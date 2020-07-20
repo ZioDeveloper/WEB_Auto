@@ -15,6 +15,7 @@ namespace WEB_Auto.Controllers
         {
             var model = new Models.HomeModel();
 
+            Session["User"] = usr;
 
             if (String.IsNullOrEmpty(usr))
                 usr = "Pierangeli";
@@ -34,7 +35,8 @@ namespace WEB_Auto.Controllers
                              select m;
             model.AGR_Periti_WEB = myPerito.ToList();
 
-            DateTime periodo = DateTime.Today.AddDays(-4);
+            // Dati per dropdown spedizioni
+            DateTime periodo = DateTime.Today.AddDays(-6);
             var Spedizioni = from m in db.AGR_SpedizioniWEB_vw
                              where m.DataInizioImbarco > periodo
                              where m.IDCliente == "51"
@@ -43,24 +45,60 @@ namespace WEB_Auto.Controllers
 
             var ElencoSpedizioni = new SelectList(model.AGR_SpedizioniWEB_vw.ToList(), "ID", "Descr");
 
+            // Dati per dropdown Meteo
+            var Meteo = from m in db.AGR_Meteo
+                             select m;
+            model.AGR_Meteo = Meteo.ToList();
+
+            var ElencoMeteo = new SelectList(model.AGR_Meteo.ToList(), "ID", "DescrITA");
+
+            // Dati per dropdown TipoPErizia
+            var TP = from m in db.AGR_TipiPerizia
+                     where m.ID == "C" ||
+                           m.ID == "D"
+                     select m;
+            model.AGR_TipiPerizia = TP.ToList();
+
+            var ElencoTP = new SelectList(model.AGR_TipiPerizia.ToList(), "ID", "DescrITA");
+
             Session["User"] = usr;
             ViewData["ElencoSpedizioni"] = ElencoSpedizioni;
+            ViewData["ElencoMeteo"] = ElencoMeteo;
+            ViewData["ElencoTP"] = ElencoTP;
 
             return View(model);
         }
 
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
+            ViewBag.Message = "Autocargo - Rilevamento danni";
 
             return View();
         }
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
+            ViewBag.Message = "Contatti per assistenza.";
 
             return View();
         }
+
+        [HttpPost]
+        public ActionResult SelezionaAttivita(string IDSpedizione, string IDMeteo , string IDTP)
+        {
+            var model = new Models.HomeModel();
+            var Spedizioni = (from m in db.AGR_SpedizioniWEB_vw
+                              where m.ID == IDSpedizione
+                              select new { m.IDCliente, m.IDCasa }).FirstOrDefault();
+
+            string aIDCliente = Spedizioni.IDCliente;
+            string aCasa = Spedizioni.IDCasa;
+
+            //var item1 = new SelectList(model.AGR_Periti_WEB.ToList());
+            
+            return View();
+        }
     }
+
+
 }

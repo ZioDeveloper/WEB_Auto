@@ -5,6 +5,15 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="wisedbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2005" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AGR_Meteo">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="varchar" MaxLength="1" Nullable="false" />
+          <Property Name="DescrITA" Type="varchar" MaxLength="20" />
+          <Property Name="DescrENG" Type="varchar" MaxLength="20" />
+          <Property Name="Flags" Type="tinyint" />
+        </EntityType>
         <EntityType Name="AGR_Periti_WEB">
           <Key>
             <PropertyRef Name="ID" />
@@ -43,6 +52,15 @@
           <Property Name="IContab" Type="float" Nullable="false" />
           <Property Name="PDF_P" Type="int" Nullable="false" />
           <Property Name="PDF_A" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AGR_TipiPerizia">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="varchar" MaxLength="1" Nullable="false" />
+          <Property Name="DescrITA" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="DescrENG" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="Ordine" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Periti">
           <Key>
@@ -113,8 +131,10 @@ warning 6002: The table/view 'wisedb.dbo.AGR_SpedizioniWEB_vw' does not have a p
           <Property Name="IDOriginale2" Type="varchar" MaxLength="30" />
         </EntityType>
         <EntityContainer Name="wisedbModelStoreContainer">
+          <EntitySet Name="AGR_Meteo" EntityType="Self.AGR_Meteo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AGR_Periti_WEB" EntityType="Self.AGR_Periti_WEB" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AGR_Spedizioni" EntityType="Self.AGR_Spedizioni" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AGR_TipiPerizia" EntityType="Self.AGR_TipiPerizia" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Periti" EntityType="Self.Periti" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AGR_SpedizioniWEB_vw" EntityType="Self.AGR_SpedizioniWEB_vw" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
@@ -145,6 +165,8 @@ warning 6002: The table/view 'wisedb.dbo.AGR_SpedizioniWEB_vw' does not have a p
           <EntitySet Name="Periti" EntityType="wisedbModel.Periti" />
           <EntitySet Name="AGR_Spedizioni" EntityType="wisedbModel.AGR_Spedizioni" />
           <EntitySet Name="AGR_SpedizioniWEB_vw" EntityType="wisedbModel.AGR_SpedizioniWEB_vw" />
+          <EntitySet Name="AGR_Meteo" EntityType="wisedbModel.AGR_Meteo" />
+          <EntitySet Name="AGR_TipiPerizia" EntityType="wisedbModel.AGR_TipiPerizia" />
         </EntityContainer>
         <EntityType Name="AGR_Periti_WEB">
           <Key>
@@ -250,6 +272,24 @@ warning 6002: The table/view 'wisedb.dbo.AGR_SpedizioniWEB_vw' does not have a p
           <Property Name="DataFineSbarco" Type="DateTime" Precision="3" />
           <Property Name="IDOriginale1" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="IDOriginale2" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="AGR_Meteo">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="DescrITA" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="DescrENG" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Flags" Type="Byte" />
+        </EntityType>
+        <EntityType Name="AGR_TipiPerizia">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="DescrITA" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="DescrENG" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="Ordine" Type="Int32" Nullable="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -357,6 +397,26 @@ warning 6002: The table/view 'wisedb.dbo.AGR_SpedizioniWEB_vw' does not have a p
                 <ScalarProperty Name="IDCliente" ColumnName="IDCliente" />
                 <ScalarProperty Name="DataInizioImbarco" ColumnName="DataInizioImbarco" />
                 <ScalarProperty Name="Descr" ColumnName="Descr" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AGR_Meteo">
+            <EntityTypeMapping TypeName="wisedbModel.AGR_Meteo">
+              <MappingFragment StoreEntitySet="AGR_Meteo">
+                <ScalarProperty Name="Flags" ColumnName="Flags" />
+                <ScalarProperty Name="DescrENG" ColumnName="DescrENG" />
+                <ScalarProperty Name="DescrITA" ColumnName="DescrITA" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AGR_TipiPerizia">
+            <EntityTypeMapping TypeName="wisedbModel.AGR_TipiPerizia">
+              <MappingFragment StoreEntitySet="AGR_TipiPerizia">
+                <ScalarProperty Name="Ordine" ColumnName="Ordine" />
+                <ScalarProperty Name="DescrENG" ColumnName="DescrENG" />
+                <ScalarProperty Name="DescrITA" ColumnName="DescrITA" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

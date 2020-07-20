@@ -4,30 +4,44 @@
 }
 
 <br />
-<h4>Utente autenticato</h4>
-<br />
-<div>
-    @{var item1 = Model.AGR_Periti_WEB.ToList();}
-    @{var item2 = Model.Periti.ToList();}
+<div class="jumbotron">
+    @*<br />
+    <h4>Utente autenticato</h4>
+    <br />*@
+    <div>
+        @{var item1 = Model.AGR_Periti_WEB.ToList();}
+        @{var item2 = Model.Periti.ToList();}
 
-    Benvenuto <b>@item1[0].Name </b>
-    <br />
-    Sei associato al perito : @item2[0].Descr
-    <br />
-
-</div>
-<br />
-<br /><br />
-<div>
-    @using (Html.BeginForm("Index", "Home", FormMethod.Post))
-    {
-        //@Html.AntiForgeryToken()
-        @Html.DropDownList("ID", (SelectList)ViewData["ElencoSpedizioni"], new { @class = "form-control" })
+        Benvenuto <b>@item1[0].Name </b>
+        <br />
+        Sei associato al gruppo periti  : @item2[0].IDModem  - @item2[0].Descr
         <br />
 
-        <div>
-            <button type="submit" class="btn btn-primary">Vai a gestione dati</button>
-        </div>
-    }
+    </div>
+    <br />
+
+    <div>
+        @using (Html.BeginForm("SelezionaAttivita", "Home", FormMethod.Post))
+        {
+            //@Html.AntiForgeryToken()
+            @Html.Label("Seleziona spedizione")
+
+            @Html.DropDownList("IDSpedizione", (SelectList)ViewData["ElencoSpedizioni"], new { @class = "form-control" })
+            <br />
+
+            @Html.Label("Seleziona meteo")
+            @Html.DropDownList("IDMeteo", (SelectList)ViewData["ElencoMeteo"], new { @class = "form-control" })
+            <br />
+
+
+            @Html.Label("Seleziona tipo perizia")
+            @Html.DropDownList("IDTP", (SelectList)ViewData["ElencoTP"], new { @class = "form-control" })
+            <br />
+
+            <div>
+                <button type="submit" class="btn btn-primary">Vai a gestione dati</button>
+            </div>
+        }
+    </div>
+    <br />
 </div>
-<br />

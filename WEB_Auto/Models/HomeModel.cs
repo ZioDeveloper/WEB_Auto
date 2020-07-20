@@ -12,6 +12,8 @@ namespace WEB_Auto.Models
         public IEnumerable<Periti> Periti { get; set; }
         public IEnumerable<AGR_Spedizioni> AGR_Spedizioni { get; set; }
         public IEnumerable<AGR_SpedizioniWEB_vw> AGR_SpedizioniWEB_vw { get; set; }
+        public IEnumerable<AGR_Meteo> AGR_Meteo { get; set; }
+        public IEnumerable<AGR_TipiPerizia> AGR_TipiPerizia { get; set; }
 
     }
 }

@@ -29,5 +29,7 @@ namespace WEB_Auto.Models
         public virtual DbSet<Periti> Periti { get; set; }
         public virtual DbSet<AGR_Spedizioni> AGR_Spedizioni { get; set; }
         public virtual DbSet<AGR_SpedizioniWEB_vw> AGR_SpedizioniWEB_vw { get; set; }
+        public virtual DbSet<AGR_Meteo> AGR_Meteo { get; set; }
+        public virtual DbSet<AGR_TipiPerizia> AGR_TipiPerizia { get; set; }
     }
 }

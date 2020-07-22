@@ -104,6 +104,41 @@
           <Property Name="EmailInvad" Type="varchar" MaxLength="250" />
         </EntityType>
         <!--Errors Found During Generation:
+warning 6002: The table/view 'wisedb.dbo.AGR_SpedizioniWEB_Decoded_vw' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="AGR_SpedizioniWEB_Decoded_vw">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="IDCliente" />
+            <PropertyRef Name="IDCasa" />
+            <PropertyRef Name="Casa" />
+            <PropertyRef Name="IDNave" />
+            <PropertyRef Name="Nave" />
+            <PropertyRef Name="IDPortoImbarco" />
+            <PropertyRef Name="POL" />
+            <PropertyRef Name="IDPortoSbarco" />
+            <PropertyRef Name="POD" />
+          </Key>
+          <Property Name="ID" Type="varchar" MaxLength="8" Nullable="false" />
+          <Property Name="Descr" Type="varchar" MaxLength="42" />
+          <Property Name="DataInizioImbarco" Type="datetime" />
+          <Property Name="IDCliente" Type="varchar" MaxLength="2" Nullable="false" />
+          <Property Name="IDCasa" Type="varchar" MaxLength="3" Nullable="false" />
+          <Property Name="Casa" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="IDNave" Type="varchar" MaxLength="3" Nullable="false" />
+          <Property Name="Nave" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="IDPortoImbarco" Type="varchar" MaxLength="3" Nullable="false" />
+          <Property Name="POL" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="DataPartenzaImbarco" Type="datetime" />
+          <Property Name="DataFineImbarco" Type="datetime" />
+          <Property Name="IDPortoSbarco" Type="varchar" MaxLength="3" Nullable="false" />
+          <Property Name="POD" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="DataArrivoSbarco" Type="datetime" />
+          <Property Name="DataInizioSbarco" Type="datetime" />
+          <Property Name="DataFineSbarco" Type="datetime" />
+          <Property Name="IDOriginale1" Type="varchar" MaxLength="30" />
+          <Property Name="IDOriginale2" Type="varchar" MaxLength="30" />
+        </EntityType>
+        <!--Errors Found During Generation:
 warning 6002: The table/view 'wisedb.dbo.AGR_SpedizioniWEB_vw' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="AGR_SpedizioniWEB_vw">
           <Key>
@@ -115,7 +150,7 @@ warning 6002: The table/view 'wisedb.dbo.AGR_SpedizioniWEB_vw' does not have a p
             <PropertyRef Name="IDPortoSbarco" />
           </Key>
           <Property Name="ID" Type="varchar" MaxLength="8" Nullable="false" />
-          <Property Name="Descr" Type="varchar" MaxLength="42" />
+          <Property Name="Descr" Type="varchar" MaxLength="28" />
           <Property Name="DataInizioImbarco" Type="datetime" />
           <Property Name="IDCliente" Type="varchar" MaxLength="2" Nullable="false" />
           <Property Name="IDCasa" Type="varchar" MaxLength="3" Nullable="false" />
@@ -136,6 +171,29 @@ warning 6002: The table/view 'wisedb.dbo.AGR_SpedizioniWEB_vw' does not have a p
           <EntitySet Name="AGR_Spedizioni" EntityType="Self.AGR_Spedizioni" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AGR_TipiPerizia" EntityType="Self.AGR_TipiPerizia" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Periti" EntityType="Self.Periti" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AGR_SpedizioniWEB_Decoded_vw" EntityType="Self.AGR_SpedizioniWEB_Decoded_vw" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [AGR_SpedizioniWEB_Decoded_vw].[ID] AS [ID], 
+    [AGR_SpedizioniWEB_Decoded_vw].[Descr] AS [Descr], 
+    [AGR_SpedizioniWEB_Decoded_vw].[DataInizioImbarco] AS [DataInizioImbarco], 
+    [AGR_SpedizioniWEB_Decoded_vw].[IDCliente] AS [IDCliente], 
+    [AGR_SpedizioniWEB_Decoded_vw].[IDCasa] AS [IDCasa], 
+    [AGR_SpedizioniWEB_Decoded_vw].[Casa] AS [Casa], 
+    [AGR_SpedizioniWEB_Decoded_vw].[IDNave] AS [IDNave], 
+    [AGR_SpedizioniWEB_Decoded_vw].[Nave] AS [Nave], 
+    [AGR_SpedizioniWEB_Decoded_vw].[IDPortoImbarco] AS [IDPortoImbarco], 
+    [AGR_SpedizioniWEB_Decoded_vw].[POL] AS [POL], 
+    [AGR_SpedizioniWEB_Decoded_vw].[DataPartenzaImbarco] AS [DataPartenzaImbarco], 
+    [AGR_SpedizioniWEB_Decoded_vw].[DataFineImbarco] AS [DataFineImbarco], 
+    [AGR_SpedizioniWEB_Decoded_vw].[IDPortoSbarco] AS [IDPortoSbarco], 
+    [AGR_SpedizioniWEB_Decoded_vw].[POD] AS [POD], 
+    [AGR_SpedizioniWEB_Decoded_vw].[DataArrivoSbarco] AS [DataArrivoSbarco], 
+    [AGR_SpedizioniWEB_Decoded_vw].[DataInizioSbarco] AS [DataInizioSbarco], 
+    [AGR_SpedizioniWEB_Decoded_vw].[DataFineSbarco] AS [DataFineSbarco], 
+    [AGR_SpedizioniWEB_Decoded_vw].[IDOriginale1] AS [IDOriginale1], 
+    [AGR_SpedizioniWEB_Decoded_vw].[IDOriginale2] AS [IDOriginale2]
+    FROM [dbo].[AGR_SpedizioniWEB_Decoded_vw] AS [AGR_SpedizioniWEB_Decoded_vw]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="AGR_SpedizioniWEB_vw" EntityType="Self.AGR_SpedizioniWEB_vw" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [AGR_SpedizioniWEB_vw].[ID] AS [ID], 
@@ -167,6 +225,7 @@ warning 6002: The table/view 'wisedb.dbo.AGR_SpedizioniWEB_vw' does not have a p
           <EntitySet Name="AGR_SpedizioniWEB_vw" EntityType="wisedbModel.AGR_SpedizioniWEB_vw" />
           <EntitySet Name="AGR_Meteo" EntityType="wisedbModel.AGR_Meteo" />
           <EntitySet Name="AGR_TipiPerizia" EntityType="wisedbModel.AGR_TipiPerizia" />
+          <EntitySet Name="AGR_SpedizioniWEB_Decoded_vw" EntityType="wisedbModel.AGR_SpedizioniWEB_Decoded_vw" />
         </EntityContainer>
         <EntityType Name="AGR_Periti_WEB">
           <Key>
@@ -258,7 +317,7 @@ warning 6002: The table/view 'wisedb.dbo.AGR_SpedizioniWEB_vw' does not have a p
             <PropertyRef Name="IDPortoSbarco" />
           </Key>
           <Property Name="ID" Type="String" Nullable="false" MaxLength="8" FixedLength="false" Unicode="false" />
-          <Property Name="Descr" Type="String" MaxLength="42" FixedLength="false" Unicode="false" />
+          <Property Name="Descr" Type="String" MaxLength="28" FixedLength="false" Unicode="false" />
           <Property Name="DataInizioImbarco" Type="DateTime" Precision="3" />
           <Property Name="IDCliente" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
           <Property Name="IDCasa" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
@@ -290,6 +349,39 @@ warning 6002: The table/view 'wisedb.dbo.AGR_SpedizioniWEB_vw' does not have a p
           <Property Name="DescrITA" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
           <Property Name="DescrENG" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
           <Property Name="Ordine" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AGR_SpedizioniWEB_Decoded_vw">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="IDCliente" />
+            <PropertyRef Name="IDCasa" />
+            <PropertyRef Name="IDNave" />
+            <PropertyRef Name="Nave" />
+            <PropertyRef Name="IDPortoImbarco" />
+            <PropertyRef Name="POL" />
+            <PropertyRef Name="IDPortoSbarco" />
+            <PropertyRef Name="POD" />
+            <PropertyRef Name="Casa" />
+          </Key>
+          <Property Name="ID" Type="String" Nullable="false" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Name="Descr" Type="String" MaxLength="42" FixedLength="false" Unicode="false" />
+          <Property Name="DataInizioImbarco" Type="DateTime" Precision="3" />
+          <Property Name="IDCliente" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="IDCasa" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="IDNave" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="Nave" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="IDPortoImbarco" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="POL" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="DataPartenzaImbarco" Type="DateTime" Precision="3" />
+          <Property Name="DataFineImbarco" Type="DateTime" Precision="3" />
+          <Property Name="IDPortoSbarco" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="POD" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="DataArrivoSbarco" Type="DateTime" Precision="3" />
+          <Property Name="DataInizioSbarco" Type="DateTime" Precision="3" />
+          <Property Name="DataFineSbarco" Type="DateTime" Precision="3" />
+          <Property Name="IDOriginale1" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="IDOriginale2" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Casa" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -417,6 +509,31 @@ warning 6002: The table/view 'wisedb.dbo.AGR_SpedizioniWEB_vw' does not have a p
                 <ScalarProperty Name="Ordine" ColumnName="Ordine" />
                 <ScalarProperty Name="DescrENG" ColumnName="DescrENG" />
                 <ScalarProperty Name="DescrITA" ColumnName="DescrITA" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AGR_SpedizioniWEB_Decoded_vw">
+            <EntityTypeMapping TypeName="wisedbModel.AGR_SpedizioniWEB_Decoded_vw">
+              <MappingFragment StoreEntitySet="AGR_SpedizioniWEB_Decoded_vw">
+                <ScalarProperty Name="Casa" ColumnName="Casa" />
+                <ScalarProperty Name="IDOriginale2" ColumnName="IDOriginale2" />
+                <ScalarProperty Name="IDOriginale1" ColumnName="IDOriginale1" />
+                <ScalarProperty Name="DataFineSbarco" ColumnName="DataFineSbarco" />
+                <ScalarProperty Name="DataInizioSbarco" ColumnName="DataInizioSbarco" />
+                <ScalarProperty Name="DataArrivoSbarco" ColumnName="DataArrivoSbarco" />
+                <ScalarProperty Name="POD" ColumnName="POD" />
+                <ScalarProperty Name="IDPortoSbarco" ColumnName="IDPortoSbarco" />
+                <ScalarProperty Name="DataFineImbarco" ColumnName="DataFineImbarco" />
+                <ScalarProperty Name="DataPartenzaImbarco" ColumnName="DataPartenzaImbarco" />
+                <ScalarProperty Name="POL" ColumnName="POL" />
+                <ScalarProperty Name="IDPortoImbarco" ColumnName="IDPortoImbarco" />
+                <ScalarProperty Name="Nave" ColumnName="Nave" />
+                <ScalarProperty Name="IDNave" ColumnName="IDNave" />
+                <ScalarProperty Name="IDCasa" ColumnName="IDCasa" />
+                <ScalarProperty Name="IDCliente" ColumnName="IDCliente" />
+                <ScalarProperty Name="DataInizioImbarco" ColumnName="DataInizioImbarco" />
+                <ScalarProperty Name="Descr" ColumnName="Descr" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

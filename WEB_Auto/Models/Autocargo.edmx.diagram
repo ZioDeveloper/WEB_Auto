@@ -11,6 +11,7 @@
         <EntityTypeShape EntityType="wisedbModel.AGR_SpedizioniWEB_vw" Width="1.5" PointX="5.375" PointY="0.75" />
         <EntityTypeShape EntityType="wisedbModel.AGR_Meteo" Width="1.5" PointX="5.375" PointY="5.75" />
         <EntityTypeShape EntityType="wisedbModel.AGR_TipiPerizia" Width="1.5" PointX="7.375" PointY="0.75" />
+        <EntityTypeShape EntityType="wisedbModel.AGR_SpedizioniWEB_Decoded_vw" Width="1.5" PointX="7.375" PointY="3.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

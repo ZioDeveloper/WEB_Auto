@@ -1,0 +1,158 @@
+﻿@model WEB_Auto.Models.HomeModel
+@{
+    ViewBag.Title = "Dati Perizia";
+}
+<style>
+    table, td, th {
+        border: 0;
+    }
+
+    table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    th {
+        height: 20px;
+    }
+</style>
+<br /><br />
+<details open>
+    <summary >Info generali su spedizione...</summary>
+    <div class="jumbotron">
+
+        <div>
+            @{var item1 = Model.AGR_SpedizioniWEB_Decoded_vw.ToList();}
+            @{var item2 = Model.AGR_TipiPerizia.ToList();}
+
+            @*@Html.Label("Spedizione :") &nbsp;  @Html.Label(item1[0].ID)*@
+            <table>
+                <tr>
+                    <td>
+                        @Html.Label("Spedizione : ")
+                    </td>
+                    <td>
+                        @Html.Label(item1[0].ID)
+                    </td>
+                    <td>&nbsp;&nbsp;</td>
+
+
+                </tr>
+                <tr>
+                    <td>
+                        @Html.Label("Viaggio : ")
+                    </td>
+                    <td>
+                        @Html.Label(item1[0].IDOriginale1)
+                    </td>
+                    <td>&nbsp;&nbsp;</td>
+                    <td>
+                        @Html.Label("Del : ")
+                    </td>
+                    <td>
+                        @Html.Label(item1[0].DataInizioImbarco.ToString().Substring(0, 10))
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        @Html.Label("POL : ")
+                    </td>
+                    <td>
+                        @Html.Label(item1[0].IDPortoImbarco + " -" + item1[0].POL)
+                    </td>
+                    <td>&nbsp;&nbsp;</td>
+                    <td>
+                        @Html.Label("POD : ")
+                    </td>
+                    <td>
+                        @Html.Label(item1[0].IDPortoSbarco + " -" + item1[0].POD)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        @Html.Label("Nave : ")
+                    </td>
+                    <td>
+                        @Html.Label(item1[0].IDNave + " -" + item1[0].Nave)
+                    </td>
+                    @*<td>&nbsp;&nbsp;</td>*@
+                </tr>
+                <tr>
+                    <td>
+                        @Html.Label("Casa costruttrice : ")
+                    </td>
+                    <td>
+                        @Html.Label(item1[0].IDCasa + " -" + item1[0].Casa)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        @Html.Label("Tipo perizia : ")
+                    </td>
+                    <td>
+                        @Html.Label(item2[0].ID + " - " + item2[0].DescrITA)
+                    </td>
+                </tr>
+            </table>
+
+        </div>
+    </div>
+</details>
+<br />
+    <div>
+        @using (Html.BeginForm("SalvaPeriziaTesta", "Home", new { id = @item2[0].ID }, FormMethod.Post))
+        {
+
+
+            <table>
+                <tr>
+                    <td>
+                        @Html.Label("Inspection date")
+                    </td>
+                    <td>
+                        @Html.TextBox("DataPerizia", DateTime.Now.ToString("dd/MM/yyyy"), new { @readonly = "readonly", style = "background:lightgrey" })
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        &nbsp;
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        @Html.Label("Chassis")
+                    </td>
+                    <td>
+                        @Html.TextBox("Chassis", "", new { onkeyup = "InputToUpper(this);" })
+                    </td>
+                </tr>
+            </table>
+            <tr>
+                <td></td>
+            </tr>
+
+
+            @*@Html.Label("Inspection date")<text>&nbsp;</text> @Html.TextBox("DataPerizia", DateTime.Now.ToString("dd/MM/yyyy"), new { @readonly = "readonly", style = "background:lightgrey" });
+                <br />
+                @Html.Label("Chassis") <text>&nbsp;</text> @Html.TextBox("Chassis", "", new { onkeyup = "InputToUpper(this);" }); <text>&nbsp;</text>*@
+            <br />
+
+            <div>
+                <button type="submit" class="btn btn-success custom">Conferma</button>
+            </div>
+        }
+    </div>
+    <br />
+    <div>
+        @Html.ActionLink("Annulla", "Index", null, new { @class = "btn btn-danger custom" })
+    </div>
+
+    <script>
+        function InputToUpper(obj) {
+            if (obj.value != "") {
+                obj.value = obj.value.toUpperCase();
+            }
+        }
+    </script>
+
+

@@ -84,17 +84,35 @@ namespace WEB_Auto.Controllers
         }
 
         [HttpPost]
-        public ActionResult SelezionaAttivita(string IDSpedizione, string IDMeteo , string IDTP)
+        public ActionResult DatiPerizia(string IDSpedizione, string IDMeteo , string IDTP)
         {
             var model = new Models.HomeModel();
-            var Spedizioni = (from m in db.AGR_SpedizioniWEB_vw
+
+            // COME RECUPERARE CAMPI DA TABELLA/VISTA = select new{m. ecc ecc}
+
+            var Casa = (from m in db.AGR_SpedizioniWEB_vw
                               where m.ID == IDSpedizione
                               select new { m.IDCliente, m.IDCasa }).FirstOrDefault();
 
-            string aIDCliente = Spedizioni.IDCliente;
-            string aCasa = Spedizioni.IDCasa;
+            string aIDCliente = Casa.IDCliente;
+            string aCasa = Casa.IDCasa;
 
-            //var item1 = new SelectList(model.AGR_Periti_WEB.ToList());
+            var Spedizioni = from m in db.AGR_SpedizioniWEB_Decoded_vw
+                              where m.ID == IDSpedizione
+                              select m;
+            model.AGR_SpedizioniWEB_Decoded_vw = Spedizioni.ToList();
+
+            var TP = from m in db.AGR_TipiPerizia
+                     where m.ID == IDTP
+                     select m;
+            model.AGR_TipiPerizia = TP.ToList();
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult SalvaPeriziaTesta(string  Chassis, string DataPerizia)
+        {
             
             return View();
         }

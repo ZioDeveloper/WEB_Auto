@@ -31,5 +31,6 @@ namespace WEB_Auto.Models
         public virtual DbSet<AGR_SpedizioniWEB_vw> AGR_SpedizioniWEB_vw { get; set; }
         public virtual DbSet<AGR_Meteo> AGR_Meteo { get; set; }
         public virtual DbSet<AGR_TipiPerizia> AGR_TipiPerizia { get; set; }
+        public virtual DbSet<AGR_SpedizioniWEB_Decoded_vw> AGR_SpedizioniWEB_Decoded_vw { get; set; }
     }
 }

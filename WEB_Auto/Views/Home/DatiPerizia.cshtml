@@ -18,13 +18,14 @@
 </style>
 <br /><br />
 <details open>
-    <summary >Info generali su spedizione...</summary>
+    <summary>Info generali su spedizione...</summary>
     <div class="jumbotron">
 
         <div>
             @{var item1 = Model.AGR_SpedizioniWEB_Decoded_vw.ToList();}
             @{var item2 = Model.AGR_TipiPerizia.ToList();}
-
+            @{var item3 = Model.AGR_Meteo.ToList();}
+            
             @*@Html.Label("Spedizione :") &nbsp;  @Html.Label(item1[0].ID)*@
             <table>
                 <tr>
@@ -62,7 +63,7 @@
                     </td>
                 </tr>
                 <tr>
-                    
+
                     <td>
                         @Html.Label("POD : ")
                     </td>
@@ -100,119 +101,141 @@
     </div>
 </details>
 <br />
-    <div>
-        @using (Html.BeginForm("SalvaPeriziaTesta", "Home", new { id = @item2[0].ID }, FormMethod.Post))
+<div>
+    @using (Html.BeginForm("SalvaPeriziaTesta", "Home", new { IDPerito = ViewBag.IDPerito , IDSpedizione = ViewBag.IDSpedizione, IDMeteo = @item3[0].ID, IDTP = item2[0].ID }, FormMethod.Post))
+    {
+
+
+    <table>
+        <tr>
+            <td>
+                @Html.Label("Inspection date")
+            </td>
+            <td>
+                @Html.TextBox("DataPerizia", DateTime.Now.ToString("dd/MM/yyyy"), new { @readonly = "readonly", style = "background:lightgrey" })
+            </td>
+        </tr>
+        <tr>
+            <td>
+                &nbsp;
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.Label("Chassis")
+            </td>
+            <td>
+                @Html.TextBox("Chassis", "", new { onkeyup = "InputToUpper(this);" })
+            </td>
+        </tr>
+        <tr>
+            <td>
+                &nbsp;
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.Label("Seleziona modello")
+
+            </td>
+            <td>
+                @Html.DropDownList("IDModelloCasa", new SelectList((SelectList)ViewData["ElencoModelli"], "Value", "Text", ViewBag.aIDModelloCasa), "-- Seleziona modello --", new { @class = "form-control" })
+
+            </td>
+        </tr>
+        <tr>
+            <td>
+                &nbsp;
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.Label("Seleziona Trasportatore")
+
+            </td>
+            <td>
+                @Html.DropDownList("IDTrasportatoreGrim", new SelectList((SelectList)ViewData["ElencoTraspGrim"], "Value", "Text", ViewBag.aIDTrasportatore), "-- Seleziona trasportatore --", new { @class = "form-control" })
+
+            </td>
+        </tr>
+        <tr>
+            <td>
+                &nbsp;
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.Label("Seleziona tipo rotabile")
+
+            </td>
+            <td>
+                @Html.DropDownList("IDTipoRotabile", new SelectList((SelectList)ViewData["ElencoTipoRotabile"], "Value", "Text", ViewBag.aIDTipoRotabile), "-- Seleziona tipo rotabile --", new { @class = "form-control" })
+
+            </td>
+        </tr>
+        @if (item1[0].IDCasa.ToUpper() != "RTB")
         {
-
-
-        <table>
-            <tr>
-                <td>
-                    @Html.Label("Inspection date")
-                </td>
-                <td>
-                    @Html.TextBox("DataPerizia", DateTime.Now.ToString("dd/MM/yyyy"), new { @readonly = "readonly", style = "background:lightgrey" })
-                </td>
-            </tr>
             <tr>
                 <td>
                     &nbsp;
                 </td>
             </tr>
+
             <tr>
                 <td>
-                    @Html.Label("Chassis")
+                    @Html.Label("Condizione")
+
                 </td>
                 <td>
-                    @Html.TextBox("Chassis", "", new { onkeyup = "InputToUpper(this);" })
+                    Nuovo:   @Html.RadioButton("Condizione", "N")
+                    Usato: @Html.RadioButton("Condizione", "U")
                 </td>
             </tr>
-            <tr>
-                <td>
-                    &nbsp;
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    @Html.Label("Seleziona modello")
+        }
+        <tr>
+            <td>
+                &nbsp;
+            </td>
+        </tr>
 
-                </td>
-                <td>
-                    @Html.DropDownList("IDModelloCasa", (SelectList)ViewData["ElencoModelli"], "-- Seleziona modello --", new { @class = "form-control" })
+        <tr>
+            <td>
+                @Html.Label("Telaio danneggiato")
 
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    &nbsp;
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    @Html.Label("Seleziona Trasportatore")
+            </td>
+            <td>
+                @Html.CheckBox("isDamaged", false)
+            </td>
+        </tr>
 
-                </td>
-                <td>
-                    @Html.DropDownList("IDTrasportatoreGrim", (SelectList)ViewData["ElencoTraspGrim"], "-- Seleziona trasportatore --", new { @class = "form-control" })
 
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    &nbsp;
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    @Html.Label("Seleziona tipo rotabile")
-
-                </td>
-                <td>
-                    @Html.DropDownList("IDTipoRotabile", (SelectList)ViewData["ElencoTipoRotabile"], "-- Seleziona tipo rotabile --", new { @class = "form-control" })
-
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    &nbsp;
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    @Html.Label("Telaio danneggiato")
-
-                </td>
-                <td>
-                    @Html.CheckBox("isDamaged", false)
-                </td>
-            </tr>
-
-            
-        </table>
+    </table>
 
 
 
-            @*@Html.Label("Inspection date")<text>&nbsp;</text> @Html.TextBox("DataPerizia", DateTime.Now.ToString("dd/MM/yyyy"), new { @readonly = "readonly", style = "background:lightgrey" });
-                <br />
-                @Html.Label("Chassis") <text>&nbsp;</text> @Html.TextBox("Chassis", "", new { onkeyup = "InputToUpper(this);" }); <text>&nbsp;</text>*@
+        @*@Html.Label("Inspection date")<text>&nbsp;</text> @Html.TextBox("DataPerizia", DateTime.Now.ToString("dd/MM/yyyy"), new { @readonly = "readonly", style = "background:lightgrey" });
             <br />
+            @Html.Label("Chassis") <text>&nbsp;</text> @Html.TextBox("Chassis", "", new { onkeyup = "InputToUpper(this);" }); <text>&nbsp;</text>*@
+        <br />
 
-            <div>
-                <button type="submit" class="btn btn-success custom">Conferma</button>
-            </div>
-        }
-    </div>
-    <br />
-    <div>
-        @Html.ActionLink("Annulla", "Index", null, new { @class = "btn btn-danger custom" })
-    </div>
+        <div>
+            <button type="submit" class="btn btn-success custom">Conferma</button>
+        </div>
+    }
+</div>
 
-    <script>
-        function InputToUpper(obj) {
-            if (obj.value != "") {
-                obj.value = obj.value.toUpperCase();
-            }
+<br />
+
+<div>
+    @Html.ActionLink("Esci", "Index", null, new { @class = "btn btn-danger custom" })
+</div>
+
+<script>
+    function InputToUpper(obj) {
+        if (obj.value != "") {
+            obj.value = obj.value.toUpperCase();
         }
-    </script>
+    }
+</script>
 
 

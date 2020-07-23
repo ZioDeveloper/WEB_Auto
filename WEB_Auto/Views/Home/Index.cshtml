@@ -12,7 +12,7 @@
         @{var item1 = Model.AGR_Periti_WEB.ToList();}
         @{var item2 = Model.Periti.ToList();}
         @{var item3 = Model.AGR_Porti.ToList();}
-
+        @{var item4 = Model.Periti.ToList();}
         Benvenuto <b>@item1[0].Name </b>
         <br />
         Sei associato al gruppo periti  : @item2[0].IDModem  - @item2[0].Descr
@@ -24,7 +24,7 @@
     <br />
 
     <div>
-        @using (Html.BeginForm("DatiPerizia", "Home", FormMethod.Post))
+        @using (Html.BeginForm("DatiPerizia", "Home", new { IDPerito = @item2[0].ID , IDSpedizione = @item1[0].ID }, FormMethod.Post))
         {
             //@Html.AntiForgeryToken()
             @Html.Label("Seleziona spedizione")

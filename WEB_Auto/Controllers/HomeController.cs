@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -76,6 +77,7 @@ namespace WEB_Auto.Controllers
 
 
             Session["User"] = usr;
+            Session["IDPerito"] = myIDPerito;
             ViewData["ElencoSpedizioni"] = ElencoSpedizioni;
             ViewData["ElencoMeteo"] = ElencoMeteo;
             ViewData["ElencoTP"] = ElencoTP;
@@ -97,8 +99,8 @@ namespace WEB_Auto.Controllers
             return View();
         }
 
-        [HttpPost]
-        public ActionResult DatiPerizia(string IDSpedizione, string IDMeteo , string IDTP )
+       
+        public ActionResult DatiPerizia( string IDPerito , string IDSpedizione, string IDMeteo , string IDTP , string aIDTrasportatore, string aIDTipoRotabile, string aIDModelloCasa)
         {
             var model = new Models.HomeModel();
 
@@ -111,10 +113,18 @@ namespace WEB_Auto.Controllers
             string aIDCliente = Casa.IDCliente;
             string aCasa = Casa.IDCasa;
 
+            // Dati spedizione
             var Spedizioni = from m in db.AGR_SpedizioniWEB_Decoded_vw
                               where m.ID == IDSpedizione
                               select m;
             model.AGR_SpedizioniWEB_Decoded_vw = Spedizioni.ToList();
+
+            // Dadti meteo
+            var Meteo = from m in db.AGR_Meteo
+                        where m.ID == IDMeteo
+                        select m;
+            model.AGR_Meteo = Meteo.ToList();
+
 
             var TP = from m in db.AGR_TipiPerizia
                      where m.ID == IDTP
@@ -129,6 +139,7 @@ namespace WEB_Auto.Controllers
             model.AGR_ModelliAuto = modello.ToList();
             var ElencoModelli = new SelectList(model.AGR_ModelliAuto.ToList(), "IDModelloCasa", "Descr");
             ViewData["ElencoModelli"] = ElencoModelli;
+            ViewBag.aIDModelloCasa = aIDModelloCasa;
 
             // Dati per dropdown Trasportatore Grimaldi
             var TraspGrim = from m in db.AGR_TrasportatoriGrimaldi
@@ -137,6 +148,7 @@ namespace WEB_Auto.Controllers
             model.AGR_TrasportatoriGrimaldi = TraspGrim.ToList().OrderBy(m=>m.Descr);
             var ElencoTraspGrim = new SelectList(model.AGR_TrasportatoriGrimaldi.ToList(), "ID", "Descr");
             ViewData["ElencoTraspGrim"] = ElencoTraspGrim;
+            ViewBag.aIDTrasportatore = aIDTrasportatore;
 
             // Dati per dropdown Tipo rotabile
             var TipoRotabile = from m in db.AGR_TipoRotabile
@@ -144,17 +156,79 @@ namespace WEB_Auto.Controllers
             model.AGR_TipoRotabile = TipoRotabile.ToList();
             var ElencoTipoRotabile = new SelectList(model.AGR_TipoRotabile.ToList(), "ID", "DescrITA");
             ViewData["ElencoTipoRotabile"] = ElencoTipoRotabile;
-
+            ViewBag.aIDTipoRotabile = aIDTipoRotabile;
+            ViewBag.IDPerito = IDPerito;
+            ViewBag.IDSpedizione = IDSpedizione;
 
             return View(model);
         }
 
+
         [HttpPost]
-        public ActionResult SalvaPeriziaTesta(string  Chassis, string DataPerizia, string IDModelloCasa, string IDTrasportatoreGrim, 
-                                              string IDTipoRotabile, bool? isDamaged)
+        public ActionResult SalvaPeriziaTesta(string IDPerito, string IDSpedizione, string IDMeteo, string IDTP , string  Chassis, string DataPerizia, string IDModelloCasa, string IDTrasportatoreGrim, 
+                                              string IDTipoRotabile, bool? isDamaged, string Condizione)
         {
+            // Mi creo un ID PErizia ...
+            string aIDPerizia = GetNewCode_AUTO(IDPerito);
+
+            // Verifico Sia tutto ok.. to do !!!!!
+            bool isOK = CheckAll();
+
+            // Inserisco dati perizia
+            string myDataPerizia = DataPerizia.Substring(6, 4) + DataPerizia.Substring(3, 2) + DataPerizia.Substring(0, 2);
+            string sqlcmd = " INSERT INTO AGR_PERIZIE_Temp_MVC (ID, IDSpedizione, IDPerito, IDTipoPerizia, DataPerizia, IDNazione, IDModello, Telaio, NumFoto, " +
+                            "  Flags, IRichiesta, IDefinizione, IContab, DataModPerito, FlagControllo, IDMeteo, NumPDF) " +
+                            "VALUES (@ID, @IDSpedizione, @IDPerito, @IDTipoPerizia, @DataPerizia, @IDNazione, @IDModello, @Telaio, @NumFoto, " +
+                            "  @Flags, @IRichiesta, @IDefinizione, @IContab, @DataModPerito, @FlagControllo, @IDMeteo, @NumPDF)";
+            int Inserted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@ID", aIDPerizia),
+                                                                 new SqlParameter("@IDSpedizione", IDSpedizione),
+                                                                 new SqlParameter("@IDPerito", IDPerito),
+                                                                 new SqlParameter("@IDTipoPerizia", IDTP),
+                                                                 new SqlParameter("@DataPerizia", myDataPerizia),
+                                                                 new SqlParameter("@IDNazione", "***"),
+                                                                 new SqlParameter("@IDModello", IDModelloCasa),
+                                                                 new SqlParameter("@Telaio", Chassis),
+                                                                 new SqlParameter("@NumFoto", "0"),
+                                                                 new SqlParameter("@Flags", 16),
+                                                                 new SqlParameter("@IRichiesta", "0"),
+                                                                 new SqlParameter("@IDefinizione","0"),
+                                                                 new SqlParameter("@IContab", "0"),
+                                                                 new SqlParameter("@DataModPerito", DateTime.Now),
+                                                                 new SqlParameter("@FlagControllo", "0"),
+                                                                 new SqlParameter("@IDMeteo", IDMeteo),
+                                                                 new SqlParameter("@NumPDF", "0"));
+
+
+
+            return RedirectToAction("DatiPerizia", "Home", new { IDPerito= IDPerito, IDSpedizione = IDSpedizione, IDMeteo = IDMeteo, IDTP = IDTP, aIDTrasportatore = IDTrasportatoreGrim , aIDTipoRotabile  = IDTipoRotabile , aIDModelloCasa = IDModelloCasa });
+        }
+
+        public string GetNewCode_AUTO(string aIDPerito)
+        {
+            string aIDPerizia = "";
+            var myIDModemPerito = (from s in db.Periti
+                              where s.ID == aIDPerito
+                              select s.IDModem).FirstOrDefault();
+
+            DateTime ora = DateTime.Now;
+            string now = ora.ToString("yyyyMMddhhmmss");
+
+            int Totale = 0;
+
             
-            return View();
+
+            //For iw = 1 To 17
+            //    Totale = Totale + Asc(Mid(wTemp, iw, 1))
+            //Next
+
+
+            aIDPerizia = myIDModemPerito + now + Totale;
+            return aIDPerizia;
+        }
+
+        public bool CheckAll()
+        {
+            return true;
         }
     }
 

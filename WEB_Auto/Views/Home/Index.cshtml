@@ -6,15 +6,18 @@
 <br />
 <div class="jumbotron">
     @*<br />
-    <h4>Utente autenticato</h4>
-    <br />*@
+        <h4>Utente autenticato</h4>
+        <br />*@
     <div>
         @{var item1 = Model.AGR_Periti_WEB.ToList();}
         @{var item2 = Model.Periti.ToList();}
+        @{var item3 = Model.AGR_Porti.ToList();}
 
         Benvenuto <b>@item1[0].Name </b>
         <br />
         Sei associato al gruppo periti  : @item2[0].IDModem  - @item2[0].Descr
+        <br />
+        Sei associato al porto : @item3[0].ID  - @item3[0].Descr
         <br />
 
     </div>
@@ -25,23 +28,26 @@
         {
             //@Html.AntiForgeryToken()
             @Html.Label("Seleziona spedizione")
-
+            @*@Html.DropDownList("IDSpedizione", (SelectList)ViewData["ElencoSpedizioni"], "-- Seleziona spedizione --", new { @class = "form-control" })*@
             @Html.DropDownList("IDSpedizione", (SelectList)ViewData["ElencoSpedizioni"], new { @class = "form-control" })
             <br />
 
             @Html.Label("Seleziona meteo")
-            @Html.DropDownList("IDMeteo", (SelectList)ViewData["ElencoMeteo"], new { @class = "form-control" })
-            <br />
+            @*@Html.DropDownList("IDMeteo", (SelectList)ViewData["ElencoMeteo"], "-- Seleziona meteo --", new { @class = "form-control" })*@
+            @Html.DropDownList("IDMeteo", (SelectList)ViewData["ElencoMeteo"], new { @class = "form-control" }) <br />
 
 
             @Html.Label("Seleziona tipo perizia")
-            @Html.DropDownList("IDTP", (SelectList)ViewData["ElencoTP"], new { @class = "form-control" })
-            <br />
+            @*@Html.DropDownList("IDTP", (SelectList)ViewData["ElencoTP"], "-- Seleziona Tipo Perizia --", new { @class = "form-control" })*@
+            @Html.DropDownList("IDTP", (SelectList)ViewData["ElencoTP"], new { @class = "form-control" })<br />
 
             <div>
-                <button type="submit" class="btn btn-success">Vai a gestione dati</button>
+                <button type="submit" class="btn btn-primary custom">Inserisci perizie</button>
             </div>
         }
     </div>
     <br />
+    <div>
+        @Html.ActionLink("Lista perizie", "Index", null, new { @class = "btn btn-primary custom" })
+    </div>
 </div>

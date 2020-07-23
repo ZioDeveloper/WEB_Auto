@@ -12,11 +12,10 @@ namespace WEB_Auto.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class AGR_Periti_WEB
+    public partial class AGR_TrasportatoriGrimaldi
     {
-        public int ID { get; set; }
-        public string Name { get; set; }
-        public string IDPerito { get; set; }
-        public string IDPorto { get; set; }
+        public string ID { get; set; }
+        public string Descr { get; set; }
+        public string DescrB { get; set; }
     }
 }

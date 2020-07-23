@@ -14,6 +14,17 @@
           <Property Name="DescrENG" Type="varchar" MaxLength="20" />
           <Property Name="Flags" Type="tinyint" />
         </EntityType>
+        <EntityType Name="AGR_ModelliAuto">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="IDCasa" Type="varchar" MaxLength="3" Nullable="false" />
+          <Property Name="IDModelloCasa" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Descr" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="IDCliente" Type="varchar" MaxLength="2" Nullable="false" />
+          <Property Name="Produzione" Type="varchar" MaxLength="1" Nullable="false" />
+        </EntityType>
         <EntityType Name="AGR_Periti_WEB">
           <Key>
             <PropertyRef Name="ID" />
@@ -21,6 +32,20 @@
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="IDPerito" Type="varchar" MaxLength="3" />
+          <Property Name="IDPorto" Type="varchar" MaxLength="3" />
+        </EntityType>
+        <EntityType Name="AGR_Porti">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="varchar" MaxLength="3" Nullable="false" />
+          <Property Name="Descr" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="IDCitta" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="IDValuta" Type="varchar" MaxLength="2" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="255" />
+          <Property Name="ID_Perito" Type="varchar" MaxLength="2" />
+          <Property Name="EmailGrimaldi" Type="varchar" MaxLength="255" />
+          <Property Name="EmailGrimaldiNuovo" Type="varchar" MaxLength="200" />
         </EntityType>
         <EntityType Name="AGR_Spedizioni">
           <Key>
@@ -61,6 +86,22 @@
           <Property Name="DescrITA" Type="varchar" MaxLength="25" Nullable="false" />
           <Property Name="DescrENG" Type="varchar" MaxLength="25" Nullable="false" />
           <Property Name="Ordine" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AGR_TipoRotabile">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="varchar" MaxLength="2" Nullable="false" />
+          <Property Name="DescrITA" Type="varchar" MaxLength="20" />
+          <Property Name="DescrEng" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="AGR_TrasportatoriGrimaldi">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="varchar" MaxLength="3" Nullable="false" />
+          <Property Name="Descr" Type="varchar" MaxLength="50" />
+          <Property Name="DescrB" Type="varchar" MaxLength="20" />
         </EntityType>
         <EntityType Name="Periti">
           <Key>
@@ -165,11 +206,39 @@ warning 6002: The table/view 'wisedb.dbo.AGR_SpedizioniWEB_vw' does not have a p
           <Property Name="IDOriginale1" Type="varchar" MaxLength="30" />
           <Property Name="IDOriginale2" Type="varchar" MaxLength="30" />
         </EntityType>
+        <Association Name="FK___5__50">
+          <End Role="AGR_Porti" Type="Self.AGR_Porti" Multiplicity="1" />
+          <End Role="AGR_Spedizioni" Type="Self.AGR_Spedizioni" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AGR_Porti">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="AGR_Spedizioni">
+              <PropertyRef Name="IDPortoImbarco" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK___6__50">
+          <End Role="AGR_Porti" Type="Self.AGR_Porti" Multiplicity="1" />
+          <End Role="AGR_Spedizioni" Type="Self.AGR_Spedizioni" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AGR_Porti">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="AGR_Spedizioni">
+              <PropertyRef Name="IDPortoSbarco" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="wisedbModelStoreContainer">
           <EntitySet Name="AGR_Meteo" EntityType="Self.AGR_Meteo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AGR_ModelliAuto" EntityType="Self.AGR_ModelliAuto" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AGR_Periti_WEB" EntityType="Self.AGR_Periti_WEB" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AGR_Porti" EntityType="Self.AGR_Porti" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AGR_Spedizioni" EntityType="Self.AGR_Spedizioni" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AGR_TipiPerizia" EntityType="Self.AGR_TipiPerizia" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AGR_TipoRotabile" EntityType="Self.AGR_TipoRotabile" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AGR_TrasportatoriGrimaldi" EntityType="Self.AGR_TrasportatoriGrimaldi" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Periti" EntityType="Self.Periti" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AGR_SpedizioniWEB_Decoded_vw" EntityType="Self.AGR_SpedizioniWEB_Decoded_vw" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
@@ -213,6 +282,14 @@ warning 6002: The table/view 'wisedb.dbo.AGR_SpedizioniWEB_vw' does not have a p
     [AGR_SpedizioniWEB_vw].[IDOriginale2] AS [IDOriginale2]
     FROM [dbo].[AGR_SpedizioniWEB_vw] AS [AGR_SpedizioniWEB_vw]</DefiningQuery>
           </EntitySet>
+          <AssociationSet Name="FK___5__50" Association="Self.FK___5__50">
+            <End Role="AGR_Porti" EntitySet="AGR_Porti" />
+            <End Role="AGR_Spedizioni" EntitySet="AGR_Spedizioni" />
+          </AssociationSet>
+          <AssociationSet Name="FK___6__50" Association="Self.FK___6__50">
+            <End Role="AGR_Porti" EntitySet="AGR_Porti" />
+            <End Role="AGR_Spedizioni" EntitySet="AGR_Spedizioni" />
+          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -226,6 +303,18 @@ warning 6002: The table/view 'wisedb.dbo.AGR_SpedizioniWEB_vw' does not have a p
           <EntitySet Name="AGR_Meteo" EntityType="wisedbModel.AGR_Meteo" />
           <EntitySet Name="AGR_TipiPerizia" EntityType="wisedbModel.AGR_TipiPerizia" />
           <EntitySet Name="AGR_SpedizioniWEB_Decoded_vw" EntityType="wisedbModel.AGR_SpedizioniWEB_Decoded_vw" />
+          <EntitySet Name="AGR_Porti" EntityType="wisedbModel.AGR_Porti" />
+          <AssociationSet Name="FK___5__50" Association="wisedbModel.FK___5__50">
+            <End Role="AGR_Porti" EntitySet="AGR_Porti" />
+            <End Role="AGR_Spedizioni" EntitySet="AGR_Spedizioni" />
+          </AssociationSet>
+          <AssociationSet Name="FK___6__50" Association="wisedbModel.FK___6__50">
+            <End Role="AGR_Porti" EntitySet="AGR_Porti" />
+            <End Role="AGR_Spedizioni" EntitySet="AGR_Spedizioni" />
+          </AssociationSet>
+          <EntitySet Name="AGR_ModelliAuto" EntityType="wisedbModel.AGR_ModelliAuto" />
+          <EntitySet Name="AGR_TrasportatoriGrimaldi" EntityType="wisedbModel.AGR_TrasportatoriGrimaldi" />
+          <EntitySet Name="AGR_TipoRotabile" EntityType="wisedbModel.AGR_TipoRotabile" />
         </EntityContainer>
         <EntityType Name="AGR_Periti_WEB">
           <Key>
@@ -234,6 +323,7 @@ warning 6002: The table/view 'wisedb.dbo.AGR_SpedizioniWEB_vw' does not have a p
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="IDPerito" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="IDPorto" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Periti">
           <Key>
@@ -306,6 +396,8 @@ warning 6002: The table/view 'wisedb.dbo.AGR_SpedizioniWEB_vw' does not have a p
           <Property Name="IContab" Type="Double" Nullable="false" />
           <Property Name="PDF_P" Type="Int32" Nullable="false" />
           <Property Name="PDF_A" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="AGR_Porti" Relationship="wisedbModel.FK___5__50" FromRole="AGR_Spedizioni" ToRole="AGR_Porti" />
+          <NavigationProperty Name="AGR_Porti1" Relationship="wisedbModel.FK___6__50" FromRole="AGR_Spedizioni" ToRole="AGR_Porti" />
         </EntityType>
         <EntityType Name="AGR_SpedizioniWEB_vw">
           <Key>
@@ -383,6 +475,72 @@ warning 6002: The table/view 'wisedb.dbo.AGR_SpedizioniWEB_vw' does not have a p
           <Property Name="IDOriginale2" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="Casa" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
         </EntityType>
+        <EntityType Name="AGR_Porti">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="Descr" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="IDCitta" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="IDValuta" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="ID_Perito" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="EmailGrimaldi" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="EmailGrimaldiNuovo" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="AGR_Spedizioni" Relationship="wisedbModel.FK___5__50" FromRole="AGR_Porti" ToRole="AGR_Spedizioni" />
+          <NavigationProperty Name="AGR_Spedizioni1" Relationship="wisedbModel.FK___6__50" FromRole="AGR_Porti" ToRole="AGR_Spedizioni" />
+        </EntityType>
+        <Association Name="FK___5__50">
+          <End Type="wisedbModel.AGR_Porti" Role="AGR_Porti" Multiplicity="1" />
+          <End Type="wisedbModel.AGR_Spedizioni" Role="AGR_Spedizioni" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AGR_Porti">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="AGR_Spedizioni">
+              <PropertyRef Name="IDPortoImbarco" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK___6__50">
+          <End Type="wisedbModel.AGR_Porti" Role="AGR_Porti" Multiplicity="1" />
+          <End Type="wisedbModel.AGR_Spedizioni" Role="AGR_Spedizioni" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AGR_Porti">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="AGR_Spedizioni">
+              <PropertyRef Name="IDPortoSbarco" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="AGR_ModelliAuto">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="IDCasa" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="IDModelloCasa" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Descr" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="IDCliente" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="Produzione" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="AGR_TrasportatoriGrimaldi">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="Descr" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DescrB" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="AGR_TipoRotabile">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="DescrITA" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="DescrEng" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -392,6 +550,7 @@ warning 6002: The table/view 'wisedb.dbo.AGR_SpedizioniWEB_vw' does not have a p
           <EntitySetMapping Name="AGR_Periti_WEB">
             <EntityTypeMapping TypeName="wisedbModel.AGR_Periti_WEB">
               <MappingFragment StoreEntitySet="AGR_Periti_WEB">
+                <ScalarProperty Name="IDPorto" ColumnName="IDPorto" />
                 <ScalarProperty Name="IDPerito" ColumnName="IDPerito" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
@@ -534,6 +693,50 @@ warning 6002: The table/view 'wisedb.dbo.AGR_SpedizioniWEB_vw' does not have a p
                 <ScalarProperty Name="IDCliente" ColumnName="IDCliente" />
                 <ScalarProperty Name="DataInizioImbarco" ColumnName="DataInizioImbarco" />
                 <ScalarProperty Name="Descr" ColumnName="Descr" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AGR_Porti">
+            <EntityTypeMapping TypeName="wisedbModel.AGR_Porti">
+              <MappingFragment StoreEntitySet="AGR_Porti">
+                <ScalarProperty Name="EmailGrimaldiNuovo" ColumnName="EmailGrimaldiNuovo" />
+                <ScalarProperty Name="EmailGrimaldi" ColumnName="EmailGrimaldi" />
+                <ScalarProperty Name="ID_Perito" ColumnName="ID_Perito" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="IDValuta" ColumnName="IDValuta" />
+                <ScalarProperty Name="IDCitta" ColumnName="IDCitta" />
+                <ScalarProperty Name="Descr" ColumnName="Descr" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AGR_ModelliAuto">
+            <EntityTypeMapping TypeName="wisedbModel.AGR_ModelliAuto">
+              <MappingFragment StoreEntitySet="AGR_ModelliAuto">
+                <ScalarProperty Name="Produzione" ColumnName="Produzione" />
+                <ScalarProperty Name="IDCliente" ColumnName="IDCliente" />
+                <ScalarProperty Name="Descr" ColumnName="Descr" />
+                <ScalarProperty Name="IDModelloCasa" ColumnName="IDModelloCasa" />
+                <ScalarProperty Name="IDCasa" ColumnName="IDCasa" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AGR_TrasportatoriGrimaldi">
+            <EntityTypeMapping TypeName="wisedbModel.AGR_TrasportatoriGrimaldi">
+              <MappingFragment StoreEntitySet="AGR_TrasportatoriGrimaldi">
+                <ScalarProperty Name="DescrB" ColumnName="DescrB" />
+                <ScalarProperty Name="Descr" ColumnName="Descr" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AGR_TipoRotabile">
+            <EntityTypeMapping TypeName="wisedbModel.AGR_TipoRotabile">
+              <MappingFragment StoreEntitySet="AGR_TipoRotabile">
+                <ScalarProperty Name="DescrEng" ColumnName="DescrEng" />
+                <ScalarProperty Name="DescrITA" ColumnName="DescrITA" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

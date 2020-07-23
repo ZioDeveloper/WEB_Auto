@@ -60,7 +60,9 @@
                     <td>
                         @Html.Label(item1[0].IDPortoImbarco + " -" + item1[0].POL)
                     </td>
-                    <td>&nbsp;&nbsp;</td>
+                </tr>
+                <tr>
+                    
                     <td>
                         @Html.Label("POD : ")
                     </td>
@@ -86,10 +88,9 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>
+                    <td colspan="2">
                         @Html.Label("Tipo perizia : ")
-                    </td>
-                    <td>
+
                         @Html.Label(item2[0].ID + " - " + item2[0].DescrITA)
                     </td>
                 </tr>
@@ -104,32 +105,91 @@
         {
 
 
-            <table>
-                <tr>
-                    <td>
-                        @Html.Label("Inspection date")
-                    </td>
-                    <td>
-                        @Html.TextBox("DataPerizia", DateTime.Now.ToString("dd/MM/yyyy"), new { @readonly = "readonly", style = "background:lightgrey" })
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        &nbsp;
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        @Html.Label("Chassis")
-                    </td>
-                    <td>
-                        @Html.TextBox("Chassis", "", new { onkeyup = "InputToUpper(this);" })
-                    </td>
-                </tr>
-            </table>
+        <table>
             <tr>
-                <td></td>
+                <td>
+                    @Html.Label("Inspection date")
+                </td>
+                <td>
+                    @Html.TextBox("DataPerizia", DateTime.Now.ToString("dd/MM/yyyy"), new { @readonly = "readonly", style = "background:lightgrey" })
+                </td>
             </tr>
+            <tr>
+                <td>
+                    &nbsp;
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.Label("Chassis")
+                </td>
+                <td>
+                    @Html.TextBox("Chassis", "", new { onkeyup = "InputToUpper(this);" })
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    &nbsp;
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.Label("Seleziona modello")
+
+                </td>
+                <td>
+                    @Html.DropDownList("IDModelloCasa", (SelectList)ViewData["ElencoModelli"], "-- Seleziona modello --", new { @class = "form-control" })
+
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    &nbsp;
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.Label("Seleziona Trasportatore")
+
+                </td>
+                <td>
+                    @Html.DropDownList("IDTrasportatoreGrim", (SelectList)ViewData["ElencoTraspGrim"], "-- Seleziona trasportatore --", new { @class = "form-control" })
+
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    &nbsp;
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.Label("Seleziona tipo rotabile")
+
+                </td>
+                <td>
+                    @Html.DropDownList("IDTipoRotabile", (SelectList)ViewData["ElencoTipoRotabile"], "-- Seleziona tipo rotabile --", new { @class = "form-control" })
+
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    &nbsp;
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.Label("Telaio danneggiato")
+
+                </td>
+                <td>
+                    @Html.CheckBox("isDamaged", false)
+                </td>
+            </tr>
+
+            
+        </table>
+
 
 
             @*@Html.Label("Inspection date")<text>&nbsp;</text> @Html.TextBox("DataPerizia", DateTime.Now.ToString("dd/MM/yyyy"), new { @readonly = "readonly", style = "background:lightgrey" });

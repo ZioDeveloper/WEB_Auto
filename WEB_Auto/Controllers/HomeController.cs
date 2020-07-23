@@ -24,10 +24,19 @@ namespace WEB_Auto.Controllers
                               where s.Name == usr
                               select s.IDPerito).FirstOrDefault();
 
+            var myIDPorto = (from s in db.AGR_Periti_WEB
+                              where s.Name == usr
+                              select s.IDPorto).FirstOrDefault();
+
             var datiperito = from m in db.Periti
                     where m.IDModem == myIDPerito.ToString()
                     select m;
             model.Periti = datiperito.ToList();
+
+            var datiporto = from m in db.AGR_Porti
+                             where m.ID == myIDPorto.ToString()
+                             select m;
+            model.AGR_Porti = datiporto.ToList();
 
 
             var myPerito = from m in db.AGR_Periti_WEB
@@ -36,9 +45,11 @@ namespace WEB_Auto.Controllers
             model.AGR_Periti_WEB = myPerito.ToList();
 
             // Dati per dropdown spedizioni
-            DateTime periodo = DateTime.Today.AddDays(-6);
+            DateTime periodo = DateTime.Today.AddDays(-4);
             var Spedizioni = from m in db.AGR_SpedizioniWEB_vw
-                             where m.DataInizioImbarco > periodo
+                             where m.DataInizioImbarco >= periodo
+                             where ( m.IDPortoImbarco == myIDPorto || m.IDPortoSbarco == myIDPorto)
+
                              where m.IDCliente == "51"
                              select m;
             model.AGR_SpedizioniWEB_vw = Spedizioni.ToList();
@@ -58,8 +69,11 @@ namespace WEB_Auto.Controllers
                            m.ID == "D"
                      select m;
             model.AGR_TipiPerizia = TP.ToList();
-
             var ElencoTP = new SelectList(model.AGR_TipiPerizia.ToList(), "ID", "DescrITA");
+
+            
+
+
 
             Session["User"] = usr;
             ViewData["ElencoSpedizioni"] = ElencoSpedizioni;
@@ -84,7 +98,7 @@ namespace WEB_Auto.Controllers
         }
 
         [HttpPost]
-        public ActionResult DatiPerizia(string IDSpedizione, string IDMeteo , string IDTP)
+        public ActionResult DatiPerizia(string IDSpedizione, string IDMeteo , string IDTP )
         {
             var model = new Models.HomeModel();
 
@@ -107,11 +121,37 @@ namespace WEB_Auto.Controllers
                      select m;
             model.AGR_TipiPerizia = TP.ToList();
 
+            // Dati per dropdown Modello
+            var modello = from m in db.AGR_ModelliAuto
+                          where m.IDCliente == "**"
+                          where m.IDCasa == aCasa
+                          select m;
+            model.AGR_ModelliAuto = modello.ToList();
+            var ElencoModelli = new SelectList(model.AGR_ModelliAuto.ToList(), "IDModelloCasa", "Descr");
+            ViewData["ElencoModelli"] = ElencoModelli;
+
+            // Dati per dropdown Trasportatore Grimaldi
+            var TraspGrim = from m in db.AGR_TrasportatoriGrimaldi
+                            where m.Descr.ToString().Substring(0,3) != "***"
+                            select m;
+            model.AGR_TrasportatoriGrimaldi = TraspGrim.ToList().OrderBy(m=>m.Descr);
+            var ElencoTraspGrim = new SelectList(model.AGR_TrasportatoriGrimaldi.ToList(), "ID", "Descr");
+            ViewData["ElencoTraspGrim"] = ElencoTraspGrim;
+
+            // Dati per dropdown Tipo rotabile
+            var TipoRotabile = from m in db.AGR_TipoRotabile
+                               select m;
+            model.AGR_TipoRotabile = TipoRotabile.ToList();
+            var ElencoTipoRotabile = new SelectList(model.AGR_TipoRotabile.ToList(), "ID", "DescrITA");
+            ViewData["ElencoTipoRotabile"] = ElencoTipoRotabile;
+
+
             return View(model);
         }
 
         [HttpPost]
-        public ActionResult SalvaPeriziaTesta(string  Chassis, string DataPerizia)
+        public ActionResult SalvaPeriziaTesta(string  Chassis, string DataPerizia, string IDModelloCasa, string IDTrasportatoreGrim, 
+                                              string IDTipoRotabile, bool? isDamaged)
         {
             
             return View();

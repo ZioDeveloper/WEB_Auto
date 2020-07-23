@@ -40,5 +40,8 @@ namespace WEB_Auto.Models
         public double IContab { get; set; }
         public int PDF_P { get; set; }
         public int PDF_A { get; set; }
+    
+        public virtual AGR_Porti AGR_Porti { get; set; }
+        public virtual AGR_Porti AGR_Porti1 { get; set; }
     }
 }

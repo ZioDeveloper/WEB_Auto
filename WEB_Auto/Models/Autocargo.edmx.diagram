@@ -12,6 +12,12 @@
         <EntityTypeShape EntityType="wisedbModel.AGR_Meteo" Width="1.5" PointX="5.375" PointY="5.75" />
         <EntityTypeShape EntityType="wisedbModel.AGR_TipiPerizia" Width="1.5" PointX="7.375" PointY="0.75" />
         <EntityTypeShape EntityType="wisedbModel.AGR_SpedizioniWEB_Decoded_vw" Width="1.5" PointX="7.375" PointY="3.75" />
+        <EntityTypeShape EntityType="wisedbModel.AGR_Porti" Width="1.5" PointX="0.75" PointY="11.5" />
+        <AssociationConnector Association="wisedbModel.FK___5__50" />
+        <AssociationConnector Association="wisedbModel.FK___6__50" />
+        <EntityTypeShape EntityType="wisedbModel.AGR_ModelliAuto" Width="1.5" PointX="9.375" PointY="0.75" />
+        <EntityTypeShape EntityType="wisedbModel.AGR_TrasportatoriGrimaldi" Width="1.5" PointX="9.375" PointY="3.75" />
+        <EntityTypeShape EntityType="wisedbModel.AGR_TipoRotabile" Width="1.5" PointX="3.375" PointY="9.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

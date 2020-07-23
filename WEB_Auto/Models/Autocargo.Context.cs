@@ -32,5 +32,9 @@ namespace WEB_Auto.Models
         public virtual DbSet<AGR_Meteo> AGR_Meteo { get; set; }
         public virtual DbSet<AGR_TipiPerizia> AGR_TipiPerizia { get; set; }
         public virtual DbSet<AGR_SpedizioniWEB_Decoded_vw> AGR_SpedizioniWEB_Decoded_vw { get; set; }
+        public virtual DbSet<AGR_Porti> AGR_Porti { get; set; }
+        public virtual DbSet<AGR_ModelliAuto> AGR_ModelliAuto { get; set; }
+        public virtual DbSet<AGR_TrasportatoriGrimaldi> AGR_TrasportatoriGrimaldi { get; set; }
+        public virtual DbSet<AGR_TipoRotabile> AGR_TipoRotabile { get; set; }
     }
 }

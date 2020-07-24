@@ -50,8 +50,7 @@ namespace WEB_Auto.Controllers
             var Spedizioni = from m in db.AGR_SpedizioniWEB_vw
                              where m.DataInizioImbarco >= periodo
                              where ( m.IDPortoImbarco == myIDPorto || m.IDPortoSbarco == myIDPorto)
-
-                             where m.IDCliente == "51"
+                             where m.IDCliente == "51" || m.IDCliente == "GN"
                              select m;
             model.AGR_SpedizioniWEB_vw = Spedizioni.ToList();
 
@@ -197,7 +196,23 @@ namespace WEB_Auto.Controllers
                                                                  new SqlParameter("@FlagControllo", "0"),
                                                                  new SqlParameter("@IDMeteo", IDMeteo),
                                                                  new SqlParameter("@NumPDF", "0"));
+            if (Inserted >0)
+            {
+                if (String.IsNullOrEmpty(Condizione))
+                    Condizione = "";
+                if (String.IsNullOrEmpty(IDTipoRotabile))
+                    IDTipoRotabile = "";
+                if (String.IsNullOrEmpty(IDTrasportatoreGrim))
+                    IDTrasportatoreGrim = "";
 
+                sqlcmd = " INSERT INTO dbo.AGR_PerizieExpGrim_Temp_MVC  (ID, ID_TrasportatoreGrimaldi, ID_TipoRotabile, FlgNuovoUsato) " +
+                          "  VALUES  (@ID, @ID_TrasportatoreGrimaldi, @ID_TipoRotabile, @FlgNuovoUsato)";
+                Inserted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@ID", aIDPerizia),
+                                                                 new SqlParameter("@ID_TrasportatoreGrimaldi", IDTrasportatoreGrim),
+                                                                 new SqlParameter("@ID_TipoRotabile", IDTipoRotabile),
+                                                                 new SqlParameter("@FlgNuovoUsato", Condizione));
+            }
+            
 
 
             return RedirectToAction("DatiPerizia", "Home", new { IDPerito= IDPerito, IDSpedizione = IDSpedizione, IDMeteo = IDMeteo, IDTP = IDTP, aIDTrasportatore = IDTrasportatoreGrim , aIDTipoRotabile  = IDTipoRotabile , aIDModelloCasa = IDModelloCasa });

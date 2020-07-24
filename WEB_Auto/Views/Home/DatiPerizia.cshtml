@@ -17,7 +17,7 @@
     }
 </style>
 <br /><br />
-<details open>
+<details>
     <summary>Info generali su spedizione...</summary>
     <div class="jumbotron">
 
@@ -46,7 +46,9 @@
                     <td>
                         @Html.Label(item1[0].IDOriginale1)
                     </td>
-                    <td>&nbsp;&nbsp;</td>
+                    @*<td>&nbsp;&nbsp;</td>*@
+                </tr>
+                <tr>
                     <td>
                         @Html.Label("Del : ")
                     </td>
@@ -89,9 +91,10 @@
                     </td>
                 </tr>
                 <tr>
-                    <td colspan="2">
+                    <td >
                         @Html.Label("Tipo perizia : ")
-
+                    </td>
+                    <td>
                         @Html.Label(item2[0].ID + " - " + item2[0].DescrITA)
                     </td>
                 </tr>
@@ -148,50 +151,60 @@
                 &nbsp;
             </td>
         </tr>
-        <tr>
-            <td>
-                @Html.Label("Seleziona Trasportatore")
-
-            </td>
-            <td>
-                @Html.DropDownList("IDTrasportatoreGrim", new SelectList((SelectList)ViewData["ElencoTraspGrim"], "Value", "Text", ViewBag.aIDTrasportatore), "-- Seleziona trasportatore --", new { @class = "form-control" })
-
-            </td>
-        </tr>
-        <tr>
-            <td>
-                &nbsp;
-            </td>
-        </tr>
-        <tr>
-            <td>
-                @Html.Label("Seleziona tipo rotabile")
-
-            </td>
-            <td>
-                @Html.DropDownList("IDTipoRotabile", new SelectList((SelectList)ViewData["ElencoTipoRotabile"], "Value", "Text", ViewBag.aIDTipoRotabile), "-- Seleziona tipo rotabile --", new { @class = "form-control" })
-
-            </td>
-        </tr>
-        @if (item1[0].IDCasa.ToUpper() != "RTB")
+        @if ( item1[0].IDCasa.ToUpper() == "RTB")
         {
+            <tr>
+                <td>
+                    @Html.Label("Seleziona Trasportatore")
+
+                </td>
+                <td>
+                    @Html.DropDownList("IDTrasportatoreGrim", new SelectList((SelectList)ViewData["ElencoTraspGrim"], "Value", "Text", ViewBag.aIDTrasportatore), "-- Seleziona trasportatore --", new { @class = "form-control" })
+
+                </td>
+            </tr>
             <tr>
                 <td>
                     &nbsp;
                 </td>
             </tr>
-
             <tr>
                 <td>
-                    @Html.Label("Condizione")
+                    @Html.Label("Seleziona tipo rotabile")
 
                 </td>
+                <td>
+                    @Html.DropDownList("IDTipoRotabile", new SelectList((SelectList)ViewData["ElencoTipoRotabile"], "Value", "Text", ViewBag.aIDTipoRotabile), "-- Seleziona tipo rotabile --", new { @class = "form-control" })
+
+                </td>
+            </tr>
+        }
+        <tr>
+            <td>
+                &nbsp;
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                @Html.Label("Condizione")
+
+            </td>
+            @if (item1[0].IDCasa.ToUpper() != "RTB")
+            {
                 <td>
                     Nuovo:   @Html.RadioButton("Condizione", "N")
                     Usato: @Html.RadioButton("Condizione", "U")
                 </td>
-            </tr>
-        }
+            }
+            else
+            {
+                <td>
+                    Nuovo:   @Html.RadioButton("Condizione", "N", new { disabled = "disabled" })
+                    Usato: @Html.RadioButton("Condizione", "U", new { disabled = "disabled" })
+                </td>
+            }
+        </tr>
         <tr>
             <td>
                 &nbsp;

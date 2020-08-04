@@ -156,6 +156,7 @@ namespace WEB_Auto.Controllers
             var ElencoTipoRotabile = new SelectList(model.AGR_TipoRotabile.ToList(), "ID", "DescrITA");
             ViewData["ElencoTipoRotabile"] = ElencoTipoRotabile;
             ViewBag.aIDTipoRotabile = aIDTipoRotabile;
+
             ViewBag.IDPerito = IDPerito;
             ViewBag.IDSpedizione = IDSpedizione;
 
@@ -212,11 +213,44 @@ namespace WEB_Auto.Controllers
                                                                  new SqlParameter("@ID_TipoRotabile", IDTipoRotabile),
                                                                  new SqlParameter("@FlgNuovoUsato", Condizione));
             }
-            
 
 
-            return RedirectToAction("DatiPerizia", "Home", new { IDPerito= IDPerito, IDSpedizione = IDSpedizione, IDMeteo = IDMeteo, IDTP = IDTP, aIDTrasportatore = IDTrasportatoreGrim , aIDTipoRotabile  = IDTipoRotabile , aIDModelloCasa = IDModelloCasa });
+            if (isDamaged == false)
+            {
+                return RedirectToAction("DatiPerizia", "Home", new { IDPerito = IDPerito, IDSpedizione = IDSpedizione, IDMeteo = IDMeteo, IDTP = IDTP, aIDTrasportatore = IDTrasportatoreGrim, aIDTipoRotabile = IDTipoRotabile, aIDModelloCasa = IDModelloCasa });
+            }
+            else
+            {
+                return RedirectToAction("SalvaPeriziaDettagli", "Home", new { aIDPerizia });
+            }
         }
+
+
+        //[HttpPost]
+        public ActionResult SalvaPeriziaDettagli(string aIDPerizia)
+        {
+            var model = new Models.HomeModel();
+            var Detatgli = from m in db.AGR_PERIZIE_DETT_TEMP_MVC_vw
+                             where m.IDPerizia == aIDPerizia
+                           select m;
+            model.AGR_PERIZIE_DETT_TEMP_MVC_vw = Detatgli.ToList();
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult SalvaPeriziaDettagli(string aIDPerizia, string a)
+        {
+            var model = new Models.HomeModel();
+            var Detatgli = from m in db.AGR_PERIZIE_DETT_TEMP_MVC_vw
+                           where m.IDPerizia == aIDPerizia
+                           select m;
+            model.AGR_PERIZIE_DETT_TEMP_MVC_vw = Detatgli.ToList();
+
+            return View(model);
+        }
+
+
 
         public string GetNewCode_AUTO(string aIDPerito)
         {

@@ -1,0 +1,37 @@
+﻿@model WEB_Auto.Models.HomeModel
+
+@{
+    ViewBag.Title = "SalvaPeriziaDettagli";
+}
+
+<h4>Dettagli danno</h4>
+
+<table id="Report" class="display" style="width:100%">
+    <thead>
+        <tr>
+            <th style="display:none;">ID</th>
+            <th>Parte</th>
+            <th>Danno</th>
+            
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.AGR_PERIZIE_DETT_TEMP_MVC_vw)
+        {
+        <tr>
+            <td style="display:none;">
+                @Html.DisplayFor(modelItem => item.ID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Parte)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Danno)
+            </td>
+        </tr>
+        }
+
+    <tbody>
+</table>
+
+

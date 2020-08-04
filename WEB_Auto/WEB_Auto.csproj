@@ -141,6 +141,12 @@
     <Compile Include="Models\AGR_Periti_WEB.cs">
       <DependentUpon>Autocargo.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\AGR_PERIZIE_DETT_TEMP_MVC.cs">
+      <DependentUpon>Autocargo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AGR_PERIZIE_DETT_TEMP_MVC_vw.cs">
+      <DependentUpon>Autocargo.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\AGR_Porti.cs">
       <DependentUpon>Autocargo.tt</DependentUpon>
     </Compile>
@@ -239,6 +245,7 @@
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\DatiPerizia.cshtml" />
+    <Content Include="Views\Home\SalvaPeriziaDettagli.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

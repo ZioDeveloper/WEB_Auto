@@ -34,6 +34,32 @@
           <Property Name="IDPerito" Type="varchar" MaxLength="3" />
           <Property Name="IDPorto" Type="varchar" MaxLength="3" />
         </EntityType>
+        <EntityType Name="AGR_PERIZIE_DETT_TEMP_MVC">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IDPerizia" Type="varchar" MaxLength="18" Nullable="false" />
+          <Property Name="IDParte" Type="varchar" MaxLength="3" />
+          <Property Name="IDDanno" Type="varchar" MaxLength="3" />
+          <Property Name="Qta" Type="smallint" />
+          <Property Name="Note" Type="varchar" MaxLength="255" />
+          <Property Name="Flags" Type="int" />
+          <Property Name="IDGravita" Type="varchar" MaxLength="3" />
+          <Property Name="IDResponsabilita" Type="varchar" MaxLength="3" />
+          <Property Name="IDAttribuzione" Type="varchar" MaxLength="3" />
+          <Property Name="IDValuta" Type="varchar" MaxLength="2" />
+          <Property Name="OreIntervento" Type="float" />
+          <Property Name="CostoOrarioIntervento" Type="float" />
+          <Property Name="CostoComponenti" Type="float" />
+          <Property Name="CostoIntervento" Type="float" />
+          <Property Name="CostoVerniciatura" Type="float" />
+          <Property Name="TotaleItem" Type="float" />
+          <Property Name="NoteValoreItem" Type="varchar" MaxLength="255" />
+          <Property Name="PosLetter" Type="varchar" MaxLength="1" />
+          <Property Name="PosNumber" Type="int" />
+          <Property Name="PosSide" Type="varchar" MaxLength="1" />
+        </EntityType>
         <EntityType Name="AGR_Porti">
           <Key>
             <PropertyRef Name="ID" />
@@ -145,6 +171,37 @@
           <Property Name="EmailInvad" Type="varchar" MaxLength="250" />
         </EntityType>
         <!--Errors Found During Generation:
+warning 6002: The table/view 'wisedb.dbo.AGR_PERIZIE_DETT_TEMP_MVC_vw' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="AGR_PERIZIE_DETT_TEMP_MVC_vw">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="IDPerizia" />
+            <PropertyRef Name="IDOriginale" />
+            <PropertyRef Name="Parte" />
+            <PropertyRef Name="Danno" />
+            <PropertyRef Name="Codice" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IDPerizia" Type="varchar" MaxLength="18" Nullable="false" />
+          <Property Name="IDParte" Type="varchar" MaxLength="3" />
+          <Property Name="IDOriginale" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Parte" Type="varchar" MaxLength="276" Nullable="false" />
+          <Property Name="IDDanno" Type="varchar" MaxLength="3" />
+          <Property Name="Danno" Type="varchar" MaxLength="259" Nullable="false" />
+          <Property Name="Qta" Type="smallint" />
+          <Property Name="Note" Type="varchar" MaxLength="255" />
+          <Property Name="IDGravita" Type="varchar" MaxLength="3" />
+          <Property Name="IDResponsabilita" Type="varchar" MaxLength="3" />
+          <Property Name="IDAttribuzione" Type="varchar" MaxLength="3" />
+          <Property Name="Codice" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Severity" Type="varchar" MaxLength="20" />
+          <Property Name="Flags" Type="int" />
+          <Property Name="In/Out" Type="varchar" MaxLength="7" />
+          <Property Name="PosLetter" Type="varchar" MaxLength="1" />
+          <Property Name="PosNumber" Type="int" />
+          <Property Name="PosSide" Type="varchar" MaxLength="1" />
+        </EntityType>
+        <!--Errors Found During Generation:
 warning 6002: The table/view 'wisedb.dbo.AGR_SpedizioniWEB_Decoded_vw' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="AGR_SpedizioniWEB_Decoded_vw">
           <Key>
@@ -234,12 +291,36 @@ warning 6002: The table/view 'wisedb.dbo.AGR_SpedizioniWEB_vw' does not have a p
           <EntitySet Name="AGR_Meteo" EntityType="Self.AGR_Meteo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AGR_ModelliAuto" EntityType="Self.AGR_ModelliAuto" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AGR_Periti_WEB" EntityType="Self.AGR_Periti_WEB" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AGR_PERIZIE_DETT_TEMP_MVC" EntityType="Self.AGR_PERIZIE_DETT_TEMP_MVC" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AGR_Porti" EntityType="Self.AGR_Porti" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AGR_Spedizioni" EntityType="Self.AGR_Spedizioni" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AGR_TipiPerizia" EntityType="Self.AGR_TipiPerizia" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AGR_TipoRotabile" EntityType="Self.AGR_TipoRotabile" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AGR_TrasportatoriGrimaldi" EntityType="Self.AGR_TrasportatoriGrimaldi" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Periti" EntityType="Self.Periti" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AGR_PERIZIE_DETT_TEMP_MVC_vw" EntityType="Self.AGR_PERIZIE_DETT_TEMP_MVC_vw" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [AGR_PERIZIE_DETT_TEMP_MVC_vw].[ID] AS [ID], 
+    [AGR_PERIZIE_DETT_TEMP_MVC_vw].[IDPerizia] AS [IDPerizia], 
+    [AGR_PERIZIE_DETT_TEMP_MVC_vw].[IDParte] AS [IDParte], 
+    [AGR_PERIZIE_DETT_TEMP_MVC_vw].[IDOriginale] AS [IDOriginale], 
+    [AGR_PERIZIE_DETT_TEMP_MVC_vw].[Parte] AS [Parte], 
+    [AGR_PERIZIE_DETT_TEMP_MVC_vw].[IDDanno] AS [IDDanno], 
+    [AGR_PERIZIE_DETT_TEMP_MVC_vw].[Danno] AS [Danno], 
+    [AGR_PERIZIE_DETT_TEMP_MVC_vw].[Qta] AS [Qta], 
+    [AGR_PERIZIE_DETT_TEMP_MVC_vw].[Note] AS [Note], 
+    [AGR_PERIZIE_DETT_TEMP_MVC_vw].[IDGravita] AS [IDGravita], 
+    [AGR_PERIZIE_DETT_TEMP_MVC_vw].[IDResponsabilita] AS [IDResponsabilita], 
+    [AGR_PERIZIE_DETT_TEMP_MVC_vw].[IDAttribuzione] AS [IDAttribuzione], 
+    [AGR_PERIZIE_DETT_TEMP_MVC_vw].[Codice] AS [Codice], 
+    [AGR_PERIZIE_DETT_TEMP_MVC_vw].[Severity] AS [Severity], 
+    [AGR_PERIZIE_DETT_TEMP_MVC_vw].[Flags] AS [Flags], 
+    [AGR_PERIZIE_DETT_TEMP_MVC_vw].[In/Out] AS [In/Out], 
+    [AGR_PERIZIE_DETT_TEMP_MVC_vw].[PosLetter] AS [PosLetter], 
+    [AGR_PERIZIE_DETT_TEMP_MVC_vw].[PosNumber] AS [PosNumber], 
+    [AGR_PERIZIE_DETT_TEMP_MVC_vw].[PosSide] AS [PosSide]
+    FROM [dbo].[AGR_PERIZIE_DETT_TEMP_MVC_vw] AS [AGR_PERIZIE_DETT_TEMP_MVC_vw]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="AGR_SpedizioniWEB_Decoded_vw" EntityType="Self.AGR_SpedizioniWEB_Decoded_vw" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [AGR_SpedizioniWEB_Decoded_vw].[ID] AS [ID], 
@@ -315,6 +396,8 @@ warning 6002: The table/view 'wisedb.dbo.AGR_SpedizioniWEB_vw' does not have a p
           <EntitySet Name="AGR_ModelliAuto" EntityType="wisedbModel.AGR_ModelliAuto" />
           <EntitySet Name="AGR_TrasportatoriGrimaldi" EntityType="wisedbModel.AGR_TrasportatoriGrimaldi" />
           <EntitySet Name="AGR_TipoRotabile" EntityType="wisedbModel.AGR_TipoRotabile" />
+          <EntitySet Name="AGR_PERIZIE_DETT_TEMP_MVC" EntityType="wisedbModel.AGR_PERIZIE_DETT_TEMP_MVC" />
+          <EntitySet Name="AGR_PERIZIE_DETT_TEMP_MVC_vw" EntityType="wisedbModel.AGR_PERIZIE_DETT_TEMP_MVC_vw" />
         </EntityContainer>
         <EntityType Name="AGR_Periti_WEB">
           <Key>
@@ -541,6 +624,61 @@ warning 6002: The table/view 'wisedb.dbo.AGR_SpedizioniWEB_vw' does not have a p
           <Property Name="DescrITA" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="DescrEng" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
         </EntityType>
+        <EntityType Name="AGR_PERIZIE_DETT_TEMP_MVC">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IDPerizia" Type="String" Nullable="false" MaxLength="18" FixedLength="false" Unicode="false" />
+          <Property Name="IDParte" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="IDDanno" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="Qta" Type="Int16" />
+          <Property Name="Note" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Flags" Type="Int32" />
+          <Property Name="IDGravita" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="IDResponsabilita" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="IDAttribuzione" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="IDValuta" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="OreIntervento" Type="Double" />
+          <Property Name="CostoOrarioIntervento" Type="Double" />
+          <Property Name="CostoComponenti" Type="Double" />
+          <Property Name="CostoIntervento" Type="Double" />
+          <Property Name="CostoVerniciatura" Type="Double" />
+          <Property Name="TotaleItem" Type="Double" />
+          <Property Name="NoteValoreItem" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="PosLetter" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="PosNumber" Type="Int32" />
+          <Property Name="PosSide" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="AGR_PERIZIE_DETT_TEMP_MVC_vw">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="IDOriginale" />
+            <PropertyRef Name="Parte" />
+            <PropertyRef Name="Danno" />
+            <PropertyRef Name="Codice" />
+            <PropertyRef Name="IDPerizia" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IDParte" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="IDOriginale" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Parte" Type="String" Nullable="false" MaxLength="276" FixedLength="false" Unicode="false" />
+          <Property Name="IDDanno" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="Danno" Type="String" Nullable="false" MaxLength="259" FixedLength="false" Unicode="false" />
+          <Property Name="Qta" Type="Int16" />
+          <Property Name="Note" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="IDGravita" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="IDResponsabilita" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="IDAttribuzione" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="Codice" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Severity" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Flags" Type="Int32" />
+          <Property Name="In_Out" Type="String" MaxLength="7" FixedLength="false" Unicode="false" />
+          <Property Name="PosLetter" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="PosNumber" Type="Int32" />
+          <Property Name="PosSide" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="IDPerizia" Type="String" Nullable="false" MaxLength="18" FixedLength="false" Unicode="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -737,6 +875,58 @@ warning 6002: The table/view 'wisedb.dbo.AGR_SpedizioniWEB_vw' does not have a p
               <MappingFragment StoreEntitySet="AGR_TipoRotabile">
                 <ScalarProperty Name="DescrEng" ColumnName="DescrEng" />
                 <ScalarProperty Name="DescrITA" ColumnName="DescrITA" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AGR_PERIZIE_DETT_TEMP_MVC">
+            <EntityTypeMapping TypeName="wisedbModel.AGR_PERIZIE_DETT_TEMP_MVC">
+              <MappingFragment StoreEntitySet="AGR_PERIZIE_DETT_TEMP_MVC">
+                <ScalarProperty Name="PosSide" ColumnName="PosSide" />
+                <ScalarProperty Name="PosNumber" ColumnName="PosNumber" />
+                <ScalarProperty Name="PosLetter" ColumnName="PosLetter" />
+                <ScalarProperty Name="NoteValoreItem" ColumnName="NoteValoreItem" />
+                <ScalarProperty Name="TotaleItem" ColumnName="TotaleItem" />
+                <ScalarProperty Name="CostoVerniciatura" ColumnName="CostoVerniciatura" />
+                <ScalarProperty Name="CostoIntervento" ColumnName="CostoIntervento" />
+                <ScalarProperty Name="CostoComponenti" ColumnName="CostoComponenti" />
+                <ScalarProperty Name="CostoOrarioIntervento" ColumnName="CostoOrarioIntervento" />
+                <ScalarProperty Name="OreIntervento" ColumnName="OreIntervento" />
+                <ScalarProperty Name="IDValuta" ColumnName="IDValuta" />
+                <ScalarProperty Name="IDAttribuzione" ColumnName="IDAttribuzione" />
+                <ScalarProperty Name="IDResponsabilita" ColumnName="IDResponsabilita" />
+                <ScalarProperty Name="IDGravita" ColumnName="IDGravita" />
+                <ScalarProperty Name="Flags" ColumnName="Flags" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="Qta" ColumnName="Qta" />
+                <ScalarProperty Name="IDDanno" ColumnName="IDDanno" />
+                <ScalarProperty Name="IDParte" ColumnName="IDParte" />
+                <ScalarProperty Name="IDPerizia" ColumnName="IDPerizia" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AGR_PERIZIE_DETT_TEMP_MVC_vw">
+            <EntityTypeMapping TypeName="wisedbModel.AGR_PERIZIE_DETT_TEMP_MVC_vw">
+              <MappingFragment StoreEntitySet="AGR_PERIZIE_DETT_TEMP_MVC_vw">
+                <ScalarProperty Name="IDPerizia" ColumnName="IDPerizia" />
+                <ScalarProperty Name="PosSide" ColumnName="PosSide" />
+                <ScalarProperty Name="PosNumber" ColumnName="PosNumber" />
+                <ScalarProperty Name="PosLetter" ColumnName="PosLetter" />
+                <ScalarProperty Name="In_Out" ColumnName="In/Out" />
+                <ScalarProperty Name="Flags" ColumnName="Flags" />
+                <ScalarProperty Name="Severity" ColumnName="Severity" />
+                <ScalarProperty Name="Codice" ColumnName="Codice" />
+                <ScalarProperty Name="IDAttribuzione" ColumnName="IDAttribuzione" />
+                <ScalarProperty Name="IDResponsabilita" ColumnName="IDResponsabilita" />
+                <ScalarProperty Name="IDGravita" ColumnName="IDGravita" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="Qta" ColumnName="Qta" />
+                <ScalarProperty Name="Danno" ColumnName="Danno" />
+                <ScalarProperty Name="IDDanno" ColumnName="IDDanno" />
+                <ScalarProperty Name="Parte" ColumnName="Parte" />
+                <ScalarProperty Name="IDOriginale" ColumnName="IDOriginale" />
+                <ScalarProperty Name="IDParte" ColumnName="IDParte" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

@@ -226,21 +226,49 @@ namespace WEB_Auto.Controllers
         }
 
 
-        //[HttpPost]
-        public ActionResult SalvaPeriziaDettagli(string aIDPerizia)
+
+        public ActionResult SalvaPeriziaDettagli(string aIDPerizia,string  myIDParte)
         {
             var model = new Models.HomeModel();
-            var Detatgli = from m in db.AGR_PERIZIE_DETT_TEMP_MVC_vw
+
+            // Carichiamo UN PO' DI DATI...
+            // Dati per dropdown AGR_Parti
+            var parti = from m in db.WEB_AGR_Parti_vw
+                          where m.IDCliente == "**"
+                          where m.IDCasa == "RTB"
+                          select m;
+            model.WEB_AGR_Parti_vw = parti.ToList();
+            var ElencoParti = new SelectList(model.WEB_AGR_Parti_vw.ToList().OrderBy(m=>m.DescrITA), "ID", "DescrITA");
+            ViewData["ElencoParti"] = ElencoParti;
+
+
+            var Dettagli = from m in db.AGR_PERIZIE_DETT_TEMP_MVC_vw
                              where m.IDPerizia == aIDPerizia
                            select m;
-            model.AGR_PERIZIE_DETT_TEMP_MVC_vw = Detatgli.ToList();
-
+            model.AGR_PERIZIE_DETT_TEMP_MVC_vw = Dettagli.ToList();
+            ViewBag.IDPerizia = aIDPerizia;
             return View(model);
         }
 
         [HttpPost]
-        public ActionResult SalvaPeriziaDettagli(string aIDPerizia, string a)
+        public ActionResult SalvaPeriziaDettagli(string aIDPerizia,  string IDParte, string IDDanno, string Qta, string Note, string Flags,
+            string IDGravita, string IDResponsabilita, string IDAttribuzione, string myIDParte)
         {
+
+            // Inserisco dettagli danno perizia
+            string sqlcmd = " INSERT INTO AGR_PERIZIE_DETT_TEMP_MVC (IDPerizia, IDParte, IDDanno, Qta, Note, Flags, IDGravita, IDResponsabilita, IDAttribuzione) " +
+                           "VALUES (@IDPerizia, @IDParte, @IDDanno, @Qta, @Note, @Flags, @IDGravita, @IDResponsabilita, @IDAttribuzione)";
+            int Inserted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@IDPerizia", aIDPerizia),
+                                                                 new SqlParameter("@IDParte", IDParte),
+                                                                 new SqlParameter("@IDDanno", IDDanno),
+                                                                 new SqlParameter("@Qta", Qta),
+                                                                 new SqlParameter("@Note", "***"),
+                                                                 new SqlParameter("@Flags", 16),
+                                                                 new SqlParameter("@IDGravita", IDGravita),
+                                                                 new SqlParameter("@IDResponsabilita", IDResponsabilita),
+                                                                 new SqlParameter("@IDAttribuzione", IDAttribuzione));
+
+
             var model = new Models.HomeModel();
             var Detatgli = from m in db.AGR_PERIZIE_DETT_TEMP_MVC_vw
                            where m.IDPerizia == aIDPerizia

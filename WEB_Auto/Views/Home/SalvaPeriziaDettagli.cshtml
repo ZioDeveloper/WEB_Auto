@@ -3,8 +3,9 @@
 @{
     ViewBag.Title = "SalvaPeriziaDettagli";
 }
-
+<br /><br /><br /><br />
 <h4>Dettagli danno</h4>
+@{string aIDPerizia = ViewBag.IDPerizia;}
 
 <table id="Report" class="display" style="width:100%">
     <thead>
@@ -12,26 +13,64 @@
             <th style="display:none;">ID</th>
             <th>Parte</th>
             <th>Danno</th>
-            
+
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model.AGR_PERIZIE_DETT_TEMP_MVC_vw)
         {
-        <tr>
-            <td style="display:none;">
-                @Html.DisplayFor(modelItem => item.ID)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Parte)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Danno)
-            </td>
-        </tr>
+            <tr>
+                <td style="display:none;">
+                    @Html.DisplayFor(modelItem => item.ID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Parte)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Danno)
+                </td>
+            </tr>
         }
 
     <tbody>
 </table>
+<br />
+<br />
+<div>
+    @*@using (Html.BeginForm("SalvaPeriziaDettagli", "Home", new { IDPerizia, IDParte, IDDanno, Qta, Note, Flags, IDGravita, IDResponsabilita, IDAttribuzione }, FormMethod.Post))*@
+    @using (Html.BeginForm("SalvaPeriziaDettagli", "Home", new { aIDPerizia  }, FormMethod.Post))
+    {
+
+    <table>
+        <tr>
+            <td>
+                @Html.Label("Seleziona Componente")
+            </td>
+            <td>
+                &nbsp;&nbsp;
+            </td>
+            <td>
+                @Html.DropDownList("IDParte", new SelectList((SelectList)ViewData["ElencoParti"], "Value", "Text", null), "-- Seleziona modello --", new { @class = "form-control" })
+
+            </td>
+            
+        </tr>
+    </table>
+
+
+
+
+
+        <div>
+            <button type="submit" class="btn btn-success custom">Conferma</button>
+        </div>
+    }
+</div>
+
+<br />
+
+<div>
+    @Html.ActionLink("Esci", "Index", null, new { @class = "btn btn-danger custom" })
+</div>
 
 

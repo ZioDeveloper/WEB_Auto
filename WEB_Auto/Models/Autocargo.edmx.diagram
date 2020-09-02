@@ -20,6 +20,8 @@
         <EntityTypeShape EntityType="wisedbModel.AGR_TipoRotabile" Width="1.5" PointX="3.375" PointY="9.75" />
         <EntityTypeShape EntityType="wisedbModel.AGR_PERIZIE_DETT_TEMP_MVC" Width="1.5" PointX="5.375" PointY="9.75" />
         <EntityTypeShape EntityType="wisedbModel.AGR_PERIZIE_DETT_TEMP_MVC_vw" Width="1.5" PointX="9.375" PointY="6.75" />
+        <EntityTypeShape EntityType="wisedbModel.AGR_Parti" Width="1.5" PointX="11.375" PointY="0.75" />
+        <EntityTypeShape EntityType="wisedbModel.WEB_AGR_Parti_vw" Width="1.5" PointX="11.375" PointY="4.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

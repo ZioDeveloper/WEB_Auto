@@ -40,5 +40,6 @@ namespace WEB_Auto.Models
         public virtual DbSet<AGR_PERIZIE_DETT_TEMP_MVC_vw> AGR_PERIZIE_DETT_TEMP_MVC_vw { get; set; }
         public virtual DbSet<AGR_Parti> AGR_Parti { get; set; }
         public virtual DbSet<WEB_AGR_Parti_vw> WEB_AGR_Parti_vw { get; set; }
+        public virtual DbSet<WEB_AGR_Danni_vw> WEB_AGR_Danni_vw { get; set; }
     }
 }

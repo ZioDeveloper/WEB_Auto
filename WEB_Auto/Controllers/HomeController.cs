@@ -232,6 +232,7 @@ namespace WEB_Auto.Controllers
             var model = new Models.HomeModel();
 
             // Carichiamo UN PO' DI DATI...
+
             // Dati per dropdown AGR_Parti
             var parti = from m in db.WEB_AGR_Parti_vw
                           where m.IDCliente == "**"
@@ -241,6 +242,24 @@ namespace WEB_Auto.Controllers
             var ElencoParti = new SelectList(model.WEB_AGR_Parti_vw.ToList().OrderBy(m=>m.DescrITA), "ID", "DescrITA");
             ViewData["ElencoParti"] = ElencoParti;
 
+            // Dati per dropdown AGR_Parti
+            var danni = from m in db.WEB_AGR_Danni_vw
+                        where m.IDCliente == "**"
+                        
+                        select m;
+            model.WEB_AGR_Danni_vw = danni.ToList();
+            var ElencoDanni = new SelectList(model.WEB_AGR_Danni_vw.ToList().OrderBy(m => m.DescrITA), "ID", "DescrITA");
+            ViewData["ElencoDanni"] = ElencoDanni;
+
+
+            //// Dati per dropdown AGR_Parti
+            //var danni = from m in db.WEB_AGR_Danni_vw
+            //            where m.IDCliente == "**"
+
+            //            select m;
+            //model.WEB_AGR_Danni_vw = danni.ToList();
+            //var ElencoDanni = new SelectList(model.WEB_AGR_Danni_vw.ToList().OrderBy(m => m.DescrITA), "ID", "DescrITA");
+            //ViewData["ElencoDanni"] = ElencoDanni;
 
             var Dettagli = from m in db.AGR_PERIZIE_DETT_TEMP_MVC_vw
                              where m.IDPerizia == aIDPerizia

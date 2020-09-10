@@ -212,6 +212,7 @@ warning 6002: The table/view 'wisedb.dbo.AGR_PERIZIE_DETT_TEMP_MVC_vw' does not 
           <Property Name="PosLetter" Type="varchar" MaxLength="1" />
           <Property Name="PosNumber" Type="int" />
           <Property Name="PosSide" Type="varchar" MaxLength="1" />
+          <Property Name="Gravita" Type="varchar" MaxLength="123" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'wisedb.dbo.AGR_SpedizioniWEB_Decoded_vw' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -290,6 +291,20 @@ warning 6002: The table/view 'wisedb.dbo.WEB_AGR_Danni_vw' does not have a prima
           <Property Name="IDClasse" Type="varchar" MaxLength="1" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
+warning 6002: The table/view 'wisedb.dbo.WEB_AGR_Gravita_vw' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="WEB_AGR_Gravita_vw">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="DescrITA" />
+            <PropertyRef Name="IDCliente" />
+            <PropertyRef Name="DescrENG" />
+          </Key>
+          <Property Name="ID" Type="varchar" MaxLength="3" Nullable="false" />
+          <Property Name="DescrITA" Type="varchar" MaxLength="123" Nullable="false" />
+          <Property Name="IDCliente" Type="varchar" MaxLength="2" Nullable="false" />
+          <Property Name="DescrENG" Type="varchar" MaxLength="123" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
 warning 6002: The table/view 'wisedb.dbo.WEB_AGR_Parti_vw' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="WEB_AGR_Parti_vw">
           <Key>
@@ -359,7 +374,8 @@ warning 6002: The table/view 'wisedb.dbo.WEB_AGR_Parti_vw' does not have a prima
     [AGR_PERIZIE_DETT_TEMP_MVC_vw].[In/Out] AS [In/Out], 
     [AGR_PERIZIE_DETT_TEMP_MVC_vw].[PosLetter] AS [PosLetter], 
     [AGR_PERIZIE_DETT_TEMP_MVC_vw].[PosNumber] AS [PosNumber], 
-    [AGR_PERIZIE_DETT_TEMP_MVC_vw].[PosSide] AS [PosSide]
+    [AGR_PERIZIE_DETT_TEMP_MVC_vw].[PosSide] AS [PosSide], 
+    [AGR_PERIZIE_DETT_TEMP_MVC_vw].[Gravita] AS [Gravita]
     FROM [dbo].[AGR_PERIZIE_DETT_TEMP_MVC_vw] AS [AGR_PERIZIE_DETT_TEMP_MVC_vw]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="AGR_SpedizioniWEB_Decoded_vw" EntityType="Self.AGR_SpedizioniWEB_Decoded_vw" store:Type="Views" store:Schema="dbo">
@@ -412,6 +428,14 @@ warning 6002: The table/view 'wisedb.dbo.WEB_AGR_Parti_vw' does not have a prima
     [WEB_AGR_Danni_vw].[IDClasse] AS [IDClasse]
     FROM [dbo].[WEB_AGR_Danni_vw] AS [WEB_AGR_Danni_vw]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="WEB_AGR_Gravita_vw" EntityType="Self.WEB_AGR_Gravita_vw" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [WEB_AGR_Gravita_vw].[ID] AS [ID], 
+    [WEB_AGR_Gravita_vw].[DescrITA] AS [DescrITA], 
+    [WEB_AGR_Gravita_vw].[IDCliente] AS [IDCliente], 
+    [WEB_AGR_Gravita_vw].[DescrENG] AS [DescrENG]
+    FROM [dbo].[WEB_AGR_Gravita_vw] AS [WEB_AGR_Gravita_vw]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="WEB_AGR_Parti_vw" EntityType="Self.WEB_AGR_Parti_vw" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [WEB_AGR_Parti_vw].[ID] AS [ID], 
@@ -458,6 +482,7 @@ warning 6002: The table/view 'wisedb.dbo.WEB_AGR_Parti_vw' does not have a prima
           <EntitySet Name="AGR_Parti" EntityType="wisedbModel.AGR_Parti" />
           <EntitySet Name="WEB_AGR_Parti_vw" EntityType="wisedbModel.WEB_AGR_Parti_vw" />
           <EntitySet Name="WEB_AGR_Danni_vw" EntityType="wisedbModel.WEB_AGR_Danni_vw" />
+          <EntitySet Name="WEB_AGR_Gravita_vw" EntityType="wisedbModel.WEB_AGR_Gravita_vw" />
         </EntityContainer>
         <EntityType Name="AGR_Periti_WEB">
           <Key>
@@ -738,6 +763,7 @@ warning 6002: The table/view 'wisedb.dbo.WEB_AGR_Parti_vw' does not have a prima
           <Property Name="PosNumber" Type="Int32" />
           <Property Name="PosSide" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
           <Property Name="IDPerizia" Type="String" Nullable="false" MaxLength="18" FixedLength="false" Unicode="false" />
+          <Property Name="Gravita" Type="String" MaxLength="123" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="AGR_Parti">
           <Key>
@@ -774,6 +800,18 @@ warning 6002: The table/view 'wisedb.dbo.WEB_AGR_Parti_vw' does not have a prima
           <Property Name="DescrITA" Type="String" Nullable="false" MaxLength="278" FixedLength="false" Unicode="false" />
           <Property Name="IDCliente" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
           <Property Name="IDClasse" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="WEB_AGR_Gravita_vw">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="IDCliente" />
+            <PropertyRef Name="DescrITA" />
+            <PropertyRef Name="DescrENG" />
+          </Key>
+          <Property Name="ID" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="IDCliente" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="DescrITA" Type="String" Nullable="false" MaxLength="123" FixedLength="false" Unicode="false" />
+          <Property Name="DescrENG" Type="String" Nullable="false" MaxLength="123" FixedLength="false" Unicode="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -1005,6 +1043,7 @@ warning 6002: The table/view 'wisedb.dbo.WEB_AGR_Parti_vw' does not have a prima
           <EntitySetMapping Name="AGR_PERIZIE_DETT_TEMP_MVC_vw">
             <EntityTypeMapping TypeName="wisedbModel.AGR_PERIZIE_DETT_TEMP_MVC_vw">
               <MappingFragment StoreEntitySet="AGR_PERIZIE_DETT_TEMP_MVC_vw">
+                <ScalarProperty Name="Gravita" ColumnName="Gravita" />
                 <ScalarProperty Name="IDPerizia" ColumnName="IDPerizia" />
                 <ScalarProperty Name="PosSide" ColumnName="PosSide" />
                 <ScalarProperty Name="PosNumber" ColumnName="PosNumber" />
@@ -1056,6 +1095,16 @@ warning 6002: The table/view 'wisedb.dbo.WEB_AGR_Parti_vw' does not have a prima
                 <ScalarProperty Name="IDClasse" ColumnName="IDClasse" />
                 <ScalarProperty Name="IDCliente" ColumnName="IDCliente" />
                 <ScalarProperty Name="DescrITA" ColumnName="DescrITA" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WEB_AGR_Gravita_vw">
+            <EntityTypeMapping TypeName="wisedbModel.WEB_AGR_Gravita_vw">
+              <MappingFragment StoreEntitySet="WEB_AGR_Gravita_vw">
+                <ScalarProperty Name="DescrENG" ColumnName="DescrENG" />
+                <ScalarProperty Name="DescrITA" ColumnName="DescrITA" />
+                <ScalarProperty Name="IDCliente" ColumnName="IDCliente" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

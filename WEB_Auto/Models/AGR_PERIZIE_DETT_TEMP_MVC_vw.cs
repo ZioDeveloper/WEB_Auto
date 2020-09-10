@@ -33,5 +33,6 @@ namespace WEB_Auto.Models
         public Nullable<int> PosNumber { get; set; }
         public string PosSide { get; set; }
         public string IDPerizia { get; set; }
+        public string Gravita { get; set; }
     }
 }

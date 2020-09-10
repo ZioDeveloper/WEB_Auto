@@ -23,6 +23,7 @@
         <EntityTypeShape EntityType="wisedbModel.AGR_Parti" Width="1.5" PointX="11.375" PointY="0.75" />
         <EntityTypeShape EntityType="wisedbModel.WEB_AGR_Parti_vw" Width="1.5" PointX="11.375" PointY="4.75" />
         <EntityTypeShape EntityType="wisedbModel.WEB_AGR_Danni_vw" Width="1.5" PointX="11.375" PointY="7.75" />
+        <EntityTypeShape EntityType="wisedbModel.WEB_AGR_Gravita_vw" Width="1.5" PointX="11.375" PointY="10.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

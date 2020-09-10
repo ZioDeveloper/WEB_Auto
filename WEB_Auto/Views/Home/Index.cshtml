@@ -50,5 +50,13 @@
     <br />
     <div>
         @Html.ActionLink("Lista perizie", "Index", null, new { @class = "btn btn-primary custom" })
+        @Html.ActionLink(
+    linkText: "Details",
+    actionName: "Details",
+    controllerName: "Product",
+    routeValues: new {
+        @item2[0].ID
+    },
+    htmlAttributes: null)
     </div>
 </div>

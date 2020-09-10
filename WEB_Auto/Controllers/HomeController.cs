@@ -252,14 +252,14 @@ namespace WEB_Auto.Controllers
             ViewData["ElencoDanni"] = ElencoDanni;
 
 
-            //// Dati per dropdown AGR_Parti
-            //var danni = from m in db.WEB_AGR_Danni_vw
-            //            where m.IDCliente == "**"
+            // Dati per dropdown AGR_Parti
+            var gravita = from m in db.WEB_AGR_Gravita_vw
+                        where m.IDCliente == "FI"
 
-            //            select m;
-            //model.WEB_AGR_Danni_vw = danni.ToList();
-            //var ElencoDanni = new SelectList(model.WEB_AGR_Danni_vw.ToList().OrderBy(m => m.DescrITA), "ID", "DescrITA");
-            //ViewData["ElencoDanni"] = ElencoDanni;
+                        select m;
+            model.WEB_AGR_Gravita_vw = gravita.ToList();
+            var ElencoGravita = new SelectList(model.WEB_AGR_Gravita_vw.ToList().OrderBy(m => m.DescrITA), "ID", "DescrITA");
+            ViewData["ElencoGravita"] = ElencoGravita;
 
             var Dettagli = from m in db.AGR_PERIZIE_DETT_TEMP_MVC_vw
                              where m.IDPerizia == aIDPerizia
@@ -271,33 +271,59 @@ namespace WEB_Auto.Controllers
 
         [HttpPost]
         public ActionResult SalvaPeriziaDettagli(string aIDPerizia,  string IDParte, string IDDanno, string Qta, string Note, string Flags,
-            string IDGravita, string IDResponsabilita, string IDAttribuzione, string myIDParte)
+            string IDGravita, string IDResponsabilita, string IDAttribuzione)
         {
 
             // Inserisco dettagli danno perizia
+            if (String.IsNullOrEmpty(Flags))
+                Flags = "";
+            if (String.IsNullOrEmpty(IDResponsabilita))
+                IDResponsabilita = "";
+            if (String.IsNullOrEmpty(Flags))
+                Flags = "";
+            if (String.IsNullOrEmpty(IDAttribuzione))
+                IDAttribuzione = "";
+
+
+
             string sqlcmd = " INSERT INTO AGR_PERIZIE_DETT_TEMP_MVC (IDPerizia, IDParte, IDDanno, Qta, Note, Flags, IDGravita, IDResponsabilita, IDAttribuzione) " +
                            "VALUES (@IDPerizia, @IDParte, @IDDanno, @Qta, @Note, @Flags, @IDGravita, @IDResponsabilita, @IDAttribuzione)";
             int Inserted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@IDPerizia", aIDPerizia),
                                                                  new SqlParameter("@IDParte", IDParte),
                                                                  new SqlParameter("@IDDanno", IDDanno),
                                                                  new SqlParameter("@Qta", Qta),
-                                                                 new SqlParameter("@Note", "***"),
+                                                                 new SqlParameter("@Note", Note),
                                                                  new SqlParameter("@Flags", 16),
                                                                  new SqlParameter("@IDGravita", IDGravita),
                                                                  new SqlParameter("@IDResponsabilita", IDResponsabilita),
                                                                  new SqlParameter("@IDAttribuzione", IDAttribuzione));
 
 
-            var model = new Models.HomeModel();
-            var Detatgli = from m in db.AGR_PERIZIE_DETT_TEMP_MVC_vw
-                           where m.IDPerizia == aIDPerizia
-                           select m;
-            model.AGR_PERIZIE_DETT_TEMP_MVC_vw = Detatgli.ToList();
-
-            return View(model);
+            //var model = new Models.HomeModel();
+            //var Detatgli = from m in db.AGR_PERIZIE_DETT_TEMP_MVC_vw
+            //               where m.IDPerizia == aIDPerizia
+            //               select m;
+            //model.AGR_PERIZIE_DETT_TEMP_MVC_vw = Detatgli.ToList();
+            return RedirectToAction("SalvaPeriziaDettagli", "Home", new { aIDPerizia });
+            return RedirectToAction("SalvaPeriziaDettagli", aIDPerizia);
+            //return View(model);
         }
 
 
+        public ActionResult EditDettaglio(string aIDDett, string aIDPerizia)
+        {
+            // return RedirectToAction("Edit", "Dettagli", new { ID = 28 });
+           
+            return RedirectToAction("SalvaPeriziaDettagli", "Home", new { aIDPerizia });
+        }
+
+        public ActionResult DeleteDettaglio(string aIDDett, string aIDPerizia)
+        {
+            string sqlcmd = " DELETE FROM  AGR_PERIZIE_DETT_TEMP_MVC WHERE ID = @ID";
+            int deleted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@ID", aIDDett));
+
+            return RedirectToAction("SalvaPeriziaDettagli", "Home", new { aIDPerizia });
+        }
 
         public string GetNewCode_AUTO(string aIDPerito)
         {

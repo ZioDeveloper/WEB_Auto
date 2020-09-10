@@ -41,5 +41,6 @@ namespace WEB_Auto.Models
         public virtual DbSet<AGR_Parti> AGR_Parti { get; set; }
         public virtual DbSet<WEB_AGR_Parti_vw> WEB_AGR_Parti_vw { get; set; }
         public virtual DbSet<WEB_AGR_Danni_vw> WEB_AGR_Danni_vw { get; set; }
+        public virtual DbSet<WEB_AGR_Gravita_vw> WEB_AGR_Gravita_vw { get; set; }
     }
 }

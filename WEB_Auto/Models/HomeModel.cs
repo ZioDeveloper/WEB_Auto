@@ -24,6 +24,7 @@ namespace WEB_Auto.Models
         public IEnumerable<AGR_Parti> AGR_Parti { get; set; }
         public IEnumerable<WEB_AGR_Parti_vw> WEB_AGR_Parti_vw { get; set; }
         public IEnumerable<WEB_AGR_Danni_vw> WEB_AGR_Danni_vw { get; set; }
+        public IEnumerable<WEB_AGR_Gravita_vw> WEB_AGR_Gravita_vw { get; set; }
 
     }
 }

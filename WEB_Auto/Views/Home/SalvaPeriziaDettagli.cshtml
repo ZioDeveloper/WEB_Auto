@@ -46,10 +46,10 @@
                 @Html.DisplayFor(modelItem => item.Gravita)
             </td>
             <td>
-                @Html.ActionLink("Edit", "EditDettaglio", new {  aIDDett = item.ID, aIDPerizia = item.IDPerizia }, new { @class = "btn btn-primary btn-xs" })
+                @Html.ActionLink("Edit", "EditDettaglio", new {  aIDDett = item.ID, aIDPerizia = item.IDPerizia }, new { @class = "btn btn-primary btn-xs disabled" })
             </td>
             <td>
-                @Html.ActionLink("Canc", "DeleteDettaglio", new { aIDDett = item.ID, aIDPerizia = item.IDPerizia }, new { @class = "btn btn-primary btn-xs" ,  onclick = "return confirm('Confermi cancellazione ?');" } )
+                @Html.ActionLink("Canc", "DeleteDettaglio", new { aIDDett = item.ID, aIDPerizia = item.IDPerizia }, new { @class = "btn btn-danger btn-xs" ,  onclick = "return confirm('Confermi cancellazione ?');" } )
             </td>
  
 

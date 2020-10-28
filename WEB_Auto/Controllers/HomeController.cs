@@ -46,13 +46,15 @@ namespace WEB_Auto.Controllers
             model.AGR_Periti_WEB = myPerito.ToList();
 
             // Dati per dropdown spedizioni
-            DateTime periodo = DateTime.Today.AddDays(-4);
+            DateTime ini = DateTime.Today.AddDays(-1);
+            DateTime end = DateTime.Today.AddDays(+1);
             var Spedizioni = from m in db.AGR_SpedizioniWEB_vw
-                             where m.DataInizioImbarco >= periodo
+                             where m.DataInizioImbarco >= ini
+                             where m.DataInizioImbarco <= end
                              where ( m.IDPortoImbarco == myIDPorto || m.IDPortoSbarco == myIDPorto)
                              where m.IDCliente == "51" || m.IDCliente == "GN"
                              select m;
-            model.AGR_SpedizioniWEB_vw = Spedizioni.ToList();
+            model.AGR_SpedizioniWEB_vw = Spedizioni.ToList().OrderBy(s=>s.ID);
 
             var ElencoSpedizioni = new SelectList(model.AGR_SpedizioniWEB_vw.ToList(), "ID", "Descr");
 

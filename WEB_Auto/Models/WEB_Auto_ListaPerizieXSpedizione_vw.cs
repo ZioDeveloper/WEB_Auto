@@ -12,12 +12,14 @@ namespace WEB_Auto.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class AGR_Periti_WEB
+    public partial class WEB_Auto_ListaPerizieXSpedizione_vw
     {
-        public int ID { get; set; }
-        public string Name { get; set; }
-        public string IDPerito { get; set; }
-        public string IDPorto { get; set; }
-        public string IDVero { get; set; }
+        public string Telaio { get; set; }
+        public string Modello { get; set; }
+        public string IDSpedizione { get; set; }
+        public string IDTipoPerizia { get; set; }
+        public Nullable<System.DateTime> ETD { get; set; }
+        public Nullable<System.DateTime> ETA { get; set; }
+        public Nullable<System.DateTime> DataPerizia { get; set; }
     }
 }

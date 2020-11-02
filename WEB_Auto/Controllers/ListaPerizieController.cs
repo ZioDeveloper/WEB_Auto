@@ -10,8 +10,8 @@ namespace WEB_Auto.Controllers
     {
         private wisedbEntities db = new wisedbEntities();
 
-        // GET: ListaPerizie
-        public ActionResult ListaPerizie()
+        // GET: ListaSpedizioni
+        public ActionResult ListaSpedizioni()
         {
 
             var model = new Models.HomeModel();
@@ -53,8 +53,40 @@ namespace WEB_Auto.Controllers
             //                 select m;
             //model.AGR_SpedizioniWEB_vw = Spedizioni.ToList().OrderBy(s => s.ID);
             #endregion
+            string aPerito = Session["IDPeritoVero"].ToString();
+            
 
-            return View();
+            
+
+            var lista = (from m in db.WEB_AUTO_ListaSpedizioni_vw
+                         where m.IDPerito == aPerito
+                         select m).ToList();
+            model.WEB_AUTO_ListaSpedizioni_vw = lista;
+
+            return View(model);
+
+            //using (var ctx = new wisedbEntities())
+            //{
+            //    //this will throw an exception
+            //    var myForwardings = ctx.WEB_AUTO_ListaSpedizioni_vw.SqlQuery("SELECT  P.IDSpedizione, S.IDOriginale1 AS RifCliente,0 AS NumPerizie,0 AS Good, 0 As Damaged ,  P.IsClosed, P.IDPerito " +
+            //" FROM            dbo.AGR_PERIZIE_TEMP_MVC AS P WITH(NOLOCK) INNER JOIN " +
+            //                                                               " dbo.AGR_Spedizioni AS S ON P.IDSpedizione = S.ID LEFT OUTER JOIN " +
+            //                                                               " dbo.AGR_PERIZIE_DETT_TEMP_MVC AS D WITH(NOLOCK) ON P.ID = D.IDPerizia " +
+            //                                                               " --GROUP BY P.IDSpedizione, P.IsClosed, P.IDPerito, S.IDOriginale1").ToList();
+            //return View(model.WEB_Auto_Test);
+            //}
+
+        }
+
+        public ActionResult EditSpedizione(string IDSpedizione)
+        {
+            var model = new Models.HomeModel();
+            var lista = (from m in db.WEB_Auto_ListaPerizieXSpedizione_vw
+                         where m.IDSpedizione == IDSpedizione
+                         select m).ToList();
+            model.WEB_Auto_ListaPerizieXSpedizione_vw = lista;
+            ViewBag.IDSpedizione = IDSpedizione;
+            return View(model);
         }
     }
 }

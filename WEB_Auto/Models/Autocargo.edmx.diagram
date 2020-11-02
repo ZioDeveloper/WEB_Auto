@@ -24,6 +24,11 @@
         <EntityTypeShape EntityType="wisedbModel.WEB_AGR_Parti_vw" Width="1.5" PointX="11.375" PointY="4.75" />
         <EntityTypeShape EntityType="wisedbModel.WEB_AGR_Danni_vw" Width="1.5" PointX="11.375" PointY="7.75" />
         <EntityTypeShape EntityType="wisedbModel.WEB_AGR_Gravita_vw" Width="1.5" PointX="11.375" PointY="10.75" />
+        <EntityTypeShape EntityType="wisedbModel.AGR_PERIZIE_TEMP_MVC" Width="1.5" PointX="7.375" PointY="12.75" />
+        <EntityTypeShape EntityType="wisedbModel.AGR_PerizieExpGrim_Temp_MVC" Width="1.5" PointX="9.625" PointY="15.625" />
+        <AssociationConnector Association="wisedbModel.FK_AGR_PerizieExpGrim_Temp_AGR_PERIZIE_TEMP_MVC" />
+        <EntityTypeShape EntityType="wisedbModel.WEB_AUTO_ListaSpedizioni_vw" Width="1.5" PointX="13.375" PointY="0.75" />
+        <EntityTypeShape EntityType="wisedbModel.WEB_Auto_ListaPerizieXSpedizione_vw" Width="1.5" PointX="13.375" PointY="4.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

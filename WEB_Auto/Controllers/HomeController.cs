@@ -25,6 +25,10 @@ namespace WEB_Auto.Controllers
                               where s.Name == usr
                               select s.IDPerito).FirstOrDefault();
 
+            var myIDPeritoVero = (from s in db.AGR_Periti_WEB
+                              where s.Name == usr
+                              select s.IDVero).FirstOrDefault();
+
             var myIDPorto = (from s in db.AGR_Periti_WEB
                               where s.Name == usr
                               select s.IDPorto).FirstOrDefault();
@@ -44,6 +48,8 @@ namespace WEB_Auto.Controllers
                              where m.Name == usr
                              select m;
             model.AGR_Periti_WEB = myPerito.ToList();
+
+
 
             // Dati per dropdown spedizioni
             DateTime ini = DateTime.Today.AddDays(-1);
@@ -79,6 +85,7 @@ namespace WEB_Auto.Controllers
 
             Session["User"] = usr;
             Session["IDPerito"] = myIDPerito;
+            Session["IDPeritoVero"] = myIDPeritoVero;
             ViewData["ElencoSpedizioni"] = ElencoSpedizioni;
             ViewData["ElencoMeteo"] = ElencoMeteo;
             ViewData["ElencoTP"] = ElencoTP;
@@ -168,7 +175,7 @@ namespace WEB_Auto.Controllers
 
         [HttpPost]
         public ActionResult SalvaPeriziaTesta(string IDPerito, string IDSpedizione, string IDMeteo, string IDTP , string  Chassis, string DataPerizia, string IDModelloCasa, string IDTrasportatoreGrim, 
-                                              string IDTipoRotabile, bool? isDamaged, string Condizione)
+                                              string IDTipoRotabile, bool? isDamaged, string Condizione, string Annotazioni)
         {
             // Mi creo un ID PErizia ...
             string aIDPerizia = GetNewCode_AUTO(IDPerito);
@@ -179,9 +186,9 @@ namespace WEB_Auto.Controllers
             // Inserisco dati perizia
             string myDataPerizia = DataPerizia.Substring(6, 4) + DataPerizia.Substring(3, 2) + DataPerizia.Substring(0, 2);
             string sqlcmd = " INSERT INTO AGR_PERIZIE_Temp_MVC (ID, IDSpedizione, IDPerito, IDTipoPerizia, DataPerizia, IDNazione, IDModello, Telaio, NumFoto, " +
-                            "  Flags, IRichiesta, IDefinizione, IContab, DataModPerito, FlagControllo, IDMeteo, NumPDF) " +
+                            "  Flags, IRichiesta, IDefinizione, IContab, DataModPerito, FlagControllo, IDMeteo, NumPDF,Note) " +
                             "VALUES (@ID, @IDSpedizione, @IDPerito, @IDTipoPerizia, @DataPerizia, @IDNazione, @IDModello, @Telaio, @NumFoto, " +
-                            "  @Flags, @IRichiesta, @IDefinizione, @IContab, @DataModPerito, @FlagControllo, @IDMeteo, @NumPDF)";
+                            "  @Flags, @IRichiesta, @IDefinizione, @IContab, @DataModPerito, @FlagControllo, @IDMeteo, @NumPDF, @Note)";
             int Inserted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@ID", aIDPerizia),
                                                                  new SqlParameter("@IDSpedizione", IDSpedizione),
                                                                  new SqlParameter("@IDPerito", IDPerito),
@@ -198,7 +205,8 @@ namespace WEB_Auto.Controllers
                                                                  new SqlParameter("@DataModPerito", DateTime.Now),
                                                                  new SqlParameter("@FlagControllo", "0"),
                                                                  new SqlParameter("@IDMeteo", IDMeteo),
-                                                                 new SqlParameter("@NumPDF", "0"));
+                                                                 new SqlParameter("@NumPDF", "0"),
+                                                                 new SqlParameter("@Note", Annotazioni));
             if (Inserted >0)
             {
                 if (String.IsNullOrEmpty(Condizione))

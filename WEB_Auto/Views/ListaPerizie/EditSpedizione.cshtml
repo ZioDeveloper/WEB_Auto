@@ -1,0 +1,167 @@
+﻿@model WEB_Auto.Models.HomeModel
+@{
+    ViewBag.Title = "EditSpedizione";
+}
+<head>
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.21/b-1.6.2/b-colvis-1.6.2/b-flash-1.6.2/b-html5-1.6.2/b-print-1.6.2/cr-1.5.2/fc-3.3.1/fh-3.1.7/kt-2.5.2/r-2.2.5/rg-1.1.2/rr-1.2.7/sc-2.0.2/sp-1.1.1/sl-1.3.1/datatables.min.css" />
+
+    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.21/b-1.6.2/b-colvis-1.6.2/b-flash-1.6.2/b-html5-1.6.2/b-print-1.6.2/cr-1.5.2/fc-3.3.1/fh-3.1.7/kt-2.5.2/r-2.2.5/rg-1.1.2/rr-1.2.7/sc-2.0.2/sp-1.1.1/sl-1.3.1/datatables.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/pdfmake.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/vfs_fonts.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.4/js/buttons.html5.min.js"</script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.4/js/buttons.print.min.js"</script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.4/js/dataTables.buttons.min.js"></script>
+    @*<link rel="stylesheet" type="text/css" href="https://nightly.datatables.net/searchpanes/css/searchPanes.dataTables.min.css" />
+        <script type="text/javascript" src="https://nightly.datatables.net/searchpanes/js/dataTables.searchPanes.min.js"</script>*@
+</head>
+<h4>Lista telai spedizione : @ViewBag.IDSpedizione</h4>
+
+<hr />
+
+<table id="ElencoPerizie" class="display" style="width:100%">
+    <thead>
+        <tr>
+            <th>Telaio</th>
+            <th>Spedizione</th>
+            <th>Data perizia</th>
+            <th>TP</th>
+            <th>ETD</th>
+            <th>ETA</th>
+
+        </tr>
+
+    </thead>
+    <tbody>
+        @foreach (var item in Model.WEB_Auto_ListaPerizieXSpedizione_vw)
+        {
+            string ETD = item.ETD.ToString().Left(10);
+            string ETA = item.ETA.ToString().Left(10);
+        <tr>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Telaio)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IDSpedizione)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DataPerizia)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IDTipoPerizia)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => ETD)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => ETA)
+            </td>
+
+        </tr>
+        }
+    </tbody>
+    <tfoot>
+        <tr>
+            <th>Telaio</th>
+            <th>Spedizione</th>
+            <th>Data perizia</th>
+            <th>TP</th>
+            <th>ETD</th>
+            <th>ETA</th>
+        </tr>
+    </tfoot>
+</table>
+
+
+<script>
+    $(document).ready(function () {
+        var table = $('#ElencoPerizie').DataTable({
+            "autoWidth": false,
+            stateSave: true,
+            "lengthMenu": [[10, 50, 100, -1], [10, 50, 100, "Tutti"]],
+            "iDisplayLength": 50,
+            buttons: [
+                //{
+                //    extend: 'searchPanes',
+                //    config: {
+                //        cascadePanes: true
+                //    }
+                //},
+                {
+                    extend: 'excelHtml5',
+                    text: 'Crea excel ',
+                    exportOptions: {
+                        modifier: {
+                            search: 'none'
+                        }
+                    }
+                }
+                //,
+                //{
+                //    extend: 'print',
+                //    text: 'Stampa griglia',
+                //    exportOptions: {
+                //        modifier: {
+                //            search: 'none'
+                //        }
+                //    }
+                //}
+
+            ],
+
+
+            dom: 'Blfrtip',
+            //buttons: [
+            //    'copy', 'csv', 'excel',  'print'
+            //],
+            //"columnDefs": [
+            //    { "width": "110px", "targets": 0 },
+            //    { "width": "40px", "targets": 1 },
+            //    { "width": "100px", "targets": 2 },
+            //    { "width": "70px", "targets": 3 },
+            //    { "width": "270px", "targets": 4 },
+            //    { "width": "70px", "targets": 5 }
+            //],
+            //stateSave: true,
+            language: {
+
+                processing: "Ricerca in corso...",
+                search: "Ricerca:",
+                //lengthMenu: "Visualizza _MENU_ elementi",
+
+                info: "Elenca da _START_ a _END_ di _TOTAL_ elementi",
+                infoEmpty: "Elenca da 0 a 0 di 0 elementi",
+                infoFiltered: "(filtrati da _MAX_ elementi totali)",
+                infoPostFix: "",
+                loadingRecords: "Caricamento...",
+                zeroRecords: "La ricerca non ha portato alcun risultato.",
+                emptyTable: "Nessun record presente in tabella",
+                paginate: {
+                    first: "Inizio",
+                    previous: "Precedente",
+                    next: "Successivo",
+                    last: "Fine"
+                },
+                aria: {
+                    sortAscending: ": attiva per ordinare la colonna in ordine crescente",
+                    sortDescending: ": attiva per ordinare la colonna in ordine decrescente"
+                },
+                searchPanes: {
+                    title: {
+                        _: 'Filtri selezionati : %d',
+                        0: 'Nessun filtro selezionato',
+                        1: 'Un solo filtro selezionato'
+                    },
+                    clearMessage: 'Azzera filtri !',
+                    collapse: { 0: 'Ricerca avanzata', _: 'Scelte selezionate (%d)' }
+                },
+                buttons: [
+                    'copy', 'csv', 'excel', 'print'
+                ]
+            }
+        });
+    });
+
+</script>

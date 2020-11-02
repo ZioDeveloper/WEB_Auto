@@ -111,44 +111,62 @@
 </details>
 <br />
 <div>
-    @using (Html.BeginForm("SalvaPeriziaTesta", "Home", new { IDPerito = ViewBag.IDPerito, IDSpedizione = ViewBag.IDSpedizione, IDMeteo = @item3[0].ID, IDTP = item2[0].ID }, FormMethod.Post))
+    @using (Html.BeginForm("SalvaPeriziaTesta", "Home", new { IDPerito = ViewBag.IDPerito, IDSpedizione = ViewBag.IDSpedizione, IDMeteo = @item3[0].ID,
+                                                              IDTP = item2[0].ID }, FormMethod.Post))
     {
 
 
-        <table>
+    <table>
+        <tr>
+            <td>
+                @Html.Label("Inspection date")
+            </td>
+            <td>
+                @Html.TextBox("DataPerizia", DateTime.Now.ToString("dd/MM/yyyy"), new { @readonly = "readonly", style = "background:lightgrey" })
+            </td>
+        </tr>
+        <tr>
+            <td>
+                &nbsp;
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.Label("Chassis")
+            </td>
+            <td>
+                @Html.TextBox("Chassis", "", new { onkeyup = "InputToUpper(this);" })
+            </td>
+        </tr>
+        <tr>
+            <td>
+                &nbsp;
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.Label("Seleziona modello")
+
+            </td>
+            <td>
+                @Html.DropDownList("IDModelloCasa", new SelectList((SelectList)ViewData["ElencoModelli"], "Value", "Text", ViewBag.aIDModelloCasa), "-- Seleziona modello --", new { @class = "form-control selectpicker data-live-search=true" })
+
+            </td>
+        </tr>
+        <tr>
+            <td>
+                &nbsp;
+            </td>
+        </tr>
+        @if (item1[0].IDCasa.ToUpper() == "RTB")
+        {
             <tr>
                 <td>
-                    @Html.Label("Inspection date")
-                </td>
-                <td>
-                    @Html.TextBox("DataPerizia", DateTime.Now.ToString("dd/MM/yyyy"), new { @readonly = "readonly", style = "background:lightgrey" })
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    &nbsp;
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    @Html.Label("Chassis")
-                </td>
-                <td>
-                    @Html.TextBox("Chassis", "", new { onkeyup = "InputToUpper(this);" })
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    &nbsp;
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    @Html.Label("Seleziona modello")
+                    @Html.Label("Seleziona Trasportatore")
 
                 </td>
                 <td>
-                    @Html.DropDownList("IDModelloCasa", new SelectList((SelectList)ViewData["ElencoModelli"], "Value", "Text", ViewBag.aIDModelloCasa), "-- Seleziona modello --", new { @class = "form-control selectpicker data-live-search=true" })
+                    @Html.DropDownList("IDTrasportatoreGrim", new SelectList((SelectList)ViewData["ElencoTraspGrim"], "Value", "Text", ViewBag.aIDTrasportatore), "-- Seleziona trasportatore --", new { @class = "form-control selectpicker data-live-search=true" })
 
                 </td>
             </tr>
@@ -157,78 +175,69 @@
                     &nbsp;
                 </td>
             </tr>
-            @if (item1[0].IDCasa.ToUpper() == "RTB")
+            <tr>
+                <td>
+                    @Html.Label("Seleziona tipo rotabile")
+
+                </td>
+                <td>
+                    @Html.DropDownList("IDTipoRotabile", new SelectList((SelectList)ViewData["ElencoTipoRotabile"], "Value", "Text", ViewBag.aIDTipoRotabile), "-- Seleziona tipo rotabile --", new { @class = "form-control selectpicker data-live-search=true" })
+
+                </td>
+            </tr>
+        }
+        <tr>
+            <td>
+                &nbsp;
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                @Html.Label("Condizione")
+
+            </td>
+            @if (item1[0].IDCasa.ToUpper() != "RTB")
             {
-                <tr>
-                    <td>
-                        @Html.Label("Seleziona Trasportatore")
-
-                    </td>
-                    <td>
-                        @Html.DropDownList("IDTrasportatoreGrim", new SelectList((SelectList)ViewData["ElencoTraspGrim"], "Value", "Text", ViewBag.aIDTrasportatore), "-- Seleziona trasportatore --", new { @class = "form-control selectpicker data-live-search=true" })
-
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        &nbsp;
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        @Html.Label("Seleziona tipo rotabile")
-
-                    </td>
-                    <td>
-                        @Html.DropDownList("IDTipoRotabile", new SelectList((SelectList)ViewData["ElencoTipoRotabile"], "Value", "Text", ViewBag.aIDTipoRotabile), "-- Seleziona tipo rotabile --", new { @class = "form-control selectpicker data-live-search=true" })
-
-                    </td>
-                </tr>
+                <td>
+                    Nuovo:   @Html.RadioButton("Condizione", "N")
+                    Usato: @Html.RadioButton("Condizione", "U")
+                </td>
             }
-            <tr>
+            else
+            {
                 <td>
-                    &nbsp;
+                    Nuovo:   @Html.RadioButton("Condizione", "N", new { disabled = "disabled" })
+                    Usato: @Html.RadioButton("Condizione", "U", new { disabled = "disabled" })
                 </td>
-            </tr>
+            }
+        </tr>
+        <tr>
+            <td>
+                &nbsp;
+            </td>
+        </tr>
 
-            <tr>
-                <td>
-                    @Html.Label("Condizione")
+        <tr>
+            <td>
+                @Html.Label("Telaio danneggiato")
 
-                </td>
-                @if (item1[0].IDCasa.ToUpper() != "RTB")
-                {
-                    <td>
-                        Nuovo:   @Html.RadioButton("Condizione", "N")
-                        Usato: @Html.RadioButton("Condizione", "U")
-                    </td>
-                }
-                else
-                {
-                    <td>
-                        Nuovo:   @Html.RadioButton("Condizione", "N", new { disabled = "disabled" })
-                        Usato: @Html.RadioButton("Condizione", "U", new { disabled = "disabled" })
-                    </td>
-                }
-            </tr>
-            <tr>
-                <td>
-                    &nbsp;
-                </td>
-            </tr>
+            </td>
+            <td>
+                @Html.CheckBox("isDamaged", false)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.Label("Note:")
 
-            <tr>
-                <td>
-                    @Html.Label("Telaio danneggiato")
+            </td>
+            <td>
+                @Html.TextArea("Annotazioni")
 
-                </td>
-                <td>
-                    @Html.CheckBox("isDamaged", false)
-                </td>
-            </tr>
+            </td>
 
-
-        </table>
+</table>
 
 
 

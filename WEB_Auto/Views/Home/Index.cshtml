@@ -56,8 +56,12 @@
     <br />
     <div>
         @*@Html.ActionLink("Lista perizie", "ListaPerizie", "ListaPerizie", new { @class = "btn btn-primary custom" })*@
-        @Html.ActionLink("Lista perizie","ListaPerizie","ListaPerizie",null, new { @class = "btn btn-primary custom" })
-        @Html.ActionLink(linkText: "Details", actionName: "Details", controllerName: "Product", routeValues: new { @item2[0].ID }, htmlAttributes: null)
+        @Html.ActionLink(linkText: "Lista spedizioni", 
+                         actionName: "ListaSpedizioni", 
+                         controllerName: "ListaPerizie", 
+                         routeValues: null, 
+                         htmlAttributes: new { @class = "btn btn-primary custom" })
+        @*@Html.ActionLink(linkText: "Details", actionName: "Details", controllerName: "Product", routeValues: new { @item2[0].ID }, htmlAttributes: null)*@
     </div>
 </div>
 

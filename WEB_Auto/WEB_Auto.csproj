@@ -155,10 +155,16 @@
     <Compile Include="Models\AGR_Periti_WEB.cs">
       <DependentUpon>Autocargo.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\AGR_PerizieExpGrim_Temp_MVC.cs">
+      <DependentUpon>Autocargo.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\AGR_PERIZIE_DETT_TEMP_MVC.cs">
       <DependentUpon>Autocargo.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\AGR_PERIZIE_DETT_TEMP_MVC_vw.cs">
+      <DependentUpon>Autocargo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AGR_PERIZIE_TEMP_MVC.cs">
       <DependentUpon>Autocargo.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\AGR_Porti.cs">
@@ -210,7 +216,14 @@
     <Compile Include="Models\WEB_AGR_Parti_vw.cs">
       <DependentUpon>Autocargo.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\WEB_Auto_ListaPerizieXSpedizione_vw.cs">
+      <DependentUpon>Autocargo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\WEB_AUTO_ListaSpedizioni_vw.cs">
+      <DependentUpon>Autocargo.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utils.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-select.css" />
@@ -398,7 +411,8 @@
     <Content Include="Views\Home\SalvaPeriziaDettagli.cshtml" />
     <Content Include="Views\Home\EditDettaglio.cshtml" />
     <Content Include="Views\Shared\ToBEImplemented.cshtml" />
-    <Content Include="Views\ListaPerizie\ListaPerizie.cshtml" />
+    <Content Include="Views\ListaPerizie\ListaSpedizioni.cshtml" />
+    <Content Include="Views\ListaPerizie\EditSpedizione.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

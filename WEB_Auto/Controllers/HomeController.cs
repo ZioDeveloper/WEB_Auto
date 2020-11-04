@@ -168,17 +168,19 @@ namespace WEB_Auto.Controllers
 
             ViewBag.IDPerito = IDPerito;
             ViewBag.IDSpedizione = IDSpedizione;
-
+            // Mi creo un ID PErizia ...
+            string aIDPerizia = GetNewCode_AUTO(IDPerito);
+            ViewBag.myIDPerizia = aIDPerizia;
             return View(model);
         }
 
 
         [HttpPost]
         public ActionResult SalvaPeriziaTesta(string IDPerito, string IDSpedizione, string IDMeteo, string IDTP , string  Chassis, string DataPerizia, string IDModelloCasa, string IDTrasportatoreGrim, 
-                                              string IDTipoRotabile, bool? isDamaged, string Condizione, string Annotazioni)
+                                              string IDTipoRotabile, bool? isDamaged, string Condizione, string Annotazioni, string myIDPerizia)
         {
             // Mi creo un ID PErizia ...
-            string aIDPerizia = GetNewCode_AUTO(IDPerito);
+            //string aIDPerizia = GetNewCode_AUTO(IDPerito);
 
             // Verifico Sia tutto ok.. to do !!!!!
             bool isOK = CheckAll();
@@ -189,7 +191,7 @@ namespace WEB_Auto.Controllers
                             "  Flags, IRichiesta, IDefinizione, IContab, DataModPerito, FlagControllo, IDMeteo, NumPDF,Note) " +
                             "VALUES (@ID, @IDSpedizione, @IDPerito, @IDTipoPerizia, @DataPerizia, @IDNazione, @IDModello, @Telaio, @NumFoto, " +
                             "  @Flags, @IRichiesta, @IDefinizione, @IContab, @DataModPerito, @FlagControllo, @IDMeteo, @NumPDF, @Note)";
-            int Inserted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@ID", aIDPerizia),
+            int Inserted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@ID", myIDPerizia),
                                                                  new SqlParameter("@IDSpedizione", IDSpedizione),
                                                                  new SqlParameter("@IDPerito", IDPerito),
                                                                  new SqlParameter("@IDTipoPerizia", IDTP),
@@ -218,7 +220,7 @@ namespace WEB_Auto.Controllers
 
                 sqlcmd = " INSERT INTO dbo.AGR_PerizieExpGrim_Temp_MVC  (ID, ID_TrasportatoreGrimaldi, ID_TipoRotabile, FlgNuovoUsato) " +
                           "  VALUES  (@ID, @ID_TrasportatoreGrimaldi, @ID_TipoRotabile, @FlgNuovoUsato)";
-                Inserted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@ID", aIDPerizia),
+                Inserted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@ID", myIDPerizia),
                                                                  new SqlParameter("@ID_TrasportatoreGrimaldi", IDTrasportatoreGrim),
                                                                  new SqlParameter("@ID_TipoRotabile", IDTipoRotabile),
                                                                  new SqlParameter("@FlgNuovoUsato", Condizione));
@@ -231,7 +233,7 @@ namespace WEB_Auto.Controllers
             }
             else
             {
-                return RedirectToAction("SalvaPeriziaDettagli", "Home", new { aIDPerizia });
+                return RedirectToAction("SalvaPeriziaDettagli", "Home", new { myIDPerizia });
             }
         }
 
@@ -362,6 +364,8 @@ namespace WEB_Auto.Controllers
         {
             return true;
         }
+
+        
     }
 
 

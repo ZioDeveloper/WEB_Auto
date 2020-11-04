@@ -1,0 +1,72 @@
+﻿
+@{
+    /**/
+
+    ViewBag.Title = "Gestione fotografie";
+}
+
+<br />
+<h4>Gestione fotografie</h4>
+<br />
+
+@Html.ActionLink("Torna a perizia", "Index", new { IDCommessa = Session["IDCommessa"] }, new { @class = "btn btn-primary btn-xs" })
+&nbsp;&nbsp;
+@Html.ActionLink("Drag & drop", "DragAndDrop", new { IDCommessa = Session["IDCommessa"], IDTelaio = ViewBag.IDTelaio, IDTipoDocumento = ViewBag.IDTipoDocumento }, new { @class = "btn btn-warning btn-xs" })
+<br />
+<br />
+@using (Html.BeginForm("UploadFoto", "Documenti", new { myIDPerizia = ViewBag.myIDPerizia }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+
+    <table border="0">
+        <thead>
+            <tr>
+                @*<td>
+                        <label for="file">Upload Image:</label>
+                    </td>
+                    <td> - </td>*@
+                <td>
+                    <input type="file" name="files" multiple id="files_0" />
+                </td>
+                @*<td> - </td>*@
+
+
+            </tr>
+
+
+            <tr>
+                <td>&nbsp;</td>
+            </tr>
+            @*<tr>
+                    <td>
+                        @Html.Label("Tipo", htmlAttributes: new { @class = "control-label col-md-2" })
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        @Html.DropDownList("IDTipoDocumento", (SelectList)ViewData["TipiDocumento"], new { @class = "form-control" })
+                    </td>
+                </tr>*@
+            <tr>
+                <td>&nbsp;</td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="submit" value="Upload" class="submit" />
+                </td>
+            </tr>
+
+        </thead>
+    </table>
+
+    <br />
+  
+
+}
+
+<br />
+
+
+
+
+
+

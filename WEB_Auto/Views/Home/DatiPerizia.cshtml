@@ -112,7 +112,7 @@
 <br />
 <div>
     @using (Html.BeginForm("SalvaPeriziaTesta", "Home", new { IDPerito = ViewBag.IDPerito, IDSpedizione = ViewBag.IDSpedizione, IDMeteo = @item3[0].ID,
-                                                              IDTP = item2[0].ID }, FormMethod.Post))
+        IDTP = item2[0].ID,  myIDPerizia = ViewBag.myIDPerizia }, FormMethod.Post))
     {
 
 
@@ -245,9 +245,16 @@
             <br />
             @Html.Label("Chassis") <text>&nbsp;</text> @Html.TextBox("Chassis", "", new { onkeyup = "InputToUpper(this);" }); <text>&nbsp;</text>*@
         <br />
-
         <div>
-            <button type="submit" class="btn btn-success custom">Conferma</button>
+            @*@Html.ActionLink("Inserisci foto", "Index", null, new { @class = "btn btn-default custom" })*@
+            @Html.ActionLink("Inserisci foto", "ScattaFoto", "Documenti", new { myIDPerizia = ViewBag.myIDPerizia }, new { @class = "btn btn-default custom" });
+        </div>
+        <div>
+            <br />
+        </div>
+        <div>
+            <button type="submit" class="btn btn-success custom">Conferma</button> &nbsp;&nbsp;&nbsp;
+            @Html.ActionLink("Esci senza salvare", "Index", null, new { @class = "btn btn-danger custom" })
         </div>
     }
 </div>
@@ -255,8 +262,8 @@
 <br />
 
 <div>
-    @Html.ActionLink("Esci", "Index", null, new { @class = "btn btn-danger custom" })
-</div>
+        @*@Html.ActionLink("Esci", "Index", null, new { @class = "btn btn-danger custom" })*@
+        </div>
 
 <script>
     function InputToUpper(obj) {

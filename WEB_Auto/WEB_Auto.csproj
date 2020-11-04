@@ -138,6 +138,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\DocumentiController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ListaPerizieController.cs" />
     <Compile Include="Global.asax.cs">
@@ -214,6 +215,9 @@
       <DependentUpon>Autocargo.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\WEB_AGR_Parti_vw.cs">
+      <DependentUpon>Autocargo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\WEB_AUTO_FOTO.cs">
       <DependentUpon>Autocargo.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\WEB_Auto_ListaPerizieXSpedizione_vw.cs">
@@ -413,9 +417,12 @@
     <Content Include="Views\Shared\ToBEImplemented.cshtml" />
     <Content Include="Views\ListaPerizie\ListaSpedizioni.cshtml" />
     <Content Include="Views\ListaPerizie\EditSpedizione.cshtml" />
+    <Content Include="Views\Documenti\Index.cshtml" />
+    <Content Include="Views\Documenti\ScattaFoto.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="DocumentiXTelai\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

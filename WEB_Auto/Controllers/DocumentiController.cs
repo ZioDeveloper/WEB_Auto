@@ -18,10 +18,29 @@ namespace WEB_Auto.Controllers
             return View();
         }
 
-        public ActionResult ScattaFoto(string myIDPerizia)
+        public ActionResult ScattaFoto(string myIDPerizia, string IDPerito, string IDSpedizione, string IDMeteo, string IDTP, string aIDTrasportatore,
+                                         string aIDTipoRotabile, string aIDModelloCasa)
         {
 
-            //var model = new Models.HomeModel();
+            var model = new Models.HomeModel();
+
+            
+
+            var myFoto = (from f in db.WEB_AUTO_FOTO
+                          where f.IDPerizia == myIDPerizia
+                          select f);
+            model.WEB_AUTO_FOTO = myFoto.ToList();
+            UpdateModel(myFoto);
+
+            //ViewBag.IDPerito = IDPerito;
+            //ViewBag.IDSpedizione = IDSpedizione;
+            //ViewBag.IDMeteo = IDMeteo;
+            //ViewBag.IDTP = IDTP;
+            //ViewBag.aIDTrasportatore = aIDTrasportatore;
+            //ViewBag.aIDTipoRotabile = aIDTipoRotabile;
+            //ViewBag.aIDModelloCasa = aIDModelloCasa;
+            ViewBag.myIDPerizia = myIDPerizia;
+            return View("ScattaFoto", myFoto);
 
             ViewBag.myIDPerizia = myIDPerizia;
             return View();
@@ -40,7 +59,7 @@ namespace WEB_Auto.Controllers
                 {
                     filename = System.IO.Path.GetFileName(file.FileName);
 
-                    path = System.IO.Path.Combine(Server.MapPath("~/DocumentiXTelai"), filename);
+                    path = System.IO.Path.Combine(Server.MapPath("~/DocumentiXTelai/Foto"), filename);
                     if (file != null)
                     {
                         file.SaveAs(path);
@@ -60,25 +79,19 @@ namespace WEB_Auto.Controllers
                 }
             }
 
-            //var model = new Models.HomeModel();
+            var model = new Models.HomeModel();
 
-            //// Lista tipidocumento
-            //var tipidoc = from m in db.TipiDocumento
-            //              select m;
-            //model.TipiDocumento = tipidoc.ToList();
-            //var elencotipidocumento = new SelectList(model.TipiDocumento.ToList().OrderBy(m => m.ID), "ID", "TipoDocumento");
-            //ViewData["TipiDocumento"] = elencotipidocumento;
+            
 
-            //var myFoto = (from f in db.FotoXTelaio_vw
-            //              where f.IDTelaio == IDTelaio
-            //              select f);
-            //model.FotoXTelaio_vw = myFoto.ToList();
-            //UpdateModel(myFoto);
+            var myFoto = (from f in db.WEB_AUTO_FOTO
+                          where f.IDPerizia == myIDPerizia
+                          select f);
+            model.WEB_AUTO_FOTO = myFoto.ToList();
+            UpdateModel(myFoto);
 
-            //ViewBag.IDTelaio = IDTelaio;
-            //ViewBag.IDTipoDocumento = IDTipoDocumento;
+            
             ViewBag.myIDPerizia = myIDPerizia;
-            return View("ScattaFoto");
+            return View("ScattaFoto", myFoto);
         }
 
 

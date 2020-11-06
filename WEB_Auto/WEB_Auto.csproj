@@ -422,7 +422,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="DocumentiXTelai\" />
+    <Folder Include="DocumentiXTelai\Foto\" />
+    <Folder Include="DocumentiXTelai\PDF\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

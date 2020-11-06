@@ -247,7 +247,15 @@
         <br />
         <div>
             @*@Html.ActionLink("Inserisci foto", "Index", null, new { @class = "btn btn-default custom" })*@
-            @Html.ActionLink("Inserisci foto", "ScattaFoto", "Documenti", new { myIDPerizia = ViewBag.myIDPerizia }, new { @class = "btn btn-default custom" });
+                @Html.ActionLink("Inserisci foto", "ScattaFoto", "Documenti", new { myIDPerizia = ViewBag.myIDPerizia//,
+               //IDPerito = ViewBag.IDPerito,
+               //IDSpedizione = ViewBag.IDSpedizione,
+               //IDMeteo = ViewBag.IDMeteo,
+               //IDTP = ViewBag.IDTP,
+               //aIDTrasportatore = ViewBag.aIDTrasportatore,
+               //aIDTipoRotabile = ViewBag.aIDTipoRotabile,
+               //aIDModelloCasa = ViewBag.aIDModelloCasa
+           }, new { @class = "btn btn-default custom" })
         </div>
         <div>
             <br />

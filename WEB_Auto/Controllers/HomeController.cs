@@ -108,7 +108,8 @@ namespace WEB_Auto.Controllers
         }
 
        
-        public ActionResult DatiPerizia( string IDPerito , string IDSpedizione, string IDMeteo , string IDTP , string aIDTrasportatore, string aIDTipoRotabile, string aIDModelloCasa)
+        public ActionResult DatiPerizia( string IDPerito , string IDSpedizione, string IDMeteo , string IDTP , string aIDTrasportatore, 
+                                         string aIDTipoRotabile, string aIDModelloCasa , string myIDPerizia)
         {
             var model = new Models.HomeModel();
 
@@ -168,9 +169,23 @@ namespace WEB_Auto.Controllers
 
             ViewBag.IDPerito = IDPerito;
             ViewBag.IDSpedizione = IDSpedizione;
-            // Mi creo un ID PErizia ...
-            string aIDPerizia = GetNewCode_AUTO(IDPerito);
-            ViewBag.myIDPerizia = aIDPerizia;
+            if (String.IsNullOrEmpty(myIDPerizia))
+            {
+                // Mi creo un ID PErizia ...
+                myIDPerizia = GetNewCode_AUTO(IDPerito);
+            }
+            else
+            {
+
+            }
+            ViewBag.myIDPerizia = myIDPerizia;
+            //ViewBag.IDPerito = IDPerito;
+            //ViewBag.IDSpedizione = IDSpedizione;
+            //ViewBag.IDMeteo = IDMeteo;
+            //ViewBag.IDTP = IDTP;  
+            //ViewBag.aIDTrasportatore = aIDTrasportatore;
+            //ViewBag.aIDTipoRotabile = aIDTipoRotabile;
+            //ViewBag.aIDModelloCasa = aIDModelloCasa;
             return View(model);
         }
 

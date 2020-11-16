@@ -30,6 +30,7 @@ namespace WEB_Auto.Models
         public IEnumerable<WEB_Auto_ListaPerizieXSpedizione_vw> WEB_Auto_ListaPerizieXSpedizione_vw { get; set; }
 
         public IEnumerable<WEB_AUTO_FOTO> WEB_AUTO_FOTO { get; set; }
+        public IEnumerable<AGR_Perizie_MVC_Flat_vw> AGR_Perizie_MVC_Flat_vw { get; set; }
 
 
 

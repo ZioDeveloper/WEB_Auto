@@ -1,0 +1,45 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+
+<br /><br />
+<div style="text-align:left">
+<h4>Inserire Telaio </h4>
+@using (Html.BeginForm("InputTelaio", "TelaiAnagrafica", new
+    {
+        IDPerito = ViewBag.IDPerito,
+        IDSpedizione = ViewBag.IDSpedizione,
+        IDMeteo = ViewBag.IDMeteo,
+        IDTP = ViewBag.IDTP
+    
+}))
+{
+<table>
+    <tr>
+        <td>
+
+
+            @Html.TextBox("Chassis", null, new { style = "width:180px;text-transform:uppercase", @id = "Telaio", @maxlength = "17", @placeholder = "CLICK TO SCAN:", @autofocus = "autofocus", @autocomplete = "off" })
+            @Html.ValidationMessage("Telaio")
+
+        </td>
+    </tr>
+    <tr>
+
+        <td>
+            <br />
+            <button type="submit" id="btnConfirm" class="btn btn-success">Conferma</button>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button onclick="document.getElementById('Telaio').value = ''" class="btn btn-danger">Annulla</button>
+
+        </td>
+    </tr>
+ </table>
+}
+
+
+
+
+</div>

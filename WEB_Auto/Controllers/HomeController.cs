@@ -107,8 +107,51 @@ namespace WEB_Auto.Controllers
             return View();
         }
 
-       
-        public ActionResult DatiPerizia( string IDPerito , string IDSpedizione, string IDMeteo , string IDTP , string aIDTrasportatore, 
+       public ActionResult SelezionaTelaio()
+        {
+            return View();
+        }
+
+        public ActionResult VerificaTelaio(string IDPerito, string IDSpedizione, string IDMeteo, string IDTP, string aIDTrasportatore,
+                                         string aIDTipoRotabile, string aIDModelloCasa, string myIDPerizia, string Chassis)
+        {
+
+            int cnt = (from m in db.AGR_PERIZIE_TEMP_MVC
+                      where m.Telaio == Chassis
+                      select m.ID).Count();
+
+            if (cnt == 0)
+            {
+
+                return RedirectToAction("DatiPerizia", new
+                {
+                    IDPerito,
+                    IDSpedizione,
+                    IDMeteo,
+                    IDTP,
+                    aIDTrasportatore,
+                    aIDTipoRotabile,
+                    aIDModelloCasa,
+                    myIDPerizia
+                });
+            }
+            else
+            {
+                return RedirectToAction("DatiPerizia", new
+                {
+                    IDPerito,
+                    IDSpedizione,
+                    IDMeteo,
+                    IDTP,
+                    aIDTrasportatore,
+                    aIDTipoRotabile,
+                    aIDModelloCasa,
+                    myIDPerizia
+                });
+            }
+        }
+
+            public ActionResult DatiPerizia( string IDPerito , string IDSpedizione, string IDMeteo , string IDTP , string aIDTrasportatore, 
                                          string aIDTipoRotabile, string aIDModelloCasa , string myIDPerizia)
         {
             var model = new Models.HomeModel();

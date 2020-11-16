@@ -32,10 +32,10 @@ namespace WEB_Auto.Controllers
             model.WEB_AUTO_FOTO = myFoto.ToList();
             UpdateModel(myFoto);
 
-            //ViewBag.IDPerito = IDPerito;
-            //ViewBag.IDSpedizione = IDSpedizione;
-            //ViewBag.IDMeteo = IDMeteo;
-            //ViewBag.IDTP = IDTP;
+            ViewBag.IDPerito = IDPerito;
+            ViewBag.IDSpedizione = IDSpedizione;
+            ViewBag.IDMeteo = IDMeteo;
+            ViewBag.IDTP = IDTP;
             //ViewBag.aIDTrasportatore = aIDTrasportatore;
             //ViewBag.aIDTipoRotabile = aIDTipoRotabile;
             //ViewBag.aIDModelloCasa = aIDModelloCasa;
@@ -94,6 +94,31 @@ namespace WEB_Auto.Controllers
             return View("ScattaFoto", myFoto);
         }
 
+        public ActionResult CancellaDocumento(int? IDDocumento ,string myIDPerizia, string nomefile, string IDPerito, string IDSpedizione, string IDMeteo, string IDTP)
+        {
+            var sql = @"DELETE FROM WEB_AUTO_FOTO WHERE ID = @IDDocumento";
+            int myRecordCounter = db.Database.ExecuteSqlCommand(sql, new SqlParameter("@IDDocumento", IDDocumento));
+
+            string fullPath = Request.MapPath("~/DocumentiXTelai/" + nomefile);
+            if (System.IO.File.Exists(fullPath))
+            {
+                System.IO.File.Delete(fullPath);
+            }
+
+            var model = new Models.HomeModel();
+
+            
+
+            var myFoto = (from f in db.WEB_AUTO_FOTO
+                          where f.IDPerizia == myIDPerizia
+                          select f);
+            model.WEB_AUTO_FOTO = myFoto.ToList();
+
+            //ViewBag.IDTelaio = myIDPerizia;
+            return RedirectToAction("ScattaFoto", "Documenti", new { myIDPerizia= myIDPerizia, IDPerito= IDPerito, IDSpedizione = IDSpedizione, IDMeteo = IDMeteo, IDTP= IDTP });
+
+            //return View("ScattaFoto", myIDPerizia);
+        }
 
     }
 }

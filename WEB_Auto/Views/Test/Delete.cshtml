@@ -1,0 +1,352 @@
+﻿@model WEB_Auto.Models.AGR_PERIZIE_TEMP_MVC
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>AGR_PERIZIE_TEMP_MVC</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.BARCODE)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BARCODE)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IDSpedizione)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IDSpedizione)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IDPerito)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IDPerito)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IDTipoPerizia)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IDTipoPerizia)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DataPerizia)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DataPerizia)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IDNazione)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IDNazione)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IDModello)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IDModello)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Telaio)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Telaio)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NumFoto)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NumFoto)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IDScheda)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IDScheda)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Note)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Note)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NoteConc)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NoteConc)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Flags)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Flags)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DRichiesta)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DRichiesta)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.VRichiesta)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.VRichiesta)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DDefinizione)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DDefinizione)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.VDefinizione)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.VDefinizione)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DContab)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DContab)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.VContab)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.VContab)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Stato)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Stato)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FileNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FileNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IDUtente)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IDUtente)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DataModUtente)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DataModUtente)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DataModPerito)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DataModPerito)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DataSpedizione)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DataSpedizione)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DataArrivo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DataArrivo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FlagControllo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FlagControllo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IRichiesta)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IRichiesta)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IDefinizione)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IDefinizione)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IContab)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IContab)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IDMeteo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IDMeteo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IDShip)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IDShip)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IDPortL)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IDPortL)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IDPortD)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IDPortD)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DataImbarco)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DataImbarco)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DataSbarco)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DataSbarco)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IDLocalitaPerizia)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IDLocalitaPerizia)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TotaleItems)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TotaleItems)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NumPDF)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NumPDF)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsClosed)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsClosed)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AGR_PerizieExpGrim_Temp_MVC.Bisarca)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AGR_PerizieExpGrim_Temp_MVC.Bisarca)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

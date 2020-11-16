@@ -29,30 +29,59 @@
     </div>
     <br />
 
-    <div>
+    @*<div>
         @using (Html.BeginForm("DatiPerizia", "Home", new { IDPerito = @item2[0].ID, IDSpedizione = @item1[0].ID }, FormMethod.Post))
         {
-            //@Html.AntiForgeryToken()
+            
             @Html.Label("Seleziona spedizione")
-            @*@Html.DropDownList("IDSpedizione", (SelectList)ViewData["ElencoSpedizioni"], "-- Seleziona spedizione --", new { @class = "form-control" })*@
             @Html.DropDownList("IDSpedizione", (SelectList)ViewData["ElencoSpedizioni"], new { @style = "font-size: 13px;", @class = "form-control selectpicker data-live-search=true" })
             <br />
 
 
             @Html.Label("Seleziona meteo")
-            @*@Html.DropDownList("IDMeteo", (SelectList)ViewData["ElencoMeteo"], "-- Seleziona meteo --", new { @class = "form-control" })*@
             @Html.DropDownList("IDMeteo", (SelectList)ViewData["ElencoMeteo"], new { @class = "form-control selectpicker data-live-search=true" }) <br />
 
 
             @Html.Label("Seleziona tipo perizia")
-            @*@Html.DropDownList("IDTP", (SelectList)ViewData["ElencoTP"], "-- Seleziona Tipo Perizia --", new { @class = "form-control" })*@
             @Html.DropDownList("IDTP", (SelectList)ViewData["ElencoTP"], new { @class = "form-control selectpicker data-live-search=true" })<br />
             <br />
             <div>
                 <button type="submit" class="btn btn-primary custom">Inserisci perizie</button>
             </div>
         }
-    </div>
+    </div>*@
+   <br />
+   <div>
+       @using (Html.BeginForm("InputTelaio", "TelaiAnagrafica", new { IDPerito = @item2[0].ID, IDSpedizione = @item1[0].ID }, FormMethod.Post))
+       {
+           //@Html.AntiForgeryToken()
+           @Html.Label("Seleziona spedizione")
+           @*@Html.DropDownList("IDSpedizione", (SelectList)ViewData["ElencoSpedizioni"], "-- Seleziona spedizione --", new { @class = "form-control" })*@
+           @Html.DropDownList("IDSpedizione", (SelectList)ViewData["ElencoSpedizioni"], new { @style = "font-size: 13px;", @class = "form-control selectpicker data-live-search=true" })
+           <br />
+
+
+           @Html.Label("Seleziona meteo")
+           @*@Html.DropDownList("IDMeteo", (SelectList)ViewData["ElencoMeteo"], "-- Seleziona meteo --", new { @class = "form-control" })*@
+           @Html.DropDownList("IDMeteo", (SelectList)ViewData["ElencoMeteo"], new { @class = "form-control selectpicker data-live-search=true" }) <br />
+
+
+           @Html.Label("Seleziona tipo perizia")
+           @*@Html.DropDownList("IDTP", (SelectList)ViewData["ElencoTP"], "-- Seleziona Tipo Perizia --", new { @class = "form-control" })*@
+           @Html.DropDownList("IDTP", (SelectList)ViewData["ElencoTP"], new { @class = "form-control selectpicker data-live-search=true" })<br />
+           @*<div>
+
+               @Html.Label("Chassis")
+
+               @Html.TextBox("Chassis", "", new { onkeyup = "InputToUpper(this);" })
+
+           </div>*@
+           <div>
+               <button type="submit" class="btn btn-primary custom">Inserisci perizie</button>
+           </div>
+
+       }
+   </div>
     <br />
     <div>
         @*@Html.ActionLink("Lista perizie", "ListaPerizie", "ListaPerizie", new { @class = "btn btn-primary custom" })*@

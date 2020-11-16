@@ -28,8 +28,9 @@
         <EntityTypeShape EntityType="wisedbModel.AGR_PerizieExpGrim_Temp_MVC" Width="1.5" PointX="9.625" PointY="15.625" />
         <AssociationConnector Association="wisedbModel.FK_AGR_PerizieExpGrim_Temp_AGR_PERIZIE_TEMP_MVC" />
         <EntityTypeShape EntityType="wisedbModel.WEB_AUTO_ListaSpedizioni_vw" Width="1.5" PointX="13.375" PointY="0.75" />
-        <EntityTypeShape EntityType="wisedbModel.WEB_Auto_ListaPerizieXSpedizione_vw" Width="1.5" PointX="13.375" PointY="4.75" />
+        <EntityTypeShape EntityType="wisedbModel.WEB_Auto_ListaPerizieXSpedizione_vw" Width="4" PointX="13.375" PointY="4.75" />
         <EntityTypeShape EntityType="wisedbModel.WEB_AUTO_FOTO" Width="1.5" PointX="13.375" PointY="8.75" />
+        <EntityTypeShape EntityType="wisedbModel.AGR_Perizie_MVC_Flat_vw" Width="3.25" PointX="13.375" PointY="11.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

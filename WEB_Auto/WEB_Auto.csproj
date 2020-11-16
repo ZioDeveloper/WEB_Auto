@@ -141,6 +141,8 @@
     <Compile Include="Controllers\DocumentiController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ListaPerizieController.cs" />
+    <Compile Include="Controllers\TelaiAnagraficaController.cs" />
+    <Compile Include="Controllers\Test.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -163,6 +165,9 @@
       <DependentUpon>Autocargo.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\AGR_PERIZIE_DETT_TEMP_MVC_vw.cs">
+      <DependentUpon>Autocargo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AGR_Perizie_MVC_Flat_vw.cs">
       <DependentUpon>Autocargo.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\AGR_PERIZIE_TEMP_MVC.cs">
@@ -419,6 +424,15 @@
     <Content Include="Views\ListaPerizie\EditSpedizione.cshtml" />
     <Content Include="Views\Documenti\Index.cshtml" />
     <Content Include="Views\Documenti\ScattaFoto.cshtml" />
+    <Content Include="Views\Home\SelezionaTelaio.cshtml" />
+    <Content Include="Views\TelaiAnagrafica\InputTelaio.cshtml" />
+    <Content Include="Views\TelaiAnagrafica\Edit.cshtml" />
+    <Content Include="Views\Test\Create.cshtml" />
+    <Content Include="Views\Test\Delete.cshtml" />
+    <Content Include="Views\Test\Details.cshtml" />
+    <Content Include="Views\Test\Edit.cshtml" />
+    <Content Include="Views\Test\Index.cshtml" />
+    <Content Include="Views\TelaiAnagrafica\SalvaPeriziaDettagli.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

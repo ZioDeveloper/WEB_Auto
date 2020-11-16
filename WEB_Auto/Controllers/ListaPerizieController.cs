@@ -81,11 +81,11 @@ namespace WEB_Auto.Controllers
         public ActionResult EditSpedizione(string IDSpedizione)
         {
             var model = new Models.HomeModel();
-            var lista = (from m in db.WEB_Auto_ListaPerizieXSpedizione_vw
-                         where m.IDSpedizione == IDSpedizione
-                         select m).ToList();
-            model.WEB_Auto_ListaPerizieXSpedizione_vw = lista;
-            ViewBag.IDSpedizione = IDSpedizione;
+            //var lista = (from m in db.WEB_Auto_ListaPerizieXSpedizione_vw
+            //             where m.IDSpedizione == IDSpedizione
+            //             select m).ToList();
+            //model.WEB_Auto_ListaPerizieXSpedizione_vw = lista;
+            //ViewBag.IDSpedizione = IDSpedizione;
             return View(model);
         }
     }

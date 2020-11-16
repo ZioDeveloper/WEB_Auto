@@ -11,14 +11,14 @@
 <div style="text-align:center">
     <h4>Gestione fotografie</h4>
 
-    @Html.ActionLink("Torna a perizia", "DatiPerizia","Home", new { myIDPerizia = ViewBag.myIDPerizia //,
-                                                                                                      //IDPerito  = ViewBag.IDPerito ,
-                                                                                                      //IDSpedizione = ViewBag.IDSpedizione ,
-                                                                                                      //IDMeteo =  ViewBag.IDMeteo ,
-                                                                                                      //IDTP =  ViewBag.IDTP  ,
-                                                                                                      //aIDTrasportatore = ViewBag.aIDTrasportatore ,
-                                                                                                      //aIDTipoRotabile =  ViewBag.aIDTipoRotabile  ,
-                                                                                                      //aIDModelloCasa =   ViewBag.aIDModelloCasa 
+    @Html.ActionLink("Torna a perizia", "Edit","TelaiAnagrafica", new { myIDPerizia = ViewBag.myIDPerizia ,
+    IDPerito = ViewBag.IDPerito,
+    IDSpedizione = ViewBag.IDSpedizione,
+    IDMeteo = ViewBag.IDMeteo,
+    IDTP = ViewBag.IDTP,
+    aIDTrasportatore = ViewBag.aIDTrasportatore,
+    aIDTipoRotabile = ViewBag.aIDTipoRotabile,
+    aIDModelloCasa = ViewBag.aIDModelloCasa
 }, new { @class = "btn btn-primary btn-xs" })
     &nbsp;&nbsp;
     @*@Html.ActionLink("Drag & drop", "DragAndDrop", new { IDCommessa = Session["IDCommessa"], IDTelaio = ViewBag.IDTelaio, IDTipoDocumento = ViewBag.IDTipoDocumento }, new { @class = "btn btn-warning btn-xs" })*@
@@ -75,7 +75,14 @@
 
             <td>
 
-                @Html.ActionLink("Elimina", "CancellaDocumento", new { IDDocumento = item.ID, IDTelaio = item.IDPerizia, nomefile = item.FileName, IDTipoDocumento = ViewBag.IDTipoDocumento }, new { @class = "btn btn-danger btn-xs", onclick = "return confirm('Vuoi davvero cancellare la foto ?');" })
+                @Html.ActionLink("Elimina", "CancellaDocumento", new { IDDocumento = item.ID,
+               myIDPerizia = item.IDPerizia,
+               nomefile = item.FileName,
+               IDPerito = ViewBag.IDPerito,
+               IDSpedizione = ViewBag.IDSpedizione,
+               IDMeteo = ViewBag.IDMeteo,
+               IDTP = ViewBag.IDTP
+           }, new { @class = "btn btn-danger btn-xs", onclick = "return confirm('Vuoi davvero cancellare la foto ?');" })
             </td>
         </tr>
         <br />

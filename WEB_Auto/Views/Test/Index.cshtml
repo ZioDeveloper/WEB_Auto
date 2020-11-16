@@ -1,0 +1,273 @@
+﻿@model IEnumerable<WEB_Auto.Models.AGR_PERIZIE_TEMP_MVC>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.BARCODE)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IDSpedizione)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IDPerito)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IDTipoPerizia)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DataPerizia)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IDNazione)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IDModello)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Telaio)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NumFoto)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IDScheda)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Note)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NoteConc)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Flags)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DRichiesta)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.VRichiesta)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DDefinizione)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.VDefinizione)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DContab)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.VContab)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Stato)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FileNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IDUtente)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DataModUtente)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DataModPerito)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DataSpedizione)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DataArrivo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FlagControllo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IRichiesta)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IDefinizione)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IContab)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IDMeteo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IDShip)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IDPortL)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IDPortD)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DataImbarco)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DataSbarco)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IDLocalitaPerizia)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TotaleItems)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NumPDF)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsClosed)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AGR_PerizieExpGrim_Temp_MVC.Bisarca)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.BARCODE)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IDSpedizione)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IDPerito)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IDTipoPerizia)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DataPerizia)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IDNazione)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IDModello)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Telaio)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NumFoto)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IDScheda)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Note)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NoteConc)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Flags)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DRichiesta)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.VRichiesta)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DDefinizione)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.VDefinizione)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DContab)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.VContab)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Stato)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FileNumber)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IDUtente)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DataModUtente)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DataModPerito)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DataSpedizione)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DataArrivo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FlagControllo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IRichiesta)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IDefinizione)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IContab)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IDMeteo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IDShip)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IDPortL)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IDPortD)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DataImbarco)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DataSbarco)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IDLocalitaPerizia)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TotaleItems)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NumPDF)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsClosed)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AGR_PerizieExpGrim_Temp_MVC.Bisarca)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+        </td>
+    </tr>
+}
+
+</table>

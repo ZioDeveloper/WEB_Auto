@@ -36,9 +36,9 @@ namespace WEB_Auto.Controllers
             ViewBag.IDSpedizione = IDSpedizione;
             ViewBag.IDMeteo = IDMeteo;
             ViewBag.IDTP = IDTP;
-            //ViewBag.aIDTrasportatore = aIDTrasportatore;
-            //ViewBag.aIDTipoRotabile = aIDTipoRotabile;
-            //ViewBag.aIDModelloCasa = aIDModelloCasa;
+            ViewBag.aIDTrasportatore = aIDTrasportatore;
+            ViewBag.aIDTipoRotabile = aIDTipoRotabile;
+            ViewBag.aIDModelloCasa = aIDModelloCasa;
             ViewBag.myIDPerizia = myIDPerizia;
             return View("ScattaFoto", myFoto);
 
@@ -64,11 +64,14 @@ namespace WEB_Auto.Controllers
                     {
                         file.SaveAs(path);
                     }
-
-                    int cnt = (from m in db.WEB_AUTO_FOTO
-                               where m.IDPerizia == myIDPerizia
-                               select m.ID).Count();
-
+                    int cnt = 0;
+                    try
+                    {
+                        cnt = (int)(from m in db.WEB_AUTO_FOTO
+                                        where m.IDPerizia == myIDPerizia
+                                        select m.Prog).Max();
+                    }
+                    catch {   }
                     cnt++;
 
                     var sql = @"Insert Into WEB_AUTO_FOTO (IDPerizia, FileName,Prog) Values (@IDPerizia, @FileName,@Prog)";

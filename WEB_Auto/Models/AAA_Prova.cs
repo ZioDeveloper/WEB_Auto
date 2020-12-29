@@ -12,18 +12,9 @@ namespace WEB_Auto.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class WEB_Auto_ListaPerizieXSpedizione_vw
+    public partial class AAA_Prova
     {
         public string ID { get; set; }
         public string Telaio { get; set; }
-        public string Modello { get; set; }
-        public string IDSpedizione { get; set; }
-        public string IDTipoPerizia { get; set; }
-        public Nullable<System.DateTime> DataPerizia { get; set; }
-        public Nullable<short> NumFoto { get; set; }
-        public string POL { get; set; }
-        public Nullable<System.DateTime> ETA { get; set; }
-        public string POD { get; set; }
-        public Nullable<System.DateTime> ETD { get; set; }
     }
 }

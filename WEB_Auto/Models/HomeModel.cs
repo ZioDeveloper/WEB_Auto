@@ -27,10 +27,15 @@ namespace WEB_Auto.Models
         public IEnumerable<WEB_AGR_Gravita_vw> WEB_AGR_Gravita_vw { get; set; }
         public IEnumerable<WEB_AUTO_ListaSpedizioni_vw> WEB_AUTO_ListaSpedizioni_vw { get; set; }
         public IEnumerable<AGR_PERIZIE_TEMP_MVC> AGR_PERIZIE_TEMP_MVC { get; set; }
-        public IEnumerable<WEB_Auto_ListaPerizieXSpedizione_vw> WEB_Auto_ListaPerizieXSpedizione_vw { get; set; }
+       
 
         public IEnumerable<WEB_AUTO_FOTO> WEB_AUTO_FOTO { get; set; }
         public IEnumerable<AGR_Perizie_MVC_Flat_vw> AGR_Perizie_MVC_Flat_vw { get; set; }
+
+        public IEnumerable<AAA_Prova> AAA_Prova { get; set; }
+        public IEnumerable<WEB_Auto_ListaPerizieXSpedizione_vw> WEB_Auto_ListaPerizieXSpedizione_vw { get; set; }
+
+
 
 
 

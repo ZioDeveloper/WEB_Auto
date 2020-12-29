@@ -255,6 +255,15 @@
           <Property Name="Prog" Type="int" />
         </EntityType>
         <!--Errors Found During Generation:
+warning 6002: The table/view 'wisedb.dbo.AAA_Prova' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="AAA_Prova">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="varchar" MaxLength="18" Nullable="false" />
+          <Property Name="Telaio" Type="varchar" MaxLength="30" />
+        </EntityType>
+        <!--Errors Found During Generation:
 warning 6002: The table/view 'wisedb.dbo.AGR_PERIZIE_DETT_TEMP_MVC_vw' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="AGR_PERIZIE_DETT_TEMP_MVC_vw">
           <Key>
@@ -421,15 +430,22 @@ warning 6002: The table/view 'wisedb.dbo.WEB_AGR_Parti_vw' does not have a prima
 warning 6002: The table/view 'wisedb.dbo.WEB_Auto_ListaPerizieXSpedizione_vw' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="WEB_Auto_ListaPerizieXSpedizione_vw">
           <Key>
+            <PropertyRef Name="ID" />
             <PropertyRef Name="Modello" />
+            <PropertyRef Name="POL" />
+            <PropertyRef Name="POD" />
           </Key>
+          <Property Name="ID" Type="varchar" MaxLength="18" Nullable="false" />
           <Property Name="Telaio" Type="varchar" MaxLength="30" />
           <Property Name="Modello" Type="varchar" MaxLength="276" Nullable="false" />
           <Property Name="IDSpedizione" Type="varchar" MaxLength="8" />
           <Property Name="IDTipoPerizia" Type="varchar" MaxLength="1" />
-          <Property Name="ETD" Type="datetime" />
-          <Property Name="ETA" Type="datetime" />
           <Property Name="DataPerizia" Type="datetime" />
+          <Property Name="NumFoto" Type="smallint" />
+          <Property Name="POL" Type="varchar" MaxLength="3" Nullable="false" />
+          <Property Name="ETA" Type="datetime" />
+          <Property Name="POD" Type="varchar" MaxLength="3" Nullable="false" />
+          <Property Name="ETD" Type="datetime" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'wisedb.dbo.WEB_AUTO_ListaSpedizioni_vw' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -497,6 +513,12 @@ warning 6002: The table/view 'wisedb.dbo.WEB_AUTO_ListaSpedizioni_vw' does not h
           <EntitySet Name="AGR_TrasportatoriGrimaldi" EntityType="Self.AGR_TrasportatoriGrimaldi" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Periti" EntityType="Self.Periti" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WEB_AUTO_FOTO" EntityType="Self.WEB_AUTO_FOTO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AAA_Prova" EntityType="Self.AAA_Prova" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [AAA_Prova].[ID] AS [ID], 
+    [AAA_Prova].[Telaio] AS [Telaio]
+    FROM [dbo].[AAA_Prova] AS [AAA_Prova]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="AGR_PERIZIE_DETT_TEMP_MVC_vw" EntityType="Self.AGR_PERIZIE_DETT_TEMP_MVC_vw" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [AGR_PERIZIE_DETT_TEMP_MVC_vw].[ID] AS [ID], 
@@ -612,13 +634,17 @@ warning 6002: The table/view 'wisedb.dbo.WEB_AUTO_ListaSpedizioni_vw' does not h
           </EntitySet>
           <EntitySet Name="WEB_Auto_ListaPerizieXSpedizione_vw" EntityType="Self.WEB_Auto_ListaPerizieXSpedizione_vw" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
+    [WEB_Auto_ListaPerizieXSpedizione_vw].[ID] AS [ID], 
     [WEB_Auto_ListaPerizieXSpedizione_vw].[Telaio] AS [Telaio], 
     [WEB_Auto_ListaPerizieXSpedizione_vw].[Modello] AS [Modello], 
     [WEB_Auto_ListaPerizieXSpedizione_vw].[IDSpedizione] AS [IDSpedizione], 
     [WEB_Auto_ListaPerizieXSpedizione_vw].[IDTipoPerizia] AS [IDTipoPerizia], 
-    [WEB_Auto_ListaPerizieXSpedizione_vw].[ETD] AS [ETD], 
+    [WEB_Auto_ListaPerizieXSpedizione_vw].[DataPerizia] AS [DataPerizia], 
+    [WEB_Auto_ListaPerizieXSpedizione_vw].[NumFoto] AS [NumFoto], 
+    [WEB_Auto_ListaPerizieXSpedizione_vw].[POL] AS [POL], 
     [WEB_Auto_ListaPerizieXSpedizione_vw].[ETA] AS [ETA], 
-    [WEB_Auto_ListaPerizieXSpedizione_vw].[DataPerizia] AS [DataPerizia]
+    [WEB_Auto_ListaPerizieXSpedizione_vw].[POD] AS [POD], 
+    [WEB_Auto_ListaPerizieXSpedizione_vw].[ETD] AS [ETD]
     FROM [dbo].[WEB_Auto_ListaPerizieXSpedizione_vw] AS [WEB_Auto_ListaPerizieXSpedizione_vw]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="WEB_AUTO_ListaSpedizioni_vw" EntityType="Self.WEB_AUTO_ListaSpedizioni_vw" store:Type="Views" store:Schema="dbo">
@@ -682,9 +708,11 @@ warning 6002: The table/view 'wisedb.dbo.WEB_AUTO_ListaSpedizioni_vw' does not h
             <End Role="AGR_PerizieExpGrim_Temp_MVC" EntitySet="AGR_PerizieExpGrim_Temp_MVC" />
           </AssociationSet>
           <EntitySet Name="WEB_AUTO_ListaSpedizioni_vw" EntityType="wisedbModel.WEB_AUTO_ListaSpedizioni_vw" />
-          <EntitySet Name="WEB_Auto_ListaPerizieXSpedizione_vw" EntityType="wisedbModel.WEB_Auto_ListaPerizieXSpedizione_vw" />
+          
           <EntitySet Name="WEB_AUTO_FOTO" EntityType="wisedbModel.WEB_AUTO_FOTO" />
           <EntitySet Name="AGR_Perizie_MVC_Flat_vw" EntityType="wisedbModel.AGR_Perizie_MVC_Flat_vw" />
+          <EntitySet Name="AAA_Prova" EntityType="wisedbModel.AAA_Prova" />
+          <EntitySet Name="WEB_Auto_ListaPerizieXSpedizione_vw" EntityType="wisedbModel.WEB_Auto_ListaPerizieXSpedizione_vw" />
         </EntityContainer>
         <EntityType Name="AGR_Periti_WEB">
           <Key>
@@ -1105,18 +1133,7 @@ warning 6002: The table/view 'wisedb.dbo.WEB_AUTO_ListaSpedizioni_vw' does not h
           <Property Name="IsClosed" Type="Boolean" Nullable="false" />
           <Property Name="IDPerito" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
         </EntityType>
-        <EntityType Name="WEB_Auto_ListaPerizieXSpedizione_vw">
-          <Key>
-            <PropertyRef Name="Modello" />
-          </Key>
-          <Property Name="Telaio" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="Modello" Type="String" Nullable="false" MaxLength="276" FixedLength="false" Unicode="false" />
-          <Property Name="IDSpedizione" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
-          <Property Name="IDTipoPerizia" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="ETD" Type="DateTime" Precision="3" />
-          <Property Name="ETA" Type="DateTime" Precision="3" />
-          <Property Name="DataPerizia" Type="DateTime" Precision="3" />
-        </EntityType>
+       
         <EntityType Name="WEB_AUTO_FOTO">
           <Key>
             <PropertyRef Name="ID" />
@@ -1150,6 +1167,32 @@ warning 6002: The table/view 'wisedb.dbo.WEB_AUTO_ListaSpedizioni_vw' does not h
           <Property Name="FlgNuovoUsato" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
           <Property Name="IDModello" Type="Int32" />
           <Property Name="Note" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="AAA_Prova">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="String" Nullable="false" MaxLength="18" FixedLength="false" Unicode="false" />
+          <Property Name="Telaio" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="WEB_Auto_ListaPerizieXSpedizione_vw">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="Modello" />
+            <PropertyRef Name="POL" />
+            <PropertyRef Name="POD" />
+          </Key>
+          <Property Name="ID" Type="String" Nullable="false" MaxLength="18" FixedLength="false" Unicode="false" />
+          <Property Name="Telaio" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Modello" Type="String" Nullable="false" MaxLength="276" FixedLength="false" Unicode="false" />
+          <Property Name="IDSpedizione" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Name="IDTipoPerizia" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="DataPerizia" Type="DateTime" Precision="3" />
+          <Property Name="NumFoto" Type="Int16" />
+          <Property Name="POL" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="ETA" Type="DateTime" Precision="3" />
+          <Property Name="POD" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="ETD" Type="DateTime" Precision="3" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -1525,19 +1568,8 @@ warning 6002: The table/view 'wisedb.dbo.WEB_AUTO_ListaSpedizioni_vw' does not h
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="WEB_Auto_ListaPerizieXSpedizione_vw">
-            <EntityTypeMapping TypeName="wisedbModel.WEB_Auto_ListaPerizieXSpedizione_vw">
-              <MappingFragment StoreEntitySet="WEB_Auto_ListaPerizieXSpedizione_vw">
-                <ScalarProperty Name="DataPerizia" ColumnName="DataPerizia" />
-                <ScalarProperty Name="ETA" ColumnName="ETA" />
-                <ScalarProperty Name="ETD" ColumnName="ETD" />
-                <ScalarProperty Name="IDTipoPerizia" ColumnName="IDTipoPerizia" />
-                <ScalarProperty Name="IDSpedizione" ColumnName="IDSpedizione" />
-                <ScalarProperty Name="Modello" ColumnName="Modello" />
-                <ScalarProperty Name="Telaio" ColumnName="Telaio" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
+          
+
           <EntitySetMapping Name="WEB_AUTO_FOTO">
             <EntityTypeMapping TypeName="wisedbModel.WEB_AUTO_FOTO">
               <MappingFragment StoreEntitySet="WEB_AUTO_FOTO">
@@ -1569,6 +1601,31 @@ warning 6002: The table/view 'wisedb.dbo.WEB_AUTO_ListaSpedizioni_vw' does not h
                 <ScalarProperty Name="IDMeteo" ColumnName="IDMeteo" />
                 <ScalarProperty Name="IDSpedizione" ColumnName="IDSpedizione" />
                 <ScalarProperty Name="IDPerito" ColumnName="IDPerito" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AAA_Prova">
+            <EntityTypeMapping TypeName="wisedbModel.AAA_Prova">
+              <MappingFragment StoreEntitySet="AAA_Prova">
+                <ScalarProperty Name="Telaio" ColumnName="Telaio" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WEB_Auto_ListaPerizieXSpedizione_vw">
+            <EntityTypeMapping TypeName="wisedbModel.WEB_Auto_ListaPerizieXSpedizione_vw">
+              <MappingFragment StoreEntitySet="WEB_Auto_ListaPerizieXSpedizione_vw">
+                <ScalarProperty Name="ETD" ColumnName="ETD" />
+                <ScalarProperty Name="POD" ColumnName="POD" />
+                <ScalarProperty Name="ETA" ColumnName="ETA" />
+                <ScalarProperty Name="POL" ColumnName="POL" />
+                <ScalarProperty Name="NumFoto" ColumnName="NumFoto" />
+                <ScalarProperty Name="DataPerizia" ColumnName="DataPerizia" />
+                <ScalarProperty Name="IDTipoPerizia" ColumnName="IDTipoPerizia" />
+                <ScalarProperty Name="IDSpedizione" ColumnName="IDSpedizione" />
+                <ScalarProperty Name="Modello" ColumnName="Modello" />
+                <ScalarProperty Name="Telaio" ColumnName="Telaio" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

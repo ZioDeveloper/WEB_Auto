@@ -24,6 +24,7 @@
     <thead>
         <tr>
             <th>Telaio</th>
+            <th>Modello</th>
             <th>Spedizione</th>
             <th>Data perizia</th>
             <th>TP</th>
@@ -37,11 +38,14 @@
         @foreach (var item in Model.WEB_Auto_ListaPerizieXSpedizione_vw)
         {
             string ETD = item.ETD.ToString().Left(10);
-            string ETA = item.ETA.ToString().Left(10);
+           string ETA = item.ETA.ToString().Left(10);
         <tr>
 
             <td>
                 @Html.DisplayFor(modelItem => item.Telaio)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Modello)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.IDSpedizione)
@@ -65,6 +69,7 @@
     <tfoot>
         <tr>
             <th>Telaio</th>
+            <th>Modello</th>
             <th>Spedizione</th>
             <th>Data perizia</th>
             <th>TP</th>

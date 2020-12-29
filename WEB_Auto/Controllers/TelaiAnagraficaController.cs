@@ -42,10 +42,10 @@ namespace WEB_Auto.Controllers
                     var dati = (from m in db.AGR_Perizie_MVC_Flat_vw
                               where m.Telaio == myTelaio
                               where m.IDSpedizione == IDSpedizione
-                              select new { m.ID_Trasportatore, m.ID_TipoRotabile,m.IDModello,m.ID,m.FlgNuovoUsato,m.Note}).FirstOrDefault();
+                              select new { m.ID_TrasportatoreGrimaldi, m.ID_TipoRotabile,m.IDModello,m.ID,m.FlgNuovoUsato,m.Note}).FirstOrDefault();
                     try
                     {
-                        ID_Trasportatore = dati.ID_Trasportatore.ToString();
+                        ID_Trasportatore = dati.ID_TrasportatoreGrimaldi.ToString();
                     }
                     catch { ID_Trasportatore = ""; }
                     try { ID_TipoRotabile = dati.ID_TipoRotabile.ToString(); }
@@ -312,6 +312,23 @@ namespace WEB_Auto.Controllers
                            select m;
             model.AGR_PERIZIE_DETT_TEMP_MVC_vw = Dettagli.ToList();
             ViewBag.IDPerizia = myIDPerizia;
+
+            var test = (from m in db.AGR_PERIZIE_TEMP_MVC
+                       where m.ID.ToString() == myIDPerizia
+                       select new { m.IDPerito, m.IDSpedizione, m.IDMeteo, m.IDTipoPerizia, m.IDModello,m.ID }).FirstOrDefault();
+
+            var test2 = (from m in db.AGR_PerizieExpGrim_Temp_MVC
+                        where m.ID.ToString() == myIDPerizia
+                        select new { m.ID_TipoRotabile,m.ID_TrasportatoreGrimaldi}).FirstOrDefault();
+
+            ViewBag.IDPerito = test.IDPerito;
+            ViewBag.IDSpedizione = test.IDSpedizione;
+            ViewBag.IDMeteo = test.IDMeteo;
+            ViewBag.IDTP = test.IDTipoPerizia;
+            ViewBag.aIDTrasportatore = test2.ID_TrasportatoreGrimaldi;
+            ViewBag.aIDTipoRotabile = test2.ID_TipoRotabile;
+            ViewBag.aIDModelloCasa = test.IDModello;
+            ViewBag.IDPeriz = test.ID;
             return View(model);
         }
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -81,12 +82,25 @@ namespace WEB_Auto.Controllers
         public ActionResult EditSpedizione(string IDSpedizione)
         {
             var model = new Models.HomeModel();
-            //var lista = (from m in db.WEB_Auto_ListaPerizieXSpedizione_vw
-            //             where m.IDSpedizione == IDSpedizione
-            //             select m).ToList();
-            //model.WEB_Auto_ListaPerizieXSpedizione_vw = lista;
-            //ViewBag.IDSpedizione = IDSpedizione;
+            var lista = (from m in db.WEB_Auto_ListaPerizieXSpedizione_vw
+                           where m.IDSpedizione == IDSpedizione
+                         select m).ToList();
+            model.WEB_Auto_ListaPerizieXSpedizione_vw = lista;
+            ViewBag.IDSpedizione = IDSpedizione;
             return View(model);
+        }
+
+        public ActionResult ChiudiSpedizione(string IDSpedizione)
+        {
+            string sqlcmd = " UPDATE AGR_PERIZIE_Temp_MVC " +
+                            " SET ISClosed = 1  " +
+                            " WHERE IDSpedizione = @IDSpedizione";
+
+
+            int Inserted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@IDSpedizione", IDSpedizione));
+
+            ViewBag.IDSpedizione = IDSpedizione;
+            return RedirectToAction("ListaSpedizioni");
         }
     }
 }

@@ -186,7 +186,16 @@
 <br />
 
 <div>
-    @Html.ActionLink("Esci", "Index", null, new { @class = "btn btn-danger custom" })
+    @*@Html.ActionLink("Esci", "Index", null, new { @class = "btn btn-danger custom" })*@
+    @Html.ActionLink("Torna a perizia", "Edit","TelaiAnagrafica", new { myIDPerizia = ViewBag.IDPeriz,
+    IDPerito = ViewBag.IDPerito,
+    IDSpedizione = ViewBag.IDSpedizione,
+    IDMeteo = ViewBag.IDMeteo,
+    IDTP = ViewBag.IDTP,
+    aIDTrasportatore = ViewBag.aIDTrasportatore,
+    aIDTipoRotabile = ViewBag.aIDTipoRotabile,
+    aIDModelloCasa = ViewBag.aIDModelloCasa
+}, new { @class = "btn btn-primary btn-xs" })
 </div>
 
 <script>

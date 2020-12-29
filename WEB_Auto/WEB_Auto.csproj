@@ -146,6 +146,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\AAA_Prova.cs">
+      <DependentUpon>Autocargo.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\AGR_Meteo.cs">
       <DependentUpon>Autocargo.tt</DependentUpon>
     </Compile>

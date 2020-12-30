@@ -90,15 +90,17 @@ namespace WEB_Auto.Controllers
             return View(model);
         }
 
-        public ActionResult ChiudiSpedizione(string IDSpedizione)
+        public ActionResult ChiudiSpedizione(string IDSpedizione, string IDTP)
         {
             string sqlcmd = " UPDATE AGR_PERIZIE_Temp_MVC " +
                             " SET ISClosed = 1  " +
-                            " WHERE IDSpedizione = @IDSpedizione";
+                            " WHERE IDSpedizione = @IDSpedizione " +
+                            " AND IDTipoPerizia = @IDTipoPerizia" ;
 
 
-            int Inserted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@IDSpedizione", IDSpedizione));
-
+            int Inserted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@IDSpedizione", IDSpedizione),
+                                                                 new SqlParameter("@IDTipoPerizia", IDTP));
+            
             ViewBag.IDSpedizione = IDSpedizione;
             return RedirectToAction("ListaSpedizioni");
         }

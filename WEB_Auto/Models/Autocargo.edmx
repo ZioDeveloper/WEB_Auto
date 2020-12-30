@@ -461,6 +461,7 @@ warning 6002: The table/view 'wisedb.dbo.WEB_AUTO_ListaSpedizioni_vw' does not h
           <Property Name="Good" Type="int" />
           <Property Name="IsClosed" Type="bit" Nullable="false" />
           <Property Name="IDPerito" Type="varchar" MaxLength="2" />
+          <Property Name="IDTipoPerizia" Type="varchar" MaxLength="1" />
         </EntityType>
         <Association Name="FK___5__50">
           <End Role="AGR_Porti" Type="Self.AGR_Porti" Multiplicity="1" />
@@ -655,7 +656,8 @@ warning 6002: The table/view 'wisedb.dbo.WEB_AUTO_ListaSpedizioni_vw' does not h
     [WEB_AUTO_ListaSpedizioni_vw].[Damaged] AS [Damaged], 
     [WEB_AUTO_ListaSpedizioni_vw].[Good] AS [Good], 
     [WEB_AUTO_ListaSpedizioni_vw].[IsClosed] AS [IsClosed], 
-    [WEB_AUTO_ListaSpedizioni_vw].[IDPerito] AS [IDPerito]
+    [WEB_AUTO_ListaSpedizioni_vw].[IDPerito] AS [IDPerito], 
+    [WEB_AUTO_ListaSpedizioni_vw].[IDTipoPerizia] AS [IDTipoPerizia]
     FROM [dbo].[WEB_AUTO_ListaSpedizioni_vw] AS [WEB_AUTO_ListaSpedizioni_vw]</DefiningQuery>
           </EntitySet>
           <AssociationSet Name="FK___5__50" Association="Self.FK___5__50">
@@ -1132,6 +1134,7 @@ warning 6002: The table/view 'wisedb.dbo.WEB_AUTO_ListaSpedizioni_vw' does not h
           <Property Name="Good" Type="Int32" />
           <Property Name="IsClosed" Type="Boolean" Nullable="false" />
           <Property Name="IDPerito" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="IDTipoPerizia" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
         </EntityType>
        
         <EntityType Name="WEB_AUTO_FOTO">
@@ -1558,6 +1561,7 @@ warning 6002: The table/view 'wisedb.dbo.WEB_AUTO_ListaSpedizioni_vw' does not h
           <EntitySetMapping Name="WEB_AUTO_ListaSpedizioni_vw">
             <EntityTypeMapping TypeName="wisedbModel.WEB_AUTO_ListaSpedizioni_vw">
               <MappingFragment StoreEntitySet="WEB_AUTO_ListaSpedizioni_vw">
+                <ScalarProperty Name="IDTipoPerizia" ColumnName="IDTipoPerizia" />
                 <ScalarProperty Name="IDPerito" ColumnName="IDPerito" />
                 <ScalarProperty Name="IsClosed" ColumnName="IsClosed" />
                 <ScalarProperty Name="Good" ColumnName="Good" />

@@ -21,5 +21,6 @@ namespace WEB_Auto.Models
         public Nullable<int> Good { get; set; }
         public bool IsClosed { get; set; }
         public string IDPerito { get; set; }
+        public string IDTipoPerizia { get; set; }
     }
 }

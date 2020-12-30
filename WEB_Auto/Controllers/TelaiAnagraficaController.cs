@@ -254,10 +254,20 @@ namespace WEB_Auto.Controllers
                           "  ID_TipoRotabile = @ID_TipoRotabile, " +
                           "   FlgNuovoUsato = @FlgNuovoUsato " +
                           " WHERE ID = @ID ";
+
+                
+                if (IDTrasportatoreGrim == "")
+                    IDTrasportatoreGrim = null;
+
+                if (IDTipoRotabile == "")
+                    IDTipoRotabile = null;
+                if (Condizione == "")
+                    Condizione = null;
+
                 Inserted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@ID", myIDPerizia),
-                                                                 new SqlParameter("@ID_TrasportatoreGrimaldi", IDTrasportatoreGrim),
-                                                                 new SqlParameter("@ID_TipoRotabile", IDTipoRotabile),
-                                                                 new SqlParameter("@FlgNuovoUsato", Condizione));
+                                                                 new SqlParameter("@ID_TrasportatoreGrimaldi", (object)IDTrasportatoreGrim ?? DBNull.Value),
+                                                                 new SqlParameter("@ID_TipoRotabile", (object)IDTipoRotabile ?? DBNull.Value),
+                                                                 new SqlParameter("@FlgNuovoUsato", (object)Condizione ?? DBNull.Value));
             }
 
 

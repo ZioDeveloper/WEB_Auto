@@ -52,8 +52,8 @@ namespace WEB_Auto.Controllers
 
 
             // Dati per dropdown spedizioni
-            DateTime ini = DateTime.Today.AddDays(-1);
-            DateTime end = DateTime.Today.AddDays(+1);
+            DateTime ini = DateTime.Today.AddDays(-5);
+            DateTime end = DateTime.Today.AddDays(+5);
             var Spedizioni = from m in db.AGR_SpedizioniWEB_vw
                              where m.DataInizioImbarco >= ini
                              where m.DataInizioImbarco <= end

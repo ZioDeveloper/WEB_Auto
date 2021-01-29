@@ -150,7 +150,9 @@ namespace WEB_Auto.Controllers
             var dati = (from m in db.AGR_Perizie_MVC_Flat_vw
                           where m.ID == myIDPerizia
                           select m).FirstOrDefault();
-           
+
+
+            AggiornaFlagGoodDamaged(myIDPerizia);
 
             var model = new Models.HomeModel();
             // COME RECUPERARE CAMPI DA TABELLA/VISTA = select new{m. ecc ecc}
@@ -185,7 +187,7 @@ namespace WEB_Auto.Controllers
                           where m.IDCasa == aCasa
                           select m;
             model.AGR_ModelliAuto = modello.ToList();
-            var ElencoModelli = new SelectList(model.AGR_ModelliAuto.ToList(), "IDModelloCasa", "Descr");
+            var ElencoModelli = new SelectList(model.AGR_ModelliAuto.ToList(), "ID", "Descr");
             ViewData["ElencoModelli"] = ElencoModelli;
             ViewBag.aIDModelloCasa = dati.IDModello;
 
@@ -371,6 +373,13 @@ namespace WEB_Auto.Controllers
                                                                  new SqlParameter("@IDResponsabilita", IDResponsabilita),
                                                                  new SqlParameter("@IDAttribuzione", IDAttribuzione));
 
+            // Aggiorno dati perizia
+            sqlcmd = " UPDATE AGR_PERIZIE_Temp_MVC " +
+                            " SET Flags = 32 " +
+                            " WHERE ID = @IDPerizia";
+
+
+            Inserted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@IDPerizia", myIDPerizia));
 
             //var model = new Models.HomeModel();
             //var Detatgli = from m in db.AGR_PERIZIE_DETT_TEMP_MVC_vw
@@ -388,6 +397,32 @@ namespace WEB_Auto.Controllers
             int deleted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@ID", aIDDett));
 
             return RedirectToAction("SalvaPeriziaDettagli", "TelaiAnagrafica", new { myIDPerizia });
+        }
+
+        public void AggiornaFlagGoodDamaged(string aIDPerizia)
+        {
+            var cnt = (from m in db.AGR_PERIZIE_DETT_TEMP_MVC_vw
+                       select m.ID).Count();
+
+            if (cnt > 0)
+            {
+                string sqlcmd = " UPDATE AGR_PERIZIE_Temp_MVC " +
+                                " SET Flags = 32 " +
+                                " WHERE ID = @IDPerizia";
+
+
+                int Inserted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@IDPerizia", aIDPerizia));
+            }
+            else
+            {
+                string sqlcmd = " UPDATE AGR_PERIZIE_Temp_MVC " +
+                                " SET Flags = 16 " +
+                                " WHERE ID = @IDPerizia";
+
+
+                int Inserted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@IDPerizia", aIDPerizia));
+            }
+
         }
     }
 }

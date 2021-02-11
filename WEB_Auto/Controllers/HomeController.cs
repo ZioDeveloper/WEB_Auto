@@ -12,7 +12,7 @@ namespace WEB_Auto.Controllers
 
         private wisedbEntities db  = new wisedbEntities();
 
-        public ActionResult Index(string usr)
+        public ActionResult Index(string usr, string errMess = "")
         {
             var model = new Models.HomeModel();
 
@@ -89,7 +89,7 @@ namespace WEB_Auto.Controllers
             ViewData["ElencoSpedizioni"] = ElencoSpedizioni;
             ViewData["ElencoMeteo"] = ElencoMeteo;
             ViewData["ElencoTP"] = ElencoTP;
-
+            ViewBag.errMess = errMess;
             return View(model);
         }
 
@@ -305,8 +305,8 @@ namespace WEB_Auto.Controllers
 
             // Dati per dropdown AGR_Parti
             var parti = from m in db.WEB_AGR_Parti_vw
-                          where m.IDCliente == "**"
-                          where m.IDCasa == "RTB"
+                          where m.IDCliente != "**"
+                          where m.IDCasa != "RTB"
                           select m;
             model.WEB_AGR_Parti_vw = parti.ToList();
             var ElencoParti = new SelectList(model.WEB_AGR_Parti_vw.ToList().OrderBy(m=>m.DescrITA), "ID", "DescrITA");

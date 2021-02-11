@@ -111,6 +111,19 @@
     </div>
 </details>
 <br />
+@if (ViewBag.ErrMess == "Sbloccato")
+{
+    <div style="color:green">
+        Controllo OK !
+    </div>
+}
+else
+{
+<div style="color:red">
+    @ViewBag.ErrMess
+</div>
+}
+<br />
 <div>
     @using (Html.BeginForm("SalvaPeriziaTesta", "TelaiAnagrafica", new
     {
@@ -156,7 +169,7 @@
 
                 </td>
                 <td>
-                    @Html.DropDownList("IDModelloCasa", new SelectList((SelectList)ViewData["ElencoModelli"], "Value", "Text", ViewBag.aIDModelloCasa), "-- Seleziona modello --", new { @class = "form-control selectpicker data-live-search=true" })
+                    @Html.DropDownList("IDModelloCasa", new SelectList((SelectList)ViewData["ElencoModelli"], "Value", "Text", ViewBag.aIDModelloCasa), "-- Seleziona modello --", new { @class = "form-control selectpicker data-live-search=true", @*@onchange = "submitform();"*@ })
 
                 </td>
             </tr>
@@ -165,7 +178,7 @@
                     &nbsp;
                 </td>
             </tr>
-            @if (item1[0].IDCasa.ToUpper() == "RTB")
+            @if (item1[0].IDCasa.ToUpper() == "RTB" || (item4[0].IDModello.ToString() == "1240" && ViewBag.aIDModelloCasa == "") || ViewBag.aIDModelloCasa == "1240" || ViewBag.aIDModelloCasa == "1241")
             {
                 <tr>
                     <td>
@@ -173,8 +186,7 @@
 
                     </td>
                     <td>
-                        @Html.DropDownList("IDTrasportatoreGrim", new SelectList((SelectList)ViewData["ElencoTraspGrim"], "Value", "Text", ViewBag.aIDTrasportatore), "-- Seleziona trasportatore --", new { @class = "form-control selectpicker data-live-search=true" })
-
+                        @Html.DropDownList("IDTrasportatoreGrim", new SelectList((SelectList)ViewData["ElencoTraspGrim"], "Value", "Text", ViewBag.aIDTrasportatore), "-- Seleziona trasportatore --", new { @class = "form-control selectpicker data-live-search=true"@*, @onchange = "submitform();"*@})
                     </td>
                 </tr>
                 <tr>
@@ -188,7 +200,7 @@
 
                     </td>
                     <td>
-                        @Html.DropDownList("IDTipoRotabile", new SelectList((SelectList)ViewData["ElencoTipoRotabile"], "Value", "Text", ViewBag.aIDTipoRotabile), "-- Seleziona tipo rotabile --", new { @class = "form-control selectpicker data-live-search=true" })
+                        @Html.DropDownList("IDTipoRotabile", new SelectList((SelectList)ViewData["ElencoTipoRotabile"], "Value", "Text", ViewBag.aIDTipoRotabile), "-- Seleziona tipo rotabile --", new { @class = "form-control selectpicker data-live-search=true"@*, @onchange = "submitform();"*@})
 
                     </td>
                 </tr>
@@ -204,7 +216,7 @@
                     @Html.Label("Condizione")
 
                 </td>
-                @if (item1[0].IDCasa.ToUpper() != "RTB")
+                @if ( item1[0].IDCasa.ToUpper() != "RTB" && (item4[0].IDModello.ToString() != "1240") || (item4[0].IDModello.ToString() == "1240" && ViewBag.aIDModelloCasa != "1240") )
                 {
                     if (item4[0].FlgNuovoUsato == "N")
                     {
@@ -261,7 +273,7 @@
                 </td>
                 <td>
                     @Html.TextArea("Annotazioni", item4[0].Note)
-                    
+
 
                 </td>
 
@@ -275,7 +287,9 @@
         <br />
         <div>
             @*@Html.ActionLink("Inserisci foto", "Index", null, new { @class = "btn btn-default custom" })*@
-            @Html.ActionLink("Inserisci foto", "ScattaFoto", "Documenti", new { myIDPerizia = item4[0].ID,
+            @Html.ActionLink("Inserisci foto", "ScattaFoto", "Documenti", new
+       {
+           myIDPerizia = item4[0].ID,
            IDPerito = ViewBag.IDPerito,
            IDSpedizione = ViewBag.IDSpedizione,
            IDMeteo = ViewBag.IDMeteo,
@@ -290,12 +304,25 @@
         </div>
         <div>
             <button type="submit" class="btn btn-success custom">Conferma</button> &nbsp;&nbsp;&nbsp;
-            @Html.ActionLink("Esci", "InputTelaio", new {
-           IDPerito = ViewBag.IDPerito,
-           IDSpedizione = ViewBag.IDSpedizione,
-           IDMeteo = ViewBag.IDMeteo,
-           IDTP = ViewBag.IDTP,
-       }, new { @class = "btn btn-danger custom" })
+            @if (ViewBag.ErrMess == "" || ViewBag.ErrMess == "Sbloccato")
+            {
+                @Html.ActionLink("Esci", "InputTelaio", new
+                   {
+                       IDPerito = ViewBag.IDPerito,
+                       IDSpedizione = ViewBag.IDSpedizione,
+                       IDMeteo = ViewBag.IDMeteo,
+                       IDTP = ViewBag.IDTP,
+                   }, new { @class = "btn btn-danger custom" })
+            }
+            else
+            {
+                @Html.ActionLink("Esci", "InputTelaio", new
+                   {
+                       IDPerito = ViewBag.IDPerito,
+                       IDSpedizione = ViewBag.IDSpedizione,
+                       IDMeteo = ViewBag.IDMeteo,
+                       IDTP = ViewBag.IDTP,
+                   }, new { @class = "btn btn-danger custom disabled" })}
         </div>
     }
 </div>
@@ -322,4 +349,9 @@
             showSubtext: true
         });
     });
+</script>
+<script>
+    function submitform() {
+        $('form').submit();
+    }
 </script>

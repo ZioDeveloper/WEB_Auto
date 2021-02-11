@@ -11,7 +11,8 @@
 
 <br /><br />
 <h4>Dettagli danno</h4>
-@{string myIDPerizia = ViewBag.IDPerizia;}
+@{string myIDPerizia = ViewBag.IDPerizia;
+    bool ISGravitaEnabled = ViewBag.ISGravitaEnabled;}
 
 <table id="Report" class="display" style="width:100%;font-size:11px">
     <thead>
@@ -79,43 +80,45 @@
     @using (Html.BeginForm("SalvaPeriziaDettagli", "TelaiAnagrafica", new { myIDPerizia }, FormMethod.Post))
     {
 
-        <table>
-            <tr>
-                <td>
-                    @Html.Label("Componente")
-                </td>
-                <td>
-                    &nbsp;&nbsp;
-                </td>
-                <td>
+    <table>
+        <tr>
+            <td>
+                @Html.Label("Componente")
+            </td>
+            <td>
+                &nbsp;&nbsp;
+            </td>
+            <td>
 
-                    @Html.DropDownList("IDParte", new SelectList((SelectList)ViewData["ElencoParti"], "Value", "Text", null), "-- Seleziona parte --", new { @class = "form-control selectpicker data-live-search=true" })
+                @Html.DropDownList("IDParte", new SelectList((SelectList)ViewData["ElencoParti"], "Value", "Text", null), "-- Seleziona parte --", new { @class = "form-control selectpicker data-live-search=true" })
 
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    &nbsp;&nbsp;
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    @Html.Label("Tipo danno")
-                </td>
-                <td>
-                    &nbsp;&nbsp;
-                </td>
-                <td>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                &nbsp;&nbsp;
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.Label("Tipo danno")
+            </td>
+            <td>
+                &nbsp;&nbsp;
+            </td>
+            <td>
 
-                    @Html.DropDownList("IDDanno", new SelectList((SelectList)ViewData["ElencoDanni"], "Value", "Text", null), "-- Seleziona danno --", new { @class = "form-control selectpicker data-live-search=true" })
+                @Html.DropDownList("IDDanno", new SelectList((SelectList)ViewData["ElencoDanni"], "Value", "Text", null), "-- Seleziona danno --", new { @class = "form-control selectpicker data-live-search=true" })
 
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    &nbsp;&nbsp;
-                </td>
-            </tr>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                &nbsp;&nbsp;
+            </td>
+        </tr>
+        @if (ISGravitaEnabled)
+        {
             <tr>
                 <td>
                     @Html.Label("Gravità")
@@ -129,6 +132,7 @@
 
                 </td>
             </tr>
+        }
             <tr>
                 <td>
                     &nbsp;&nbsp;

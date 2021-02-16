@@ -218,6 +218,11 @@ namespace WEB_Auto.Controllers
             {
                 ViewBag.aIDModelloCasa = aIDModelloCasa;
             }
+            if(aCasa == "RTB")
+            {
+                aIDModelloCasa = "1241";
+                ViewBag.aIDModelloCasa = "1241";
+            }
 
             // Dati per dropdown Trasportatore Grimaldi
             var TraspGrim = from m in db.AGR_TrasportatoriGrimaldi
@@ -240,7 +245,7 @@ namespace WEB_Auto.Controllers
 
 
             // Cerco Trasportatore Grimaldi e Tipo rotabile pregressi e li uso...
-            if(aIDModelloCasa == "1240" || aIDModelloCasa == "1241")
+            if((aIDModelloCasa == "1240" || aIDModelloCasa == "1241" )&& (String.IsNullOrEmpty(aIDTrasportatore)&& String.IsNullOrEmpty(aIDTipoRotabile)))
             {
                 var myTelaio = (from m in db.AGR_Perizie_MVC_Flat_vw
                             where m.ID == myIDPerizia
@@ -260,8 +265,22 @@ namespace WEB_Auto.Controllers
 
             }
 
-            ViewBag.IDPerito = IDPerito;
+            // Dati per dropdown Spedizione
+            DateTime ini = DateTime.Today.AddDays(-5);
+            DateTime end = DateTime.Today.AddDays(+5);
+            var Spedizione = from m in db.AGR_SpedizioniWEB_vw
+                             where m.DataInizioImbarco >= ini
+                             where m.DataInizioImbarco <= end
+                             select m;
+            model.AGR_SpedizioniWEB_vw = Spedizione.ToList();
+            var ElencoSpedizioni = new SelectList(model.AGR_SpedizioniWEB_vw.ToList(), "ID", "Descr");
+
+
+            ViewData["ElencoSpedizioni"] = ElencoSpedizioni;
             ViewBag.IDSpedizione = IDSpedizione;
+
+            ViewBag.IDPerito = IDPerito;
+            
             ViewBag.IDMeteo = IDMeteo;
             ViewBag.IDTP = IDTP;
 
@@ -331,6 +350,36 @@ namespace WEB_Auto.Controllers
                                                                      new SqlParameter("@ID_TrasportatoreGrimaldi", (object)IDTrasportatoreGrim ?? DBNull.Value),
                                                                      new SqlParameter("@ID_TipoRotabile", (object)IDTipoRotabile ?? DBNull.Value),
                                                                      new SqlParameter("@FlgNuovoUsato", (object)Condizione ?? DBNull.Value));
+
+                    if(Condizione == "U")
+                    {
+
+                        var hasdanni = (from m in db.AGR_PERIZIE_DETT_TEMP_MVC_vw
+                                        where m.IDPerizia == myIDPerizia
+                                        where m.IDParte == "045"
+                                        where m.IDDanno == "Y"
+                                        select m).Count();
+                        if (hasdanni == 0)
+                        {
+
+                            sqlcmd = " INSERT INTO AGR_PERIZIE_DETT_TEMP_MVC (IDPerizia,IDParte, IDDanno, QTA, Note)" +
+                                     " VALUES(@IDPerizia,@IDParte, @IDDanno, @QTA, @Note)";
+                            try
+                            {
+                                Inserted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@IDPerizia", myIDPerizia),
+                                                                             new SqlParameter("@IDParte", "045"),
+                                                                             new SqlParameter("@IDDanno", "Y"),
+                                                                             new SqlParameter("@QTA", 1),
+                                                                             new SqlParameter("@Note", "Danni da utilizzo")
+                                                                             );
+                            }
+                            catch (Exception exc)
+                            {
+                                string a = exc.Message;
+                            }
+                        }
+                        
+                    }
                 }
 
 

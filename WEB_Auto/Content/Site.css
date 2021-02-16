@@ -25,10 +25,17 @@ textarea {
 .photoImg {
     display: block;
     background: url(../img/image.png) no-repeat;
-    width: 32px;
-    height: 48px;
+    width: 36px;
+    height: 36px;
     text-indent: -9999px; /*hides the link text*/
     vertical-align: bottom
 }
-
+.pdfImg {
+    display: block;
+    background: url(../img/pdf.png) no-repeat;
+    width: 36px;
+    height: 36px;
+    text-indent: -9999px; /*hides the link text*/
+    vertical-align: bottom
+}
 

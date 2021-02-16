@@ -139,6 +139,14 @@ else
     <table>
         <tr>
             <td>
+                @Html.Label("Viaggio")
+            </td>
+            <td>
+                @Html.DropDownList("IDSpedizione", new SelectList((SelectList)ViewData["ElencoSpedizioni"], "Value", "Text", ViewBag.IDSpedizione), "-- Seleziona spedizione --", new { @class = "form-control selectpicker data-live-search=true", @*@onchange = "submitform();"*@ })
+            </td>
+        </tr>
+        <tr>
+            <td>
                 @Html.Label("Inspection date")
             </td>
             <td>
@@ -301,25 +309,42 @@ else
         </table>
 
 
-
-        @*@Html.Label("Inspection date")<text>&nbsp;</text> @Html.TextBox("DataPerizia", DateTime.Now.ToString("dd/MM/yyyy"), new { @readonly = "readonly", style = "background:lightgrey" });
-            <br />
-            @Html.Label("Chassis") <text>&nbsp;</text> @Html.TextBox("Chassis", "", new { onkeyup = "InputToUpper(this);" }); <text>&nbsp;</text>*@
         <br />
         <div>
-            @*@Html.ActionLink("Inserisci foto", "Index", null, new { @class = "btn btn-default custom" })*@
-            @Html.ActionLink("Inserisci foto", "ScattaFoto", "Documenti", new
-       {
-           myIDPerizia = item4[0].ID,
-           IDPerito = ViewBag.IDPerito,
-           IDSpedizione = ViewBag.IDSpedizione,
-           IDMeteo = ViewBag.IDMeteo,
-           IDTP = ViewBag.IDTP,
-           aIDTrasportatore = ViewBag.aIDTrasportatore,
-           aIDTipoRotabile = ViewBag.aIDTipoRotabile,
-           aIDModelloCasa = ViewBag.aIDModelloCasa
-       }, new { @class = "photoImg" })
-        </div>
+            <table width="50%">
+                <tr>
+                    <td>
+                        @Html.ActionLink("Inserisci foto", "ScattaFoto", "Documenti", new
+                                   {
+                                       myIDPerizia = item4[0].ID,
+                                       IDPerito = ViewBag.IDPerito,
+                                       IDSpedizione = ViewBag.IDSpedizione,
+                                       IDMeteo = ViewBag.IDMeteo,
+                                       IDTP = ViewBag.IDTP,
+                                       aIDTrasportatore = ViewBag.aIDTrasportatore,
+                                       aIDTipoRotabile = ViewBag.aIDTipoRotabile,
+                                       aIDModelloCasa = ViewBag.aIDModelloCasa
+                                   }, new { @class = "photoImg" })
+                                    </td>
+                    <td>
+                        @Html.ActionLink("Inserisci foto", "ScattaFoto", "Documenti", new
+                                  {
+                                      myIDPerizia = item4[0].ID,
+                                      IDPerito = ViewBag.IDPerito,
+                                      IDSpedizione = ViewBag.IDSpedizione,
+                                      IDMeteo = ViewBag.IDMeteo,
+                                      IDTP = ViewBag.IDTP,
+                                      aIDTrasportatore = ViewBag.aIDTrasportatore,
+                                      aIDTipoRotabile = ViewBag.aIDTipoRotabile,
+                                      aIDModelloCasa = ViewBag.aIDModelloCasa
+                                  }, new { @class = "pdfImg" })
+                                    </td>
+                </tr>
+                
+                
+            </table>
+
+</div>
         <div>
             <br />
         </div>

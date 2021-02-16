@@ -46,8 +46,10 @@ namespace WEB_Auto.Controllers
             return View();
 
         }
+        
 
-        public ActionResult UploadFoto(IEnumerable<HttpPostedFileBase> files, string myIDPerizia)
+        public ActionResult UploadFoto(IEnumerable<HttpPostedFileBase> files, string myIDPerizia,string IDPerito, string IDSpedizione , string IDMeteo,
+               string IDTP, string aIDTrasportatore, string aIDTipoRotabile, string aIDModelloCasa )
         {
             string filename = "";
             string path = "";
@@ -94,6 +96,14 @@ namespace WEB_Auto.Controllers
 
             
             ViewBag.myIDPerizia = myIDPerizia;
+            ViewBag.IDPerito = IDPerito;
+            ViewBag.IDSpedizione = IDSpedizione;
+            ViewBag.IDMeteo = IDMeteo;
+            ViewBag.IDTP = IDTP;
+            ViewBag.aIDTrasportatore = aIDTrasportatore;
+            ViewBag.aIDTipoRotabile = aIDTipoRotabile;
+            ViewBag.aIDModelloCasa = aIDModelloCasa;
+
             return View("ScattaFoto", myFoto);
         }
 

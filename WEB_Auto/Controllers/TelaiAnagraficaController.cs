@@ -173,6 +173,7 @@ namespace WEB_Auto.Controllers
 
 
             AggiornaFlagGoodDamaged(myIDPerizia);
+            AggiornaContatoreFoto(myIDPerizia);
 
             var model = new Models.HomeModel();
             // COME RECUPERARE CAMPI DA TABELLA/VISTA = select new{m. ecc ecc}
@@ -189,7 +190,7 @@ namespace WEB_Auto.Controllers
                              select m;
             model.AGR_SpedizioniWEB_Decoded_vw = Spedizioni.ToList();
 
-            // Dadti meteo
+            // Dati meteo
             var Meteo = from m in db.AGR_Meteo
                         where m.ID == dati.IDMeteo
                         select m;
@@ -237,10 +238,40 @@ namespace WEB_Auto.Controllers
             ViewData["ElencoTipoRotabile"] = ElencoTipoRotabile;
             ViewBag.aIDTipoRotabile = aIDTipoRotabile;
 
+
+            // Cerco Trasportatore Grimaldi e Tipo rotabile pregressi e li uso...
+            if(aIDModelloCasa == "1240" || aIDModelloCasa == "1241")
+            {
+                var myTelaio = (from m in db.AGR_Perizie_MVC_Flat_vw
+                            where m.ID == myIDPerizia
+                            select m.Telaio).FirstOrDefault();
+                var datiPregressi = (from m in db.AGR_DatiRotabiliInUSo_vw
+                                     where m.Telaio == myTelaio
+                                     orderby m.DataPerizia descending
+                                     select new { m.ID_TipoRotabile, m.ID_TrasportatoreGrimaldi }).FirstOrDefault();
+                try
+                {
+                    string myIDTipoRotabile = datiPregressi.ID_TipoRotabile;
+                    string myIDTrasportatore = datiPregressi.ID_TrasportatoreGrimaldi;
+                    ViewBag.aIDTipoRotabile = myIDTipoRotabile;
+                    ViewBag.aIDTrasportatore = myIDTrasportatore;
+                }
+                catch { }// bruciamo eccezione
+
+            }
+
             ViewBag.IDPerito = IDPerito;
             ViewBag.IDSpedizione = IDSpedizione;
             ViewBag.IDMeteo = IDMeteo;
             ViewBag.IDTP = IDTP;
+
+            var hasdanni = (from m in db.AGR_PERIZIE_DETT_TEMP_MVC_vw
+                            where m.IDPerizia == myIDPerizia
+                            select m).Count();
+            if (hasdanni > 0)
+                ViewBag.HasDanni = "Perizia con danni";
+            else
+                ViewBag.HasDanni = "Perizia GOOD";
 
             var perizie = from m in db.AGR_Perizie_MVC_Flat_vw
                             where m.ID == myIDPerizia
@@ -256,7 +287,7 @@ namespace WEB_Auto.Controllers
 
 
             // Verifico Sia tutto ok.. to do !!!!!
-            bool isOK = CheckAll(IDSpedizione, IDModelloCasa, IDTrasportatoreGrim , IDTipoRotabile, Condizione , out string myerrMess);
+            bool isOK = CheckAll(IDSpedizione, Chassis, IDModelloCasa, IDTrasportatoreGrim , IDTipoRotabile, Condizione , out string myerrMess);
             if (isOK)
             {
 
@@ -519,6 +550,19 @@ namespace WEB_Auto.Controllers
 
         }
 
+        public void AggiornaContatoreFoto(string aIDPerizia)
+        {
+            var myFoto = (from f in db.WEB_AUTO_FOTO
+                          where f.IDPerizia == aIDPerizia
+                          select f).Count();
+            string sqlcmd = " UPDATE AGR_PERIZIE_Temp_MVC " +
+                                " SET NumFoto = @NumFoto " +
+                                " WHERE ID = @IDPerizia";
+
+
+            int Inserted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@NumFoto", myFoto), new SqlParameter("@IDPerizia", aIDPerizia));
+        }
+
         public bool pISGEFCO_GN_51(string aIDPerizia)
         {
             var model = new Models.HomeModel();
@@ -545,17 +589,18 @@ namespace WEB_Auto.Controllers
             
         }
 
-        public bool CheckAll(string aIDSpedizione , string IDModelloCasa, string IDTrasportatoreGrim,  string IDTipoRotabile , string Condizione, out string errMEss)
+        public bool CheckAll(string aIDSpedizione ,string aTelaio, string IDModelloCasa, string IDTrasportatoreGrim,  string IDTipoRotabile , string Condizione, out string errMEss)
         {
             // Dati spedizione
             errMEss = "";
 
+            // Controllo modello
             if(String.IsNullOrEmpty(IDModelloCasa))
             {
                 errMEss = "Modello obbligatorio"; return false;
             }
         
-
+            // Usato NUovo
             if(!String.IsNullOrEmpty(IDModelloCasa))
             {
                 if(IDModelloCasa != "1240" && IDModelloCasa !="1241" && String.IsNullOrEmpty(Condizione))
@@ -563,16 +608,39 @@ namespace WEB_Auto.Controllers
 
             }
             
+            // Trasportatore
             if((IDModelloCasa == "1240" || IDModelloCasa == "1241") && String.IsNullOrEmpty(IDTrasportatoreGrim))
             {
                 errMEss += "Trasportatore obbligatorio " ;
                 return false;
             }
+
+            // Tipo rotabile
             if ((IDModelloCasa == "1240" || IDModelloCasa == "1241") && String.IsNullOrEmpty(IDTipoRotabile))
             {
                 errMEss += "Tipo rotabile obbligatorio ";
                 return false;
             }
+
+            // Lunghezza telaio x rotabili
+            //if(IDModelloCasa == "1240" || IDModelloCasa =="1241")
+            //{
+            //    if(aTelaio.Length != 7)
+            //    {
+            //        errMEss += "Lunghezza telaio errata, (7 caratteri per i rotabili) ";
+            //        return false;
+            //    }
+            //}
+            //else
+            //{
+            //    if (aTelaio.Length != 8)
+            //    {
+            //        errMEss += "Lunghezza telaio errata, (8 caratteri per i NON rotabili) ";
+            //        return false;
+            //    }
+            //}
+
+
 
             if (!String.IsNullOrEmpty(errMEss))
             {

@@ -21,11 +21,16 @@
         <td>
 
 
-            @Html.TextBox("Chassis", null, new { style = "width:180px;text-transform:uppercase", @id = "Telaio", @maxlength = "17", @placeholder = "CLICK TO SCAN:", @autofocus = "autofocus", @autocomplete = "off" })
+            @Html.TextBox("Chassis", null, new { style = "width:180px;text-transform:uppercase" , @id = "Telaio", @maxlength = "17", @placeholder = "CLICK TO SCAN:", @autofocus = "autofocus", @autocomplete = "off" })
             @Html.ValidationMessage("Telaio")
 
         </td>
     </tr>
+    @*<tr>
+        <td>
+            <input lang="it" x-webkit-speech="">
+        </td>
+    </tr>*@
     <tr>
 
         <td>

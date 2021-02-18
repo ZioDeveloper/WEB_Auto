@@ -299,11 +299,11 @@ namespace WEB_Auto.Controllers
             ViewBag.ErrMess = errMess;
 
             // num foto
-
-            var NumFoto = (from m in db.WEB_AUTO_FOTO
-                             where m.IDPerizia == myIDPerizia
-                             select m.ID).Count();
-            ViewBag.NumFoto = NumFoto;
+            //var NumFoto = (from m in db.WEB_AUTO_FOTO
+            //                 where m.IDPerizia == myIDPerizia
+            //                 select m.ID).Count();
+            ViewBag.NumFoto = ContaFoto(myIDPerizia);
+            ViewBag.NumPDF = ContaPDF(myIDPerizia);
 
             return View(model);
         }
@@ -645,6 +645,24 @@ namespace WEB_Auto.Controllers
                 return false;
             }
             
+        }
+
+        public int ContaFoto(string aIdPerizia)
+        {
+            int cnt = 0;
+            cnt = (from m in db.WEB_AUTO_FOTO
+                           where m.IDPerizia == aIdPerizia
+                           select m.ID).Count();
+            return cnt;
+        }
+
+        public int ContaPDF(string aIdPerizia)
+        {
+            int cnt = 0;
+            cnt = (from m in db.WEB_AUTO_PDF
+                           where m.IDPerizia == aIdPerizia
+                           select m.ID).Count();
+            return cnt;
         }
 
         public bool CheckAll(string aIDSpedizione ,string aTelaio, string IDModelloCasa, string IDTrasportatoreGrim,  string IDTipoRotabile , string Condizione, out string errMEss)

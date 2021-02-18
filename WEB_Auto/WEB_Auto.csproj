@@ -237,6 +237,9 @@
     <Compile Include="Models\WEB_AUTO_ListaSpedizioni_vw.cs">
       <DependentUpon>Autocargo.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\WEB_AUTO_PDF.cs">
+      <DependentUpon>Autocargo.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utils.cs" />
   </ItemGroup>
@@ -441,6 +444,7 @@
     <Content Include="Views\Test\Edit.cshtml" />
     <Content Include="Views\Test\Index.cshtml" />
     <Content Include="Views\TelaiAnagrafica\SalvaPeriziaDettagli.cshtml" />
+    <Content Include="Views\Documenti\ScattaPDF.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

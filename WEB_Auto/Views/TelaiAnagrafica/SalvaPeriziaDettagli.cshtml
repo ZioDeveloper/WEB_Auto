@@ -47,31 +47,36 @@
                     @Html.DisplayFor(modelItem => item.Gravita)
                 </td>
                 @*<td>
-                        @Html.ActionLink("Edit", "EditDettaglio", new {  aIDDett = item.ID, aIDPerizia = item.IDPerizia }, new { @class = "btn btn-primary btn-xs disabled" })
-                    </td>*@
+                    @Html.ActionLink("Edit", "EditDettaglio", new {  aIDDett = item.ID, aIDPerizia = item.IDPerizia }, new { @class = "btn btn-primary btn-xs disabled" })
+                </td>*@
                 <td>
                     @Html.ActionLink("Canc", "DeleteDettaglio", new { aIDDett = item.ID, myIDPerizia = item.IDPerizia }, new { @class = "btn btn-danger btn-xs", onclick = "return confirm('Confermi cancellazione ?');" })
                 </td>
-
-
-                @*<td>
-
-                        @Html.DisplayFor(modelItem => item.Qta)
-                    </td>*@
-                @*<td>
-                        @Html.DisplayFor(modelItem => item.Note)
-                    </td>*@
-
-                @*<td>
-                        @Html.DisplayFor(modelItem => item.IDResponsabilita)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.IDAttribuzione)
-                    </td>*@
+            <tr>
+                <td>
+                 @Html.DisplayFor(modelItem => item.Note)
+                </td>
             </tr>
-        }
+                
 
-    <tbody>
+                @*<td>
+
+                    @Html.DisplayFor(modelItem => item.Qta)
+                </td>*@
+                @*<td>
+                    @Html.DisplayFor(modelItem => item.Note)
+                </td>*@
+
+                @*<td>
+                    @Html.DisplayFor(modelItem => item.IDResponsabilita)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IDAttribuzione)
+                </td>*@
+            </tr>
+            }
+
+<tbody>
 </table>
 <br />
 <br />

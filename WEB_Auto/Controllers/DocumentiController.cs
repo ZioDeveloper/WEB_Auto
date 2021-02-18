@@ -19,7 +19,7 @@ namespace WEB_Auto.Controllers
         }
 
         public ActionResult ScattaFoto(string myIDPerizia, string IDPerito, string IDSpedizione, string IDMeteo, string IDTP, string aIDTrasportatore,
-                                         string aIDTipoRotabile, string aIDModelloCasa)
+                                         string aIDTipoRotabile, string aIDModelloCasa,string ErrMess="")
         {
 
             var model = new Models.HomeModel();
@@ -40,6 +40,7 @@ namespace WEB_Auto.Controllers
             ViewBag.aIDTipoRotabile = aIDTipoRotabile;
             ViewBag.aIDModelloCasa = aIDModelloCasa;
             ViewBag.myIDPerizia = myIDPerizia;
+            ViewBag.ErrMess = ErrMess;
             return View("ScattaFoto", myFoto);
 
             ViewBag.myIDPerizia = myIDPerizia;
@@ -49,7 +50,7 @@ namespace WEB_Auto.Controllers
         
 
         public ActionResult UploadFoto(IEnumerable<HttpPostedFileBase> files, string myIDPerizia,string IDPerito, string IDSpedizione , string IDMeteo,
-               string IDTP, string aIDTrasportatore, string aIDTipoRotabile, string aIDModelloCasa )
+               string IDTP, string aIDTrasportatore, string aIDTipoRotabile, string aIDModelloCasa, string ErrMess = "")
         {
             string filename = "";
             string path = "";
@@ -103,7 +104,7 @@ namespace WEB_Auto.Controllers
             ViewBag.aIDTrasportatore = aIDTrasportatore;
             ViewBag.aIDTipoRotabile = aIDTipoRotabile;
             ViewBag.aIDModelloCasa = aIDModelloCasa;
-
+            ViewBag.ErrMess = ErrMess;
             return View("ScattaFoto", myFoto);
         }
 
@@ -133,5 +134,35 @@ namespace WEB_Auto.Controllers
             //return View("ScattaFoto", myIDPerizia);
         }
 
+
+        public ActionResult ScattaPDF(string myIDPerizia, string IDPerito, string IDSpedizione, string IDMeteo, string IDTP, string aIDTrasportatore,
+                                         string aIDTipoRotabile, string aIDModelloCasa, string ErrMess = "")
+        {
+
+            var model = new Models.HomeModel();
+
+
+
+            var myFoto = (from f in db.WEB_AUTO_FOTO
+                          where f.IDPerizia == myIDPerizia
+                          select f);
+            model.WEB_AUTO_FOTO = myFoto.ToList();
+            UpdateModel(myFoto);
+
+            ViewBag.IDPerito = IDPerito;
+            ViewBag.IDSpedizione = IDSpedizione;
+            ViewBag.IDMeteo = IDMeteo;
+            ViewBag.IDTP = IDTP;
+            ViewBag.aIDTrasportatore = aIDTrasportatore;
+            ViewBag.aIDTipoRotabile = aIDTipoRotabile;
+            ViewBag.aIDModelloCasa = aIDModelloCasa;
+            ViewBag.myIDPerizia = myIDPerizia;
+            ViewBag.ErrMess = ErrMess;
+            return View("ScattaPDF", myFoto);
+
+            ViewBag.myIDPerizia = myIDPerizia;
+            return View();
+
+        }
     }
 }

@@ -273,7 +273,7 @@ namespace WEB_Auto.Controllers
                              where m.DataInizioImbarco <= end
                              select m;
             model.AGR_SpedizioniWEB_vw = Spedizione.ToList();
-            var ElencoSpedizioni = new SelectList(model.AGR_SpedizioniWEB_vw.ToList(), "ID", "Descr");
+            var ElencoSpedizioni = new SelectList(model.AGR_SpedizioniWEB_vw.ToList(), "ID", "DescrMin");
 
 
             ViewData["ElencoSpedizioni"] = ElencoSpedizioni;
@@ -297,6 +297,14 @@ namespace WEB_Auto.Controllers
                           select m;
             model.AGR_Perizie_MVC_Flat_vw = perizie.ToList();
             ViewBag.ErrMess = errMess;
+
+            // num foto
+
+            var NumFoto = (from m in db.WEB_AUTO_FOTO
+                             where m.IDPerizia == myIDPerizia
+                             select m.ID).Count();
+            ViewBag.NumFoto = NumFoto;
+
             return View(model);
         }
 
@@ -313,11 +321,12 @@ namespace WEB_Auto.Controllers
 
                 // Aggiorno dati perizia
                 string sqlcmd = " UPDATE AGR_PERIZIE_Temp_MVC " +
-                                " SET IDModello = @IDModello, Telaio = @Telaio, NumFoto = @NumFoto , FileNumber = 0 , Note = @Note " +
+                                " SET IDSpedizione = @IDSpedizione , IDModello = @IDModello, Telaio = @Telaio, NumFoto = @NumFoto , FileNumber = 0 , Note = @Note " +
                                 " WHERE ID = @IDPerizia";
 
 
                 int Inserted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@IDPerizia", myIDPerizia),
+                                                                     new SqlParameter("@IDSpedizione", IDSpedizione),
                                                                      new SqlParameter("@IDModello", IDModelloCasa),
                                                                      new SqlParameter("@Telaio", Chassis),
                                                                      new SqlParameter("@NumFoto", "0"),

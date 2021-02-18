@@ -17,7 +17,8 @@
     IDTP = ViewBag.IDTP,
     aIDTrasportatore = ViewBag.aIDTrasportatore,
     aIDTipoRotabile = ViewBag.aIDTipoRotabile,
-    aIDModelloCasa = ViewBag.aIDModelloCasa
+    aIDModelloCasa = ViewBag.aIDModelloCasa,
+    errMess = ViewBag.ErrMess
 }, new { @class = "btn btn-primary btn-xs" })
     &nbsp;&nbsp;
     @*@Html.ActionLink("Drag & drop", "DragAndDrop", new { IDCommessa = Session["IDCommessa"], IDTelaio = ViewBag.IDTelaio, IDTipoDocumento = ViewBag.IDTipoDocumento }, new { @class = "btn btn-warning btn-xs" })*@
@@ -25,8 +26,9 @@
 <br />
 <br />
 @using (Html.BeginForm("UploadFoto", "Documenti", new { myIDPerizia = ViewBag.myIDPerizia, IDPerito = ViewBag.IDPerito, IDSpedizione = ViewBag.IDSpedizione,
-            IDMeteo = ViewBag.IDMeteo, IDTP = ViewBag.IDTP, aIDTrasportatore = ViewBag.aIDTrasportatore, aIDTipoRotabile = ViewBag.aIDTipoRotabile, aIDModelloCasa = ViewBag.aIDModelloCasa
-}, FormMethod.Post, new { enctype = "multipart/form-data" }))
+            IDMeteo = ViewBag.IDMeteo, IDTP = ViewBag.IDTP, aIDTrasportatore = ViewBag.aIDTrasportatore, aIDTipoRotabile = ViewBag.aIDTipoRotabile,
+            aIDModelloCasa = ViewBag.aIDModelloCasa, ErrMess = ViewBag.ErrMess
+    }, FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
 
     @*<table border="0">

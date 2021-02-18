@@ -253,6 +253,7 @@
           <Property Name="IDPerizia" Type="varchar" MaxLength="50" />
           <Property Name="FileName" Type="varchar" MaxLength="50" />
           <Property Name="Prog" Type="int" />
+          <Property Name="InsertTime" Type="datetime" StoreGeneratedPattern="Computed" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'wisedb.dbo.AAA_Prova' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -397,6 +398,7 @@ warning 6002: The table/view 'wisedb.dbo.AGR_SpedizioniWEB_vw' does not have a p
           <Property Name="DataFineSbarco" Type="datetime" />
           <Property Name="IDOriginale1" Type="varchar" MaxLength="30" />
           <Property Name="IDOriginale2" Type="varchar" MaxLength="30" />
+          <Property Name="DescrMin" Type="varchar" MaxLength="38" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'wisedb.dbo.WEB_AGR_Danni_vw' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -629,7 +631,8 @@ warning 6002: The table/view 'wisedb.dbo.WEB_AUTO_ListaSpedizioni_vw' does not h
     [AGR_SpedizioniWEB_vw].[DataInizioSbarco] AS [DataInizioSbarco], 
     [AGR_SpedizioniWEB_vw].[DataFineSbarco] AS [DataFineSbarco], 
     [AGR_SpedizioniWEB_vw].[IDOriginale1] AS [IDOriginale1], 
-    [AGR_SpedizioniWEB_vw].[IDOriginale2] AS [IDOriginale2]
+    [AGR_SpedizioniWEB_vw].[IDOriginale2] AS [IDOriginale2], 
+    [AGR_SpedizioniWEB_vw].[DescrMin] AS [DescrMin]
     FROM [dbo].[AGR_SpedizioniWEB_vw] AS [AGR_SpedizioniWEB_vw]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="WEB_AGR_Danni_vw" EntityType="Self.WEB_AGR_Danni_vw" store:Type="Views" store:Schema="dbo">
@@ -848,6 +851,7 @@ warning 6002: The table/view 'wisedb.dbo.WEB_AUTO_ListaSpedizioni_vw' does not h
           <Property Name="DataFineSbarco" Type="DateTime" Precision="3" />
           <Property Name="IDOriginale1" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="IDOriginale2" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="DescrMin" Type="String" MaxLength="38" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="AGR_Meteo">
           <Key>
@@ -1169,6 +1173,7 @@ warning 6002: The table/view 'wisedb.dbo.WEB_AUTO_ListaSpedizioni_vw' does not h
           <Property Name="IDPerizia" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="FileName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Prog" Type="Int32" />
+          <Property Name="InsertTime" Type="DateTime" Precision="3" annotation:StoreGeneratedPattern="Computed" />
         </EntityType>
         <EntityType Name="AGR_Perizie_MVC_Flat_vw">
           <Key>
@@ -1327,6 +1332,7 @@ warning 6002: The table/view 'wisedb.dbo.WEB_AUTO_ListaSpedizioni_vw' does not h
           <EntitySetMapping Name="AGR_SpedizioniWEB_vw">
             <EntityTypeMapping TypeName="wisedbModel.AGR_SpedizioniWEB_vw">
               <MappingFragment StoreEntitySet="AGR_SpedizioniWEB_vw">
+                <ScalarProperty Name="DescrMin" ColumnName="DescrMin" />
                 <ScalarProperty Name="IDOriginale2" ColumnName="IDOriginale2" />
                 <ScalarProperty Name="IDOriginale1" ColumnName="IDOriginale1" />
                 <ScalarProperty Name="DataFineSbarco" ColumnName="DataFineSbarco" />
@@ -1613,6 +1619,7 @@ warning 6002: The table/view 'wisedb.dbo.WEB_AUTO_ListaSpedizioni_vw' does not h
           <EntitySetMapping Name="WEB_AUTO_FOTO">
             <EntityTypeMapping TypeName="wisedbModel.WEB_AUTO_FOTO">
               <MappingFragment StoreEntitySet="WEB_AUTO_FOTO">
+                <ScalarProperty Name="InsertTime" ColumnName="InsertTime" />
                 <ScalarProperty Name="Prog" ColumnName="Prog" />
                 <ScalarProperty Name="FileName" ColumnName="FileName" />
                 <ScalarProperty Name="IDPerizia" ColumnName="IDPerizia" />

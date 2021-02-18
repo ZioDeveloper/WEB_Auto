@@ -12,7 +12,7 @@ namespace WEB_Auto.Controllers
 
         private wisedbEntities db  = new wisedbEntities();
 
-        public ActionResult Index(string usr, string errMess = "")
+        public ActionResult Index(string usr, string Filtro = "OGGI", string errMess = "")
         {
             var model = new Models.HomeModel();
 
@@ -52,8 +52,24 @@ namespace WEB_Auto.Controllers
 
 
             // Dati per dropdown spedizioni
-            DateTime ini = DateTime.Today.AddDays(-5);
-            DateTime end = DateTime.Today.AddDays(+5);
+            DateTime ini = DateTime.Today;
+            DateTime end = DateTime.Today;
+            if (Filtro == "OGGI")
+            {
+                ini = DateTime.Today.AddDays(0);
+                end = DateTime.Today.AddDays(0);
+            }
+            else if(Filtro == "TRE")
+            {
+                ini = DateTime.Today.AddDays(-3);
+                end = DateTime.Today.AddDays(3);
+            }
+            else if (Filtro == "SETTE")
+            {
+                ini = DateTime.Today.AddDays(-7);
+                end = DateTime.Today.AddDays(7);
+            }
+
             var Spedizioni = from m in db.AGR_SpedizioniWEB_vw
                              where m.DataInizioImbarco >= ini
                              where m.DataInizioImbarco <= end

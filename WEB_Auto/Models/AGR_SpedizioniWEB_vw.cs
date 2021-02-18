@@ -29,5 +29,6 @@ namespace WEB_Auto.Models
         public Nullable<System.DateTime> DataFineSbarco { get; set; }
         public string IDOriginale1 { get; set; }
         public string IDOriginale2 { get; set; }
+        public string DescrMin { get; set; }
     }
 }

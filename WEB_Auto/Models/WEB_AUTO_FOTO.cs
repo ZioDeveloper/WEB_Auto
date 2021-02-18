@@ -18,5 +18,6 @@ namespace WEB_Auto.Models
         public string IDPerizia { get; set; }
         public string FileName { get; set; }
         public Nullable<int> Prog { get; set; }
+        public Nullable<System.DateTime> InsertTime { get; set; }
     }
 }

@@ -273,7 +273,7 @@ else
             <td>
                 @if (ViewBag.ErrMess == "" || ViewBag.ErrMess == "Sbloccato")
                 {
-                    @Html.CheckBox("isDamaged", false)
+                    @Html.CheckBox("isDamaged", false, new { @onchange = "submitform();" })
                 }
                 else
                 {
@@ -315,19 +315,21 @@ else
                 <tr>
                     <td>
                         @Html.ActionLink("Inserisci foto", "ScattaFoto", "Documenti", new
-                                   {
-                                       myIDPerizia = item4[0].ID,
-                                       IDPerito = ViewBag.IDPerito,
-                                       IDSpedizione = ViewBag.IDSpedizione,
-                                       IDMeteo = ViewBag.IDMeteo,
-                                       IDTP = ViewBag.IDTP,
-                                       aIDTrasportatore = ViewBag.aIDTrasportatore,
-                                       aIDTipoRotabile = ViewBag.aIDTipoRotabile,
-                                       aIDModelloCasa = ViewBag.aIDModelloCasa
-                                   }, new { @class = "photoImg" })
-                                    </td>
+                           {
+                               myIDPerizia = item4[0].ID,
+                               IDPerito = ViewBag.IDPerito,
+                               IDSpedizione = ViewBag.IDSpedizione,
+                               IDMeteo = ViewBag.IDMeteo,
+                               IDTP = ViewBag.IDTP,
+                               aIDTrasportatore = ViewBag.aIDTrasportatore,
+                               aIDTipoRotabile = ViewBag.aIDTipoRotabile,
+                               aIDModelloCasa = ViewBag.aIDModelloCasa,
+                               ErrMess = ViewBag.ErrMess
+                           }, new { @class = "photoImg" }) &nbsp;@ViewBag.NumFoto
+                    </td>
+                    
                     <td>
-                        @Html.ActionLink("Inserisci foto", "ScattaFoto", "Documenti", new
+                        @Html.ActionLink("Inserisci PDF", "ScattaPDF", "Documenti", new
                                   {
                                       myIDPerizia = item4[0].ID,
                                       IDPerito = ViewBag.IDPerito,

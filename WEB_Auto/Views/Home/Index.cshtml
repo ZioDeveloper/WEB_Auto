@@ -25,10 +25,17 @@
         <br />
         Sei associato al porto : @item3[0].ID  - @item3[0].Descr
         <br />
-        
     </div>
     <br />
-    <div style="color:red" >
+
+    @using (Html.BeginForm("Index", "Home"))
+    {
+    <label>Oggi: @Html.RadioButton("Filtro", "OGGI", true, new { onclick = "this.form.submit()" })</label>
+    <label>&nbsp;&nbsp; &nbsp;&nbsp; +/- 3 gg :  @Html.RadioButton("Filtro", "TRE", false, new { onclick = "this.form.submit()" })</label>
+    <label>&nbsp;&nbsp; &nbsp;&nbsp; +/- 7 gg :  @Html.RadioButton("Filtro", "SETTE", false, new { onclick = "this.form.submit()" })</label>
+    }
+
+    <div style="color:red">
         @ViewBag.errMess
     </div>
     <br />

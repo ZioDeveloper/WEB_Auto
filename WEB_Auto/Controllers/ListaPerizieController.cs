@@ -55,9 +55,6 @@ namespace WEB_Auto.Controllers
             //model.AGR_SpedizioniWEB_vw = Spedizioni.ToList().OrderBy(s => s.ID);
             #endregion
             string aPerito = Session["IDPeritoVero"].ToString();
-            
-
-            
 
             var lista = (from m in db.WEB_AUTO_ListaSpedizioni_vw
                          where m.IDPerito == aPerito

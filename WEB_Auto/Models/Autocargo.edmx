@@ -489,6 +489,7 @@ warning 6002: The table/view 'wisedb.dbo.WEB_AUTO_ListaSpedizioni_2_vw' does not
             <PropertyRef Name="ID" />
             <PropertyRef Name="IsClosed" />
           </Key>
+          <Property Name="Prog" Type="bigint" />
           <Property Name="ID" Type="varchar" MaxLength="8" Nullable="false" />
           <Property Name="IDOriginale1" Type="varchar" MaxLength="30" />
           <Property Name="IDTipoPerizia" Type="varchar" MaxLength="1" />
@@ -720,6 +721,7 @@ warning 6002: The table/view 'wisedb.dbo.WEB_AUTO_ListaSpedizioni_vw' does not h
           </EntitySet>
           <EntitySet Name="WEB_AUTO_ListaSpedizioni_2_vw" EntityType="Self.WEB_AUTO_ListaSpedizioni_2_vw" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
+    [WEB_AUTO_ListaSpedizioni_2_vw].[Prog] AS [Prog], 
     [WEB_AUTO_ListaSpedizioni_2_vw].[ID] AS [ID], 
     [WEB_AUTO_ListaSpedizioni_2_vw].[IDOriginale1] AS [IDOriginale1], 
     [WEB_AUTO_ListaSpedizioni_2_vw].[IDTipoPerizia] AS [IDTipoPerizia], 
@@ -1328,6 +1330,7 @@ warning 6002: The table/view 'wisedb.dbo.WEB_AUTO_ListaSpedizioni_vw' does not h
           <Property Name="Damaged" Type="Int32" />
           <Property Name="IsClosed" Type="Boolean" Nullable="false" />
           <Property Name="IDPerito" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="Prog" Type="Int64" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -1801,6 +1804,7 @@ warning 6002: The table/view 'wisedb.dbo.WEB_AUTO_ListaSpedizioni_vw' does not h
           <EntitySetMapping Name="WEB_AUTO_ListaSpedizioni_2_vw">
             <EntityTypeMapping TypeName="wisedbModel.WEB_AUTO_ListaSpedizioni_2_vw">
               <MappingFragment StoreEntitySet="WEB_AUTO_ListaSpedizioni_2_vw">
+                <ScalarProperty Name="Prog" ColumnName="Prog" />
                 <ScalarProperty Name="IDPerito" ColumnName="IDPerito" />
                 <ScalarProperty Name="IsClosed" ColumnName="IsClosed" />
                 <ScalarProperty Name="Damaged" ColumnName="Damaged" />

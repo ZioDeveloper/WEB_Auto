@@ -18,7 +18,8 @@
     aIDTrasportatore = ViewBag.aIDTrasportatore,
     aIDTipoRotabile = ViewBag.aIDTipoRotabile,
     aIDModelloCasa = ViewBag.aIDModelloCasa,
-    errMess = ViewBag.ErrMess
+    errMess = ViewBag.ErrMess,
+    IsUpdate = ViewBag.IsUpdate
 }, new { @class = "btn btn-primary btn-xs" })
     &nbsp;&nbsp;
     @*@Html.ActionLink("Drag & drop", "DragAndDrop", new { IDCommessa = Session["IDCommessa"], IDTelaio = ViewBag.IDTelaio, IDTipoDocumento = ViewBag.IDTipoDocumento }, new { @class = "btn btn-warning btn-xs" })*@
@@ -27,7 +28,7 @@
 <br />
 @using (Html.BeginForm("UploadFoto", "Documenti", new { myIDPerizia = ViewBag.myIDPerizia, IDPerito = ViewBag.IDPerito, IDSpedizione = ViewBag.IDSpedizione,
             IDMeteo = ViewBag.IDMeteo, IDTP = ViewBag.IDTP, aIDTrasportatore = ViewBag.aIDTrasportatore, aIDTipoRotabile = ViewBag.aIDTipoRotabile,
-            aIDModelloCasa = ViewBag.aIDModelloCasa, ErrMess = ViewBag.ErrMess
+            aIDModelloCasa = ViewBag.aIDModelloCasa, ErrMess = ViewBag.ErrMess, IsUpdate = ViewBag.IsUpdate
     }, FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
 
@@ -100,7 +101,8 @@
                IDPerito = ViewBag.IDPerito,
                IDSpedizione = ViewBag.IDSpedizione,
                IDMeteo = ViewBag.IDMeteo,
-               IDTP = ViewBag.IDTP
+               IDTP = ViewBag.IDTP,
+               IsUpdate = ViewBag.IsUpdate
            }, new { @class = "btn btn-danger btn-xs", onclick = "return confirm('Vuoi davvero cancellare la foto ?');" })
             </td>
         </tr>

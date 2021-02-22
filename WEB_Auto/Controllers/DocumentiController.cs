@@ -19,7 +19,7 @@ namespace WEB_Auto.Controllers
         }
 
         public ActionResult ScattaFoto(string myIDPerizia, string IDPerito, string IDSpedizione, string IDMeteo, string IDTP, string aIDTrasportatore,
-                                         string aIDTipoRotabile, string aIDModelloCasa,string ErrMess="")
+                                         string aIDTipoRotabile, string aIDModelloCasa,string ErrMess="", bool IsUpdate = false)
         {
 
             var model = new Models.HomeModel();
@@ -41,6 +41,7 @@ namespace WEB_Auto.Controllers
             ViewBag.aIDModelloCasa = aIDModelloCasa;
             ViewBag.myIDPerizia = myIDPerizia;
             ViewBag.ErrMess = ErrMess;
+            ViewBag.IsUpdate = IsUpdate;
             return View("ScattaFoto", myFoto);
 
             ViewBag.myIDPerizia = myIDPerizia;
@@ -50,7 +51,7 @@ namespace WEB_Auto.Controllers
         
 
         public ActionResult UploadFoto(IEnumerable<HttpPostedFileBase> files, string myIDPerizia,string IDPerito, string IDSpedizione , string IDMeteo,
-               string IDTP, string aIDTrasportatore, string aIDTipoRotabile, string aIDModelloCasa, string ErrMess = "")
+               string IDTP, string aIDTrasportatore, string aIDTipoRotabile, string aIDModelloCasa, string ErrMess = "", bool IsUpdate = false)
         {
             string filename = "";
             string path = "";
@@ -105,10 +106,11 @@ namespace WEB_Auto.Controllers
             ViewBag.aIDTipoRotabile = aIDTipoRotabile;
             ViewBag.aIDModelloCasa = aIDModelloCasa;
             ViewBag.ErrMess = ErrMess;
+            ViewBag.IsUpdate = IsUpdate;
             return View("ScattaFoto", myFoto);
         }
 
-        public ActionResult CancellaDocumento(int? IDDocumento ,string myIDPerizia, string nomefile, string IDPerito, string IDSpedizione, string IDMeteo, string IDTP)
+        public ActionResult CancellaDocumento(int? IDDocumento ,string myIDPerizia, string nomefile, string IDPerito, string IDSpedizione, string IDMeteo, string IDTP, bool IsUpdate = false)
         {
             var sql = @"DELETE FROM WEB_AUTO_FOTO WHERE ID = @IDDocumento";
             int myRecordCounter = db.Database.ExecuteSqlCommand(sql, new SqlParameter("@IDDocumento", IDDocumento));
@@ -129,14 +131,16 @@ namespace WEB_Auto.Controllers
             model.WEB_AUTO_FOTO = myFoto.ToList();
 
             //ViewBag.IDTelaio = myIDPerizia;
-            return RedirectToAction("ScattaFoto", "Documenti", new { myIDPerizia= myIDPerizia, IDPerito= IDPerito, IDSpedizione = IDSpedizione, IDMeteo = IDMeteo, IDTP= IDTP });
+            return RedirectToAction("ScattaFoto", "Documenti", new { myIDPerizia= myIDPerizia, IDPerito= IDPerito, IDSpedizione = IDSpedizione,
+                                                                     IDMeteo = IDMeteo, IDTP= IDTP, IsUpdate= IsUpdate
+            });
 
             //return View("ScattaFoto", myIDPerizia);
         }
 
 
         public ActionResult ScattaPDF(string myIDPerizia, string IDPerito, string IDSpedizione, string IDMeteo, string IDTP, string aIDTrasportatore,
-                                         string aIDTipoRotabile, string aIDModelloCasa, string ErrMess = "")
+                                         string aIDTipoRotabile, string aIDModelloCasa, string ErrMess = "" ,bool IsUpdate = false)
         {
 
             var model = new Models.HomeModel();
@@ -158,6 +162,7 @@ namespace WEB_Auto.Controllers
             ViewBag.aIDModelloCasa = aIDModelloCasa;
             ViewBag.myIDPerizia = myIDPerizia;
             ViewBag.ErrMess = ErrMess;
+            ViewBag.IsUpdate = IsUpdate;
             return View("ScattaPDF", myFoto);
 
             ViewBag.myIDPerizia = myIDPerizia;
@@ -166,7 +171,7 @@ namespace WEB_Auto.Controllers
         }
 
         public ActionResult UploadPDF(IEnumerable<HttpPostedFileBase> files, string myIDPerizia, string IDPerito, string IDSpedizione, string IDMeteo,
-               string IDTP, string aIDTrasportatore, string aIDTipoRotabile, string aIDModelloCasa, string ErrMess = "")
+               string IDTP, string aIDTrasportatore, string aIDTipoRotabile, string aIDModelloCasa, string ErrMess = "", bool IsUpdate = false)
         {
             string filename = "";
             string path = "";
@@ -221,9 +226,10 @@ namespace WEB_Auto.Controllers
             ViewBag.aIDTipoRotabile = aIDTipoRotabile;
             ViewBag.aIDModelloCasa = aIDModelloCasa;
             ViewBag.ErrMess = ErrMess;
+            ViewBag.IsUpdate = IsUpdate;
             return View("ScattaPDF", myFoto);
         }
-        public ActionResult CancellaPDF(int? IDDocumento, string myIDPerizia, string nomefile, string IDPerito, string IDSpedizione, string IDMeteo, string IDTP)
+        public ActionResult CancellaPDF(int? IDDocumento, string myIDPerizia, string nomefile, string IDPerito, string IDSpedizione, string IDMeteo, string IDTP, bool IsUpdate = false)
         {
             var sql = @"DELETE FROM WEB_AUTO_PDF WHERE ID = @IDDocumento";
             int myRecordCounter = db.Database.ExecuteSqlCommand(sql, new SqlParameter("@IDDocumento", IDDocumento));
@@ -244,7 +250,9 @@ namespace WEB_Auto.Controllers
             model.WEB_AUTO_PDF = myFoto.ToList();
 
             //ViewBag.IDTelaio = myIDPerizia;
-            return RedirectToAction("ScattaPDF", "Documenti", new { myIDPerizia = myIDPerizia, IDPerito = IDPerito, IDSpedizione = IDSpedizione, IDMeteo = IDMeteo, IDTP = IDTP });
+            return RedirectToAction("ScattaPDF", "Documenti", new { myIDPerizia = myIDPerizia, IDPerito = IDPerito, IDSpedizione = IDSpedizione,
+                                                                    IDMeteo = IDMeteo, IDTP = IDTP,  IsUpdate = IsUpdate
+            });
 
             //return View("ScattaFoto", myIDPerizia);
         }

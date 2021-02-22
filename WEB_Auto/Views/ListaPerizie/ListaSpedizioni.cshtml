@@ -35,6 +35,7 @@ Filtri :*@
             <th>Modifica</th>
             <th>Spedizione</th>
             <th>Rif.cliente</th>
+            <th>TP</th>
             <th>Num perizie</th>
             <th>Good</th>
             <th>Damaged</th>
@@ -49,13 +50,16 @@ Filtri :*@
         {
         <tr>
             <td>
-                @Html.ActionLink("Visualizza", "EditSpedizione", new { IDSpedizione = item.ID }, new { @class = "btn btn-success btn-xs" })
+                @Html.ActionLink("Visualizza", "EditSpedizione", new { IDSpedizione = item.ID, IDTP = item.IDTipoPerizia }, new { @class = "btn btn-success btn-xs" })
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.ID)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.IDOriginale1)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IDTipoPerizia)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.NumPerizie)
@@ -70,7 +74,7 @@ Filtri :*@
                 @Html.DisplayFor(modelItem => item.IsClosed)
             </td>
             <td>
-                @Html.ActionLink("Chiudi", "ChiudiSpedizione", new { IDSpedizione = item.ID , IDTP = item.IDTipoPerizia }, new { @class = "btn btn-warning btn-xs" })
+                @Html.ActionLink("Chiudi", "ChiudiSpedizione", new { IDSpedizione = item.ID, IDTP = item.IDTipoPerizia }, new { @class = "btn btn-warning btn-xs" })
             </td>
 
         </tr>
@@ -81,6 +85,7 @@ Filtri :*@
             <th>Modifica</th>
             <th>Spedizione</th>
             <th>Rif.cliente</th>
+            <th>TP</th>
             <th>Num perizie</th>
             <th>Good</th>
             <th>Damaged</th>

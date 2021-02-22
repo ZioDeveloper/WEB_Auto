@@ -76,13 +76,14 @@ namespace WEB_Auto.Controllers
 
         }
 
-        public ActionResult EditSpedizione(string IDSpedizione)
+        public ActionResult EditSpedizione(string IDSpedizione, string IDTP)
         {
             var model = new Models.HomeModel();
             string aPerito = Session["IDPeritoVero"].ToString();
             var lista = (from m in db.WEB_Auto_ListaPerizieXSpedizione_vw
                            where m.IDSpedizione == IDSpedizione
                            where m.IDPerito == aPerito
+                           where m.IDTipoPerizia == IDTP
                          select m).ToList();
             model.WEB_Auto_ListaPerizieXSpedizione_vw = lista;
             ViewBag.IDSpedizione = IDSpedizione;

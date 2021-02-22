@@ -22,5 +22,6 @@ namespace WEB_Auto.Models
         public Nullable<int> Damaged { get; set; }
         public bool IsClosed { get; set; }
         public string IDPerito { get; set; }
+        public Nullable<long> Prog { get; set; }
     }
 }

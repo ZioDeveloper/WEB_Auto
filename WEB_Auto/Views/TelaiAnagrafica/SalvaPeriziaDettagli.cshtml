@@ -50,7 +50,7 @@
                     @Html.ActionLink("Edit", "EditDettaglio", new {  aIDDett = item.ID, aIDPerizia = item.IDPerizia }, new { @class = "btn btn-primary btn-xs disabled" })
                 </td>*@
                 <td>
-                    @Html.ActionLink("Canc", "DeleteDettaglio", new { aIDDett = item.ID, myIDPerizia = item.IDPerizia }, new { @class = "btn btn-danger btn-xs", onclick = "return confirm('Confermi cancellazione ?');" })
+                    @Html.ActionLink("Canc", "DeleteDettaglio", new { aIDDett = item.ID, myIDPerizia = item.IDPerizia,IsUpdate = ViewBag.IsUpdate }, new { @class = "btn btn-danger btn-xs", onclick = "return confirm('Confermi cancellazione ?');" })
                 </td>
             <tr>
                 <td>
@@ -82,7 +82,7 @@
 <br />
 <div>
     @*@using (Html.BeginForm("SalvaPeriziaDettagli", "Home", new { IDPerizia, IDParte, IDDanno, Qta, Note, Flags, IDGravita, IDResponsabilita, IDAttribuzione }, FormMethod.Post))*@
-    @using (Html.BeginForm("SalvaPeriziaDettagli", "TelaiAnagrafica", new { myIDPerizia }, FormMethod.Post))
+    @using (Html.BeginForm("SalvaPeriziaDettagli", "TelaiAnagrafica", new { myIDPerizia,IsUpdate = ViewBag.IsUpdate }, FormMethod.Post))
     {
 
     <table>
@@ -204,7 +204,8 @@
     aIDTrasportatore = ViewBag.aIDTrasportatore,
     aIDTipoRotabile = ViewBag.aIDTipoRotabile,
     aIDModelloCasa = ViewBag.aIDModelloCasa,
-    errMess = "Sbloccato"
+    errMess = "Sbloccato",
+    IsUpdate = ViewBag.ISUpdate
 }, new { @class = "btn btn-primary btn-xs" })
 </div>
 

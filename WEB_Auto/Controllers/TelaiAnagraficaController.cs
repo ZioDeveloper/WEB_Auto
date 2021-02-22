@@ -16,6 +16,8 @@ namespace WEB_Auto.Controllers
         public ActionResult InputTelaio(string IDPerito, string IDSpedizione,string IDMeteo, string IDTP, string Chassis)
         {
 
+            EliminaTelaiSenzaModello(IDPerito);
+
             if (String.IsNullOrEmpty(IDSpedizione))
             {
                 string usr = Session["User"].ToString();
@@ -89,6 +91,7 @@ namespace WEB_Auto.Controllers
             ViewBag.IDTP = IDTP;
             return View();
         }
+
 
         public string CreaNuovaPerizia(string IDPerito, string IDSpedizione, string IDMeteo, string IDTP, string Chassis)
         {
@@ -411,7 +414,7 @@ namespace WEB_Auto.Controllers
                 }
                 else
                 {
-                    return RedirectToAction("SalvaPeriziaDettagli", "TelaiAnagrafica", new { myIDPerizia });
+                    return RedirectToAction("SalvaPeriziaDettagli", "TelaiAnagrafica", new { myIDPerizia, IsUpdate= IsUpdate });
                 }
             }
             else
@@ -432,7 +435,7 @@ namespace WEB_Auto.Controllers
             }
         }
 
-        public ActionResult SalvaPeriziaDettagli(string myIDPerizia, string myIDParte)
+        public ActionResult SalvaPeriziaDettagli(string myIDPerizia, string myIDParte, bool IsUpdate= false)
         {
             var model = new Models.HomeModel();
             bool ISGravitaEnabled = true;
@@ -524,12 +527,13 @@ namespace WEB_Auto.Controllers
             ViewBag.aIDModelloCasa = test.IDModello;
             ViewBag.IDPeriz = test.ID;
             ViewBag.ISGravitaEnabled = ISGravitaEnabled;
+            ViewBag.IsUpdate = IsUpdate;
             return View(model);
         }
 
         [HttpPost]
         public ActionResult SalvaPeriziaDettagli(string myIDPerizia, string IDParte, string IDDanno, string Qta, string Note, string Flags,
-            string IDGravita, string IDResponsabilita, string IDAttribuzione)
+            string IDGravita, string IDResponsabilita, string IDAttribuzione , bool IsUpdate = false)
         {
 
             // Inserisco dettagli danno perizia
@@ -571,17 +575,17 @@ namespace WEB_Auto.Controllers
             //               where m.IDPerizia == aIDPerizia
             //               select m;
             //model.AGR_PERIZIE_DETT_TEMP_MVC_vw = Detatgli.ToList();
-            return RedirectToAction("SalvaPeriziaDettagli", "TelaiAnagrafica", new { myIDPerizia });
+            return RedirectToAction("SalvaPeriziaDettagli", "TelaiAnagrafica", new { myIDPerizia , IsUpdate = IsUpdate });
             
             //return View(model);
         }
 
-        public ActionResult DeleteDettaglio(string aIDDett, string myIDPerizia)
+        public ActionResult DeleteDettaglio(string aIDDett, string myIDPerizia, bool IsUpdate = false)
         {
             string sqlcmd = " DELETE FROM  AGR_PERIZIE_DETT_TEMP_MVC WHERE ID = @ID";
             int deleted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@ID", aIDDett));
 
-            return RedirectToAction("SalvaPeriziaDettagli", "TelaiAnagrafica", new { myIDPerizia });
+            return RedirectToAction("SalvaPeriziaDettagli", "TelaiAnagrafica", new { myIDPerizia , IsUpdate = IsUpdate });
         }
 
         public void AggiornaFlagGoodDamaged(string aIDPerizia)
@@ -728,6 +732,14 @@ namespace WEB_Auto.Controllers
 
             errMEss = "";
             return true;
+        }
+
+        public void EliminaTelaiSenzaModello(string IDPerito)
+        {
+            string sqlcmd = " DELETE FROM AGR_PerizieExpGrim_Temp_MVC WHERE ID IN(SELECT ID FROM AGR_PERIZIE_TEMP_MVC WHERE IDPErito = @IDPErito  AND IDModello IS NULL)";
+            int deleted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@IDPErito", IDPerito));
+            sqlcmd = " DELETE FROM AGR_PERIZIE_TEMP_MVC WHERE IDPErito =  @IDPErito AND IDModello IS NULL";
+            deleted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@IDPErito", IDPerito));
         }
     }
 }

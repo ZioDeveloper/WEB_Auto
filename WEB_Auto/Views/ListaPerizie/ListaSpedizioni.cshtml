@@ -22,7 +22,11 @@
 <h4>Lista spedizioni associate</h4>
 @*<hr />
 Filtri :*@
-
+<br />
+<td>
+   
+    @Html.ActionLink("Torna a Home","Index","Home",null, new { @class = "btn btn-primary btn-xs" })
+</td>
 <hr />
 
 <table id="ElencoSpedizioni" class="display" style="width:100%">
@@ -41,7 +45,7 @@ Filtri :*@
 
     </thead>
     <tbody>
-        @foreach (var item in Model.WEB_AUTO_ListaSpedizioni_vw)
+        @foreach (var item in Model.WEB_AUTO_ListaSpedizioni_2_vw)
         {
         <tr>
             <td>

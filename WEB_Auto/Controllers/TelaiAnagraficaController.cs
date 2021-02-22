@@ -155,7 +155,7 @@ namespace WEB_Auto.Controllers
 
         public ActionResult Edit(string IDPerito, string IDSpedizione, string IDMeteo, string IDTP, string aIDTrasportatore,
                                          string aIDTipoRotabile, string aIDModelloCasa, string myIDPerizia,string flagNU, string Annotazioni,
-                                         string errMess = " ") // errMess = " " per eludere primo controllo in View Edit
+                                         string errMess = " ", bool IsUpdate = false) // errMess = " " per eludere primo controllo in View Edit
         {
             if (myIDPerizia == null)
             {
@@ -266,8 +266,8 @@ namespace WEB_Auto.Controllers
             }
 
             // Dati per dropdown Spedizione
-            DateTime ini = DateTime.Today.AddDays(-5);
-            DateTime end = DateTime.Today.AddDays(+5);
+            DateTime ini = DateTime.Today.AddDays(-50);
+            DateTime end = DateTime.Today.AddDays(+50);
             var Spedizione = from m in db.AGR_SpedizioniWEB_vw
                              where m.DataInizioImbarco >= ini
                              where m.DataInizioImbarco <= end
@@ -304,12 +304,13 @@ namespace WEB_Auto.Controllers
             //                 select m.ID).Count();
             ViewBag.NumFoto = ContaFoto(myIDPerizia);
             ViewBag.NumPDF = ContaPDF(myIDPerizia);
+            ViewBag.IsUpdate = IsUpdate;
 
             return View(model);
         }
 
         public ActionResult SalvaPeriziaTesta(string IDPerito, string IDSpedizione, string IDMeteo, string IDTP, string Chassis, string DataPerizia, string IDModelloCasa, string IDTrasportatoreGrim,
-                                              string IDTipoRotabile, bool? isDamaged, string Condizione, string Annotazioni, string myIDPerizia)
+                                              string IDTipoRotabile, bool? isDamaged, string Condizione, string Annotazioni, string myIDPerizia, bool IsUpdate = false)
         {
 
 
@@ -404,7 +405,8 @@ namespace WEB_Auto.Controllers
                         aIDTipoRotabile = IDTipoRotabile,
                         aIDModelloCasa = IDModelloCasa,
                         myIDPerizia = myIDPerizia,
-                        errMess = "Sbloccato"
+                        errMess = "Sbloccato",
+                        IsUpdate = IsUpdate
                     });
                 }
                 else
@@ -424,7 +426,8 @@ namespace WEB_Auto.Controllers
                     aIDTipoRotabile = IDTipoRotabile,
                     aIDModelloCasa = IDModelloCasa,
                     myIDPerizia = myIDPerizia,
-                    errMess = myerrMess
+                    errMess = myerrMess,
+                    IsUpdate = IsUpdate
                 });
             }
         }

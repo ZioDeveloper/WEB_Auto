@@ -56,10 +56,10 @@ namespace WEB_Auto.Controllers
             #endregion
             string aPerito = Session["IDPeritoVero"].ToString();
 
-            var lista = (from m in db.WEB_AUTO_ListaSpedizioni_vw
+            var lista = (from m in db.WEB_AUTO_ListaSpedizioni_2_vw
                          where m.IDPerito == aPerito
                          select m).ToList();
-            model.WEB_AUTO_ListaSpedizioni_vw = lista;
+            model.WEB_AUTO_ListaSpedizioni_2_vw = lista;
 
             return View(model);
 
@@ -79,8 +79,10 @@ namespace WEB_Auto.Controllers
         public ActionResult EditSpedizione(string IDSpedizione)
         {
             var model = new Models.HomeModel();
+            string aPerito = Session["IDPeritoVero"].ToString();
             var lista = (from m in db.WEB_Auto_ListaPerizieXSpedizione_vw
                            where m.IDSpedizione == IDSpedizione
+                           where m.IDPerito == aPerito
                          select m).ToList();
             model.WEB_Auto_ListaPerizieXSpedizione_vw = lista;
             ViewBag.IDSpedizione = IDSpedizione;

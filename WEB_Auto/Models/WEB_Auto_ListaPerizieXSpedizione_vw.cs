@@ -25,5 +25,13 @@ namespace WEB_Auto.Models
         public Nullable<System.DateTime> ETA { get; set; }
         public string POD { get; set; }
         public Nullable<System.DateTime> ETD { get; set; }
+        public string Status { get; set; }
+        public string IDPerito { get; set; }
+        public string IDMeteo { get; set; }
+        public string ID_TrasportatoreGrimaldi { get; set; }
+        public string ID_TipoRotabile { get; set; }
+        public string FlgNuovoUsato { get; set; }
+        public Nullable<int> IDModello { get; set; }
+        public string Note { get; set; }
     }
 }

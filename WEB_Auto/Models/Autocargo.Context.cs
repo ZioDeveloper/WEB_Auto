@@ -51,5 +51,6 @@ namespace WEB_Auto.Models
         public virtual DbSet<WEB_Auto_ListaPerizieXSpedizione_vw> WEB_Auto_ListaPerizieXSpedizione_vw { get; set; }
         public virtual DbSet<AGR_DatiRotabiliInUSo_vw> AGR_DatiRotabiliInUSo_vw { get; set; }
         public virtual DbSet<WEB_AUTO_PDF> WEB_AUTO_PDF { get; set; }
+        public virtual DbSet<WEB_AUTO_ListaSpedizioni_2_vw> WEB_AUTO_ListaSpedizioni_2_vw { get; set; }
     }
 }

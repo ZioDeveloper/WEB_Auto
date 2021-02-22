@@ -17,12 +17,16 @@
         <script type="text/javascript" src="https://nightly.datatables.net/searchpanes/js/dataTables.searchPanes.min.js"</script>*@
 </head>
 <h4>Lista telai spedizione : @ViewBag.IDSpedizione</h4>
-
+<br />
+<td>
+    @Html.ActionLink("Torna a lista spedizioni", "ListaSpedizioni", null, new { @class = "btn btn-primary btn-xs" })
+</td>
 <hr />
 
 <table id="ElencoPerizie" class="display" style="width:100%">
     <thead>
         <tr>
+            <th>Modifica</th>
             <th>Telaio</th>
             <th>Modello</th>
             <th>Spedizione</th>
@@ -30,6 +34,7 @@
             <th>TP</th>
             <th>ETD</th>
             <th>ETA</th>
+            <th>Status</th>
 
         </tr>
 
@@ -38,9 +43,25 @@
         @foreach (var item in Model.WEB_Auto_ListaPerizieXSpedizione_vw)
         {
             string ETD = item.ETD.ToString().Left(10);
-           string ETA = item.ETA.ToString().Left(10);
+            string ETA = item.ETA.ToString().Left(10);
+            string aStatus = item.Status;
         <tr>
-
+            <td>
+                @Html.ActionLink("Modifica", "Edit", "TelaiAnagrafica", new {
+               IDPerito = item.IDPerito,
+               IDSpedizione = item.IDSpedizione,
+               IDMeteo = item.IDMeteo,
+               IDTP = item.IDTipoPerizia,
+               aIDTrasportatore = item.ID_TrasportatoreGrimaldi,
+               aIDTipoRotabile = item.ID_TipoRotabile,
+               aIDModelloCasa = item.IDModello,
+               myIDPerizia = item.ID,
+               flagNU = item.FlgNuovoUsato,
+               Annotazioni = item.Note,
+               errMess = "In fase modifica",
+               IsUpdate = true
+                }, new { @class = "btn btn-success btn-xs" })
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Telaio)
             </td>
@@ -62,12 +83,27 @@
             <td>
                 @Html.DisplayFor(modelItem => ETA)
             </td>
+            @if (aStatus.ToUpper() == "GOOD")
+            {
+                <td style="color:forestgreen">
+
+                    @Html.DisplayFor(modelItem => item.Status)
+                </td>
+            }
+            else
+            {
+                <td style="color:red">
+
+                    @Html.DisplayFor(modelItem => item.Status)
+                </td>
+            }
 
         </tr>
         }
     </tbody>
     <tfoot>
         <tr>
+            <th>Modifica</th>
             <th>Telaio</th>
             <th>Modello</th>
             <th>Spedizione</th>
@@ -75,6 +111,7 @@
             <th>TP</th>
             <th>ETD</th>
             <th>ETA</th>
+            <th>Status</th>
         </tr>
     </tfoot>
 </table>

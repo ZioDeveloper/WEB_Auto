@@ -234,6 +234,9 @@
     <Compile Include="Models\WEB_Auto_ListaPerizieXSpedizione_vw.cs">
       <DependentUpon>Autocargo.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\WEB_AUTO_ListaSpedizioni_2_vw.cs">
+      <DependentUpon>Autocargo.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\WEB_AUTO_ListaSpedizioni_vw.cs">
       <DependentUpon>Autocargo.tt</DependentUpon>
     </Compile>

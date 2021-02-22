@@ -131,7 +131,8 @@ else
         IDSpedizione = item4[0].IDSpedizione,
         IDMeteo = @item3[0].ID,
         IDTP = item2[0].ID,
-        myIDPerizia = item4[0].ID
+        myIDPerizia = item4[0].ID,
+        IsUpdate = ViewBag.IsUpdate
     }, FormMethod.Post))
     {
 
@@ -352,34 +353,48 @@ else
         </div>
         <div>
             <button type="submit" class="btn btn-success custom">Conferma</button> &nbsp;&nbsp;&nbsp;
-            @if (ViewBag.ErrMess == "" || ViewBag.ErrMess == "Sbloccato")
+
+            @if (ViewBag.IsUpdate == true)
             {
-                @Html.ActionLink("Termina", "InputTelaio", new
-                   {
-                       IDPerito = ViewBag.IDPerito,
-                       IDSpedizione = ViewBag.IDSpedizione,
-                       IDMeteo = ViewBag.IDMeteo,
-                       IDTP = ViewBag.IDTP,
-                   }, new { @class = "btn btn-danger custom" })
+                @Html.ActionLink("Termina", "EditSpedizione", "ListaPerizie", new { IDSpedizione = ViewBag.IDSpedizione }, new { @class = "btn btn-danger custom" })
             }
             else
             {
-                @Html.ActionLink("Termina", "InputTelaio", new
-                   {
-                       IDPerito = ViewBag.IDPerito,
-                       IDSpedizione = ViewBag.IDSpedizione,
-                       IDMeteo = ViewBag.IDMeteo,
-                       IDTP = ViewBag.IDTP,
-                   }, new { @class = "btn btn-danger custom disabled" })}
+                if (ViewBag.ErrMess == "" || ViewBag.ErrMess == "Sbloccato")
+                {
+                    @Html.ActionLink("Termina", "InputTelaio", new
+                       {
+                           IDPerito = ViewBag.IDPerito,
+                           IDSpedizione = ViewBag.IDSpedizione,
+                           IDMeteo = ViewBag.IDMeteo,
+                           IDTP = ViewBag.IDTP,
+                           IsUpdate = ViewBag.IsUpdate
+                       }, new { @class = "btn btn-danger custom" })
+                }
+
+                else
+                {
+                    @Html.ActionLink("Termina", "InputTelaio", new
+                    {
+                        IDPerito = ViewBag.IDPerito,
+                        IDSpedizione = ViewBag.IDSpedizione,
+                        IDMeteo = ViewBag.IDMeteo,
+                        IDTP = ViewBag.IDTP,
+                    }, new { @class = "btn btn-danger custom disabled" })}
+                }
+
+
+
+
         </div>
-    }
+   }
 </div>
 
 <br />
 
 <div>
-    @*@Html.ActionLink("Esci", "Index", null, new { @class = "btn btn-danger custom" })*@
-</div>
+        @*@Html.ActionLink("Esci", "Index", null, new { @class = "btn btn-danger custom" })*@
+            </div>
 
 <script>
     function InputToUpper(obj) {

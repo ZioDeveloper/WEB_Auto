@@ -33,5 +33,6 @@ namespace WEB_Auto.Models
         public string FlgNuovoUsato { get; set; }
         public Nullable<int> IDModello { get; set; }
         public string Note { get; set; }
+        public bool IsClosed { get; set; }
     }
 }

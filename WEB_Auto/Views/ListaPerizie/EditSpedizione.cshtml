@@ -45,22 +45,46 @@
             string ETD = item.ETD.ToString().Left(10);
             string ETA = item.ETA.ToString().Left(10);
             string aStatus = item.Status;
+            bool IsClosed = item.IsClosed;
+
         <tr>
             <td>
-                @Html.ActionLink("Modifica", "Edit", "TelaiAnagrafica", new {
-               IDPerito = item.IDPerito,
-               IDSpedizione = item.IDSpedizione,
-               IDMeteo = item.IDMeteo,
-               IDTP = item.IDTipoPerizia,
-               aIDTrasportatore = item.ID_TrasportatoreGrimaldi,
-               aIDTipoRotabile = item.ID_TipoRotabile,
-               aIDModelloCasa = item.IDModello,
-               myIDPerizia = item.ID,
-               flagNU = item.FlgNuovoUsato,
-               Annotazioni = item.Note,
-               errMess = "In fase modifica",
-               IsUpdate = true
-                }, new { @class = "btn btn-success btn-xs" })
+                @if (!IsClosed)
+                {
+                    @Html.ActionLink("Modifica", "Edit", "TelaiAnagrafica", new
+               {
+                   IDPerito = item.IDPerito,
+                   IDSpedizione = item.IDSpedizione,
+                   IDMeteo = item.IDMeteo,
+                   IDTP = item.IDTipoPerizia,
+                   aIDTrasportatore = item.ID_TrasportatoreGrimaldi,
+                   aIDTipoRotabile = item.ID_TipoRotabile,
+                   aIDModelloCasa = item.IDModello,
+                   myIDPerizia = item.ID,
+                   flagNU = item.FlgNuovoUsato,
+                   Annotazioni = item.Note,
+                   errMess = "In fase modifica",
+                   IsUpdate = true
+               }, new { @class = "btn btn-success btn-xs" })
+                }
+                else
+                {
+                    @Html.ActionLink("Modifica", "Edit", "TelaiAnagrafica", new
+               {
+                   IDPerito = item.IDPerito,
+                   IDSpedizione = item.IDSpedizione,
+                   IDMeteo = item.IDMeteo,
+                   IDTP = item.IDTipoPerizia,
+                   aIDTrasportatore = item.ID_TrasportatoreGrimaldi,
+                   aIDTipoRotabile = item.ID_TipoRotabile,
+                   aIDModelloCasa = item.IDModello,
+                   myIDPerizia = item.ID,
+                   flagNU = item.FlgNuovoUsato,
+                   Annotazioni = item.Note,
+                   errMess = "In fase modifica",
+                   IsUpdate = true
+               }, new { @class = "btn btn-success btn-xs  disabled" })}
+
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Telaio)

@@ -110,7 +110,7 @@
         </div>
     </div>
 </details>
-<br />
+@*<br />*@
 @if (ViewBag.ErrMess == "Sbloccato")
 {
     <div style="color:green">
@@ -137,13 +137,13 @@ else
     {
 
 
-    <table>
+    <table style="background-color:aliceblue">
         <tr>
             <td>
                 @Html.Label("Viaggio")
             </td>
             <td>
-                @Html.DropDownList("IDSpedizione", new SelectList((SelectList)ViewData["ElencoSpedizioni"], "Value", "Text", ViewBag.IDSpedizione), "-- Seleziona spedizione --", new { @class = "form-control selectpicker data-live-search=true", @*@onchange = "submitform();"*@ })
+                @Html.DropDownList("IDSpedizione", new SelectList((SelectList)ViewData["ElencoSpedizioni"], "Value", "Text", ViewBag.IDSpedizione), "-- Seleziona spedizione --", new { @class = "form-control selectpicker dropupAuto = false data-live-search=true data-size=5", @onchange = "submitform();"})
             </td>
         </tr>
         <tr>
@@ -154,11 +154,11 @@ else
                 @Html.TextBox("DataPerizia", DateTime.Now.ToString("dd/MM/yyyy"), new { @readonly = "readonly", style = "background:lightgrey" })
             </td>
         </tr>
-        <tr>
+        @*<tr>
             <td>
                 &nbsp;
             </td>
-        </tr>
+        </tr>*@
         <tr>
             <td>
                 @Html.Label("Chassis")
@@ -167,19 +167,19 @@ else
                 @Html.TextBox("Chassis", item4[0].Telaio, new { onkeyup = "InputToUpper(this);" })
             </td>
         </tr>
-        <tr>
+        @*<tr>
             <td>
                 &nbsp;
             </td>
-        </tr>
+        </tr>*@
         <tr>
             <td>
                 @Html.Label("Seleziona modello auto")
 
             </td>
             <td>
-                @Html.DropDownList("IDModelloCasa", new SelectList((SelectList)ViewData["ElencoModelli"], "Value", "Text", ViewBag.aIDModelloCasa), "-- Seleziona modello --", new { @class = "form-control selectpicker data-live-search=true", @onchange = "submitform();" })
-
+                @Html.DropDownList("IDModelloCasa", new SelectList((SelectList)ViewData["ElencoModelli"], "Value", "Text", ViewBag.aIDModelloCasa), "-- Seleziona modello --", new { @class = "form-control selectpicker dropupAuto=false data-live-search=true data-size=5", @onchange = "submitform();" })
+                @*@class = "form-control selectpicker data-live-search=true dropup data-dropup-auto = false"*@
             </td>
         </tr>
         @*<tr>
@@ -209,7 +209,7 @@ else
 
                 </td>
                 <td>
-                    @Html.DropDownList("IDTipoRotabile", new SelectList((SelectList)ViewData["ElencoTipoRotabile"], "Value", "Text", ViewBag.aIDTipoRotabile), "-- Seleziona tipo rotabile --", new { @class = "form-control selectpicker data-live-search=true", @onchange = "submitform();" })
+                    @Html.DropDownList("IDTipoRotabile", new SelectList((SelectList)ViewData["ElencoTipoRotabile"], "Value", "Text", ViewBag.aIDTipoRotabile), "-- Seleziona tipo rotabile --", new { @class = "form-control selectpicker data-live-search=true ", @onchange = "submitform();" })
 
                 </td>
             </tr>
@@ -271,8 +271,9 @@ else
                 @Html.Label("Inserisci danni")
 
             </td>
+
             <td>
-                @if (ViewBag.ErrMess == "" || ViewBag.ErrMess == "Sbloccato")
+                @if (ViewBag.ErrMess == "" || ViewBag.ErrMess == "Sbloccato" || ViewBag.ErrMess == "In fase modifica")
                 {
                     @Html.CheckBox("isDamaged", false, new { @onchange = "submitform();" })
                 }
@@ -283,113 +284,118 @@ else
 
                 }
             </td>
-            @if (@ViewBag.HasDanni == "Perizia GOOD")
-            {
-            <tr style="color:seagreen">
-                <td>@ViewBag.HasDanni</td>
-            </tr>
-        }
-        else
-        {
-            <tr style="color:red">
-                <td>@ViewBag.HasDanni</td>
-            </tr>
-        }
-
-            <tr>
-                <td>
-                    @Html.Label("Note:")
-
-                </td>
-                <td>
-                    @Html.TextArea("Annotazioni", item4[0].Note)
-
-
+                @if (@ViewBag.HasDanni == "Perizia GOOD")
+                {
+                <td style="color:seagreen">
+                    @ViewBag.HasDanni
                 </td>
 
-        </table>
-
-
-        <br />
-        <div>
-            <table width="50%">
-                <tr>
-                    <td>
-                        @Html.ActionLink("Inserisci foto", "ScattaFoto", "Documenti", new
-                   {
-                       myIDPerizia = item4[0].ID,
-                       IDPerito = ViewBag.IDPerito,
-                       IDSpedizione = ViewBag.IDSpedizione,
-                       IDMeteo = ViewBag.IDMeteo,
-                       IDTP = ViewBag.IDTP,
-                       aIDTrasportatore = ViewBag.aIDTrasportatore,
-                       aIDTipoRotabile = ViewBag.aIDTipoRotabile,
-                       aIDModelloCasa = ViewBag.aIDModelloCasa,
-                       ErrMess = ViewBag.ErrMess,
-                       IsUpdate = ViewBag.IsUpdate
-                   }, new { @class = "photoImg" }) &nbsp;@ViewBag.NumFoto
-                    </td>
-                    
-                    <td>
-                        @Html.ActionLink("Inserisci PDF", "ScattaPDF", "Documenti", new
-                   {
-                       myIDPerizia = item4[0].ID,
-                       IDPerito = ViewBag.IDPerito,
-                       IDSpedizione = ViewBag.IDSpedizione,
-                       IDMeteo = ViewBag.IDMeteo,
-                       IDTP = ViewBag.IDTP,
-                       aIDTrasportatore = ViewBag.aIDTrasportatore,
-                       aIDTipoRotabile = ViewBag.aIDTipoRotabile,
-                       aIDModelloCasa = ViewBag.aIDModelloCasa,
-                       IsUpdate = ViewBag.IsUpdate
-                   }, new { @class = "pdfImg" }) &nbsp;@ViewBag.NumPDF
-                            </td>
-                </tr>
-                
-                
-            </table>
-
-</div>
-        <div>
-            <br />
-        </div>
-        <div>
-            <button type="submit" class="btn btn-success custom">Conferma</button> &nbsp;&nbsp;&nbsp;
-
-            @if (ViewBag.IsUpdate == true)
-            {
-                @Html.ActionLink("Termina", "EditSpedizione", "ListaPerizie", new { IDSpedizione = ViewBag.IDSpedizione , ViewBag.IDTP }, new { @class = "btn btn-danger custom" })
             }
             else
             {
-                if (ViewBag.ErrMess == "" || ViewBag.ErrMess == "Sbloccato")
-                {
-                    @Html.ActionLink("Termina", "InputTelaio", new
-                       {
-                           IDPerito = ViewBag.IDPerito,
-                           IDSpedizione = ViewBag.IDSpedizione,
-                           IDMeteo = ViewBag.IDMeteo,
-                           IDTP = ViewBag.IDTP,
-                           IsUpdate = ViewBag.IsUpdate
-                       }, new { @class = "btn btn-danger custom" })
-                }
+                <td style="color:red">
+                    @ViewBag.HasDanni
+                </td>
+            }
+            
 
-                else
-                {
-                    @Html.ActionLink("Termina", "InputTelaio", new
+            </tr>
+
+</table>
+
+
+            <br />
+            <div>
+                <table width="50%">
+                    <tr>
+                        <td>
+                            @Html.ActionLink("Inserisci foto", "ScattaFoto", "Documenti", new
+                        {
+                            myIDPerizia = item4[0].ID,
+                            IDPerito = ViewBag.IDPerito,
+                            IDSpedizione = ViewBag.IDSpedizione,
+                            IDMeteo = ViewBag.IDMeteo,
+                            IDTP = ViewBag.IDTP,
+                            aIDTrasportatore = ViewBag.aIDTrasportatore,
+                            aIDTipoRotabile = ViewBag.aIDTipoRotabile,
+                            aIDModelloCasa = ViewBag.aIDModelloCasa,
+                            ErrMess = ViewBag.ErrMess,
+                            IsUpdate = ViewBag.IsUpdate
+                        }, new { @class = "photoImg" }) &nbsp;@ViewBag.NumFoto
+                    </td>
+
+                    <td>
+                        @Html.ActionLink("Inserisci PDF", "ScattaPDF", "Documenti", new
+                    {
+                        myIDPerizia = item4[0].ID,
+                        IDPerito = ViewBag.IDPerito,
+                        IDSpedizione = ViewBag.IDSpedizione,
+                        IDMeteo = ViewBag.IDMeteo,
+                        IDTP = ViewBag.IDTP,
+                        aIDTrasportatore = ViewBag.aIDTrasportatore,
+                        aIDTipoRotabile = ViewBag.aIDTipoRotabile,
+                        aIDModelloCasa = ViewBag.aIDModelloCasa,
+                        IsUpdate = ViewBag.IsUpdate
+                    }, new { @class = "pdfImg" }) &nbsp;@ViewBag.NumPDF
+                </td>
+            </tr>
+
+
+        </table>
+
+    </div>
+    <div>
+        <br />
+    </div>
+    <div>
+        <button type="submit" class="btn btn-primary custom">Conferma</button> &nbsp;&nbsp;&nbsp;
+
+        @if (ViewBag.IsUpdate == true)
+        {
+            @Html.ActionLink("Termina", "EditSpedizione", "ListaPerizie", new { IDSpedizione = ViewBag.IDSpedizione, ViewBag.IDTP }, new { @class = "btn btn-success custom" })
+        }
+        else
+        {
+            if (ViewBag.ErrMess == "" || ViewBag.ErrMess == "Sbloccato")
+            {
+                @Html.ActionLink("Termina", "InputTelaio", new
                     {
                         IDPerito = ViewBag.IDPerito,
                         IDSpedizione = ViewBag.IDSpedizione,
                         IDMeteo = ViewBag.IDMeteo,
                         IDTP = ViewBag.IDTP,
-                    }, new { @class = "btn btn-danger custom disabled" })}
-                }
+                        IsUpdate = ViewBag.IsUpdate
+                    }, new { @class = "btn btn-success custom" })
+            }
+
+            else
+            {
+                @Html.ActionLink("Termina", "InputTelaio", new
+                {
+                    IDPerito = ViewBag.IDPerito,
+                    IDSpedizione = ViewBag.IDSpedizione,
+                    IDMeteo = ViewBag.IDMeteo,
+                    IDTP = ViewBag.IDTP,
+                }, new { @class = "btn btn-success custom disabled" })}
+        }
+        &nbsp;&nbsp;&nbsp;
+        @Html.ActionLink("Elimina", "EliminaPerizia", "TelaiAnagrafica", new
+           {
+               IDPerizia = item4[0].ID,
+               IDPerito = ViewBag.IDPerito,
+               IDSpedizione = ViewBag.IDSpedizione,
+               IDMeteo = ViewBag.IDMeteo,
+               IDTP = ViewBag.IDTP,
+               IsUpdate = ViewBag.IsUpdate
+           }, new { @class = "btn btn-danger custom" , onclick = "return confirm('Vuoi davvero cancellare la perizia ?');" })
 
 
+    </div>
+    <br />
+    @Html.Label("Note:")
+    @Html.TextArea("Annotazioni", item4[0].Note)
 
-
-        </div>
-   }
+}
 </div>
 
 <br />
@@ -420,3 +426,16 @@ else
         $('form').submit();
     }
 </script>
+
+<script>
+    $('.selectpicker').selectpicker({
+        dropupAuto: false,
+        liveSearch: true
+
+    });
+</script>
+@*<script>
+    $(function () {
+        $('form').submit();
+    });
+</script>*@

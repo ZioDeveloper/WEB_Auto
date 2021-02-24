@@ -186,17 +186,29 @@
 
 
 
-        <div>
-            <button type="submit" class="btn btn-success custom">Conferma</button>
-        </div>
+    <div>
+        <button type="submit" class="btn btn-primary custom">Conferma</button>
+
+        @Html.ActionLink("Torna a perizia", "Edit","TelaiAnagrafica", new { myIDPerizia = ViewBag.IDPeriz,
+        IDPerito = ViewBag.IDPerito,
+        IDSpedizione = ViewBag.IDSpedizione,
+        IDMeteo = ViewBag.IDMeteo,
+        IDTP = ViewBag.IDTP,
+        aIDTrasportatore = ViewBag.aIDTrasportatore,
+        aIDTipoRotabile = ViewBag.aIDTipoRotabile,
+        aIDModelloCasa = ViewBag.aIDModelloCasa,
+        errMess = "Sbloccato",
+        IsUpdate = ViewBag.ISUpdate
+        }, new { @class = "btn btn-success custom" })
+    </div>
     }
 </div>
 
 <br />
 
 <div>
-    @*@Html.ActionLink("Esci", "Index", null, new { @class = "btn btn-danger custom" })*@
-    @Html.ActionLink("Torna a perizia", "Edit","TelaiAnagrafica", new { myIDPerizia = ViewBag.IDPeriz,
+    
+    @*@Html.ActionLink("Torna a perizia", "Edit","TelaiAnagrafica", new { myIDPerizia = ViewBag.IDPeriz,
     IDPerito = ViewBag.IDPerito,
     IDSpedizione = ViewBag.IDSpedizione,
     IDMeteo = ViewBag.IDMeteo,
@@ -206,7 +218,7 @@
     aIDModelloCasa = ViewBag.aIDModelloCasa,
     errMess = "Sbloccato",
     IsUpdate = ViewBag.ISUpdate
-}, new { @class = "btn btn-primary btn-xs" })
+}, new { @class = "btn btn-success custom" })*@
 </div>
 
 <script>

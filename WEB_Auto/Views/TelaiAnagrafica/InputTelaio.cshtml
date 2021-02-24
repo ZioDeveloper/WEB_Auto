@@ -44,7 +44,16 @@
  </table>
 }
 
-
-
-
 </div>
+
+<script>
+    $(function () {
+        var txt = $("input#Telaio");
+        var func = function (e) {
+            if (e.keyCode === 32) {
+                txt.val(txt.val().replace(/\s/g, ''));
+            }
+        }
+        txt.keyup(func).blur(func);
+    });
+</script>

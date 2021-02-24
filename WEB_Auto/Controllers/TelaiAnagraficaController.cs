@@ -6,6 +6,7 @@ using System.Web;
 using System.Net;
 using System.Web.Mvc;
 using WEB_Auto.Models;
+using System.Text.RegularExpressions;
 
 namespace WEB_Auto.Controllers
 {
@@ -15,8 +16,11 @@ namespace WEB_Auto.Controllers
         // GET: TelaiAnagrafica
         public ActionResult InputTelaio(string IDPerito, string IDSpedizione,string IDMeteo, string IDTP, string Chassis)
         {
+            if(!String.IsNullOrEmpty(IDPerito))
+                EliminaTelaiSenzaModello(IDPerito);
 
-            EliminaTelaiSenzaModello(IDPerito);
+            if(! String.IsNullOrEmpty(Chassis))
+                Chassis = Regex.Replace(Chassis, @"\s+", "");
 
             if (String.IsNullOrEmpty(IDSpedizione))
             {
@@ -210,7 +214,7 @@ namespace WEB_Auto.Controllers
                           where m.IDCliente == "**"
                           where m.IDCasa == aCasa
                           select m;
-            model.AGR_ModelliAuto = modello.ToList();
+            model.AGR_ModelliAuto = modello.ToList().OrderBy(m=>m.Descr);
             var ElencoModelli = new SelectList(model.AGR_ModelliAuto.ToList(), "ID", "Descr");
             ViewData["ElencoModelli"] = ElencoModelli;
             if (!String.IsNullOrEmpty(dati.IDModello.ToString()))
@@ -269,8 +273,8 @@ namespace WEB_Auto.Controllers
             }
 
             // Dati per dropdown Spedizione
-            DateTime ini = DateTime.Today.AddDays(-50);
-            DateTime end = DateTime.Today.AddDays(+50);
+            DateTime ini = DateTime.Today.AddDays(-5);
+            DateTime end = DateTime.Today.AddDays(+5);
             var Spedizione = from m in db.AGR_SpedizioniWEB_vw
                              where m.DataInizioImbarco >= ini
                              where m.DataInizioImbarco <= end
@@ -586,6 +590,24 @@ namespace WEB_Auto.Controllers
             int deleted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@ID", aIDDett));
 
             return RedirectToAction("SalvaPeriziaDettagli", "TelaiAnagrafica", new { myIDPerizia , IsUpdate = IsUpdate });
+        }
+
+
+        public ActionResult EliminaPerizia(string IDPerizia , string IDPerito, string IDSpedizione, string IDMeteo, string IDTP, bool IsUpdate = false)
+        {
+
+
+            string sqlcmd =  " DELETE FROM  AGR_PerizieExpGrim_Temp_MVC  WHERE ID = @ID";
+            int deleted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@ID", IDPerizia));
+
+            sqlcmd = " DELETE FROM  AGR_PERIZIE_DETT_TEMP_MVC  WHERE IDPerizia = @IDPerizia";
+            deleted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@IDPerizia", IDPerizia));
+
+            sqlcmd = " DELETE FROM  AGR_PERIZIE_TEMP_MVC WHERE ID = @ID";
+            deleted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@ID", IDPerizia));
+
+
+            return RedirectToAction("InputTelaio", "TelaiAnagrafica" ,new { IDPerito, IDSpedizione, IDMeteo, IDTP });
         }
 
         public void AggiornaFlagGoodDamaged(string aIDPerizia)

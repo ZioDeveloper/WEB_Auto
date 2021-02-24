@@ -61,8 +61,8 @@ namespace WEB_Auto.Controllers
             }
             else if(Filtro == "TRE")
             {
-                ini = DateTime.Today.AddDays(-3);
-                end = DateTime.Today.AddDays(3);
+                ini = DateTime.Today.AddDays(-1);
+                end = DateTime.Today.AddDays(1);
             }
             else if (Filtro == "SETTE")
             {
@@ -78,7 +78,7 @@ namespace WEB_Auto.Controllers
                              select m;
             model.AGR_SpedizioniWEB_vw = Spedizioni.ToList().OrderBy(s=>s.ID);
 
-            var ElencoSpedizioni = new SelectList(model.AGR_SpedizioniWEB_vw.ToList(), "ID", "Descr");
+            var ElencoSpedizioni = new SelectList(model.AGR_SpedizioniWEB_vw.ToList(), "ID", "DescrMin");
 
             // Dati per dropdown Meteo
             var Meteo = from m in db.AGR_Meteo

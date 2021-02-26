@@ -61,8 +61,8 @@ namespace WEB_Auto.Controllers
             }
             else if(Filtro == "TRE")
             {
-                ini = DateTime.Today.AddDays(-1);
-                end = DateTime.Today.AddDays(1);
+                ini = DateTime.Today.AddDays(-3);
+                end = DateTime.Today.AddDays(3);
             }
             else if (Filtro == "SETTE")
             {

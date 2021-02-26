@@ -38,7 +38,7 @@
 
                 <td>
 
-                    <input type="file" name="files" multiple id="files_0" accept="image/*" capture="camera" />
+                    <input type="file" name="files" multiple id="files_0" accept="image/*;capture=camera" />
                     
                 </td>
                 <td>
@@ -57,8 +57,8 @@
 
                
 
-                <label class="btn btn-primary btn-xs">
-                     Apri fotocamera<input type="file" onchange="form.submit()" style="display:contents;" name="files" multiple id="files_0" accept="image/*" capture="camera">
+                <label class="btn btn-primary">
+                     Apri fotocamera<input type="file" id="story_avatar" onchange="form.submit()" style="display:contents;" name="files" multiple id="files_0" accept="image/*" capture="camera">
                 </label>
 
             </td>
@@ -66,7 +66,7 @@
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             </td>
             <td>
-                <label class="btn btn-primary btn-xs">
+                <label class="btn btn-warning">
                     Carica foto da archivio<input type="file" onchange="form.submit()" style="display:contents;" name="files" multiple id="files_0" accept="image/*">
                 </label>
             </td>
@@ -87,7 +87,7 @@
         <tr>
             <td></td>
             <td>
-                <img src="@Url.Content("~/DocumentiXTelai/Foto/" + item.FileName)" title="@Url.Content(item.FileName)" alt="Image" style='height: 480px; width: 640; object-fit: contain'>
+                <img src="@Url.Content("~/DocumentiXTelai/Foto/" + item.FileName)" title="@Url.Content(item.FileName)" alt="Image" style='height: 480px; width: 640px; object-fit: contain'>
 
             </td>
             
@@ -114,5 +114,18 @@
 
 
 
-
+<script>
+    $('#story_avatar').change(function () { // this is the file input
+        readURL(this);
+    })
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $('#image-item').attr('src', e.target.result); //img element
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+</script>
 

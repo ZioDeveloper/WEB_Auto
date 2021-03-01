@@ -12,7 +12,7 @@ namespace WEB_Auto.Controllers
         private wisedbEntities db = new wisedbEntities();
 
         // GET: ListaSpedizioni
-        public ActionResult ListaSpedizioni()
+        public ActionResult ListaSpedizioni(string Status = "APERTE")
         {
 
             var model = new Models.HomeModel();
@@ -56,12 +56,35 @@ namespace WEB_Auto.Controllers
             #endregion
             string aPerito = Session["IDPeritoVero"].ToString();
 
-            var lista = (from m in db.WEB_AUTO_ListaSpedizioni_2_vw
-                         where m.IDPerito == aPerito
-                         select m).ToList();
-            model.WEB_AUTO_ListaSpedizioni_2_vw = lista;
+            if (Status == "TUTTE")
+            {
+                var lista = (from m in db.WEB_AUTO_ListaSpedizioni_2_vw
+                             where m.IDPerito == aPerito
+                             select m).ToList();
+                model.WEB_AUTO_ListaSpedizioni_2_vw = lista;
+               
+            }
+            else if (Status == "APERTE")
+            {
+                var lista = (from m in db.WEB_AUTO_ListaSpedizioni_2_vw
+                             where m.IDPerito == aPerito
+                             where m.IsClosed == false
+                             select m).ToList();
+                model.WEB_AUTO_ListaSpedizioni_2_vw = lista;
+                
+            }
+            else if (Status == "CHIUSE")
+            {
+                var lista = (from m in db.WEB_AUTO_ListaSpedizioni_2_vw
+                             where m.IDPerito == aPerito
+                             where m.IsClosed == true
+                             select m).ToList();
+                model.WEB_AUTO_ListaSpedizioni_2_vw = lista;
+                
+            }
 
             return View(model);
+
 
             //using (var ctx = new wisedbEntities())
             //{

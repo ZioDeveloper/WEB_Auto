@@ -289,6 +289,24 @@ warning 6002: The table/view 'wisedb.dbo.AGR_DatiRotabiliInUSo_vw' does not have
           <Property Name="ID_TipoRotabile" Type="varchar" MaxLength="2" />
         </EntityType>
         <!--Errors Found During Generation:
+warning 6002: The table/view 'wisedb.dbo.AGR_ModelliAuto_CAB_vw' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="AGR_ModelliAuto_CAB_vw">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="IDCasa" />
+            <PropertyRef Name="IDModelloCasa" />
+            <PropertyRef Name="Descr" />
+            <PropertyRef Name="IDCliente" />
+            <PropertyRef Name="Produzione" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="IDCasa" Type="varchar" MaxLength="3" Nullable="false" />
+          <Property Name="IDModelloCasa" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Descr" Type="varchar" MaxLength="278" Nullable="false" />
+          <Property Name="IDCliente" Type="varchar" MaxLength="2" Nullable="false" />
+          <Property Name="Produzione" Type="varchar" MaxLength="1" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
 warning 6002: The table/view 'wisedb.dbo.AGR_PERIZIE_DETT_TEMP_MVC_vw' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="AGR_PERIZIE_DETT_TEMP_MVC_vw">
           <Key>
@@ -409,6 +427,16 @@ warning 6002: The table/view 'wisedb.dbo.AGR_SpedizioniWEB_vw' does not have a p
           <Property Name="IDOriginale1" Type="varchar" MaxLength="30" />
           <Property Name="IDOriginale2" Type="varchar" MaxLength="30" />
           <Property Name="DescrMin" Type="varchar" MaxLength="38" />
+          <Property Name="DescrAlt" Type="varchar" MaxLength="55" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'wisedb.dbo.AGR_TrasportatoriGrimaldi_vw' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="AGR_TrasportatoriGrimaldi_vw">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="varchar" MaxLength="3" Nullable="false" />
+          <Property Name="Descr" Type="varchar" MaxLength="56" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'wisedb.dbo.WEB_AGR_Danni_vw' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -583,6 +611,16 @@ warning 6002: The table/view 'wisedb.dbo.WEB_AUTO_ListaSpedizioni_vw' does not h
     [AGR_DatiRotabiliInUSo_vw].[ID_TipoRotabile] AS [ID_TipoRotabile]
     FROM [dbo].[AGR_DatiRotabiliInUSo_vw] AS [AGR_DatiRotabiliInUSo_vw]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="AGR_ModelliAuto_CAB_vw" EntityType="Self.AGR_ModelliAuto_CAB_vw" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [AGR_ModelliAuto_CAB_vw].[ID] AS [ID], 
+    [AGR_ModelliAuto_CAB_vw].[IDCasa] AS [IDCasa], 
+    [AGR_ModelliAuto_CAB_vw].[IDModelloCasa] AS [IDModelloCasa], 
+    [AGR_ModelliAuto_CAB_vw].[Descr] AS [Descr], 
+    [AGR_ModelliAuto_CAB_vw].[IDCliente] AS [IDCliente], 
+    [AGR_ModelliAuto_CAB_vw].[Produzione] AS [Produzione]
+    FROM [dbo].[AGR_ModelliAuto_CAB_vw] AS [AGR_ModelliAuto_CAB_vw]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="AGR_PERIZIE_DETT_TEMP_MVC_vw" EntityType="Self.AGR_PERIZIE_DETT_TEMP_MVC_vw" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [AGR_PERIZIE_DETT_TEMP_MVC_vw].[ID] AS [ID], 
@@ -670,8 +708,15 @@ warning 6002: The table/view 'wisedb.dbo.WEB_AUTO_ListaSpedizioni_vw' does not h
     [AGR_SpedizioniWEB_vw].[DataFineSbarco] AS [DataFineSbarco], 
     [AGR_SpedizioniWEB_vw].[IDOriginale1] AS [IDOriginale1], 
     [AGR_SpedizioniWEB_vw].[IDOriginale2] AS [IDOriginale2], 
-    [AGR_SpedizioniWEB_vw].[DescrMin] AS [DescrMin]
+    [AGR_SpedizioniWEB_vw].[DescrMin] AS [DescrMin], 
+    [AGR_SpedizioniWEB_vw].[DescrAlt] AS [DescrAlt]
     FROM [dbo].[AGR_SpedizioniWEB_vw] AS [AGR_SpedizioniWEB_vw]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="AGR_TrasportatoriGrimaldi_vw" EntityType="Self.AGR_TrasportatoriGrimaldi_vw" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [AGR_TrasportatoriGrimaldi_vw].[ID] AS [ID], 
+    [AGR_TrasportatoriGrimaldi_vw].[Descr] AS [Descr]
+    FROM [dbo].[AGR_TrasportatoriGrimaldi_vw] AS [AGR_TrasportatoriGrimaldi_vw]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="WEB_AGR_Danni_vw" EntityType="Self.WEB_AGR_Danni_vw" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
@@ -803,6 +848,8 @@ warning 6002: The table/view 'wisedb.dbo.WEB_AUTO_ListaSpedizioni_vw' does not h
           <EntitySet Name="AGR_DatiRotabiliInUSo_vw" EntityType="wisedbModel.AGR_DatiRotabiliInUSo_vw" />
           <EntitySet Name="WEB_AUTO_PDF" EntityType="wisedbModel.WEB_AUTO_PDF" />
           <EntitySet Name="WEB_AUTO_ListaSpedizioni_2_vw" EntityType="wisedbModel.WEB_AUTO_ListaSpedizioni_2_vw" />
+          <EntitySet Name="AGR_ModelliAuto_CAB_vw" EntityType="wisedbModel.AGR_ModelliAuto_CAB_vw" />
+          <EntitySet Name="AGR_TrasportatoriGrimaldi_vw" EntityType="wisedbModel.AGR_TrasportatoriGrimaldi_vw" />
         </EntityContainer>
         <EntityType Name="AGR_Periti_WEB">
           <Key>
@@ -913,6 +960,7 @@ warning 6002: The table/view 'wisedb.dbo.WEB_AUTO_ListaSpedizioni_vw' does not h
           <Property Name="IDOriginale1" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="IDOriginale2" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="DescrMin" Type="String" MaxLength="38" FixedLength="false" Unicode="false" />
+          <Property Name="DescrAlt" Type="String" MaxLength="55" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="AGR_Meteo">
           <Key>
@@ -1334,6 +1382,29 @@ warning 6002: The table/view 'wisedb.dbo.WEB_AUTO_ListaSpedizioni_vw' does not h
           <Property Name="IsClosed" Type="Boolean" Nullable="false" />
           <Property Name="IDPerito" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
         </EntityType>
+        <EntityType Name="AGR_ModelliAuto_CAB_vw">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="IDCasa" />
+            <PropertyRef Name="IDModelloCasa" />
+            <PropertyRef Name="Descr" />
+            <PropertyRef Name="IDCliente" />
+            <PropertyRef Name="Produzione" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="IDCasa" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="IDModelloCasa" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Descr" Type="String" Nullable="false" MaxLength="278" FixedLength="false" Unicode="false" />
+          <Property Name="IDCliente" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="Produzione" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="AGR_TrasportatoriGrimaldi_vw">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="Descr" Type="String" MaxLength="56" FixedLength="false" Unicode="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1428,6 +1499,7 @@ warning 6002: The table/view 'wisedb.dbo.WEB_AUTO_ListaSpedizioni_vw' does not h
           <EntitySetMapping Name="AGR_SpedizioniWEB_vw">
             <EntityTypeMapping TypeName="wisedbModel.AGR_SpedizioniWEB_vw">
               <MappingFragment StoreEntitySet="AGR_SpedizioniWEB_vw">
+                <ScalarProperty Name="DescrAlt" ColumnName="DescrAlt" />
                 <ScalarProperty Name="DescrMin" ColumnName="DescrMin" />
                 <ScalarProperty Name="IDOriginale2" ColumnName="IDOriginale2" />
                 <ScalarProperty Name="IDOriginale1" ColumnName="IDOriginale1" />
@@ -1814,6 +1886,26 @@ warning 6002: The table/view 'wisedb.dbo.WEB_AUTO_ListaSpedizioni_vw' does not h
                 <ScalarProperty Name="NumPerizie" ColumnName="NumPerizie" />
                 <ScalarProperty Name="IDTipoPerizia" ColumnName="IDTipoPerizia" />
                 <ScalarProperty Name="IDOriginale1" ColumnName="IDOriginale1" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AGR_ModelliAuto_CAB_vw">
+            <EntityTypeMapping TypeName="wisedbModel.AGR_ModelliAuto_CAB_vw">
+              <MappingFragment StoreEntitySet="AGR_ModelliAuto_CAB_vw">
+                <ScalarProperty Name="Produzione" ColumnName="Produzione" />
+                <ScalarProperty Name="IDCliente" ColumnName="IDCliente" />
+                <ScalarProperty Name="Descr" ColumnName="Descr" />
+                <ScalarProperty Name="IDModelloCasa" ColumnName="IDModelloCasa" />
+                <ScalarProperty Name="IDCasa" ColumnName="IDCasa" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AGR_TrasportatoriGrimaldi_vw">
+            <EntityTypeMapping TypeName="wisedbModel.AGR_TrasportatoriGrimaldi_vw">
+              <MappingFragment StoreEntitySet="AGR_TrasportatoriGrimaldi_vw">
+                <ScalarProperty Name="Descr" ColumnName="Descr" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

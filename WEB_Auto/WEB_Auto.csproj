@@ -158,6 +158,9 @@
     <Compile Include="Models\AGR_ModelliAuto.cs">
       <DependentUpon>Autocargo.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\AGR_ModelliAuto_CAB_vw.cs">
+      <DependentUpon>Autocargo.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\AGR_Parti.cs">
       <DependentUpon>Autocargo.tt</DependentUpon>
     </Compile>
@@ -198,6 +201,9 @@
       <DependentUpon>Autocargo.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\AGR_TrasportatoriGrimaldi.cs">
+      <DependentUpon>Autocargo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AGR_TrasportatoriGrimaldi_vw.cs">
       <DependentUpon>Autocargo.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Autocargo.Context.cs">

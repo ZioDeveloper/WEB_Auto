@@ -17,16 +17,23 @@
     <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.4/js/buttons.print.min.js"</script>
     <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.4/js/dataTables.buttons.min.js"></script>
     @*<link rel="stylesheet" type="text/css" href="https://nightly.datatables.net/searchpanes/css/searchPanes.dataTables.min.css" />
-    <script type="text/javascript" src="https://nightly.datatables.net/searchpanes/js/dataTables.searchPanes.min.js"</script>*@
+        <script type="text/javascript" src="https://nightly.datatables.net/searchpanes/js/dataTables.searchPanes.min.js"</script>*@
 </head>
 <h4>Lista spedizioni associate</h4>
 @*<hr />
-Filtri :*@
+    Filtri :*@
 <br />
-<td>
-   
-    @Html.ActionLink("Torna a Home","Index","Home",null, new { @class = "btn btn-primary btn-xs" })
-</td>
+
+
+@Html.ActionLink("Torna a Home", "Index", "Home", null, new { @class = "btn btn-primary" })
+<br /><br />
+@using (Html.BeginForm("ListaSpedizioni", "ListaPerizie"))
+{
+    <label>Solo aperte : @Html.RadioButton("Status", "APERTE", true, new { onclick = "this.form.submit()" })</label>
+    <label>&nbsp;&nbsp; &nbsp;&nbsp; Solo chiuse  @Html.RadioButton("Status", "CHIUSE", false, new { onclick = "this.form.submit()" })</label>
+    <label>&nbsp;&nbsp; &nbsp;&nbsp; Tutte:  @Html.RadioButton("Status", "TUTTE", false, new { onclick = "this.form.submit()" })</label>
+}
+
 <hr />
 
 <table id="ElencoSpedizioni" class="display" style="width:100%">
@@ -48,36 +55,36 @@ Filtri :*@
     <tbody>
         @foreach (var item in Model.WEB_AUTO_ListaSpedizioni_2_vw)
         {
-        <tr>
-            <td>
-                @Html.ActionLink("Visualizza", "EditSpedizione", new { IDSpedizione = item.ID, IDTP = item.IDTipoPerizia }, new { @class = "btn btn-success btn-xs" })
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ID)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IDOriginale1)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IDTipoPerizia)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NumPerizie)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Good)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Damaged)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsClosed)
-            </td>
-            <td>
-                @Html.ActionLink("Chiudi", "ChiudiSpedizione", new { IDSpedizione = item.ID, IDTP = item.IDTipoPerizia }, new { @class = "btn btn-warning btn-xs" })
-            </td>
+            <tr>
+                <td>
+                    @Html.ActionLink("Visualizza", "EditSpedizione", new { IDSpedizione = item.ID, IDTP = item.IDTipoPerizia }, new { @class = "btn btn-success btn-xs" })
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IDOriginale1)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IDTipoPerizia)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NumPerizie)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Good)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Damaged)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsClosed)
+                </td>
+                <td>
+                    @Html.ActionLink("Chiudi", "ChiudiSpedizione", new { IDSpedizione = item.ID, IDTP = item.IDTipoPerizia }, new { @class = "btn btn-warning btn-xs" })
+                </td>
 
-        </tr>
+            </tr>
         }
     </tbody>
     <tfoot>
@@ -119,18 +126,26 @@ Filtri :*@
                             search: 'none'
                         }
                     }
+                },
+                {
+                    extend: 'print',
+                    text: 'Stampa griglia',
+                    exportOptions: {
+                        modifier: {
+                            search: 'none'
+                        }
+                    }
+                },
+                {
+                    extend: 'pdf',
+                    text: 'Crea PDF',
+                    exportOptions: {
+                        modifier: {
+                            page: 'current'
+                        }
+                    }
                 }
-                //,
-                //{
-                //    extend: 'print',
-                //    text: 'Stampa griglia',
-                //    exportOptions: {
-                //        modifier: {
-                //            search: 'none'
-                //        }
-                //    }
-                //}
-                
+
             ],
 
 

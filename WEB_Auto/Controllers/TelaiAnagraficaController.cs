@@ -14,12 +14,30 @@ namespace WEB_Auto.Controllers
     {
         private wisedbEntities db = new wisedbEntities();
         // GET: TelaiAnagrafica
-        public ActionResult InputTelaio(string IDPerito, string IDSpedizione,string IDMeteo, string IDTP, string Chassis)
+        public ActionResult InputTelaio(string IDPerito, string IDSpedizione,string IDMeteo, string IDTP, string Chassis, bool IsRTB = false)
         {
             if(!String.IsNullOrEmpty(IDPerito))
                 EliminaTelaiSenzaModello(IDPerito);
 
-            if(! String.IsNullOrEmpty(Chassis))
+            string Test = Session["RTB"].ToString();
+
+            if (Session["RTB"].ToString().ToUpper() == "TRUE")
+                IsRTB = true;
+
+            if (String.IsNullOrEmpty(Session["RTB"].ToString()))
+                Session["RTB"] = IsRTB;
+            else
+                Session["RTB"] = IsRTB;
+
+            var Casa = (from m in db.AGR_SpedizioniWEB_vw
+                        where m.ID == IDSpedizione
+                        select new { m.IDCliente, m.IDCasa }).FirstOrDefault();
+
+            
+            string aCasa = Casa.IDCasa;
+
+
+            if (! String.IsNullOrEmpty(Chassis))
                 Chassis = Regex.Replace(Chassis, @"\s+", "");
 
             if (String.IsNullOrEmpty(IDSpedizione))
@@ -90,6 +108,7 @@ namespace WEB_Auto.Controllers
 
             // Se invece devo ancora inputare il telaio...
             ViewBag.IDPerito = IDPerito;
+            ViewBag.Casa = aCasa;
             ViewBag.IDSpedizione = IDSpedizione;
             ViewBag.IDMeteo = IDMeteo;
             ViewBag.IDTP = IDTP;
@@ -161,7 +180,7 @@ namespace WEB_Auto.Controllers
         }
 
         public ActionResult Edit(string IDPerito, string IDSpedizione, string IDMeteo, string IDTP, string aIDTrasportatore,
-                                         string aIDTipoRotabile, string aIDModelloCasa, string myIDPerizia,string flagNU, string Annotazioni,
+                                         string aIDTipoRotabile, string aIDModelloCasa, string myIDPerizia,string flagNU, string Annotazioni, bool Filtrati = true ,
                                          string errMess = " ", bool IsUpdate = false) // errMess = " " per eludere primo controllo in View Edit
         {
             if (myIDPerizia == null)
@@ -210,13 +229,44 @@ namespace WEB_Auto.Controllers
             model.AGR_TipiPerizia = TP.ToList();
 
             // Dati per dropdown Modello
-            var modello = from m in db.AGR_ModelliAuto
-                          where m.IDCliente == "**"
-                          where m.IDCasa == aCasa
-                          select m;
-            model.AGR_ModelliAuto = modello.ToList().OrderBy(m=>m.Descr);
-            var ElencoModelli = new SelectList(model.AGR_ModelliAuto.ToList(), "ID", "Descr");
-            ViewData["ElencoModelli"] = ElencoModelli;
+            if (Session["RTB"].ToString().ToUpper() == "TRUE" && aCasa != "RTB")
+            {
+                var modello = from m in db.AGR_ModelliAuto
+                              where m.IDCliente == "**"
+                              where m.IDCasa == aCasa
+                              where m.IDModelloCasa == "1240"
+                              select m;
+                model.AGR_ModelliAuto = modello.ToList().OrderBy(m => m.Descr);
+                var ElencoModelli = new SelectList(model.AGR_ModelliAuto.ToList(), "ID", "Descr");
+                ViewData["ElencoModelli"] = ElencoModelli;
+                aIDModelloCasa = "1240";
+                ViewBag.aIDModelloCasa = "1240";
+            }
+            else
+            {
+                if (aCasa == "CAB" && Filtrati )
+                {
+                    var modello = from m in db.AGR_ModelliAuto_CAB_vw
+                                  where m.IDCliente == "**"
+                                  where m.IDCasa == aCasa
+                                  where m.IDModelloCasa == "2055" || m.IDModelloCasa == "2006" || m.IDModelloCasa == "1922"
+                                  select m;
+                    model.AGR_ModelliAuto_CAB_vw = modello.ToList().OrderBy(m => m.Descr);
+                    var ElencoModelli = new SelectList(model.AGR_ModelliAuto_CAB_vw.ToList(), "ID", "Descr");
+                    ViewData["ElencoModelli"] = ElencoModelli;
+                }
+                else
+                {
+                    var modello = from m in db.AGR_ModelliAuto_CAB_vw
+                                  where m.IDCliente == "**"
+                                  where m.IDCasa == aCasa
+                                  select m;
+                    model.AGR_ModelliAuto_CAB_vw = modello.ToList().OrderBy(m => m.Descr);
+                    var ElencoModelli = new SelectList(model.AGR_ModelliAuto_CAB_vw.ToList(), "ID", "Descr");
+                    ViewData["ElencoModelli"] = ElencoModelli;
+                }
+
+            }
             if (!String.IsNullOrEmpty(dati.IDModello.ToString()))
             {
                 ViewBag.aIDModelloCasa = aIDModelloCasa; //dati.IDModello;
@@ -232,11 +282,11 @@ namespace WEB_Auto.Controllers
             }
 
             // Dati per dropdown Trasportatore Grimaldi
-            var TraspGrim = from m in db.AGR_TrasportatoriGrimaldi
+            var TraspGrim = from m in db.AGR_TrasportatoriGrimaldi_vw
                             where m.Descr.ToString().Substring(0, 3) != "***"
                             select m;
-            model.AGR_TrasportatoriGrimaldi = TraspGrim.ToList().OrderBy(m => m.Descr);
-            var ElencoTraspGrim = new SelectList(model.AGR_TrasportatoriGrimaldi.ToList(), "ID", "Descr");
+            model.AGR_TrasportatoriGrimaldi_vw = TraspGrim.ToList().OrderBy(m => m.Descr);
+            var ElencoTraspGrim = new SelectList(model.AGR_TrasportatoriGrimaldi_vw.ToList(), "ID", "Descr");
             ViewData["ElencoTraspGrim"] = ElencoTraspGrim;
             ViewBag.aIDTrasportatore = aIDTrasportatore;
 
@@ -317,12 +367,12 @@ namespace WEB_Auto.Controllers
         }
 
         public ActionResult SalvaPeriziaTesta(string IDPerito, string IDSpedizione, string IDMeteo, string IDTP, string Chassis, string DataPerizia, string IDModelloCasa, string IDTrasportatoreGrim,
-                                              string IDTipoRotabile, bool? isDamaged, string Condizione, string Annotazioni, string myIDPerizia, bool IsUpdate = false)
+                                              string IDTipoRotabile, bool? isDamaged, string Condizione, string Annotazioni, string myIDPerizia, bool IsUpdate = false,bool Filtrati=true )
         {
 
 
             // Verifico Sia tutto ok.. to do !!!!!
-            bool isOK = CheckAll(IDSpedizione, Chassis, IDModelloCasa, IDTrasportatoreGrim , IDTipoRotabile, Condizione , out string myerrMess);
+            bool isOK = CheckAll(IDSpedizione, Chassis, IDModelloCasa, IDTrasportatoreGrim , IDTipoRotabile, Condizione , Annotazioni, out string myerrMess);
             if (isOK)
             {
 
@@ -413,7 +463,8 @@ namespace WEB_Auto.Controllers
                         aIDModelloCasa = IDModelloCasa,
                         myIDPerizia = myIDPerizia,
                         errMess = "Sbloccato",
-                        IsUpdate = IsUpdate
+                        IsUpdate = IsUpdate,
+                        Filtrati = Filtrati
                     });
                 }
                 else
@@ -434,7 +485,8 @@ namespace WEB_Auto.Controllers
                     aIDModelloCasa = IDModelloCasa,
                     myIDPerizia = myIDPerizia,
                     errMess = myerrMess,
-                    IsUpdate = IsUpdate
+                    IsUpdate = IsUpdate,
+                    Filtrati = Filtrati
                 });
             }
         }
@@ -694,7 +746,7 @@ namespace WEB_Auto.Controllers
             return cnt;
         }
 
-        public bool CheckAll(string aIDSpedizione ,string aTelaio, string IDModelloCasa, string IDTrasportatoreGrim,  string IDTipoRotabile , string Condizione, out string errMEss)
+        public bool CheckAll(string aIDSpedizione ,string aTelaio, string IDModelloCasa, string IDTrasportatoreGrim,  string IDTipoRotabile , string Condizione,string Annotazioni, out string errMEss)
         {
             // Dati spedizione
             errMEss = "";
@@ -745,7 +797,17 @@ namespace WEB_Auto.Controllers
             //    }
             //}
 
+            if(IDTrasportatoreGrim == "0" && String.IsNullOrEmpty(Annotazioni))
+            {
+                errMEss += "Note obbligatorie ";
+                return false;
+            }
 
+            if (IDModelloCasa == "219" && String.IsNullOrEmpty(Annotazioni))
+            {
+                errMEss += "Note obbligatorie ";
+                return false;
+            }
 
             if (!String.IsNullOrEmpty(errMEss))
             {

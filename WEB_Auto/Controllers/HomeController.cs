@@ -19,7 +19,7 @@ namespace WEB_Auto.Controllers
             Session["User"] = usr;
 
             if (String.IsNullOrEmpty(usr))
-                usr = "Pierangeli";
+                usr = "Test";
 
             var myIDPerito = (from s in db.AGR_Periti_WEB
                               where s.Name == usr
@@ -78,7 +78,7 @@ namespace WEB_Auto.Controllers
                              select m;
             model.AGR_SpedizioniWEB_vw = Spedizioni.ToList().OrderBy(s=>s.ID);
 
-            var ElencoSpedizioni = new SelectList(model.AGR_SpedizioniWEB_vw.ToList(), "ID", "DescrMin");
+            var ElencoSpedizioni = new SelectList(model.AGR_SpedizioniWEB_vw.ToList(), "ID", "DescrAlt");
 
             // Dati per dropdown Meteo
             var Meteo = from m in db.AGR_Meteo
@@ -102,6 +102,7 @@ namespace WEB_Auto.Controllers
             Session["User"] = usr;
             Session["IDPerito"] = myIDPerito;
             Session["IDPeritoVero"] = myIDPeritoVero;
+            Session["RTB"] = "";
             ViewData["ElencoSpedizioni"] = ElencoSpedizioni;
             ViewData["ElencoMeteo"] = ElencoMeteo;
             ViewData["ElencoTP"] = ElencoTP;

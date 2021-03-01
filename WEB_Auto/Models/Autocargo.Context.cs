@@ -52,5 +52,7 @@ namespace WEB_Auto.Models
         public virtual DbSet<AGR_DatiRotabiliInUSo_vw> AGR_DatiRotabiliInUSo_vw { get; set; }
         public virtual DbSet<WEB_AUTO_PDF> WEB_AUTO_PDF { get; set; }
         public virtual DbSet<WEB_AUTO_ListaSpedizioni_2_vw> WEB_AUTO_ListaSpedizioni_2_vw { get; set; }
+        public virtual DbSet<AGR_ModelliAuto_CAB_vw> AGR_ModelliAuto_CAB_vw { get; set; }
+        public virtual DbSet<AGR_TrasportatoriGrimaldi_vw> AGR_TrasportatoriGrimaldi_vw { get; set; }
     }
 }

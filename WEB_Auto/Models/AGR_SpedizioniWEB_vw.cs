@@ -30,5 +30,6 @@ namespace WEB_Auto.Models
         public string IDOriginale1 { get; set; }
         public string IDOriginale2 { get; set; }
         public string DescrMin { get; set; }
+        public string DescrAlt { get; set; }
     }
 }

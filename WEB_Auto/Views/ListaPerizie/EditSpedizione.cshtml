@@ -164,16 +164,25 @@
                         }
                     }
                 }
-                //,
-                //{
-                //    extend: 'print',
-                //    text: 'Stampa griglia',
-                //    exportOptions: {
-                //        modifier: {
-                //            search: 'none'
-                //        }
-                //    }
-                //}
+                ,
+                {
+                    extend: 'print',
+                    text: 'Stampa griglia',
+                    exportOptions: {
+                        modifier: {
+                            search: 'none'
+                        }
+                    }
+                },
+                {
+                    extend: 'pdf',
+                    text: 'Crea PDF',
+                    exportOptions: {
+                        modifier: {
+                            page: 'current'
+                        }
+                    }
+                }
 
             ],
 

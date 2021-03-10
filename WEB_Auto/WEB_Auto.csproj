@@ -141,6 +141,7 @@
     <Compile Include="Controllers\DocumentiController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ListaPerizieController.cs" />
+    <Compile Include="Controllers\StoricoController.cs" />
     <Compile Include="Controllers\TelaiAnagraficaController.cs" />
     <Compile Include="Controllers\Test.cs" />
     <Compile Include="Global.asax.cs">
@@ -454,6 +455,9 @@
     <Content Include="Views\Test\Index.cshtml" />
     <Content Include="Views\TelaiAnagrafica\SalvaPeriziaDettagli.cshtml" />
     <Content Include="Views\Documenti\ScattaPDF.cshtml" />
+    <Content Include="Views\Storico\Index.cshtml" />
+    <Content Include="Views\Storico\CercaTelaio.cshtml" />
+    <Content Include="Views\Storico\CercaTelaioSingolo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

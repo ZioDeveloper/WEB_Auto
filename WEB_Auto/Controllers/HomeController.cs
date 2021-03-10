@@ -61,13 +61,13 @@ namespace WEB_Auto.Controllers
             }
             else if(Filtro == "TRE")
             {
-                ini = DateTime.Today.AddDays(-3);
-                end = DateTime.Today.AddDays(3);
+                ini = DateTime.Today.AddDays(-23);
+                end = DateTime.Today.AddDays(23);
             }
             else if (Filtro == "SETTE")
             {
-                ini = DateTime.Today.AddDays(-7);
-                end = DateTime.Today.AddDays(7);
+                ini = DateTime.Today.AddDays(-67);
+                end = DateTime.Today.AddDays(67);
             }
 
             var Spedizioni = from m in db.AGR_SpedizioniWEB_vw

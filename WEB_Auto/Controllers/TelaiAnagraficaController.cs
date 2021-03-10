@@ -19,6 +19,13 @@ namespace WEB_Auto.Controllers
             if(!String.IsNullOrEmpty(IDPerito))
                 EliminaTelaiSenzaModello(IDPerito);
 
+
+            if (String.IsNullOrEmpty(IDSpedizione))
+            {
+                string usr = Session["User"].ToString();
+                return RedirectToAction("Index", "Home", new { usr = usr, errMess = "Selezionare una spedizione" });
+            }
+
             string Test = Session["RTB"].ToString();
 
             if (Session["RTB"].ToString().ToUpper() == "TRUE")
@@ -40,11 +47,6 @@ namespace WEB_Auto.Controllers
             if (! String.IsNullOrEmpty(Chassis))
                 Chassis = Regex.Replace(Chassis, @"\s+", "");
 
-            if (String.IsNullOrEmpty(IDSpedizione))
-            {
-                string usr = Session["User"].ToString();
-                return RedirectToAction("Index","Home", new {usr = usr, errMess = "Selezionare una spedizione"  });
-            }
 
             if (String.IsNullOrEmpty(IDMeteo))
             {
@@ -604,27 +606,29 @@ namespace WEB_Auto.Controllers
             if (String.IsNullOrEmpty(IDGravita))
                 IDGravita = "";
 
+            if (!String.IsNullOrEmpty(myIDPerizia) && !String.IsNullOrEmpty(IDParte) && !String.IsNullOrEmpty(IDDanno) && !String.IsNullOrEmpty(myIDPerizia))
+            {
+
+                string sqlcmd = " INSERT INTO AGR_PERIZIE_DETT_TEMP_MVC (IDPerizia, IDParte, IDDanno, Qta, Note, Flags, IDGravita, IDResponsabilita, IDAttribuzione) " +
+                               "VALUES (@IDPerizia, @IDParte, @IDDanno, @Qta, @Note, @Flags, @IDGravita, @IDResponsabilita, @IDAttribuzione)";
+                int Inserted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@IDPerizia", myIDPerizia),
+                                                                     new SqlParameter("@IDParte", IDParte),
+                                                                     new SqlParameter("@IDDanno", IDDanno),
+                                                                     new SqlParameter("@Qta", Qta),
+                                                                     new SqlParameter("@Note", Note),
+                                                                     new SqlParameter("@Flags", 16),
+                                                                     new SqlParameter("@IDGravita", IDGravita),
+                                                                     new SqlParameter("@IDResponsabilita", IDResponsabilita),
+                                                                     new SqlParameter("@IDAttribuzione", IDAttribuzione));
+
+                // Aggiorno dati perizia
+                sqlcmd = " UPDATE AGR_PERIZIE_Temp_MVC " +
+                                " SET Flags = 32 " +
+                                " WHERE ID = @IDPerizia";
 
 
-            string sqlcmd = " INSERT INTO AGR_PERIZIE_DETT_TEMP_MVC (IDPerizia, IDParte, IDDanno, Qta, Note, Flags, IDGravita, IDResponsabilita, IDAttribuzione) " +
-                           "VALUES (@IDPerizia, @IDParte, @IDDanno, @Qta, @Note, @Flags, @IDGravita, @IDResponsabilita, @IDAttribuzione)";
-            int Inserted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@IDPerizia", myIDPerizia),
-                                                                 new SqlParameter("@IDParte", IDParte),
-                                                                 new SqlParameter("@IDDanno", IDDanno),
-                                                                 new SqlParameter("@Qta", Qta),
-                                                                 new SqlParameter("@Note", Note),
-                                                                 new SqlParameter("@Flags", 16),
-                                                                 new SqlParameter("@IDGravita", IDGravita),
-                                                                 new SqlParameter("@IDResponsabilita", IDResponsabilita),
-                                                                 new SqlParameter("@IDAttribuzione", IDAttribuzione));
-
-            // Aggiorno dati perizia
-            sqlcmd = " UPDATE AGR_PERIZIE_Temp_MVC " +
-                            " SET Flags = 32 " +
-                            " WHERE ID = @IDPerizia";
-
-
-            Inserted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@IDPerizia", myIDPerizia));
+                Inserted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@IDPerizia", myIDPerizia));
+            }
 
             //var model = new Models.HomeModel();
             //var Detatgli = from m in db.AGR_PERIZIE_DETT_TEMP_MVC_vw

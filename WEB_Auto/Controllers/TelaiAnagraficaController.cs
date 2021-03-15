@@ -244,27 +244,61 @@ namespace WEB_Auto.Controllers
                 aIDModelloCasa = "1240";
                 ViewBag.aIDModelloCasa = "1240";
             }
+            if (Session["RTB"].ToString().ToUpper() == "TRUE" && aCasa == "RTB")
+            {
+                var modello = from m in db.AGR_ModelliAuto
+                              where m.IDCliente == "**"
+                              where m.IDCasa == aCasa
+                              where m.IDModelloCasa == "1241"
+                              select m;
+                model.AGR_ModelliAuto = modello.ToList().OrderBy(m => m.Descr);
+                var ElencoModelli = new SelectList(model.AGR_ModelliAuto.ToList(), "ID", "Descr");
+                ViewData["ElencoModelli"] = ElencoModelli;
+                aIDModelloCasa = "1241";
+                ViewBag.aIDModelloCasa = "1240";
+            }
             else
             {
-                if (aCasa == "CAB" && Filtrati )
+                //if (aCasa == "CAB" && Filtrati )
+                //{
+                //    var modello = from m in db.AGR_ModelliAuto_CAB_vw
+                //                  where m.IDCliente == "**"
+                //                  where m.IDCasa == aCasa
+                //                  where m.IDModelloCasa == "2055" || m.IDModelloCasa == "2006" || m.IDModelloCasa == "1922"
+                //                  select m;
+                //    model.AGR_ModelliAuto_CAB_vw = modello.ToList().OrderBy(m => m.Descr);
+                //    var ElencoModelli = new SelectList(model.AGR_ModelliAuto_CAB_vw.ToList(), "ID", "Descr");
+                //    ViewData["ElencoModelli"] = ElencoModelli;
+                //}
+                //else
+                //{
+                //    var modello = from m in db.AGR_ModelliAuto_CAB_vw
+                //                  where m.IDCliente == "**"
+                //                  where m.IDCasa == aCasa
+                //                  select m;
+                //    model.AGR_ModelliAuto_CAB_vw = modello.ToList().OrderBy(m => m.Descr);
+                //    var ElencoModelli = new SelectList(model.AGR_ModelliAuto_CAB_vw.ToList(), "ID", "Descr");
+                //    ViewData["ElencoModelli"] = ElencoModelli;
+                //}
+                if (aCasa == "CAB" && Filtrati)
                 {
-                    var modello = from m in db.AGR_ModelliAuto_CAB_vw
+                    var modello = from m in db.AGR_ModelliAuto
                                   where m.IDCliente == "**"
                                   where m.IDCasa == aCasa
-                                  where m.IDModelloCasa == "2055" || m.IDModelloCasa == "2006" || m.IDModelloCasa == "1922"
+                                  //where m.IDModelloCasa == "2055" || m.IDModelloCasa == "2006" || m.IDModelloCasa == "1922"
                                   select m;
-                    model.AGR_ModelliAuto_CAB_vw = modello.ToList().OrderBy(m => m.Descr);
-                    var ElencoModelli = new SelectList(model.AGR_ModelliAuto_CAB_vw.ToList(), "ID", "Descr");
+                    model.AGR_ModelliAuto = modello.ToList().OrderBy(m => m.Descr);
+                    var ElencoModelli = new SelectList(model.AGR_ModelliAuto.ToList(), "ID", "Descr");
                     ViewData["ElencoModelli"] = ElencoModelli;
                 }
                 else
                 {
-                    var modello = from m in db.AGR_ModelliAuto_CAB_vw
+                    var modello = from m in db.AGR_ModelliAuto
                                   where m.IDCliente == "**"
                                   where m.IDCasa == aCasa
                                   select m;
-                    model.AGR_ModelliAuto_CAB_vw = modello.ToList().OrderBy(m => m.Descr);
-                    var ElencoModelli = new SelectList(model.AGR_ModelliAuto_CAB_vw.ToList(), "ID", "Descr");
+                    model.AGR_ModelliAuto = modello.ToList().OrderBy(m => m.Descr);
+                    var ElencoModelli = new SelectList(model.AGR_ModelliAuto.ToList(), "ID", "Descr");
                     ViewData["ElencoModelli"] = ElencoModelli;
                 }
 
@@ -325,8 +359,8 @@ namespace WEB_Auto.Controllers
             }
 
             // Dati per dropdown Spedizione
-            DateTime ini = DateTime.Today.AddDays(-5);
-            DateTime end = DateTime.Today.AddDays(+5);
+            DateTime ini = DateTime.Today.AddDays(-30);
+            DateTime end = DateTime.Today.AddDays(+30);
             var Spedizione = from m in db.AGR_SpedizioniWEB_vw
                              where m.DataInizioImbarco >= ini
                              where m.DataInizioImbarco <= end

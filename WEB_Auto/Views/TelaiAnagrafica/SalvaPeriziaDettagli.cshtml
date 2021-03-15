@@ -95,7 +95,7 @@
             </td>
             <td>
 
-                @Html.DropDownList("IDParte", new SelectList((SelectList)ViewData["ElencoParti"], "Value", "Text", null), "-- Seleziona parte --", new { @class = "form-control selectpicker data-live-search=true" })
+                @Html.DropDownList("IDParte", new SelectList((SelectList)ViewData["ElencoParti"], "Value", "Text", null), "-- Seleziona parte --", new { @class = "form-control selectpicker dropupAuto = false data-live-search=true data-size=5" })
 
             </td>
         </tr>
@@ -113,7 +113,7 @@
             </td>
             <td>
 
-                @Html.DropDownList("IDDanno", new SelectList((SelectList)ViewData["ElencoDanni"], "Value", "Text", null), "-- Seleziona danno --", new { @class = "form-control selectpicker data-live-search=true" })
+                @Html.DropDownList("IDDanno", new SelectList((SelectList)ViewData["ElencoDanni"], "Value", "Text", null), "-- Seleziona danno --", new { @class = "form-control selectpicker dropupAuto = false data-live-search=true data-size=5" })
 
             </td>
         </tr>
@@ -133,7 +133,7 @@
                 </td>
                 <td>
 
-                    @Html.DropDownList("IDGravita", new SelectList((SelectList)ViewData["ElencoGravita"], "Value", "Text", null), "-- Seleziona gravità --", new { @class = "form-control selectpicker data-live-search=true" })
+                    @Html.DropDownList("IDGravita", new SelectList((SelectList)ViewData["ElencoGravita"], "Value", "Text", null), "-- Seleziona gravità --", new { @class = "form-control selectpicker dropupAuto = false data-live-search=true data-size=5" })
 
                 </td>
             </tr>
@@ -222,11 +222,11 @@
 </div>
 
 <script>
-    $(document).ready(function () {
-        $('.selectpicker').selectpicker({
-            liveSearch: true,
-            showSubtext: true
-        });
+    $('.selectpicker').selectpicker({
+        dropupAuto: false,
+        liveSearch: true,
+        showSubtext: true
+
     });
 </script>
 

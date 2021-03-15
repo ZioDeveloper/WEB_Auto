@@ -27,7 +27,7 @@
         </td>
     </tr>
     <tr>
-        @if (ViewBag.Casa != "RTB")
+        @if (ViewBag.Casa == "CAB")
         {
             if (Session["RTB"].ToString().ToUpper() == "TRUE")
             {
@@ -42,6 +42,12 @@
                 </td>
             }
         }
+        @*else
+        {
+            <td>
+                Perizia RTB  @Html.CheckBox("IsRTB", true, new { @onclick = "this.form.submit();" })
+            </td>
+        }*@
     </tr>
     <tr>
 

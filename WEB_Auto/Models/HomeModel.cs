@@ -39,6 +39,9 @@ namespace WEB_Auto.Models
         public IEnumerable<AAA_Prova> AAA_Prova { get; set; }
         public IEnumerable<WEB_Auto_ListaPerizieXSpedizione_vw> WEB_Auto_ListaPerizieXSpedizione_vw { get; set; }
 
+        public IEnumerable<WEB_ListaPerizieFlat_MVC_vw> WEB_ListaPerizieFlat_MVC_vw { get; set; }
+
+
 
 
 

@@ -19,7 +19,7 @@ namespace WEB_Auto.Controllers
             Session["User"] = usr;
 
             if (String.IsNullOrEmpty(usr))
-                usr = "Test";
+                usr = "Pierangeli";
 
             var myIDPerito = (from s in db.AGR_Periti_WEB
                               where s.Name == usr
@@ -61,13 +61,13 @@ namespace WEB_Auto.Controllers
             }
             else if(Filtro == "TRE")
             {
-                ini = DateTime.Today.AddDays(-23);
-                end = DateTime.Today.AddDays(23);
+                ini = DateTime.Today.AddDays(-7);
+                end = DateTime.Today.AddDays(7);
             }
             else if (Filtro == "SETTE")
             {
-                ini = DateTime.Today.AddDays(-67);
-                end = DateTime.Today.AddDays(67);
+                ini = DateTime.Today.AddDays(-20);
+                end = DateTime.Today.AddDays(20);
             }
 
             var Spedizioni = from m in db.AGR_SpedizioniWEB_vw
@@ -78,7 +78,7 @@ namespace WEB_Auto.Controllers
                              select m;
             model.AGR_SpedizioniWEB_vw = Spedizioni.ToList().OrderBy(s=>s.ID);
 
-            var ElencoSpedizioni = new SelectList(model.AGR_SpedizioniWEB_vw.ToList(), "ID", "DescrAlt");
+            var ElencoSpedizioni = new SelectList(model.AGR_SpedizioniWEB_vw.ToList(), "ID", "Descr");
 
             // Dati per dropdown Meteo
             var Meteo = from m in db.AGR_Meteo

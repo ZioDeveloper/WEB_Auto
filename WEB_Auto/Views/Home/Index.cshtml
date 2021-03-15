@@ -45,7 +45,7 @@
 
             @Html.Label("Seleziona spedizione")
             @*@Html.DropDownList("IDSpedizione", (SelectList)ViewData["ElencoSpedizioni"], "-- Seleziona spedizione --", new { @class = "form-control" })*@
-            @Html.DropDownList("IDSpedizione", (SelectList)ViewData["ElencoSpedizioni"], "-- Seleziona spedizione --", new { @style = "font-size: 13px;", @class = "form-control selectpicker data-live-search=true" })
+            @Html.DropDownList("IDSpedizione", (SelectList)ViewData["ElencoSpedizioni"], "-- Seleziona spedizione --", new { @style = "font-size: 13px;", @class = "form-control selectpicker dropupAuto = false data-live-search=true data-size=5" })
             <br />
 
             @Html.Label("Seleziona meteo")
@@ -84,11 +84,20 @@
     </div>
 </div>
 
-<script>
+@*<script>
     $(document).ready(function () {
         $('.selectpicker').selectpicker({
             liveSearch: true,
             showSubtext: true
+
         });
+    });
+</script>*@
+<script>
+    $('.selectpicker').selectpicker({
+        dropupAuto: false,
+        liveSearch: true,
+        showSubtext: true
+
     });
 </script>

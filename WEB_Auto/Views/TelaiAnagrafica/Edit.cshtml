@@ -174,7 +174,7 @@ else
         </tr>*@
         <tr>
             <td>
-                @Html.Label("Seleziona modello auto")
+                @Html.Label("Modello")
 
             </td>
             <td>
@@ -192,7 +192,7 @@ else
         {
             <tr>
                 <td>
-                    @Html.Label("Seleziona Trasportatore")
+                    @Html.Label("Trasportatore")
 
                 </td>
                 <td>
@@ -206,7 +206,7 @@ else
             </tr>*@
             <tr>
                 <td>
-                    @Html.Label("Seleziona tipo rotabile")
+                    @Html.Label("Rotabile")
 
                 </td>
                 <td>
@@ -269,19 +269,27 @@ else
 
         <tr>
             <td>
-                @Html.Label("Inserisci danni")
+                
 
             </td>
 
             <td>
-                @if (ViewBag.ErrMess == "" || ViewBag.ErrMess == "Sbloccato" || ViewBag.ErrMess == "In fase modifica")
+                @Html.Label("Inserisci danni")
+                @if (ViewBag.ErrMess == "" || ViewBag.ErrMess == "Sbloccato" || ViewBag.ErrMess == "In fase modifica" || ViewBag.ErrMess == "In modifica")
                 {
                     @Html.CheckBox("isDamaged", false, new { @onchange = "submitform();" })
+
+
+                    @Html.Label("Inserimento rapido ")
+
+
+                    @Html.CheckBox("isRapid", false, new { @onchange = "submitform();" })
                 }
                 else
                 {
                     @Html.CheckBox("isDamaged", false, new { disabled = "disabled" })
-
+                    @Html.Label("Inserimento rapido ")
+                    @Html.CheckBox("isRapid", false, new { disabled = "disabled" })
 
                 }
             </td>
@@ -291,13 +299,13 @@ else
                     @ViewBag.HasDanni
                 </td>
 
-            }
-            else
-            {
-                <td style="color:red">
-                    @ViewBag.HasDanni
-                </td>
-            }
+                }
+                else
+                {
+                    <td style="color:red">
+                        @ViewBag.HasDanni
+                    </td>
+                }
             
 
             </tr>
@@ -357,7 +365,7 @@ else
         }
         else
         {
-            if (ViewBag.ErrMess == "" || ViewBag.ErrMess == "Sbloccato" )
+            if (ViewBag.ErrMess == "" || ViewBag.ErrMess == "Sbloccato" || ViewBag.ErrMess == "In modifica")
             {
                 @Html.ActionLink("Termina", "InputTelaio", new
                     {
@@ -414,14 +422,14 @@ else
 </script>
 
 
-<script>
+@*<script>
     $(document).ready(function () {
         $('.selectpicker').selectpicker({
             liveSearch: true,
             showSubtext: true
         });
     });
-</script>
+</script>*@
 <script>
     function submitform() {
         $('form').submit();
@@ -431,6 +439,7 @@ else
 <script>
     $('.selectpicker').selectpicker({
         dropupAuto: false,
+        showSubtext: true,
         liveSearch: true
 
     });

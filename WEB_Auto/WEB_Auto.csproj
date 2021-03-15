@@ -461,6 +461,7 @@
     <Content Include="Views\Storico\Index.cshtml" />
     <Content Include="Views\Storico\CercaTelaio.cshtml" />
     <Content Include="Views\Storico\CercaTelaioSingolo.cshtml" />
+    <Content Include="Views\TelaiAnagrafica\SalvaPeriziaDettagliRapid.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

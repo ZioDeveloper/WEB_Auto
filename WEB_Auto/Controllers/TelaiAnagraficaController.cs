@@ -99,10 +99,12 @@ namespace WEB_Auto.Controllers
                     try { Annotazioni = dati.Note.ToString(); } catch { Annotazioni = ""; }
                     string IDModello = dati.IDModello.ToString();
                     return RedirectToAction("Edit", "TelaiAnagrafica", new { IDPerito = IDPerito, IDSpedizione = IDSpedizione,
-                        IDMeteo= IDMeteo, IDTP= IDTP, aIDTrasportatore = ID_Trasportatore,
+                        IDMeteo = IDMeteo, IDTP = IDTP, aIDTrasportatore = ID_Trasportatore,
                         aIDTipoRotabile = ID_TipoRotabile,
                         aIDModelloCasa = IDModello, myIDPerizia = myIDPerizia,
-                        Annotazioni = Annotazioni
+                        Annotazioni = Annotazioni,
+                        errMess = "In modifica"
+
                     });
 
                 }
@@ -403,9 +405,14 @@ namespace WEB_Auto.Controllers
         }
 
         public ActionResult SalvaPeriziaTesta(string IDPerito, string IDSpedizione, string IDMeteo, string IDTP, string Chassis, string DataPerizia, string IDModelloCasa, string IDTrasportatoreGrim,
-                                              string IDTipoRotabile, bool? isDamaged, string Condizione, string Annotazioni, string myIDPerizia, bool IsUpdate = false,bool Filtrati=true )
+                                              string IDTipoRotabile, bool? isDamaged, string Condizione, string Annotazioni, string myIDPerizia, 
+                                              bool IsUpdate = false,bool Filtrati=true, bool isRapid = false )
         {
+            if (isRapid == true)
+                isDamaged = false;
 
+            if (isDamaged == true)
+                isRapid = false;
 
             // Verifico Sia tutto ok.. to do !!!!!
             bool isOK = CheckAll(IDSpedizione, Chassis, IDModelloCasa, IDTrasportatoreGrim , IDTipoRotabile, Condizione , Annotazioni, out string myerrMess);
@@ -486,7 +493,7 @@ namespace WEB_Auto.Controllers
                 }
 
 
-                if (isDamaged == false)
+                if (isDamaged == false && isRapid == false )
                 {
                     return RedirectToAction("Edit", "TelaiAnagrafica", new
                     {
@@ -505,7 +512,12 @@ namespace WEB_Auto.Controllers
                 }
                 else
                 {
-                    return RedirectToAction("SalvaPeriziaDettagli", "TelaiAnagrafica", new { myIDPerizia, IsUpdate= IsUpdate });
+                    if (isDamaged == true && isRapid == false)
+                        return RedirectToAction("SalvaPeriziaDettagli", "TelaiAnagrafica", new { myIDPerizia, IsUpdate= IsUpdate });
+                    else if (isDamaged == false && isRapid == true)
+                        return RedirectToAction("SalvaPeriziaDettagliRapid", "TelaiAnagrafica", new { myIDPerizia, IsUpdate = IsUpdate });
+                    else // finire: non deve mai accadere
+                        return RedirectToAction("SalvaPeriziaDettagli", "TelaiAnagrafica", new { myIDPerizia, IsUpdate = IsUpdate });
                 }
             }
             else
@@ -862,6 +874,153 @@ namespace WEB_Auto.Controllers
             int deleted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@IDPErito", IDPerito));
             sqlcmd = " DELETE FROM AGR_PERIZIE_TEMP_MVC WHERE IDPErito =  @IDPErito AND IDModello IS NULL";
             deleted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@IDPErito", IDPerito));
+        }
+
+        public ActionResult SalvaPeriziaDettagliRapid(string myIDPerizia, string myIDParte, bool IsUpdate = false)
+        {
+            var model = new Models.HomeModel();
+            bool ISGravitaEnabled = true;
+
+            // Carichiamo UN PO' DI DATI...
+            // *******************************
+            bool ISGEFCO_GN_51 = pISGEFCO_GN_51(myIDPerizia);
+
+            // Dati per dropdown AGR_Parti
+            if (ISGEFCO_GN_51)
+            {
+                var parti = from m in db.WEB_AGR_Parti_vw
+                            where m.IDCliente == "**"
+                            where m.IDCasa == "RTB"
+                            select m;
+                model.WEB_AGR_Parti_vw = parti.ToList();
+                var ElencoParti = new SelectList(model.WEB_AGR_Parti_vw.ToList().OrderBy(m => m.DescrITA), "ID", "DescrITA");
+                ViewData["ElencoParti"] = ElencoParti;
+            }
+            else
+            {
+                var parti = from m in db.WEB_AGR_Parti_vw
+                            where m.IDCliente == "**"
+                            where m.IDCasa != "RTB"
+                            select m;
+                model.WEB_AGR_Parti_vw = parti.ToList();
+                var ElencoParti = new SelectList(model.WEB_AGR_Parti_vw.ToList().OrderBy(m => m.DescrITA), "ID", "DescrITA");
+                ViewData["ElencoParti"] = ElencoParti;
+            }
+
+
+
+
+            // Dati per dropdown AGR_Danni
+            var danni = from m in db.WEB_AGR_Danni_vw
+                        where m.IDCliente == "**"
+
+                        select m;
+            model.WEB_AGR_Danni_vw = danni.ToList();
+            var ElencoDanni = new SelectList(model.WEB_AGR_Danni_vw.ToList().OrderBy(m => m.DescrITA), "ID", "DescrITA");
+            ViewData["ElencoDanni"] = ElencoDanni;
+
+
+            // Dati per dropdown AGR_Gravita
+            // *******************************
+            if (ISGEFCO_GN_51)
+            {
+                var gravita = from m in db.WEB_AGR_Gravita_vw
+                              where m.IDCliente == "FI"
+
+                              select m;
+                model.WEB_AGR_Gravita_vw = gravita.ToList();
+                var ElencoGravita = new SelectList(model.WEB_AGR_Gravita_vw.ToList().OrderBy(m => m.DescrITA), "ID", "DescrITA");
+                ViewData["ElencoGravita"] = ElencoGravita;
+            }
+            else
+            {
+                var gravita = from m in db.WEB_AGR_Gravita_vw
+                              where m.IDCliente == "NULL"
+
+                              select m;
+                model.WEB_AGR_Gravita_vw = gravita.ToList();
+                var ElencoGravita = new SelectList(model.WEB_AGR_Gravita_vw.ToList().OrderBy(m => m.DescrITA), "ID", "DescrITA");
+                ViewData["ElencoGravita"] = ElencoGravita;
+                ISGravitaEnabled = false;
+
+            }
+
+            var Dettagli = from m in db.AGR_PERIZIE_DETT_TEMP_MVC_vw
+                           where m.IDPerizia == myIDPerizia
+                           select m;
+            model.AGR_PERIZIE_DETT_TEMP_MVC_vw = Dettagli.ToList();
+            ViewBag.IDPerizia = myIDPerizia;
+
+            var test = (from m in db.AGR_PERIZIE_TEMP_MVC
+                        where m.ID.ToString() == myIDPerizia
+                        select new { m.IDPerito, m.IDSpedizione, m.IDMeteo, m.IDTipoPerizia, m.IDModello, m.ID }).FirstOrDefault();
+
+            var test2 = (from m in db.AGR_PerizieExpGrim_Temp_MVC
+                         where m.ID.ToString() == myIDPerizia
+                         select new { m.ID_TipoRotabile, m.ID_TrasportatoreGrimaldi }).FirstOrDefault();
+
+            ViewBag.IDPerito = test.IDPerito;
+            ViewBag.IDSpedizione = test.IDSpedizione;
+            ViewBag.IDMeteo = test.IDMeteo;
+            ViewBag.IDTP = test.IDTipoPerizia;
+            ViewBag.aIDTrasportatore = test2.ID_TrasportatoreGrimaldi;
+            ViewBag.aIDTipoRotabile = test2.ID_TipoRotabile;
+            ViewBag.aIDModelloCasa = test.IDModello;
+            ViewBag.IDPeriz = test.ID;
+            ViewBag.ISGravitaEnabled = ISGravitaEnabled;
+            ViewBag.IsUpdate = IsUpdate;
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult SalvaPeriziaDettagliRapid(string myIDPerizia, string IDParte, string IDDanno, string Qta, string Note, string Flags,
+            string IDGravita, string IDResponsabilita, string IDAttribuzione, bool IsUpdate = false)
+        {
+
+            // Inserisco dettagli danno perizia
+            if (String.IsNullOrEmpty(Flags))
+                Flags = "";
+            if (String.IsNullOrEmpty(IDResponsabilita))
+                IDResponsabilita = "";
+            if (String.IsNullOrEmpty(Flags))
+                Flags = "";
+            if (String.IsNullOrEmpty(IDAttribuzione))
+                IDAttribuzione = "";
+            if (String.IsNullOrEmpty(IDGravita))
+                IDGravita = "";
+
+            if (!String.IsNullOrEmpty(myIDPerizia) && !String.IsNullOrEmpty(IDParte) && !String.IsNullOrEmpty(IDDanno) && !String.IsNullOrEmpty(myIDPerizia))
+            {
+
+                string sqlcmd = " INSERT INTO AGR_PERIZIE_DETT_TEMP_MVC (IDPerizia, IDParte, IDDanno, Qta, Note, Flags, IDGravita, IDResponsabilita, IDAttribuzione) " +
+                               "VALUES (@IDPerizia, @IDParte, @IDDanno, @Qta, @Note, @Flags, @IDGravita, @IDResponsabilita, @IDAttribuzione)";
+                int Inserted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@IDPerizia", myIDPerizia),
+                                                                     new SqlParameter("@IDParte", IDParte),
+                                                                     new SqlParameter("@IDDanno", IDDanno),
+                                                                     new SqlParameter("@Qta", Qta),
+                                                                     new SqlParameter("@Note", Note),
+                                                                     new SqlParameter("@Flags", 16),
+                                                                     new SqlParameter("@IDGravita", IDGravita),
+                                                                     new SqlParameter("@IDResponsabilita", IDResponsabilita),
+                                                                     new SqlParameter("@IDAttribuzione", IDAttribuzione));
+
+                // Aggiorno dati perizia
+                sqlcmd = " UPDATE AGR_PERIZIE_Temp_MVC " +
+                                " SET Flags = 32 " +
+                                " WHERE ID = @IDPerizia";
+
+
+                Inserted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@IDPerizia", myIDPerizia));
+            }
+
+            //var model = new Models.HomeModel();
+            //var Detatgli = from m in db.AGR_PERIZIE_DETT_TEMP_MVC_vw
+            //               where m.IDPerizia == aIDPerizia
+            //               select m;
+            //model.AGR_PERIZIE_DETT_TEMP_MVC_vw = Detatgli.ToList();
+            return RedirectToAction("SalvaPeriziaDettagliRapid", "TelaiAnagrafica", new { myIDPerizia, IsUpdate = IsUpdate });
+
+            //return View(model);
         }
     }
 }

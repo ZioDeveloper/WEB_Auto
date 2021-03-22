@@ -17,7 +17,7 @@
     <div id="panel">
         Dati generali
         <table border="1">
-            
+
             <tbody>
 
                 <tr>
@@ -144,6 +144,151 @@
         </table>
     </div>
 }
+
+
+
+else
+{
+    <div id="flip">NON ci sono dati da visualizzare</div>
+    <div id="panel">
+        NON ci sono dati da visualizzare
+    </div>
+}
+@{var TestataDef = Model.WEB_ListaPerizieFlat_DEF_vw.ToList();}
+@if (TestataDef.Count() > 0)
+{
+
+    <div id="flip1">Click qui x visualizzare dati perizia storici</div>
+    <div id="panel1">
+        Dati generali
+        <table border="1">
+
+            <tbody>
+
+                <tr>
+                    <td width=30% style="font-weight:bold">
+                        Spedizione :
+                    </td>
+
+                    <td width=30%>
+                        @TestataDef[0].IDSpedizione
+                    </td>
+                    <td width=20% style="font-weight:bold">
+                        Viaggio :
+                    </td>
+
+                    <td width=20%>
+                        @TestataDef[0].Viaggio
+                    </td>
+                </tr>
+                <tr>
+                    <td width=30% style="font-weight:bold">
+                        POL :
+                    </td>
+
+                    <td width=30%>
+                        @TestataDef[0].POL
+                    </td>
+                    <td width=20% style="font-weight:bold">
+                        Imbarco :
+                    </td>
+
+                    <td width=20%>
+                        @Convert.ToDateTime(TestataDef[0].DataPartenzaImbarco).ToString("dd/MM/yyyy")
+                    </td>
+                </tr>
+                <tr>
+                    <td width=30% style="font-weight:bold">
+                        POD :
+                    </td>
+
+                    <td width=30%>
+                        @TestataDef[0].POD
+                    </td>
+                    <td width=20% style="font-weight:bold">
+                        Sbarco :
+                    </td>
+
+                    <td width=20%>
+                        @Convert.ToDateTime(TestataDef[0].DataArrivoSbarco).ToString("dd/MM/yyyy")
+                    </td>
+                </tr>
+                <tr>
+                    <td width=30% style="font-weight:bold">
+                        Nave :
+                    </td>
+
+                    <td width=30%>
+                        @TestataDef[0].Nave
+                    </td>
+                    <td width=20%></td>
+
+                    <td width=20%></td>
+                </tr>
+
+            </tbody>
+            <tfoot>
+
+            </tfoot>
+        </table>
+        <br />
+        Dettagli danno
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>
+                        Parte :
+                    </th>
+                    <th>
+                        Danno :
+                    </th>
+                    <th>
+                        Gravità :
+                    </th>
+                    <th>
+                        Qta :
+                    </th>
+
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.WEB_ListaPerizieFlat_DEF_vw)
+                {
+                    <tr>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Parte)
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Danno)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Gravita)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Qta)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="100%">
+                            <b>Trasportatore</b> :  @Html.DisplayFor(modelItem => item.Trasportatore)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="100%">
+                            <b>Note</b> :  @Html.DisplayFor(modelItem => item.Note)
+                        </td>
+                    </tr>
+                }
+
+            </tbody>
+            <tfoot>
+
+            </tfoot>
+        </table>
+    </div>
+}
 else
 {
     <div id="flip">NON ci sono dati da visualizzare</div>
@@ -152,12 +297,19 @@ else
     </div>
 }
 
-</br>
+    </br>
 @Html.ActionLink("Cerca telaio", "CercaTelaio", "Storico", routeValues: null, htmlAttributes: new { @class = "btn btn-primary custom" })
 <script>
     $(document).ready(function () {
         $("#flip").click(function () {
             $("#panel").slideToggle("slow");
+        });
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        $("#flip1").click(function () {
+            $("#panel1").slideToggle("slow");
         });
     });
 </script>

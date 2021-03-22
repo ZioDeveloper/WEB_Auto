@@ -48,4 +48,16 @@ textarea {
 #panel {
     padding: 5px;
     display: none;
+
+}
+#panel1, #flip1 {
+    padding: 5px;
+    text-align: left;
+    background-color: #ecf2dc;
+    border: solid 1px #c3c3c3;
+}
+
+#panel1 {
+    padding: 5px;
+    display: none;
 }

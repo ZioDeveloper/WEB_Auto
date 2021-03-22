@@ -287,7 +287,14 @@ namespace WEB_Auto.Controllers
                     var modello = from m in db.AGR_ModelliAuto
                                   where m.IDCliente == "**"
                                   where m.IDCasa == aCasa
-                                  //where m.IDModelloCasa == "2055" || m.IDModelloCasa == "2006" || m.IDModelloCasa == "1922"
+                                  where m.IDModelloCasa == "2055" || m.IDModelloCasa == "2006" || m.IDModelloCasa == "1922" || m.IDModelloCasa == "1923"
+                                                                  || m.IDModelloCasa == "1523" || m.IDModelloCasa == "1915" || m.IDModelloCasa == "1920"
+                                                                  || m.IDModelloCasa == "1802" || m.IDModelloCasa == "1924" || m.IDModelloCasa == "1583"
+                                                                  || m.IDModelloCasa == "1916" || m.IDModelloCasa == "1419" || m.IDModelloCasa == "1917"
+                                                                  || m.IDModelloCasa == "1914" || m.IDModelloCasa == "2050" || m.IDModelloCasa == "1905"
+                                                                  || m.IDModelloCasa == "2054" || m.IDModelloCasa == "1897" || m.IDModelloCasa == "1898"
+                                                                  || m.IDModelloCasa == "1896" || m.IDModelloCasa == "1479" || m.IDModelloCasa == "2014"
+                                                                  || m.IDModelloCasa == "2053" || m.IDModelloCasa == "219" 
                                   select m;
                     model.AGR_ModelliAuto = modello.ToList().OrderBy(m => m.Descr);
                     var ElencoModelli = new SelectList(model.AGR_ModelliAuto.ToList(), "ID", "Descr");
@@ -868,6 +875,26 @@ namespace WEB_Auto.Controllers
             return true;
         }
 
+        public bool CheckAllDetails(string IDParte, string IDDanno , out string errMEss)
+        {
+            if (String.IsNullOrEmpty(IDParte))
+            {
+                errMEss = "Inserire codice parte...";
+                return false;
+            }
+            if (String.IsNullOrEmpty(IDDanno))
+            {
+                errMEss = "Inserire codice danno...";
+                return false;
+            }
+
+            else
+            {
+                errMEss = "";
+                return true;
+            }
+        }
+
         public void EliminaTelaiSenzaModello(string IDPerito)
         {
             string sqlcmd = " DELETE FROM AGR_PerizieExpGrim_Temp_MVC WHERE ID IN(SELECT ID FROM AGR_PERIZIE_TEMP_MVC WHERE IDPErito = @IDPErito  AND IDModello IS NULL)";
@@ -876,7 +903,7 @@ namespace WEB_Auto.Controllers
             deleted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@IDPErito", IDPerito));
         }
 
-        public ActionResult SalvaPeriziaDettagliRapid(string myIDPerizia, string myIDParte, bool IsUpdate = false)
+        public ActionResult SalvaPeriziaDettagliRapid(string myIDPerizia, string myIDParte, bool IsUpdate = false, string ErrMess="")
         {
             var model = new Models.HomeModel();
             bool ISGravitaEnabled = true;
@@ -969,6 +996,7 @@ namespace WEB_Auto.Controllers
             ViewBag.IDPeriz = test.ID;
             ViewBag.ISGravitaEnabled = ISGravitaEnabled;
             ViewBag.IsUpdate = IsUpdate;
+            ViewBag.ErrMess = ErrMess;
             return View(model);
         }
 
@@ -976,49 +1004,61 @@ namespace WEB_Auto.Controllers
         public ActionResult SalvaPeriziaDettagliRapid(string myIDPerizia, string IDParte, string IDDanno, string Qta, string Note, string Flags,
             string IDGravita, string IDResponsabilita, string IDAttribuzione, bool IsUpdate = false)
         {
+            string myMessDett = "";
+            bool isOK = CheckAllDetails(IDParte, IDDanno , out myMessDett);
 
-            // Inserisco dettagli danno perizia
-            if (String.IsNullOrEmpty(Flags))
-                Flags = "";
-            if (String.IsNullOrEmpty(IDResponsabilita))
-                IDResponsabilita = "";
-            if (String.IsNullOrEmpty(Flags))
-                Flags = "";
-            if (String.IsNullOrEmpty(IDAttribuzione))
-                IDAttribuzione = "";
-            if (String.IsNullOrEmpty(IDGravita))
-                IDGravita = "";
-
-            if (!String.IsNullOrEmpty(myIDPerizia) && !String.IsNullOrEmpty(IDParte) && !String.IsNullOrEmpty(IDDanno) && !String.IsNullOrEmpty(myIDPerizia))
+            if (isOK)
             {
+                myMessDett = "";
+                // Inserisco dettagli danno perizia
+                if (String.IsNullOrEmpty(Flags))
+                    Flags = "";
+                if (String.IsNullOrEmpty(IDResponsabilita))
+                    IDResponsabilita = "";
+                if (String.IsNullOrEmpty(Flags))
+                    Flags = "";
+                if (String.IsNullOrEmpty(IDAttribuzione))
+                    IDAttribuzione = "";
+                if (String.IsNullOrEmpty(IDGravita))
+                    IDGravita = "";
 
-                string sqlcmd = " INSERT INTO AGR_PERIZIE_DETT_TEMP_MVC (IDPerizia, IDParte, IDDanno, Qta, Note, Flags, IDGravita, IDResponsabilita, IDAttribuzione) " +
-                               "VALUES (@IDPerizia, @IDParte, @IDDanno, @Qta, @Note, @Flags, @IDGravita, @IDResponsabilita, @IDAttribuzione)";
-                int Inserted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@IDPerizia", myIDPerizia),
-                                                                     new SqlParameter("@IDParte", IDParte),
-                                                                     new SqlParameter("@IDDanno", IDDanno),
-                                                                     new SqlParameter("@Qta", Qta),
-                                                                     new SqlParameter("@Note", Note),
-                                                                     new SqlParameter("@Flags", 16),
-                                                                     new SqlParameter("@IDGravita", IDGravita),
-                                                                     new SqlParameter("@IDResponsabilita", IDResponsabilita),
-                                                                     new SqlParameter("@IDAttribuzione", IDAttribuzione));
+                if (!String.IsNullOrEmpty(myIDPerizia) && !String.IsNullOrEmpty(IDParte) && !String.IsNullOrEmpty(IDDanno) && !String.IsNullOrEmpty(myIDPerizia))
+                {
 
-                // Aggiorno dati perizia
-                sqlcmd = " UPDATE AGR_PERIZIE_Temp_MVC " +
-                                " SET Flags = 32 " +
-                                " WHERE ID = @IDPerizia";
+                    string sqlcmd = " INSERT INTO AGR_PERIZIE_DETT_TEMP_MVC (IDPerizia, IDParte, IDDanno, Qta, Note, Flags, IDGravita, IDResponsabilita, IDAttribuzione) " +
+                                   "VALUES (@IDPerizia, @IDParte, @IDDanno, @Qta, @Note, @Flags, @IDGravita, @IDResponsabilita, @IDAttribuzione)";
+                    int Inserted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@IDPerizia", myIDPerizia),
+                                                                         new SqlParameter("@IDParte", IDParte),
+                                                                         new SqlParameter("@IDDanno", IDDanno),
+                                                                         new SqlParameter("@Qta", Qta),
+                                                                         new SqlParameter("@Note", Note),
+                                                                         new SqlParameter("@Flags", 16),
+                                                                         new SqlParameter("@IDGravita", IDGravita),
+                                                                         new SqlParameter("@IDResponsabilita", IDResponsabilita),
+                                                                         new SqlParameter("@IDAttribuzione", IDAttribuzione));
+
+                    // Aggiorno dati perizia
+                    sqlcmd = " UPDATE AGR_PERIZIE_Temp_MVC " +
+                                    " SET Flags = 32 " +
+                                    " WHERE ID = @IDPerizia";
 
 
-                Inserted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@IDPerizia", myIDPerizia));
+                    Inserted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@IDPerizia", myIDPerizia));
+                }
+
+                //var model = new Models.HomeModel();
+                //var Detatgli = from m in db.AGR_PERIZIE_DETT_TEMP_MVC_vw
+                //               where m.IDPerizia == aIDPerizia
+                //               select m;
+                //model.AGR_PERIZIE_DETT_TEMP_MVC_vw = Detatgli.ToList();
+               
+                return RedirectToAction("SalvaPeriziaDettagliRapid", "TelaiAnagrafica", new { myIDPerizia, IsUpdate = IsUpdate, ErrMess = myMessDett });
             }
-
-            //var model = new Models.HomeModel();
-            //var Detatgli = from m in db.AGR_PERIZIE_DETT_TEMP_MVC_vw
-            //               where m.IDPerizia == aIDPerizia
-            //               select m;
-            //model.AGR_PERIZIE_DETT_TEMP_MVC_vw = Detatgli.ToList();
-            return RedirectToAction("SalvaPeriziaDettagliRapid", "TelaiAnagrafica", new { myIDPerizia, IsUpdate = IsUpdate });
+            else
+            {
+               
+                return RedirectToAction("SalvaPeriziaDettagliRapid", "TelaiAnagrafica", new { myIDPerizia, IsUpdate = IsUpdate , myIDParte = IDParte, ErrMess = myMessDett });
+            }
 
             //return View(model);
         }

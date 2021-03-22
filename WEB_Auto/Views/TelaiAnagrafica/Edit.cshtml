@@ -274,13 +274,13 @@ else
             </td>
 
             <td>
-                @Html.Label("Inserisci danni")
+                @Html.Label("DMG") &nbsp
                 @if (ViewBag.ErrMess == "" || ViewBag.ErrMess == "Sbloccato" || ViewBag.ErrMess == "In fase modifica" || ViewBag.ErrMess == "In modifica")
                 {
                     @Html.CheckBox("isDamaged", false, new { @onchange = "submitform();" })
 
 
-                    @Html.Label("Inserimento rapido ")
+                    @Html.Label("Rapido")
 
 
                     @Html.CheckBox("isRapid", false, new { @onchange = "submitform();" })
@@ -288,7 +288,7 @@ else
                 else
                 {
                     @Html.CheckBox("isDamaged", false, new { disabled = "disabled" })
-                    @Html.Label("Inserimento rapido ")
+                    @Html.Label("DMG rapido ")
                     @Html.CheckBox("isRapid", false, new { disabled = "disabled" })
 
                 }
@@ -357,17 +357,17 @@ else
         <br />
     </div>
     <div>
-        <button type="submit" class="btn btn-primary custom">Conferma</button> &nbsp;&nbsp;&nbsp;
+        <button type="submit" class="btn btn-primary custom">Salva dati</button> &nbsp;&nbsp;&nbsp;
 
         @if (ViewBag.IsUpdate == true)
         {
-            @Html.ActionLink("Termina", "EditSpedizione", "ListaPerizie", new { IDSpedizione = ViewBag.IDSpedizione, ViewBag.IDTP }, new { @class = "btn btn-success custom" })
+            @Html.ActionLink("Nuova perizia", "EditSpedizione", "ListaPerizie", new { IDSpedizione = ViewBag.IDSpedizione, ViewBag.IDTP }, new { @class = "btn btn-success custom" })
         }
         else
         {
             if (ViewBag.ErrMess == "" || ViewBag.ErrMess == "Sbloccato" || ViewBag.ErrMess == "In modifica")
             {
-                @Html.ActionLink("Termina", "InputTelaio", new
+                @Html.ActionLink("Nuova perizia", "InputTelaio", new
                     {
                         IDPerito = ViewBag.IDPerito,
                         IDSpedizione = ViewBag.IDSpedizione,
@@ -379,7 +379,7 @@ else
 
             else
             {
-                @Html.ActionLink("Termina", "InputTelaio", new
+                @Html.ActionLink("Nuova perizia", "InputTelaio", new
                 {
                     IDPerito = ViewBag.IDPerito,
                     IDSpedizione = ViewBag.IDSpedizione,

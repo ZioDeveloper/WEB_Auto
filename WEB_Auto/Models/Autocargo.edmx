@@ -545,8 +545,60 @@ warning 6002: The table/view 'wisedb.dbo.WEB_AUTO_ListaSpedizioni_vw' does not h
           <Property Name="IDTipoPerizia" Type="varchar" MaxLength="1" />
         </EntityType>
         <!--Errors Found During Generation:
+warning 6002: The table/view 'wisedb.dbo.WEB_ListaPerizieFlat_DEF_vw' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="WEB_ListaPerizieFlat_DEF_vw">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="IDSpedizione" Type="varchar" MaxLength="8" />
+          <Property Name="Viaggio" Type="varchar" MaxLength="30" />
+          <Property Name="POL" Type="varchar" MaxLength="29" />
+          <Property Name="POD" Type="varchar" MaxLength="29" />
+          <Property Name="DataPartenzaImbarco" Type="datetime" />
+          <Property Name="DataArrivoSbarco" Type="datetime" />
+          <Property Name="Nave" Type="varchar" MaxLength="259" />
+          <Property Name="Cliente" Type="varchar" MaxLength="33" />
+          <Property Name="Telaio" Type="varchar" MaxLength="30" />
+          <Property Name="Modello" Type="varchar" MaxLength="276" />
+          <Property Name="DataPerizia" Type="datetime" />
+          <Property Name="IDTipoPerizia" Type="varchar" MaxLength="1" />
+          <Property Name="Trasportatore" Type="varchar" MaxLength="54" />
+          <Property Name="Qta" Type="smallint" />
+          <Property Name="Note" Type="varchar" MaxLength="255" />
+          <Property Name="Parte" Type="varchar" MaxLength="259" />
+          <Property Name="Danno" Type="varchar" MaxLength="276" />
+          <Property Name="Gravita" Type="varchar" MaxLength="121" />
+        </EntityType>
+        <!--Errors Found During Generation:
 warning 6002: The table/view 'wisedb.dbo.WEB_ListaPerizieFlat_MVC_vw' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="WEB_ListaPerizieFlat_MVC_vw">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="IDSpedizione" Type="varchar" MaxLength="8" />
+          <Property Name="Viaggio" Type="varchar" MaxLength="30" />
+          <Property Name="POL" Type="varchar" MaxLength="29" />
+          <Property Name="POD" Type="varchar" MaxLength="29" />
+          <Property Name="DataPartenzaImbarco" Type="datetime" />
+          <Property Name="DataArrivoSbarco" Type="datetime" />
+          <Property Name="Nave" Type="varchar" MaxLength="259" />
+          <Property Name="Cliente" Type="varchar" MaxLength="33" />
+          <Property Name="Telaio" Type="varchar" MaxLength="30" />
+          <Property Name="Modello" Type="varchar" MaxLength="276" />
+          <Property Name="DataPerizia" Type="datetime" />
+          <Property Name="IDTipoPerizia" Type="varchar" MaxLength="1" />
+          <Property Name="Trasportatore" Type="varchar" MaxLength="54" />
+          <Property Name="Qta" Type="smallint" />
+          <Property Name="Note" Type="varchar" MaxLength="255" />
+          <Property Name="Parte" Type="varchar" MaxLength="259" />
+          <Property Name="Danno" Type="varchar" MaxLength="276" />
+          <Property Name="Gravita" Type="varchar" MaxLength="121" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'wisedb.dbo.WEB_ListaPerizieFlat_TMP_vw' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="WEB_ListaPerizieFlat_TMP_vw">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
@@ -816,6 +868,29 @@ warning 6002: The table/view 'wisedb.dbo.WEB_ListaPerizieFlat_MVC_vw' does not h
     [WEB_AUTO_ListaSpedizioni_vw].[IDTipoPerizia] AS [IDTipoPerizia]
     FROM [dbo].[WEB_AUTO_ListaSpedizioni_vw] AS [WEB_AUTO_ListaSpedizioni_vw]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="WEB_ListaPerizieFlat_DEF_vw" EntityType="Self.WEB_ListaPerizieFlat_DEF_vw" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [WEB_ListaPerizieFlat_DEF_vw].[ID] AS [ID], 
+    [WEB_ListaPerizieFlat_DEF_vw].[IDSpedizione] AS [IDSpedizione], 
+    [WEB_ListaPerizieFlat_DEF_vw].[Viaggio] AS [Viaggio], 
+    [WEB_ListaPerizieFlat_DEF_vw].[POL] AS [POL], 
+    [WEB_ListaPerizieFlat_DEF_vw].[POD] AS [POD], 
+    [WEB_ListaPerizieFlat_DEF_vw].[DataPartenzaImbarco] AS [DataPartenzaImbarco], 
+    [WEB_ListaPerizieFlat_DEF_vw].[DataArrivoSbarco] AS [DataArrivoSbarco], 
+    [WEB_ListaPerizieFlat_DEF_vw].[Nave] AS [Nave], 
+    [WEB_ListaPerizieFlat_DEF_vw].[Cliente] AS [Cliente], 
+    [WEB_ListaPerizieFlat_DEF_vw].[Telaio] AS [Telaio], 
+    [WEB_ListaPerizieFlat_DEF_vw].[Modello] AS [Modello], 
+    [WEB_ListaPerizieFlat_DEF_vw].[DataPerizia] AS [DataPerizia], 
+    [WEB_ListaPerizieFlat_DEF_vw].[IDTipoPerizia] AS [IDTipoPerizia], 
+    [WEB_ListaPerizieFlat_DEF_vw].[Trasportatore] AS [Trasportatore], 
+    [WEB_ListaPerizieFlat_DEF_vw].[Qta] AS [Qta], 
+    [WEB_ListaPerizieFlat_DEF_vw].[Note] AS [Note], 
+    [WEB_ListaPerizieFlat_DEF_vw].[Parte] AS [Parte], 
+    [WEB_ListaPerizieFlat_DEF_vw].[Danno] AS [Danno], 
+    [WEB_ListaPerizieFlat_DEF_vw].[Gravita] AS [Gravita]
+    FROM [dbo].[WEB_ListaPerizieFlat_DEF_vw] AS [WEB_ListaPerizieFlat_DEF_vw]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="WEB_ListaPerizieFlat_MVC_vw" EntityType="Self.WEB_ListaPerizieFlat_MVC_vw" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [WEB_ListaPerizieFlat_MVC_vw].[ID] AS [ID], 
@@ -838,6 +913,29 @@ warning 6002: The table/view 'wisedb.dbo.WEB_ListaPerizieFlat_MVC_vw' does not h
     [WEB_ListaPerizieFlat_MVC_vw].[Danno] AS [Danno], 
     [WEB_ListaPerizieFlat_MVC_vw].[Gravita] AS [Gravita]
     FROM [dbo].[WEB_ListaPerizieFlat_MVC_vw] AS [WEB_ListaPerizieFlat_MVC_vw]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="WEB_ListaPerizieFlat_TMP_vw" EntityType="Self.WEB_ListaPerizieFlat_TMP_vw" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [WEB_ListaPerizieFlat_TMP_vw].[ID] AS [ID], 
+    [WEB_ListaPerizieFlat_TMP_vw].[IDSpedizione] AS [IDSpedizione], 
+    [WEB_ListaPerizieFlat_TMP_vw].[Viaggio] AS [Viaggio], 
+    [WEB_ListaPerizieFlat_TMP_vw].[POL] AS [POL], 
+    [WEB_ListaPerizieFlat_TMP_vw].[POD] AS [POD], 
+    [WEB_ListaPerizieFlat_TMP_vw].[DataPartenzaImbarco] AS [DataPartenzaImbarco], 
+    [WEB_ListaPerizieFlat_TMP_vw].[DataArrivoSbarco] AS [DataArrivoSbarco], 
+    [WEB_ListaPerizieFlat_TMP_vw].[Nave] AS [Nave], 
+    [WEB_ListaPerizieFlat_TMP_vw].[Cliente] AS [Cliente], 
+    [WEB_ListaPerizieFlat_TMP_vw].[Telaio] AS [Telaio], 
+    [WEB_ListaPerizieFlat_TMP_vw].[Modello] AS [Modello], 
+    [WEB_ListaPerizieFlat_TMP_vw].[DataPerizia] AS [DataPerizia], 
+    [WEB_ListaPerizieFlat_TMP_vw].[IDTipoPerizia] AS [IDTipoPerizia], 
+    [WEB_ListaPerizieFlat_TMP_vw].[Trasportatore] AS [Trasportatore], 
+    [WEB_ListaPerizieFlat_TMP_vw].[Qta] AS [Qta], 
+    [WEB_ListaPerizieFlat_TMP_vw].[Note] AS [Note], 
+    [WEB_ListaPerizieFlat_TMP_vw].[Parte] AS [Parte], 
+    [WEB_ListaPerizieFlat_TMP_vw].[Danno] AS [Danno], 
+    [WEB_ListaPerizieFlat_TMP_vw].[Gravita] AS [Gravita]
+    FROM [dbo].[WEB_ListaPerizieFlat_TMP_vw] AS [WEB_ListaPerizieFlat_TMP_vw]</DefiningQuery>
           </EntitySet>
           <AssociationSet Name="FK___5__50" Association="Self.FK___5__50">
             <End Role="AGR_Porti" EntitySet="AGR_Porti" />
@@ -900,6 +998,8 @@ warning 6002: The table/view 'wisedb.dbo.WEB_ListaPerizieFlat_MVC_vw' does not h
           <EntitySet Name="AGR_ModelliAuto_CAB_vw" EntityType="wisedbModel.AGR_ModelliAuto_CAB_vw" />
           <EntitySet Name="AGR_TrasportatoriGrimaldi_vw" EntityType="wisedbModel.AGR_TrasportatoriGrimaldi_vw" />
           <EntitySet Name="WEB_ListaPerizieFlat_MVC_vw" EntityType="wisedbModel.WEB_ListaPerizieFlat_MVC_vw" />
+          <EntitySet Name="WEB_ListaPerizieFlat_DEF_vw" EntityType="wisedbModel.WEB_ListaPerizieFlat_DEF_vw" />
+          <EntitySet Name="WEB_ListaPerizieFlat_TMP_vw" EntityType="wisedbModel.WEB_ListaPerizieFlat_TMP_vw" />
         </EntityContainer>
         <EntityType Name="AGR_Periti_WEB">
           <Key>
@@ -1479,6 +1579,54 @@ warning 6002: The table/view 'wisedb.dbo.WEB_ListaPerizieFlat_MVC_vw' does not h
           <Property Name="DataArrivoSbarco" Type="DateTime" Precision="3" />
           <Property Name="Trasportatore" Type="String" MaxLength="54" FixedLength="false" Unicode="false" />
         </EntityType>
+        <EntityType Name="WEB_ListaPerizieFlat_DEF_vw">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="IDSpedizione" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Name="Viaggio" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="POL" Type="String" MaxLength="29" FixedLength="false" Unicode="false" />
+          <Property Name="POD" Type="String" MaxLength="29" FixedLength="false" Unicode="false" />
+          <Property Name="DataPartenzaImbarco" Type="DateTime" Precision="3" />
+          <Property Name="DataArrivoSbarco" Type="DateTime" Precision="3" />
+          <Property Name="Nave" Type="String" MaxLength="259" FixedLength="false" Unicode="false" />
+          <Property Name="Cliente" Type="String" MaxLength="33" FixedLength="false" Unicode="false" />
+          <Property Name="Telaio" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Modello" Type="String" MaxLength="276" FixedLength="false" Unicode="false" />
+          <Property Name="DataPerizia" Type="DateTime" Precision="3" />
+          <Property Name="IDTipoPerizia" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="Trasportatore" Type="String" MaxLength="54" FixedLength="false" Unicode="false" />
+          <Property Name="Qta" Type="Int16" />
+          <Property Name="Note" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Parte" Type="String" MaxLength="259" FixedLength="false" Unicode="false" />
+          <Property Name="Danno" Type="String" MaxLength="276" FixedLength="false" Unicode="false" />
+          <Property Name="Gravita" Type="String" MaxLength="121" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="WEB_ListaPerizieFlat_TMP_vw">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="IDSpedizione" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Name="Viaggio" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="POL" Type="String" MaxLength="29" FixedLength="false" Unicode="false" />
+          <Property Name="POD" Type="String" MaxLength="29" FixedLength="false" Unicode="false" />
+          <Property Name="DataPartenzaImbarco" Type="DateTime" Precision="3" />
+          <Property Name="DataArrivoSbarco" Type="DateTime" Precision="3" />
+          <Property Name="Nave" Type="String" MaxLength="259" FixedLength="false" Unicode="false" />
+          <Property Name="Cliente" Type="String" MaxLength="33" FixedLength="false" Unicode="false" />
+          <Property Name="Telaio" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Modello" Type="String" MaxLength="276" FixedLength="false" Unicode="false" />
+          <Property Name="DataPerizia" Type="DateTime" Precision="3" />
+          <Property Name="IDTipoPerizia" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="Trasportatore" Type="String" MaxLength="54" FixedLength="false" Unicode="false" />
+          <Property Name="Qta" Type="Int16" />
+          <Property Name="Note" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Parte" Type="String" MaxLength="259" FixedLength="false" Unicode="false" />
+          <Property Name="Danno" Type="String" MaxLength="276" FixedLength="false" Unicode="false" />
+          <Property Name="Gravita" Type="String" MaxLength="121" FixedLength="false" Unicode="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2001,6 +2149,56 @@ warning 6002: The table/view 'wisedb.dbo.WEB_ListaPerizieFlat_MVC_vw' does not h
                 <ScalarProperty Name="Telaio" ColumnName="Telaio" />
                 <ScalarProperty Name="Cliente" ColumnName="Cliente" />
                 <ScalarProperty Name="Nave" ColumnName="Nave" />
+                <ScalarProperty Name="POD" ColumnName="POD" />
+                <ScalarProperty Name="POL" ColumnName="POL" />
+                <ScalarProperty Name="Viaggio" ColumnName="Viaggio" />
+                <ScalarProperty Name="IDSpedizione" ColumnName="IDSpedizione" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WEB_ListaPerizieFlat_DEF_vw">
+            <EntityTypeMapping TypeName="wisedbModel.WEB_ListaPerizieFlat_DEF_vw">
+              <MappingFragment StoreEntitySet="WEB_ListaPerizieFlat_DEF_vw">
+                <ScalarProperty Name="Gravita" ColumnName="Gravita" />
+                <ScalarProperty Name="Danno" ColumnName="Danno" />
+                <ScalarProperty Name="Parte" ColumnName="Parte" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="Qta" ColumnName="Qta" />
+                <ScalarProperty Name="Trasportatore" ColumnName="Trasportatore" />
+                <ScalarProperty Name="IDTipoPerizia" ColumnName="IDTipoPerizia" />
+                <ScalarProperty Name="DataPerizia" ColumnName="DataPerizia" />
+                <ScalarProperty Name="Modello" ColumnName="Modello" />
+                <ScalarProperty Name="Telaio" ColumnName="Telaio" />
+                <ScalarProperty Name="Cliente" ColumnName="Cliente" />
+                <ScalarProperty Name="Nave" ColumnName="Nave" />
+                <ScalarProperty Name="DataArrivoSbarco" ColumnName="DataArrivoSbarco" />
+                <ScalarProperty Name="DataPartenzaImbarco" ColumnName="DataPartenzaImbarco" />
+                <ScalarProperty Name="POD" ColumnName="POD" />
+                <ScalarProperty Name="POL" ColumnName="POL" />
+                <ScalarProperty Name="Viaggio" ColumnName="Viaggio" />
+                <ScalarProperty Name="IDSpedizione" ColumnName="IDSpedizione" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WEB_ListaPerizieFlat_TMP_vw">
+            <EntityTypeMapping TypeName="wisedbModel.WEB_ListaPerizieFlat_TMP_vw">
+              <MappingFragment StoreEntitySet="WEB_ListaPerizieFlat_TMP_vw">
+                <ScalarProperty Name="Gravita" ColumnName="Gravita" />
+                <ScalarProperty Name="Danno" ColumnName="Danno" />
+                <ScalarProperty Name="Parte" ColumnName="Parte" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="Qta" ColumnName="Qta" />
+                <ScalarProperty Name="Trasportatore" ColumnName="Trasportatore" />
+                <ScalarProperty Name="IDTipoPerizia" ColumnName="IDTipoPerizia" />
+                <ScalarProperty Name="DataPerizia" ColumnName="DataPerizia" />
+                <ScalarProperty Name="Modello" ColumnName="Modello" />
+                <ScalarProperty Name="Telaio" ColumnName="Telaio" />
+                <ScalarProperty Name="Cliente" ColumnName="Cliente" />
+                <ScalarProperty Name="Nave" ColumnName="Nave" />
+                <ScalarProperty Name="DataArrivoSbarco" ColumnName="DataArrivoSbarco" />
+                <ScalarProperty Name="DataPartenzaImbarco" ColumnName="DataPartenzaImbarco" />
                 <ScalarProperty Name="POD" ColumnName="POD" />
                 <ScalarProperty Name="POL" ColumnName="POL" />
                 <ScalarProperty Name="Viaggio" ColumnName="Viaggio" />

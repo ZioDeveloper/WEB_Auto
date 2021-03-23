@@ -368,24 +368,26 @@ else
             if (ViewBag.ErrMess == "" || ViewBag.ErrMess == "Sbloccato" || ViewBag.ErrMess == "In modifica")
             {
                 @Html.ActionLink("Nuova perizia", "InputTelaio", new
-                    {
-                        IDPerito = ViewBag.IDPerito,
-                        IDSpedizione = ViewBag.IDSpedizione,
-                        IDMeteo = ViewBag.IDMeteo,
-                        IDTP = ViewBag.IDTP,
-                        IsUpdate = ViewBag.IsUpdate
-                    }, new { @class = "btn btn-success custom" })
+           {
+               IDPerito = ViewBag.IDPerito,
+               IDSpedizione = ViewBag.IDSpedizione,
+               IDMeteo = ViewBag.IDMeteo,
+               IDTP = ViewBag.IDTP,
+               IsUpdate = ViewBag.IsUpdate,
+               IsRTB = Session["RTB"]
+           }, new { @class = "btn btn-success custom" })
             }
 
             else
             {
                 @Html.ActionLink("Nuova perizia", "InputTelaio", new
-                {
-                    IDPerito = ViewBag.IDPerito,
-                    IDSpedizione = ViewBag.IDSpedizione,
-                    IDMeteo = ViewBag.IDMeteo,
-                    IDTP = ViewBag.IDTP,
-                }, new { @class = "btn btn-success custom disabled" })}
+           {
+               IDPerito = ViewBag.IDPerito,
+               IDSpedizione = ViewBag.IDSpedizione,
+               IDMeteo = ViewBag.IDMeteo,
+               IDTP = ViewBag.IDTP,
+               IsRTB =  Session["RTB"]
+           }, new { @class = "btn btn-success custom disabled" })}
         }
         &nbsp;&nbsp;&nbsp;
         @Html.ActionLink("Elimina", "EliminaPerizia", "TelaiAnagrafica", new

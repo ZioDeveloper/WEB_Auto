@@ -40,7 +40,7 @@ namespace WEB_Auto.Controllers
             var Chassis3 = from m in db.WEB_ListaPerizieFlat_DEF_vw
                            where m.Telaio == myTelaio
                            select m;
-            model.WEB_ListaPerizieFlat_DEF_vw = Chassis3.ToList();
+            model.WEB_ListaPerizieFlat_DEF_vw = Chassis3.ToList().OrderByDescending(m=>m.DataPerizia);
 
             return View(model);
         }

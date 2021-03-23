@@ -11,7 +11,8 @@ namespace WEB_Auto.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class WEB_AUTO_ListaSpedizioni_2_vw
     {
         public string ID { get; set; }
@@ -22,5 +23,9 @@ namespace WEB_Auto.Models
         public Nullable<int> Damaged { get; set; }
         public bool IsClosed { get; set; }
         public string IDPerito { get; set; }
+        [DisplayFormat(DataFormatString = "{0:dd MMM yyyy}")]
+        public Nullable<System.DateTime> DataPartenzaImbarco { get; set; }
+        [DisplayFormat(DataFormatString = "{0:dd MMM yyyy}")]
+        public Nullable<System.DateTime> DataArrivoSbarco { get; set; }
     }
 }

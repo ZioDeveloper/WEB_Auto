@@ -78,7 +78,7 @@ namespace WEB_Auto.Controllers
                              select m;
             model.AGR_SpedizioniWEB_vw = Spedizioni.ToList().OrderBy(s=>s.ID);
 
-            var ElencoSpedizioni = new SelectList(model.AGR_SpedizioniWEB_vw.ToList(), "ID", "Descr");
+            var ElencoSpedizioni = new SelectList(model.AGR_SpedizioniWEB_vw.ToList(), "ID", "DescrAlt");
 
             // Dati per dropdown Meteo
             var Meteo = from m in db.AGR_Meteo

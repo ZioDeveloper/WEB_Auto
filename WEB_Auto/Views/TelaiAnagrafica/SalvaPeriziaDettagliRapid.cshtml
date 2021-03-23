@@ -11,11 +11,138 @@
 
 
 <h4>Dettagli danno</h4>
-Stato : @ViewBag.ErrMess
-<br /><br />
+@*Stato : @ViewBag.ErrMess*@
+@*<br /><br />*@
 @{string myIDPerizia = ViewBag.IDPerizia;
     bool ISGravitaEnabled = ViewBag.ISGravitaEnabled;}
 
+
+@*<br />
+<br />*@
+      <div>
+          @using (Html.BeginForm("SalvaPeriziaDettagliRapid", "TelaiAnagrafica", new { myIDPerizia, IsUpdate = ViewBag.IsUpdate }, FormMethod.Post))
+          {
+              <div>
+                  <button type="submit" class="btn btn-primary custom">Salva item</button>
+
+                  @Html.ActionLink("Torna a perizia", "Edit","TelaiAnagrafica", new { myIDPerizia = ViewBag.IDPeriz,
+                  IDPerito = ViewBag.IDPerito,
+                  IDSpedizione = ViewBag.IDSpedizione,
+                  IDMeteo = ViewBag.IDMeteo,
+                  IDTP = ViewBag.IDTP,
+                  aIDTrasportatore = ViewBag.aIDTrasportatore,
+                  aIDTipoRotabile = ViewBag.aIDTipoRotabile,
+                  aIDModelloCasa = ViewBag.aIDModelloCasa,
+                  errMess = "Sbloccato",
+                  IsUpdate = ViewBag.ISUpdate
+                  }, new { @class = "btn btn-success custom" })
+              </div>
+              <br />
+              <table>
+                  <tr>
+                      <td>
+                          @Html.Label("Componente")
+                      </td>
+                      <td>
+                          &nbsp;&nbsp;
+                      </td>
+                      <td>
+
+                          @*@Html.DropDownList("IDParte", new SelectList((SelectList)ViewData["ElencoParti"], "Value", "Text", null), "-- Seleziona parte --", new { @class = "form-control selectpicker dropupAuto = false data-live-search=true data-size=5" })*@
+                          @Html.TextBox("IDParte", null, new { style = "width:180px;text-transform:uppercase", @id = "IDParte", @maxlength = "17", @placeholder = "", @autofocus = "autofocus", @autocomplete = "off" })
+                      </td>
+                  </tr>
+                  <tr>
+                      <td>
+                          &nbsp;&nbsp;
+                      </td>
+                  </tr>
+                  <tr>
+                      <td>
+                          @Html.Label("Tipo danno")
+                      </td>
+                      <td>
+                          &nbsp;&nbsp;
+                      </td>
+                      <td>
+                          @Html.TextBox("IDDanno", null, new { style = "width:180px;text-transform:uppercase", @id = "IDDanno", @maxlength = "17", @placeholder = "", @autofocus = "autofocus", @autocomplete = "off" })
+                          @*@Html.DropDownList("IDDanno", new SelectList((SelectList)ViewData["ElencoDanni"], "Value", "Text", null), "-- Seleziona danno --", new { @class = "form-control selectpicker dropupAuto = false data-live-search=true data-size=5" })*@
+
+                      </td>
+                  </tr>
+                  <tr>
+                      <td>
+                          &nbsp;&nbsp;
+                      </td>
+                  </tr>
+                  @if (ISGravitaEnabled)
+                  {
+                      <tr>
+                          <td>
+                              @Html.Label("Gravità")
+                          </td>
+                          <td>
+                              &nbsp;&nbsp;
+                          </td>
+                          <td>
+                              @Html.TextBox("IDGravita", null, new { style = "width:180px;text-transform:uppercase", @id = "IDGravita", @maxlength = "17", @placeholder = "", @autofocus = "autofocus", @autocomplete = "off" })
+
+                          </td>
+                      </tr>
+                  }
+                  <tr>
+                      <td>
+                          &nbsp;&nbsp;
+                      </td>
+                  </tr>
+                  <tr>
+                      <td>
+                          @Html.Label("Qta")
+                      </td>
+                      <td>
+                          &nbsp;&nbsp;
+                      </td>
+
+
+                      <td>
+
+                          @Html.TextBox("Qta", null, new { @Value = "1", @style = "width: 40px;" })
+
+                      </td>
+                  </tr>
+
+                  <tr>
+                      <td>
+                          &nbsp;&nbsp;
+                      </td>
+                  </tr>
+                  <tr>
+                      <td>
+                          @Html.Label("Note")
+                      </td>
+                      <td>
+                          &nbsp;&nbsp;
+                      </td>
+
+
+                      <td>
+
+                          @Html.TextArea("Note", null, new { style = "width: 200px;" })
+
+                      </td>
+                  </tr>
+
+              </table>
+
+
+
+
+
+
+          }
+      </div>
+
+<br />
 <table id="Report" class="display" style="width:100%;font-size:11px">
     <thead>
         <tr>
@@ -52,7 +179,7 @@ Stato : @ViewBag.ErrMess
                         @Html.ActionLink("Edit", "EditDettaglio", new {  aIDDett = item.ID, aIDPerizia = item.IDPerizia }, new { @class = "btn btn-primary btn-xs disabled" })
                     </td>*@
                 <td>
-                    @Html.ActionLink("Canc", "DeleteDettaglio", new { aIDDett = item.ID, myIDPerizia = item.IDPerizia, IsUpdate = ViewBag.IsUpdate }, new { @class = "btn btn-danger btn-xs", onclick = "return confirm('Confermi cancellazione ?');" })
+                    @Html.ActionLink("Canc", "DeleteDettaglioRapid", new { aIDDett = item.ID, myIDPerizia = item.IDPerizia, IsUpdate = ViewBag.IsUpdate }, new { @class = "btn btn-danger btn-xs", onclick = "return confirm('Confermi cancellazione ?');" })
                 </td>
             <tr>
                 <td>
@@ -80,131 +207,6 @@ Stato : @ViewBag.ErrMess
 
     <tbody>
 </table>
-<br />
-<br />
-<div>
-    @using (Html.BeginForm("SalvaPeriziaDettagliRapid", "TelaiAnagrafica", new { myIDPerizia, IsUpdate = ViewBag.IsUpdate }, FormMethod.Post))
-    {
-
-        <table>
-            <tr>
-                <td>
-                    @Html.Label("Componente")
-                </td>
-                <td>
-                    &nbsp;&nbsp;
-                </td>
-                <td>
-
-                    @*@Html.DropDownList("IDParte", new SelectList((SelectList)ViewData["ElencoParti"], "Value", "Text", null), "-- Seleziona parte --", new { @class = "form-control selectpicker dropupAuto = false data-live-search=true data-size=5" })*@
-                    @Html.TextBox("IDParte", null, new { style = "width:180px;text-transform:uppercase", @id = "IDParte", @maxlength = "17", @placeholder = "", @autofocus = "autofocus", @autocomplete = "off" })
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    &nbsp;&nbsp;
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    @Html.Label("Tipo danno")
-                </td>
-                <td>
-                    &nbsp;&nbsp;
-                </td>
-                <td>
-                    @Html.TextBox("IDDanno", null, new { style = "width:180px;text-transform:uppercase", @id = "IDDanno", @maxlength = "17", @placeholder = "", @autofocus = "autofocus", @autocomplete = "off" })
-                    @*@Html.DropDownList("IDDanno", new SelectList((SelectList)ViewData["ElencoDanni"], "Value", "Text", null), "-- Seleziona danno --", new { @class = "form-control selectpicker dropupAuto = false data-live-search=true data-size=5" })*@
-
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    &nbsp;&nbsp;
-                </td>
-            </tr>
-            @if (ISGravitaEnabled)
-            {
-                <tr>
-                    <td>
-                        @Html.Label("Gravità")
-                    </td>
-                    <td>
-                        &nbsp;&nbsp;
-                    </td>
-                    <td>
-                        @Html.TextBox("IDGravita", null, new { style = "width:180px;text-transform:uppercase", @id = "IDGravita", @maxlength = "17", @placeholder = "", @autofocus = "autofocus", @autocomplete = "off" })
-
-                    </td>
-                </tr>
-            }
-            <tr>
-                <td>
-                    &nbsp;&nbsp;
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    @Html.Label("Qta")
-                </td>
-                <td>
-                    &nbsp;&nbsp;
-                </td>
-
-
-                <td>
-
-                    @Html.TextBox("Qta", null, new { @Value = "1", @style = "width: 40px;" })
-
-                </td>
-            </tr>
-
-            <tr>
-                <td>
-                    &nbsp;&nbsp;
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    @Html.Label("Note")
-                </td>
-                <td>
-                    &nbsp;&nbsp;
-                </td>
-
-
-                <td>
-
-                    @Html.TextArea("Note", null, new { style = "width: 200px;" })
-
-                </td>
-            </tr>
-
-        </table>
-
-
-
-
-
-        <div>
-            <button type="submit" class="btn btn-primary custom">Salva item</button>
-
-            @Html.ActionLink("Torna a perizia", "Edit","TelaiAnagrafica", new { myIDPerizia = ViewBag.IDPeriz,
-            IDPerito = ViewBag.IDPerito,
-            IDSpedizione = ViewBag.IDSpedizione,
-            IDMeteo = ViewBag.IDMeteo,
-            IDTP = ViewBag.IDTP,
-            aIDTrasportatore = ViewBag.aIDTrasportatore,
-            aIDTipoRotabile = ViewBag.aIDTipoRotabile,
-            aIDModelloCasa = ViewBag.aIDModelloCasa,
-            errMess = "Sbloccato",
-            IsUpdate = ViewBag.ISUpdate
-            }, new { @class = "btn btn-success custom" })
-        </div>
-    }
-</div>
-
-<br />
 
 <div>
 

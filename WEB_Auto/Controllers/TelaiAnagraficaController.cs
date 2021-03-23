@@ -28,8 +28,10 @@ namespace WEB_Auto.Controllers
 
             string Test = Session["RTB"].ToString();
 
-            if (Session["RTB"].ToString().ToUpper() == "TRUE")
+            if (Session["RTB"].ToString().ToUpper() == "TRUE" && IsRTB)
                 IsRTB = true;
+
+
 
             if (String.IsNullOrEmpty(Session["RTB"].ToString()))
                 Session["RTB"] = IsRTB;
@@ -282,7 +284,7 @@ namespace WEB_Auto.Controllers
                 //    var ElencoModelli = new SelectList(model.AGR_ModelliAuto_CAB_vw.ToList(), "ID", "Descr");
                 //    ViewData["ElencoModelli"] = ElencoModelli;
                 //}
-                if (aCasa == "CAB" && Filtrati)
+                if (aCasa == "CAB" && Filtrati && Session["RTB"].ToString().ToUpper() != "TRUE")
                 {
                     var modello = from m in db.AGR_ModelliAuto
                                   where m.IDCliente == "**"
@@ -294,11 +296,38 @@ namespace WEB_Auto.Controllers
                                                                   || m.IDModelloCasa == "1914" || m.IDModelloCasa == "2050" || m.IDModelloCasa == "1905"
                                                                   || m.IDModelloCasa == "2054" || m.IDModelloCasa == "1897" || m.IDModelloCasa == "1898"
                                                                   || m.IDModelloCasa == "1896" || m.IDModelloCasa == "1479" || m.IDModelloCasa == "2014"
-                                                                  || m.IDModelloCasa == "2053" || m.IDModelloCasa == "219" 
+                                                                  || m.IDModelloCasa == "2053" || m.IDModelloCasa == "219"
                                   select m;
                     model.AGR_ModelliAuto = modello.ToList().OrderBy(m => m.Descr);
                     var ElencoModelli = new SelectList(model.AGR_ModelliAuto.ToList(), "ID", "Descr");
                     ViewData["ElencoModelli"] = ElencoModelli;
+
+                    //var modello = from m in db.AGR_ModelliAuto
+                    //              where m.IDCliente == "**"
+                    //              where m.IDCasa == aCasa
+                    //              select m;
+                    //model.AGR_ModelliAuto = modello.ToList().OrderBy(m => m.Descr);
+                    //var ElencoModelli = new SelectList(model.AGR_ModelliAuto.ToList(), "ID", "Descr");
+                    //ViewData["ElencoModelli"] = ElencoModelli;
+                }
+                else if (aCasa == "CAB" && Filtrati && Session["RTB"].ToString().ToUpper() == "TRUE")
+                {
+                    var modello = from m in db.AGR_ModelliAuto
+                                  where m.IDCliente == "**"
+                                  where m.IDCasa == aCasa
+                                  where m.IDModelloCasa == "1240"
+                                  select m;
+                    model.AGR_ModelliAuto = modello.ToList().OrderBy(m => m.Descr);
+                    var ElencoModelli = new SelectList(model.AGR_ModelliAuto.ToList(), "ID", "Descr");
+                    ViewData["ElencoModelli"] = ElencoModelli;
+
+                    //var modello = from m in db.AGR_ModelliAuto
+                    //              where m.IDCliente == "**"
+                    //              where m.IDCasa == aCasa
+                    //              select m;
+                    //model.AGR_ModelliAuto = modello.ToList().OrderBy(m => m.Descr);
+                    //var ElencoModelli = new SelectList(model.AGR_ModelliAuto.ToList(), "ID", "Descr");
+                    //ViewData["ElencoModelli"] = ElencoModelli;
                 }
                 else
                 {
@@ -701,6 +730,13 @@ namespace WEB_Auto.Controllers
             return RedirectToAction("SalvaPeriziaDettagli", "TelaiAnagrafica", new { myIDPerizia , IsUpdate = IsUpdate });
         }
 
+        public ActionResult DeleteDettaglioRapid(string aIDDett, string myIDPerizia, bool IsUpdate = false)
+        {
+            string sqlcmd = " DELETE FROM  AGR_PERIZIE_DETT_TEMP_MVC WHERE ID = @ID";
+            int deleted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@ID", aIDDett));
+
+            return RedirectToAction("SalvaPeriziaDettagliRapid", "TelaiAnagrafica", new { myIDPerizia, IsUpdate = IsUpdate });
+        }
 
         public ActionResult EliminaPerizia(string IDPerizia , string IDPerito, string IDSpedizione, string IDMeteo, string IDTP, bool IsUpdate = false)
         {

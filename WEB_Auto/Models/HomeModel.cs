@@ -28,6 +28,8 @@ namespace WEB_Auto.Models
         public IEnumerable<WEB_AGR_Parti_vw> WEB_AGR_Parti_vw { get; set; }
         public IEnumerable<WEB_AGR_Danni_vw> WEB_AGR_Danni_vw { get; set; }
         public IEnumerable<WEB_AGR_Gravita_vw> WEB_AGR_Gravita_vw { get; set; }
+
+       
         public IEnumerable<WEB_AUTO_ListaSpedizioni_vw> WEB_AUTO_ListaSpedizioni_vw { get; set; }
         public IEnumerable<WEB_AUTO_ListaSpedizioni_2_vw> WEB_AUTO_ListaSpedizioni_2_vw { get; set; }
         public IEnumerable<AGR_PERIZIE_TEMP_MVC> AGR_PERIZIE_TEMP_MVC { get; set; }

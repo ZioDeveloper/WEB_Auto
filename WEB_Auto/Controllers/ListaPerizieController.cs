@@ -12,6 +12,7 @@ namespace WEB_Auto.Controllers
         private wisedbEntities db = new wisedbEntities();
 
         // GET: ListaSpedizioni
+        
         public ActionResult ListaSpedizioni(string Status = "APERTE")
         {
 

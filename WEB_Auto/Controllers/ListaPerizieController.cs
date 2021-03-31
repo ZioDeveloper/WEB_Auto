@@ -15,7 +15,7 @@ namespace WEB_Auto.Controllers
         
         public ActionResult ListaSpedizioni(string Status = "APERTE")
         {
-
+            Session["RTB"] = false; ;
             var model = new Models.HomeModel();
             #region Codice Commentato
             //string usr = Session["USer"].ToString(); ;
@@ -110,6 +110,7 @@ namespace WEB_Auto.Controllers
                            where m.IDTipoPerizia == IDTP
                          select m).ToList();
             model.WEB_Auto_ListaPerizieXSpedizione_vw = lista;
+            
             ViewBag.IDSpedizione = IDSpedizione;
             return View(model);
         }
@@ -127,6 +128,16 @@ namespace WEB_Auto.Controllers
             
             ViewBag.IDSpedizione = IDSpedizione;
             return RedirectToAction("ListaSpedizioni");
+        }
+
+        public ActionResult CarouselFoto(string aIDPerizia)
+        {
+            var model = new Models.HomeModel();
+            var foto = (from m in db.WEB_AUTO_FOTO
+                        where m.IDPerizia == aIDPerizia
+                        select m).ToList();
+            model.WEB_AUTO_FOTO = foto;
+            return View(model);
         }
     }
 }

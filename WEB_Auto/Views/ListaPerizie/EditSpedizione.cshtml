@@ -29,13 +29,14 @@
             <th>Modifica</th>
             <th>Telaio</th>
             <th>Modello</th>
-            <th>Spedizione</th>
+            <th>Viaggio</th>
             <th>Data perizia</th>
             <th>TP</th>
-            <th>ETD</th>
-            <th>ETA</th>
-            <th>Status</th>
 
+            @*<th>ETD</th>
+        <th>ETA</th>*@
+            <th>Status</th>
+            <th>N° foto</th>
         </tr>
 
     </thead>
@@ -46,6 +47,7 @@
             string ETA = item.ETA.ToString().Left(10);
             string aStatus = item.Status;
             bool IsClosed = item.IsClosed;
+            
 
         <tr>
             <td>
@@ -93,7 +95,7 @@
                 @Html.DisplayFor(modelItem => item.Modello)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.IDSpedizione)
+                @Html.DisplayFor(modelItem => item.IDOriginale1)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.DataPerizia)
@@ -101,12 +103,12 @@
             <td>
                 @Html.DisplayFor(modelItem => item.IDTipoPerizia)
             </td>
-            <td>
+            @*<td>
                 @Html.DisplayFor(modelItem => ETD)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => ETA)
-            </td>
+            </td>*@
             @if (aStatus.ToUpper() == "GOOD")
             {
                 <td style="color:forestgreen">
@@ -121,6 +123,22 @@
                     @Html.DisplayFor(modelItem => item.Status)
                 </td>
             }
+                <td>
+                    @Html.DisplayFor(modelItem => item.NumFoto)
+                    @Html.ActionLink("Mostra foto", "CarouselFoto", "ListaPerizie", new
+                        {
+                            aIDPerizia = item.ID,
+                            IDPerito = ViewBag.IDPerito,
+                            IDSpedizione = ViewBag.IDSpedizione,
+                            IDMeteo = ViewBag.IDMeteo,
+                            IDTP = ViewBag.IDTP,
+                            aIDTrasportatore = ViewBag.aIDTrasportatore,
+                            aIDTipoRotabile = ViewBag.aIDTipoRotabile,
+                            aIDModelloCasa = ViewBag.aIDModelloCasa,
+                            ErrMess = ViewBag.ErrMess,
+                            IsUpdate = ViewBag.IsUpdate
+                        }, new { @class = "photoImg" })
+                </td>
 
         </tr>
         }
@@ -130,12 +148,13 @@
             <th>Modifica</th>
             <th>Telaio</th>
             <th>Modello</th>
-            <th>Spedizione</th>
+            <th>Viaggio</th>
             <th>Data perizia</th>
             <th>TP</th>
-            <th>ETD</th>
-            <th>ETA</th>
+            @*<th>ETD</th>
+        <th>ETA</th>*@
             <th>Status</th>
+            <th>N° foto</th>
         </tr>
     </tfoot>
 </table>

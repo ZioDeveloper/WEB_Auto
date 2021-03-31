@@ -162,6 +162,9 @@
     <Compile Include="Models\AGR_ModelliAuto_CAB_vw.cs">
       <DependentUpon>Autocargo.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\AGR_ModelliAuto_vw.cs">
+      <DependentUpon>Autocargo.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\AGR_Parti.cs">
       <DependentUpon>Autocargo.tt</DependentUpon>
     </Compile>
@@ -468,6 +471,7 @@
     <Content Include="Views\Storico\CercaTelaio.cshtml" />
     <Content Include="Views\Storico\CercaTelaioSingolo.cshtml" />
     <Content Include="Views\TelaiAnagrafica\SalvaPeriziaDettagliRapid.cshtml" />
+    <Content Include="Views\ListaPerizie\CarouselFoto.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

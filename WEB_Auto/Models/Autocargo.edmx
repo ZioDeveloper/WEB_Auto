@@ -307,6 +307,24 @@ warning 6002: The table/view 'wisedb.dbo.AGR_ModelliAuto_CAB_vw' does not have a
           <Property Name="Produzione" Type="varchar" MaxLength="1" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
+warning 6002: The table/view 'wisedb.dbo.AGR_ModelliAuto_vw' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="AGR_ModelliAuto_vw">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="Descr" />
+            <PropertyRef Name="IDCasa" />
+            <PropertyRef Name="IDModelloCasa" />
+            <PropertyRef Name="IDCliente" />
+            <PropertyRef Name="Produzione" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="Descr" Type="varchar" MaxLength="278" Nullable="false" />
+          <Property Name="IDCasa" Type="varchar" MaxLength="3" Nullable="false" />
+          <Property Name="IDModelloCasa" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="IDCliente" Type="varchar" MaxLength="2" Nullable="false" />
+          <Property Name="Produzione" Type="varchar" MaxLength="1" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
 warning 6002: The table/view 'wisedb.dbo.AGR_PERIZIE_DETT_TEMP_MVC_vw' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="AGR_PERIZIE_DETT_TEMP_MVC_vw">
           <Key>
@@ -702,6 +720,16 @@ warning 6002: The table/view 'wisedb.dbo.WEB_ListaPerizieFlat_TMP_vw' does not h
     [AGR_ModelliAuto_CAB_vw].[Produzione] AS [Produzione]
     FROM [dbo].[AGR_ModelliAuto_CAB_vw] AS [AGR_ModelliAuto_CAB_vw]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="AGR_ModelliAuto_vw" EntityType="Self.AGR_ModelliAuto_vw" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [AGR_ModelliAuto_vw].[ID] AS [ID], 
+    [AGR_ModelliAuto_vw].[Descr] AS [Descr], 
+    [AGR_ModelliAuto_vw].[IDCasa] AS [IDCasa], 
+    [AGR_ModelliAuto_vw].[IDModelloCasa] AS [IDModelloCasa], 
+    [AGR_ModelliAuto_vw].[IDCliente] AS [IDCliente], 
+    [AGR_ModelliAuto_vw].[Produzione] AS [Produzione]
+    FROM [dbo].[AGR_ModelliAuto_vw] AS [AGR_ModelliAuto_vw]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="AGR_PERIZIE_DETT_TEMP_MVC_vw" EntityType="Self.AGR_PERIZIE_DETT_TEMP_MVC_vw" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [AGR_PERIZIE_DETT_TEMP_MVC_vw].[ID] AS [ID], 
@@ -1006,6 +1034,7 @@ warning 6002: The table/view 'wisedb.dbo.WEB_ListaPerizieFlat_TMP_vw' does not h
           <EntitySet Name="WEB_ListaPerizieFlat_MVC_vw" EntityType="wisedbModel.WEB_ListaPerizieFlat_MVC_vw" />
           <EntitySet Name="WEB_ListaPerizieFlat_DEF_vw" EntityType="wisedbModel.WEB_ListaPerizieFlat_DEF_vw" />
           <EntitySet Name="WEB_ListaPerizieFlat_TMP_vw" EntityType="wisedbModel.WEB_ListaPerizieFlat_TMP_vw" />
+          <EntitySet Name="AGR_ModelliAuto_vw" EntityType="wisedbModel.AGR_ModelliAuto_vw" />
         </EntityContainer>
         <EntityType Name="AGR_Periti_WEB">
           <Key>
@@ -1636,6 +1665,22 @@ warning 6002: The table/view 'wisedb.dbo.WEB_ListaPerizieFlat_TMP_vw' does not h
           <Property Name="Danno" Type="String" MaxLength="276" FixedLength="false" Unicode="false" />
           <Property Name="Gravita" Type="String" MaxLength="121" FixedLength="false" Unicode="false" />
         </EntityType>
+        <EntityType Name="AGR_ModelliAuto_vw">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="Descr" />
+            <PropertyRef Name="IDCasa" />
+            <PropertyRef Name="IDModelloCasa" />
+            <PropertyRef Name="IDCliente" />
+            <PropertyRef Name="Produzione" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="Descr" Type="String" Nullable="false" MaxLength="278" FixedLength="false" Unicode="false" />
+          <Property Name="IDCasa" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="IDModelloCasa" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="IDCliente" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="Produzione" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2215,6 +2260,18 @@ warning 6002: The table/view 'wisedb.dbo.WEB_ListaPerizieFlat_TMP_vw' does not h
                 <ScalarProperty Name="POL" ColumnName="POL" />
                 <ScalarProperty Name="Viaggio" ColumnName="Viaggio" />
                 <ScalarProperty Name="IDSpedizione" ColumnName="IDSpedizione" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AGR_ModelliAuto_vw">
+            <EntityTypeMapping TypeName="wisedbModel.AGR_ModelliAuto_vw">
+              <MappingFragment StoreEntitySet="AGR_ModelliAuto_vw">
+                <ScalarProperty Name="Produzione" ColumnName="Produzione" />
+                <ScalarProperty Name="IDCliente" ColumnName="IDCliente" />
+                <ScalarProperty Name="IDModelloCasa" ColumnName="IDModelloCasa" />
+                <ScalarProperty Name="IDCasa" ColumnName="IDCasa" />
+                <ScalarProperty Name="Descr" ColumnName="Descr" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

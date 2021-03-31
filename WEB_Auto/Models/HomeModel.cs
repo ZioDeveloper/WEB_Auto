@@ -17,6 +17,7 @@ namespace WEB_Auto.Models
         public IEnumerable<AGR_SpedizioniWEB_Decoded_vw> AGR_SpedizioniWEB_Decoded_vw { get; set; }
         public IEnumerable<AGR_Porti> AGR_Porti { get; set; }
         public IEnumerable<AGR_ModelliAuto> AGR_ModelliAuto { get; set; }
+        public IEnumerable<AGR_ModelliAuto_vw> AGR_ModelliAuto_vw { get; set; }
 
         public IEnumerable<AGR_ModelliAuto_CAB_vw> AGR_ModelliAuto_CAB_vw { get; set; }
         public IEnumerable<AGR_TrasportatoriGrimaldi> AGR_TrasportatoriGrimaldi { get; set; }

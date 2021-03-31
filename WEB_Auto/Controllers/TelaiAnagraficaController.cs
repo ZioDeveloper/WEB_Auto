@@ -237,26 +237,26 @@ namespace WEB_Auto.Controllers
             // Dati per dropdown Modello
             if (Session["RTB"].ToString().ToUpper() == "TRUE" && aCasa != "RTB")
             {
-                var modello = from m in db.AGR_ModelliAuto
+                var modello = from m in db.AGR_ModelliAuto_vw
                               where m.IDCliente == "**"
                               where m.IDCasa == aCasa
                               where m.IDModelloCasa == "1240"
                               select m;
-                model.AGR_ModelliAuto = modello.ToList().OrderBy(m => m.Descr);
-                var ElencoModelli = new SelectList(model.AGR_ModelliAuto.ToList(), "ID", "Descr");
+                model.AGR_ModelliAuto_vw = modello.ToList().OrderBy(m => m.Descr);
+                var ElencoModelli = new SelectList(model.AGR_ModelliAuto_vw.ToList(), "ID", "Descr");
                 ViewData["ElencoModelli"] = ElencoModelli;
                 aIDModelloCasa = "1240";
                 ViewBag.aIDModelloCasa = "1240";
             }
             if (Session["RTB"].ToString().ToUpper() == "TRUE" && aCasa == "RTB")
             {
-                var modello = from m in db.AGR_ModelliAuto
+                var modello = from m in db.AGR_ModelliAuto_vw
                               where m.IDCliente == "**"
                               where m.IDCasa == aCasa
                               where m.IDModelloCasa == "1241"
                               select m;
-                model.AGR_ModelliAuto = modello.ToList().OrderBy(m => m.Descr);
-                var ElencoModelli = new SelectList(model.AGR_ModelliAuto.ToList(), "ID", "Descr");
+                model.AGR_ModelliAuto_vw = modello.ToList().OrderBy(m => m.Descr);
+                var ElencoModelli = new SelectList(model.AGR_ModelliAuto_vw.ToList(), "ID", "Descr");
                 ViewData["ElencoModelli"] = ElencoModelli;
                 aIDModelloCasa = "1241";
                 ViewBag.aIDModelloCasa = "1240";
@@ -287,7 +287,7 @@ namespace WEB_Auto.Controllers
                 
                 if (aCasa == "CAB" && Filtrati && Session["RTB"].ToString().ToUpper() != "TRUE" && String.IsNullOrEmpty(aIDModelloCasa))
                 {
-                    var modello = from m in db.AGR_ModelliAuto
+                    var modello = from m in db.AGR_ModelliAuto_vw
                                   where m.IDCliente == "**"
                                   where m.IDCasa == aCasa
                                   where m.IDModelloCasa == "2055" || m.IDModelloCasa == "2006" || m.IDModelloCasa == "1922" || m.IDModelloCasa == "1923"
@@ -299,8 +299,8 @@ namespace WEB_Auto.Controllers
                                                                   || m.IDModelloCasa == "1896" || m.IDModelloCasa == "1479" || m.IDModelloCasa == "2014"
                                                                   || m.IDModelloCasa == "2053" || m.IDModelloCasa == "219"
                                   select m;
-                    model.AGR_ModelliAuto = modello.ToList().OrderBy(m => m.Descr);
-                    var ElencoModelli = new SelectList(model.AGR_ModelliAuto.ToList(), "ID", "Descr");
+                    model.AGR_ModelliAuto_vw = modello.ToList().OrderBy(m => m.Descr);
+                    var ElencoModelli = new SelectList(model.AGR_ModelliAuto_vw.ToList(), "ID", "Descr");
                     ViewData["ElencoModelli"] = ElencoModelli;
 
                     //var modello = from m in db.AGR_ModelliAuto
@@ -313,13 +313,13 @@ namespace WEB_Auto.Controllers
                 }
                 else if (aCasa == "CAB" && Filtrati && Session["RTB"].ToString().ToUpper() == "TRUE" && String.IsNullOrEmpty(aIDModelloCasa))
                 {
-                    var modello = from m in db.AGR_ModelliAuto
+                    var modello = from m in db.AGR_ModelliAuto_vw
                                   where m.IDCliente == "**"
                                   where m.IDCasa == aCasa
                                   where m.IDModelloCasa == "1240"
                                   select m;
-                    model.AGR_ModelliAuto = modello.ToList().OrderBy(m => m.Descr);
-                    var ElencoModelli = new SelectList(model.AGR_ModelliAuto.ToList(), "ID", "Descr");
+                    model.AGR_ModelliAuto_vw = modello.ToList().OrderBy(m => m.Descr);
+                    var ElencoModelli = new SelectList(model.AGR_ModelliAuto_vw.ToList(), "ID", "Descr");
                     ViewData["ElencoModelli"] = ElencoModelli;
 
                     //var modello = from m in db.AGR_ModelliAuto
@@ -330,24 +330,24 @@ namespace WEB_Auto.Controllers
                     //var ElencoModelli = new SelectList(model.AGR_ModelliAuto.ToList(), "ID", "Descr");
                     //ViewData["ElencoModelli"] = ElencoModelli;
                 }
-                else if (!String.IsNullOrEmpty(aIDModelloCasa))
-                {
-                    var modello = from m in db.AGR_ModelliAuto
-                                  
-                                  where m.IDModelloCasa == aIDModelloCasa
-                                  select m;
-                    model.AGR_ModelliAuto = modello.ToList().OrderBy(m => m.Descr);
-                    var ElencoModelli = new SelectList(model.AGR_ModelliAuto.ToList(), "ID", "Descr");
-                    ViewData["ElencoModelli"] = ElencoModelli;
-                }
+                //else if (!String.IsNullOrEmpty(aIDModelloCasa))
+                //{
+                //    var modello = from m in db.AGR_ModelliAuto_vw
+
+                //                  where m.IDModelloCasa == aIDModelloCasa
+                //                  select m;
+                //    model.AGR_ModelliAuto_vw = modello.ToList().OrderBy(m => m.Descr);
+                //    var ElencoModelli = new SelectList(model.AGR_ModelliAuto_vw.ToList(), "ID", "Descr");
+                //    ViewData["ElencoModelli"] = ElencoModelli;
+                //}
                 else
                 {
-                    var modello = from m in db.AGR_ModelliAuto
+                    var modello = from m in db.AGR_ModelliAuto_vw
                                   where m.IDCliente == "**"
                                   where m.IDCasa == aCasa
                                   select m;
-                    model.AGR_ModelliAuto = modello.ToList().OrderBy(m => m.Descr);
-                    var ElencoModelli = new SelectList(model.AGR_ModelliAuto.ToList(), "ID", "Descr");
+                    model.AGR_ModelliAuto_vw = modello.ToList().OrderBy(m => m.Descr);
+                    var ElencoModelli = new SelectList(model.AGR_ModelliAuto_vw.ToList(), "ID", "Descr");
                     ViewData["ElencoModelli"] = ElencoModelli;
                 }
 

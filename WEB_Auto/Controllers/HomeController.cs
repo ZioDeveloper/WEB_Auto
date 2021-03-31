@@ -61,13 +61,13 @@ namespace WEB_Auto.Controllers
             }
             else if(Filtro == "TRE")
             {
-                ini = DateTime.Today.AddDays(-7);
-                end = DateTime.Today.AddDays(7);
+                ini = DateTime.Today.AddDays(-3);
+                end = DateTime.Today.AddDays(3);
             }
             else if (Filtro == "SETTE")
             {
-                ini = DateTime.Today.AddDays(-20);
-                end = DateTime.Today.AddDays(20);
+                ini = DateTime.Today.AddDays(-7);
+                end = DateTime.Today.AddDays(7);
             }
 
             var Spedizioni = from m in db.AGR_SpedizioniWEB_vw
@@ -76,7 +76,7 @@ namespace WEB_Auto.Controllers
                              where ( m.IDPortoImbarco == myIDPorto || m.IDPortoSbarco == myIDPorto)
                              where m.IDCliente == "51" || m.IDCliente == "GN"
                              select m;
-            model.AGR_SpedizioniWEB_vw = Spedizioni.ToList().OrderBy(s=>s.ID);
+            model.AGR_SpedizioniWEB_vw = Spedizioni.ToList().OrderBy(s=>s.DataInizioImbarco);
 
             var ElencoSpedizioni = new SelectList(model.AGR_SpedizioniWEB_vw.ToList(), "ID", "DescrAlt");
 

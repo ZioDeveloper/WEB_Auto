@@ -33,14 +33,16 @@
         <label>Oggi: @Html.RadioButton("Filtro", "OGGI", true, new { onclick = "this.form.submit()" })</label>
         <label>&nbsp;&nbsp; &nbsp;&nbsp; +/- 3 gg :  @Html.RadioButton("Filtro", "TRE", false, new { onclick = "this.form.submit()" })</label>
         <label>&nbsp;&nbsp; &nbsp;&nbsp; +/- 7 gg :  @Html.RadioButton("Filtro", "SETTE", false, new { onclick = "this.form.submit()" })</label>
-        
-        
+
+
     }
 
     <div style="color:red">
         @ViewBag.errMess
     </div>
     <br />
+
+
     <div>
         @using (Html.BeginForm("InputTelaio", "TelaiAnagrafica", new { IDPerito = @item2[0].ID, IDSpedizione = @item1[0].ID }, FormMethod.Post))
         {
@@ -87,14 +89,14 @@
 </div>
 
 @*<script>
-    $(document).ready(function () {
-        $('.selectpicker').selectpicker({
-            liveSearch: true,
-            showSubtext: true
+        $(document).ready(function () {
+            $('.selectpicker').selectpicker({
+                liveSearch: true,
+                showSubtext: true
 
+            });
         });
-    });
-</script>*@
+    </script>*@
 <script>
     $('.selectpicker').selectpicker({
         dropupAuto: false,
@@ -102,4 +104,9 @@
         showSubtext: true
 
     });
+</script>
+<script>
+    function submitform() {
+        $('form').submit();
+    }
 </script>

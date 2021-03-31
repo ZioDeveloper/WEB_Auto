@@ -126,6 +126,9 @@ namespace WEB_Auto.Controllers
         {
             DateTime DataPerizia = DateTime.Now;
             string myIDPerizia = GetNewCode_AUTO(IDPerito,IDSpedizione);
+            string myNote = "";
+            if (IDMeteo == "3" || IDMeteo == "4")
+                myNote = "Foto non inserite causa pioggia ";
             //string myDataPerizia = DataPerizia.Substring(6, 4) + DataPerizia.Substring(3, 2) + DataPerizia.Substring(0, 2);
             string sqlcmd = " INSERT INTO AGR_PERIZIE_Temp_MVC (ID, IDSpedizione, IDPerito, IDTipoPerizia, DataPerizia, IDNazione, Telaio, NumFoto, " +
                             "  Flags, IRichiesta, IDefinizione, IContab, DataModPerito, FlagControllo, IDMeteo, NumPDF,Note) " +
@@ -147,7 +150,7 @@ namespace WEB_Auto.Controllers
                                                                  new SqlParameter("@FlagControllo", "0"),
                                                                  new SqlParameter("@IDMeteo", IDMeteo),
                                                                  new SqlParameter("@NumPDF", "0"),
-                                                                 new SqlParameter("@Note", ""));
+                                                                 new SqlParameter("@Note", myNote));
             if (Inserted > 0)
             {
 
@@ -402,6 +405,30 @@ namespace WEB_Auto.Controllers
                     string myIDTrasportatore = datiPregressi.ID_TrasportatoreGrimaldi;
                     ViewBag.aIDTipoRotabile = myIDTipoRotabile;
                     ViewBag.aIDTrasportatore = myIDTrasportatore;
+
+                    // Aggiorno dati perizia
+                    string sqlcmd = " UPDATE AGR_PERIZIE_Temp_MVC " +
+                                    " SET  IDModello = @IDModello " +
+                                    " WHERE ID = @IDPerizia";
+
+
+                    int Inserted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@IDPerizia", myIDPerizia),
+                                                                         
+                                                                         new SqlParameter("@IDModello", aIDModelloCasa));
+
+                    sqlcmd = " UPDATE AGR_PerizieExpGrim_Temp_MVC   " +
+                                                  "  SET ID_TrasportatoreGrimaldi = @ID_TrasportatoreGrimaldi, " +
+                                                  "  ID_TipoRotabile = @ID_TipoRotabile "  +
+                                                  " WHERE ID = @ID ";
+
+
+                    
+
+                    Inserted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@ID", myIDPerizia),
+                                                                     new SqlParameter("@ID_TrasportatoreGrimaldi", myIDTrasportatore),
+                                                                     new SqlParameter("@ID_TipoRotabile", myIDTipoRotabile));
+
+                    errMess = "TARGA CONOSCIUTA";
                 }
                 catch { }// bruciamo eccezione
 

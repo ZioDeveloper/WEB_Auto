@@ -100,18 +100,44 @@ namespace WEB_Auto.Controllers
 
         }
 
-        public ActionResult EditSpedizione(string IDSpedizione, string IDTP)
+        public ActionResult EditSpedizione(string IDSpedizione, string IDTP, string TipoMezzo = "TUTTE")
         {
             var model = new Models.HomeModel();
             string aPerito = Session["IDPeritoVero"].ToString();
-            var lista = (from m in db.WEB_Auto_ListaPerizieXSpedizione_vw
-                           where m.IDSpedizione == IDSpedizione
-                           where m.IDPerito == aPerito
-                           where m.IDTipoPerizia == IDTP
-                         select m).ToList();
-            model.WEB_Auto_ListaPerizieXSpedizione_vw = lista;
+
+            if (TipoMezzo == "TUTTE")
+            {
+                var lista = (from m in db.WEB_Auto_ListaPerizieXSpedizione_vw
+                             where m.IDSpedizione == IDSpedizione
+                             where m.IDPerito == aPerito
+                             where m.IDTipoPerizia == IDTP
+                             select m).ToList();
+                model.WEB_Auto_ListaPerizieXSpedizione_vw = lista;
+            }
+            else if (TipoMezzo == "RTB")
+            {
+                var lista = (from m in db.WEB_Auto_ListaPerizieXSpedizione_vw
+                             where m.IDSpedizione == IDSpedizione
+                             where m.IDPerito == aPerito
+                             where m.IDTipoPerizia == IDTP
+                             where m.IDModello.ToString() == "1240" || m.IDModello.ToString() == "1241"
+                             select m).ToList();
+                model.WEB_Auto_ListaPerizieXSpedizione_vw = lista;
+            }
+            if (TipoMezzo == "AUTO")
+            {
+                var lista = (from m in db.WEB_Auto_ListaPerizieXSpedizione_vw
+                             where m.IDSpedizione == IDSpedizione
+                             where m.IDPerito == aPerito
+                             where m.IDTipoPerizia == IDTP
+                             where m.IDModello.ToString() != "1240" && m.IDModello.ToString() != "1241"
+                             select m).ToList();
+                model.WEB_Auto_ListaPerizieXSpedizione_vw = lista;
+            }
+            
             
             ViewBag.IDSpedizione = IDSpedizione;
+            ViewBag.IDTP = IDTP;
             return View(model);
         }
 

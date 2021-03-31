@@ -23,7 +23,7 @@
     }
 </style>
 
-<details >
+<details>
     <summary style="color:navy">Info generali su spedizione...</summary>
     <div class="jumbotron">
 
@@ -114,13 +114,19 @@
 @if (ViewBag.ErrMess == "Sbloccato")
 {
     <div style="color:green">
-        Controllo OK ! 
+        Controllo OK !
+    </div>
+}
+else if (ViewBag.ErrMess == "TARGA CONOSCIUTA")
+{
+    <div style="color:blue">
+        @ViewBag.ErrMess
     </div>
 }
 else
 {
     <div style="color:red">
-        @ViewBag.ErrMess 
+        @ViewBag.ErrMess
     </div>
 }
 <br />
@@ -137,167 +143,162 @@ else
     {
 
 
-    <table style="background-color:aliceblue">
-        <tr>
-            <td>
-                @Html.Label("Viaggio")
-            </td>
-            <td>
-                @Html.DropDownList("IDSpedizione", new SelectList((SelectList)ViewData["ElencoSpedizioni"], "Value", "Text", ViewBag.IDSpedizione), "-- Seleziona spedizione --", new { @class = "form-control selectpicker dropupAuto = false data-live-search=true data-size=5", @onchange = "submitform();"})
-            </td>
-        </tr>
-        <tr>
-            <td>
-                @Html.Label("Inspection date")
-            </td>
-            <td>
-                @Html.TextBox("DataPerizia", DateTime.Now.ToString("dd/MM/yyyy"), new { @readonly = "readonly", style = "background:lightgrey" })
-            </td>
-        </tr>
-        @*<tr>
-            <td>
-                &nbsp;
-            </td>
-        </tr>*@
-        <tr>
-            <td>
-                @Html.Label("Chassis")
-            </td>
-            <td>
-                @Html.TextBox("Chassis", item4[0].Telaio, new { onkeyup = "InputToUpper(this);" })
-            </td>
-        </tr>
-        @*<tr>
-            <td>
-                &nbsp;
-            </td>
-        </tr>*@
-        <tr>
-            <td>
-                @Html.Label("Modello")
-
-            </td>
-            <td>
-                @Html.DropDownList("IDModelloCasa", new SelectList((SelectList)ViewData["ElencoModelli"], "Value", "Text", ViewBag.aIDModelloCasa), "-- Seleziona modello --", new { @class = "form-control selectpicker dropupAuto=false data-live-search=true data-size=5", @onchange = "submitform();" })
-                @if (item1[0].IDCasa.ToUpper() == "CAB")
-                {
-                    <div style="font-size:smaller">Solo trasportatori in uso !  @Html.CheckBox("Filtrati", true, new { @onchange = "this.form.submit();" })</div>
-                }
-            </td>
-        </tr>
-        <tr>
-            
-        </tr>
-        @if (item1[0].IDCasa.ToUpper() == "RTB" || (item4[0].IDModello.ToString() == "1240" && ViewBag.aIDModelloCasa == "") || ViewBag.aIDModelloCasa == "1240" || ViewBag.aIDModelloCasa == "1241")
-        {
+        <table style="background-color:aliceblue">
             <tr>
                 <td>
-                    @Html.Label("Trasportatore")
-
+                    @Html.Label("Viaggio")
                 </td>
                 <td>
-                    @Html.DropDownList("IDTrasportatoreGrim", new SelectList((SelectList)ViewData["ElencoTraspGrim"], "Value", "Text", ViewBag.aIDTrasportatore), "-- Seleziona trasportatore --", new { @class = "form-control selectpicker data-live-search=true", @onchange = "submitform();" })
+                    @Html.DropDownList("IDSpedizione", new SelectList((SelectList)ViewData["ElencoSpedizioni"], "Value", "Text", ViewBag.IDSpedizione), "-- Seleziona spedizione --", new { @class = "form-control selectpicker dropupAuto = false data-live-search=true data-size=5", @onchange = "submitform();" })
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.Label("Inspection date")
+                </td>
+                <td>
+                    @Html.TextBox("DataPerizia", DateTime.Now.ToString("dd/MM/yyyy"), new { @readonly = "readonly", style = "background:lightgrey" })
                 </td>
             </tr>
             @*<tr>
+                    <td>
+                        &nbsp;
+                    </td>
+                </tr>*@
+            <tr>
+                <td>
+                    @Html.Label("Chassis")
+                </td>
+                <td>
+                    @Html.TextBox("Chassis", item4[0].Telaio, new { onkeyup = "InputToUpper(this);" })
+                </td>
+            </tr>
+            @*<tr>
+                    <td>
+                        &nbsp;
+                    </td>
+                </tr>*@
+            <tr>
+                <td>
+                    @Html.Label("Modello")
+
+                </td>
+                <td>
+                    @Html.DropDownList("IDModelloCasa", new SelectList((SelectList)ViewData["ElencoModelli"], "Value", "Text", ViewBag.aIDModelloCasa), "-- Seleziona modello --", new { @class = "form-control selectpicker dropupAuto=false data-live-search=true data-size=5", @onchange = "submitform();" })
+                    @if (item1[0].IDCasa.ToUpper() == "CAB")
+                    {
+                        <div style="font-size:smaller">Solo trasportatori in uso !  @Html.CheckBox("Filtrati", true, new { @onchange = "this.form.submit();" })</div>
+                    }
+                </td>
+            </tr>
+            <tr></tr>
+            @if (item1[0].IDCasa.ToUpper() == "RTB" || (item4[0].IDModello.ToString() == "1240" && ViewBag.aIDModelloCasa == "") || ViewBag.aIDModelloCasa == "1240" || ViewBag.aIDModelloCasa == "1241")
+            {
+                <tr>
+                    <td>
+                        @Html.Label("Trasportatore")
+
+                    </td>
+                    <td>
+                        @Html.DropDownList("IDTrasportatoreGrim", new SelectList((SelectList)ViewData["ElencoTraspGrim"], "Value", "Text", ViewBag.aIDTrasportatore), "-- Seleziona trasportatore --", new { @class = "form-control selectpicker data-live-search=true", @onchange = "submitform();" })
+                    </td>
+                </tr>
+                @*<tr>
+                        <td>
+                            &nbsp;
+                        </td>
+                    </tr>*@
+                <tr>
+                    <td>
+                        @Html.Label("Rotabile")
+
+                    </td>
+                    <td>
+                        @Html.DropDownList("IDTipoRotabile", new SelectList((SelectList)ViewData["ElencoTipoRotabile"], "Value", "Text", ViewBag.aIDTipoRotabile), "-- Seleziona tipo rotabile --", new { @class = "form-control selectpicker data-live-search=true ", @onchange = "submitform();" })
+
+                    </td>
+                </tr>
+            }
+            @*<tr>
+                    <td>
+                        &nbsp;
+                    </td>
+                </tr>*@
+
+            <tr>
+                <td>
+                    @Html.Label("Condizione")
+
+                </td>
+                @if (item1[0].IDCasa.ToUpper() != "RTB" && (item4[0].IDModello.ToString() != "1240") || (item4[0].IDModello.ToString() == "1240" && ViewBag.aIDModelloCasa != "1240"))
+                {
+                    if (item4[0].FlgNuovoUsato == "N")
+                    {
+                        <td>
+                            Nuovo:   @Html.RadioButton("Condizione", "N", new { @checked = true, @onchange = "submitform();" })
+                            Usato: @Html.RadioButton("Condizione", "U")
+                            @*@Html.RadioButtonFor(model => item4[0].FlagControllo, "Test", new { @checked = true })*@
+                        </td>
+                    }
+                    else if (item4[0].FlgNuovoUsato == "U")
+                    {
+                        <td>
+                            Nuovo:   @Html.RadioButton("Condizione", "N")
+                            Usato: @Html.RadioButton("Condizione", "U", new { @checked = true, @onchange = "submitform();" })
+                            @*@Html.RadioButtonFor(model => item4[0].FlagControllo, "Test", new { @checked = true })*@
+                        </td>
+                    }
+                    else
+                    {
+                        <td>
+                            Nuovo:   @Html.RadioButton("Condizione", "N", new { @onchange = "submitform();" })
+                            Usato: @Html.RadioButton("Condizione", "U", new { @onchange = "submitform();" })
+                            @*@Html.RadioButtonFor(model => item4[0].FlagControllo, "Test", new { @checked = true })*@
+                        </td>
+                    }
+                }
+                else
+                {
+                    <td>
+                        Nuovo:   @Html.RadioButton("Condizione", "N", new { disabled = "disabled" })
+                        Usato: @Html.RadioButton("Condizione", "U", new { disabled = "disabled" })
+                    </td>
+                }
+            </tr>
+            <tr>
                 <td>
                     &nbsp;
                 </td>
-            </tr>*@
-            <tr>
-                <td>
-                    @Html.Label("Rotabile")
-
-                </td>
-                <td>
-                    @Html.DropDownList("IDTipoRotabile", new SelectList((SelectList)ViewData["ElencoTipoRotabile"], "Value", "Text", ViewBag.aIDTipoRotabile), "-- Seleziona tipo rotabile --", new { @class = "form-control selectpicker data-live-search=true ", @onchange = "submitform();" })
-
-                </td>
             </tr>
-        }
-        @*<tr>
-            <td>
-                &nbsp;
-            </td>
-        </tr>*@
 
-        <tr>
-            <td>
-                @Html.Label("Condizione")
+            <tr>
+                <td></td>
 
-            </td>
-            @if (item1[0].IDCasa.ToUpper() != "RTB" && (item4[0].IDModello.ToString() != "1240") || (item4[0].IDModello.ToString() == "1240" && ViewBag.aIDModelloCasa != "1240"))
-            {
-                if (item4[0].FlgNuovoUsato == "N")
-                {
-                    <td>
-                        Nuovo:   @Html.RadioButton("Condizione", "N", new { @checked = true, @onchange = "submitform();" })
-                        Usato: @Html.RadioButton("Condizione", "U")
-                        @*@Html.RadioButtonFor(model => item4[0].FlagControllo, "Test", new { @checked = true })*@
-                    </td>
-                }
-                else if (item4[0].FlgNuovoUsato == "U")
-                {
-                    <td>
-                        Nuovo:   @Html.RadioButton("Condizione", "N")
-                        Usato: @Html.RadioButton("Condizione", "U", new { @checked = true, @onchange = "submitform();" })
-                        @*@Html.RadioButtonFor(model => item4[0].FlagControllo, "Test", new { @checked = true })*@
-                    </td>
-                }
-                else
-                {
-                    <td>
-                        Nuovo:   @Html.RadioButton("Condizione", "N", new { @onchange = "submitform();" })
-                        Usato: @Html.RadioButton("Condizione", "U", new { @onchange = "submitform();" })
-                        @*@Html.RadioButtonFor(model => item4[0].FlagControllo, "Test", new { @checked = true })*@
-                    </td>
-                }
-            }
-            else
-            {
                 <td>
-                    Nuovo:   @Html.RadioButton("Condizione", "N", new { disabled = "disabled" })
-                    Usato: @Html.RadioButton("Condizione", "U", new { disabled = "disabled" })
+                    @Html.Label("DMG") &nbsp
+                    @if (ViewBag.ErrMess == "" || ViewBag.ErrMess == "Sbloccato" || ViewBag.ErrMess == "In fase modifica" || ViewBag.ErrMess == "In modifica")
+                    {
+                        @Html.CheckBox("isDamaged", false, new { @onchange = "submitform();" })
+
+
+                        @Html.Label("Rapido")
+
+
+                        @Html.CheckBox("isRapid", false, new { @onchange = "submitform();" })
+                    }
+                    else
+                    {
+                        @Html.CheckBox("isDamaged", false, new { disabled = "disabled" })
+                        @Html.Label("DMG rapido ")
+                        @Html.CheckBox("isRapid", false, new { disabled = "disabled" })
+
+                    }
                 </td>
-            }
-        </tr>
-        <tr>
-            <td>
-                &nbsp;
-            </td>
-        </tr>
-
-        <tr>
-            <td>
-                
-
-            </td>
-
-            <td>
-                @Html.Label("DMG") &nbsp
-                @if (ViewBag.ErrMess == "" || ViewBag.ErrMess == "Sbloccato" || ViewBag.ErrMess == "In fase modifica" || ViewBag.ErrMess == "In modifica")
-                {
-                    @Html.CheckBox("isDamaged", false, new { @onchange = "submitform();" })
-
-
-                    @Html.Label("Rapido")
-
-
-                    @Html.CheckBox("isRapid", false, new { @onchange = "submitform();" })
-                }
-                else
-                {
-                    @Html.CheckBox("isDamaged", false, new { disabled = "disabled" })
-                    @Html.Label("DMG rapido ")
-                    @Html.CheckBox("isRapid", false, new { disabled = "disabled" })
-
-                }
-            </td>
                 @if (@ViewBag.HasDanni == "Perizia GOOD")
                 {
-                <td style="color:seagreen">
-                    @ViewBag.HasDanni
-                </td>
+                    <td style="color:seagreen">
+                        @ViewBag.HasDanni
+                    </td>
 
                 }
                 else
@@ -306,35 +307,19 @@ else
                         @ViewBag.HasDanni
                     </td>
                 }
-            
+
 
             </tr>
 
-</table>
+        </table>
 
 
-            <br />
-            <div>
-                <table width="50%">
-                    <tr>
-                        <td>
-                            @Html.ActionLink("Inserisci foto", "ScattaFoto", "Documenti", new
-                        {
-                            myIDPerizia = item4[0].ID,
-                            IDPerito = ViewBag.IDPerito,
-                            IDSpedizione = ViewBag.IDSpedizione,
-                            IDMeteo = ViewBag.IDMeteo,
-                            IDTP = ViewBag.IDTP,
-                            aIDTrasportatore = ViewBag.aIDTrasportatore,
-                            aIDTipoRotabile = ViewBag.aIDTipoRotabile,
-                            aIDModelloCasa = ViewBag.aIDModelloCasa,
-                            ErrMess = ViewBag.ErrMess,
-                            IsUpdate = ViewBag.IsUpdate
-                        }, new { @class = "photoImg" }) &nbsp;@ViewBag.NumFoto
-                    </td>
-
+        <br />
+        <div>
+            <table width="50%">
+                <tr>
                     <td>
-                        @Html.ActionLink("Inserisci PDF", "ScattaPDF", "Documenti", new
+                        @Html.ActionLink("Inserisci foto", "ScattaFoto", "Documenti", new
                     {
                         myIDPerizia = item4[0].ID,
                         IDPerito = ViewBag.IDPerito,
@@ -344,67 +329,87 @@ else
                         aIDTrasportatore = ViewBag.aIDTrasportatore,
                         aIDTipoRotabile = ViewBag.aIDTipoRotabile,
                         aIDModelloCasa = ViewBag.aIDModelloCasa,
+                        ErrMess = ViewBag.ErrMess,
                         IsUpdate = ViewBag.IsUpdate
-                    }, new { @class = "pdfImg" }) &nbsp;@ViewBag.NumPDF
+                    }, new { @class = "photoImg" }) &nbsp;@ViewBag.NumFoto
                 </td>
-            </tr>
+
+                <td>
+                    @Html.ActionLink("Inserisci PDF", "ScattaPDF", "Documenti", new
+                {
+                    myIDPerizia = item4[0].ID,
+                    IDPerito = ViewBag.IDPerito,
+                    IDSpedizione = ViewBag.IDSpedizione,
+                    IDMeteo = ViewBag.IDMeteo,
+                    IDTP = ViewBag.IDTP,
+                    aIDTrasportatore = ViewBag.aIDTrasportatore,
+                    aIDTipoRotabile = ViewBag.aIDTipoRotabile,
+                    aIDModelloCasa = ViewBag.aIDModelloCasa,
+                    IsUpdate = ViewBag.IsUpdate
+                }, new { @class = "pdfImg" }) &nbsp;@ViewBag.NumPDF
+            </td>
+        </tr>
 
 
-        </table>
+    </table>
 
-    </div>
-    <div>
-        <br />
-    </div>
-    <div>
-        <button type="submit" class="btn btn-primary custom">Salva dati</button> &nbsp;&nbsp;&nbsp;
+</div>
+<div>
+    <br />
+</div>
+<div>
+    <button type="submit" class="btn btn-primary custom">Salva dati</button> &nbsp;&nbsp;&nbsp;
 
-        @if (ViewBag.IsUpdate == true)
+    @if (ViewBag.IsUpdate == true)
+    {
+        @Html.ActionLink("Nuova perizia", "EditSpedizione", "ListaPerizie", new { IDSpedizione = ViewBag.IDSpedizione, ViewBag.IDTP }, new { @class = "btn btn-success custom" })
+    }
+    else
+    {
+        if (ViewBag.ErrMess == "" || ViewBag.ErrMess == "Sbloccato" || ViewBag.ErrMess == "In modifica" || ViewBag.ErrMess == "TARGA CONOSCIUTA")
         {
-            @Html.ActionLink("Nuova perizia", "EditSpedizione", "ListaPerizie", new { IDSpedizione = ViewBag.IDSpedizione, ViewBag.IDTP }, new { @class = "btn btn-success custom" })
+            @Html.ActionLink("Nuova perizia", "InputTelaio", new
+            {
+                IDPerito = ViewBag.IDPerito,
+                IDSpedizione = ViewBag.IDSpedizione,
+                IDMeteo = ViewBag.IDMeteo,
+                IDTP = ViewBag.IDTP,
+                IsUpdate = ViewBag.IsUpdate,
+                IsRTB = Session["RTB"]
+            }, new { @class = "btn btn-success custom" })
         }
+
         else
         {
-            if (ViewBag.ErrMess == "" || ViewBag.ErrMess == "Sbloccato" || ViewBag.ErrMess == "In modifica")
+            @Html.ActionLink("Nuova perizia", "InputTelaio", new
             {
-                @Html.ActionLink("Nuova perizia", "InputTelaio", new
-           {
-               IDPerito = ViewBag.IDPerito,
-               IDSpedizione = ViewBag.IDSpedizione,
-               IDMeteo = ViewBag.IDMeteo,
-               IDTP = ViewBag.IDTP,
-               IsUpdate = ViewBag.IsUpdate,
-               IsRTB = Session["RTB"]
-           }, new { @class = "btn btn-success custom" })
-            }
-
-            else
-            {
-                @Html.ActionLink("Nuova perizia", "InputTelaio", new
-           {
-               IDPerito = ViewBag.IDPerito,
-               IDSpedizione = ViewBag.IDSpedizione,
-               IDMeteo = ViewBag.IDMeteo,
-               IDTP = ViewBag.IDTP,
-               IsRTB =  Session["RTB"]
-           }, new { @class = "btn btn-success custom disabled" })}
-        }
-        &nbsp;&nbsp;&nbsp;
-        @Html.ActionLink("Elimina", "EliminaPerizia", "TelaiAnagrafica", new
-           {
-               IDPerizia = item4[0].ID,
-               IDPerito = ViewBag.IDPerito,
-               IDSpedizione = ViewBag.IDSpedizione,
-               IDMeteo = ViewBag.IDMeteo,
-               IDTP = ViewBag.IDTP,
-               IsUpdate = ViewBag.IsUpdate
-           }, new { @class = "btn btn-danger custom" , onclick = "return confirm('Vuoi davvero cancellare la perizia ?');" })
+                IDPerito = ViewBag.IDPerito,
+                IDSpedizione = ViewBag.IDSpedizione,
+                IDMeteo = ViewBag.IDMeteo,
+                IDTP = ViewBag.IDTP,
+                IsRTB =  Session["RTB"]
+            }, new { @class = "btn btn-success custom disabled" })}
+    }
+    &nbsp;&nbsp;&nbsp;
+    @Html.ActionLink("Elimina", "EliminaPerizia", "TelaiAnagrafica", new
+       {
+           IDPerizia = item4[0].ID,
+           IDPerito = ViewBag.IDPerito,
+           IDSpedizione = ViewBag.IDSpedizione,
+           IDMeteo = ViewBag.IDMeteo,
+           IDTP = ViewBag.IDTP,
+           IsUpdate = ViewBag.IsUpdate
+       }, new { @class = "btn btn-danger custom" , onclick = "return confirm('Vuoi davvero cancellare la perizia ?');" })
 
 
-    </div>
-    <br />
-    @Html.Label("Note:")
-    @Html.TextArea("Annotazioni", item4[0].Note)
+</div>
+<br />
+@Html.Label("Note:")
+@Html.TextArea("Annotazioni", item4[0].Note)
+
+<script>
+    submitform();
+</script>
 
 }
 </div>
@@ -412,9 +417,13 @@ else
 <br />
 
 <div>
-        @*@Html.ActionLink("Esci", "Index", null, new { @class = "btn btn-danger custom" })*@
-            </div>
-
+    @*@Html.ActionLink("Esci", "Index", null, new { @class = "btn btn-danger custom" })*@
+</div>
+<script>
+    function tryMe(arg) {
+        document.write(arg);
+    }
+</script>
 <script>
     function InputToUpper(obj) {
         if (obj.value != "") {
@@ -424,14 +433,15 @@ else
 </script>
 
 
-@*<script>
+*
+<script>
     $(document).ready(function () {
         $('.selectpicker').selectpicker({
             liveSearch: true,
             showSubtext: true
         });
     });
-</script>*@
+</script>
 <script>
     function submitform() {
         $('form').submit();
@@ -447,7 +457,7 @@ else
     });
 </script>
 @*<script>
-    $(function () {
-        $('form').submit();
-    });
-</script>*@
+        $(function () {
+            $('form').submit();
+        });
+    </script>*@

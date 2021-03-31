@@ -284,7 +284,8 @@ namespace WEB_Auto.Controllers
                 //    var ElencoModelli = new SelectList(model.AGR_ModelliAuto_CAB_vw.ToList(), "ID", "Descr");
                 //    ViewData["ElencoModelli"] = ElencoModelli;
                 //}
-                if (aCasa == "CAB" && Filtrati && Session["RTB"].ToString().ToUpper() != "TRUE")
+                
+                if (aCasa == "CAB" && Filtrati && Session["RTB"].ToString().ToUpper() != "TRUE" && String.IsNullOrEmpty(aIDModelloCasa))
                 {
                     var modello = from m in db.AGR_ModelliAuto
                                   where m.IDCliente == "**"
@@ -310,7 +311,7 @@ namespace WEB_Auto.Controllers
                     //var ElencoModelli = new SelectList(model.AGR_ModelliAuto.ToList(), "ID", "Descr");
                     //ViewData["ElencoModelli"] = ElencoModelli;
                 }
-                else if (aCasa == "CAB" && Filtrati && Session["RTB"].ToString().ToUpper() == "TRUE")
+                else if (aCasa == "CAB" && Filtrati && Session["RTB"].ToString().ToUpper() == "TRUE" && String.IsNullOrEmpty(aIDModelloCasa))
                 {
                     var modello = from m in db.AGR_ModelliAuto
                                   where m.IDCliente == "**"
@@ -328,6 +329,16 @@ namespace WEB_Auto.Controllers
                     //model.AGR_ModelliAuto = modello.ToList().OrderBy(m => m.Descr);
                     //var ElencoModelli = new SelectList(model.AGR_ModelliAuto.ToList(), "ID", "Descr");
                     //ViewData["ElencoModelli"] = ElencoModelli;
+                }
+                else if (!String.IsNullOrEmpty(aIDModelloCasa))
+                {
+                    var modello = from m in db.AGR_ModelliAuto
+                                  
+                                  where m.IDModelloCasa == aIDModelloCasa
+                                  select m;
+                    model.AGR_ModelliAuto = modello.ToList().OrderBy(m => m.Descr);
+                    var ElencoModelli = new SelectList(model.AGR_ModelliAuto.ToList(), "ID", "Descr");
+                    ViewData["ElencoModelli"] = ElencoModelli;
                 }
                 else
                 {

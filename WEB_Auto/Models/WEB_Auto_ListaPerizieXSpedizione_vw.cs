@@ -34,5 +34,6 @@ namespace WEB_Auto.Models
         public Nullable<int> IDModello { get; set; }
         public string Note { get; set; }
         public bool IsClosed { get; set; }
+        public string IDOriginale1 { get; set; }
     }
 }

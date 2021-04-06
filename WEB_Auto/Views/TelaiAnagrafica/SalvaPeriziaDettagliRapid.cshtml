@@ -16,8 +16,9 @@
 @{string myIDPerizia = ViewBag.IDPerizia;
     bool ISGravitaEnabled = ViewBag.ISGravitaEnabled;}
 
-
+@ViewBag.ErrMess
 @*<br />
+   
 <br />*@
       <div>
           @using (Html.BeginForm("SalvaPeriziaDettagliRapid", "TelaiAnagrafica", new { myIDPerizia, IsUpdate = ViewBag.IsUpdate }, FormMethod.Post))
@@ -85,7 +86,7 @@
                               &nbsp;&nbsp;
                           </td>
                           <td>
-                              @Html.TextBox("IDGravita", null, new { style = "width:180px;text-transform:uppercase", @id = "IDGravita", @maxlength = "17", @placeholder = "", @autofocus = "autofocus", @autocomplete = "off" })
+                              @Html.TextBox("IDGravita", "*", new { style = "width:180px;text-transform:uppercase", @id = "IDGravita", @maxlength = "17", @placeholder = "", @autofocus = "autofocus", @autocomplete = "off" })
 
                           </td>
                       </tr>

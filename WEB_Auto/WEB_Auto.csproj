@@ -142,6 +142,7 @@
     <Compile Include="Controllers\DocumentiController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ListaPerizieController.cs" />
+    <Compile Include="Controllers\ModificaViaggioController.cs" />
     <Compile Include="Controllers\StoricoController.cs" />
     <Compile Include="Controllers\TelaiAnagraficaController.cs" />
     <Compile Include="Controllers\Test.cs" />
@@ -474,6 +475,7 @@
     <Content Include="Views\TelaiAnagrafica\SalvaPeriziaDettagliRapid.cshtml" />
     <Content Include="Views\ListaPerizie\CarouselFoto.cshtml" />
     <Content Include="Views\AreaTest\Index.cshtml" />
+    <Content Include="Views\ModificaViaggio\ModificaViaggio.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

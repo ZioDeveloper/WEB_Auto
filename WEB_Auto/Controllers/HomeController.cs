@@ -66,7 +66,7 @@ namespace WEB_Auto.Controllers
             }
             else if (Filtro == "SETTE")
             {
-                ini = DateTime.Today.AddDays(-7);
+                ini = DateTime.Today.AddDays(-27);
                 end = DateTime.Today.AddDays(7);
             }
 

@@ -128,7 +128,7 @@ namespace WEB_Auto.Controllers
             string myIDPerizia = GetNewCode_AUTO(IDPerito,IDSpedizione);
             string myNote = "";
             if (IDMeteo == "3" || IDMeteo == "4")
-                myNote = "Foto non inserite causa pioggia ";
+                myNote = "No foto causa pioggia ";
             //string myDataPerizia = DataPerizia.Substring(6, 4) + DataPerizia.Substring(3, 2) + DataPerizia.Substring(0, 2);
             string sqlcmd = " INSERT INTO AGR_PERIZIE_Temp_MVC (ID, IDSpedizione, IDPerito, IDTipoPerizia, DataPerizia, IDNazione, Telaio, NumFoto, " +
                             "  Flags, IRichiesta, IDefinizione, IContab, DataModPerito, FlagControllo, IDMeteo, NumPDF,Note) " +

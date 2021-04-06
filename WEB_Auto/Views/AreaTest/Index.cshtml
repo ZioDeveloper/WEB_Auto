@@ -51,12 +51,12 @@
                 {
                     @Html.TextBox("test")
                     <br />
-                    <button type="submit" value="Delete" class="btn btn-sm btn-danger rounded-0" onclick="return confirm('Are you sure?')"><i class="fa fa-trash-o"></i> Delete</button>
+                    <button type="submit" value="Confirm" class="btn btn-sm btn-info rounded-0" onclick="return confirm('Are you sure?')"><i class="fa fa-floppy-o"></i> Confirm</button>
                     <br /><br />
                     <table id="DataTable" style="width:100%;" class="table table-bordered">
                         <thead>
                             <tr>
-                                <th><input type="checkbox" id="checkBoxAll" class="custom-checkbox" /></th>
+                                <th><input type="checkbox" id="checkBoxAll" class="custom-checkbox" /> Seleziona tutti</th>
 
                                 <th>telaio</th>
                             </tr>
@@ -87,60 +87,49 @@
         var table = $('#DataTable').DataTable({
             "autoWidth": false,
             stateSave: true,
-            "lengthMenu": [[10, 50, 100, -1], [10, 50, 100, "Tutti"]],
-            "iDisplayLength": 50,
-            buttons: [
-                //{
-                //    extend: 'searchPanes',
-                //    config: {
-                //        cascadePanes: true
-                //    }
-                //},
-                {
-                    extend: 'excelHtml5',
-                    text: 'Crea excel ',
-                    exportOptions: {
-                        modifier: {
-                            search: 'none'
-                        }
-                    }
-                }
-                ,
-                {
-                    extend: 'print',
-                    text: 'Stampa griglia',
-                    exportOptions: {
-                        modifier: {
-                            search: 'none'
-                        }
-                    }
-                },
-                {
-                    extend: 'pdf',
-                    text: 'Crea PDF',
-                    exportOptions: {
-                        modifier: {
-                            page: 'current'
-                        }
-                    }
-                }
-
-            ],
-
-
-            dom: 'Blfrtip',
+            //"lengthMenu": [[10, 50, 100, -1], [10, 50, 100, "Tutti"]],
+            //"iDisplayLength": 10,
             //buttons: [
-            //    'copy', 'csv', 'excel',  'print'
+            //    //{
+            //    //    extend: 'searchPanes',
+            //    //    config: {
+            //    //        cascadePanes: true
+            //    //    }
+            //    //},
+            //    {
+            //        extend: 'excelHtml5',
+            //        text: 'Crea excel ',
+            //        exportOptions: {
+            //            modifier: {
+            //                search: 'none'
+            //            }
+            //        }
+            //    }
+            //    ,
+            //    {
+            //        extend: 'print',
+            //        text: 'Stampa griglia',
+            //        exportOptions: {
+            //            modifier: {
+            //                search: 'none'
+            //            }
+            //        }
+            //    },
+            //    {
+            //        extend: 'pdf',
+            //        text: 'Crea PDF',
+            //        exportOptions: {
+            //            modifier: {
+            //                page: 'current'
+            //            }
+            //        }
+            //    }
+
             //],
-            //"columnDefs": [
-            //    { "width": "110px", "targets": 0 },
-            //    { "width": "40px", "targets": 1 },
-            //    { "width": "100px", "targets": 2 },
-            //    { "width": "70px", "targets": 3 },
-            //    { "width": "270px", "targets": 4 },
-            //    { "width": "70px", "targets": 5 }
-            //],
-            //stateSave: true,
+
+
+            dom: 'lrtip',
+ 
             language: {
 
                 processing: "Ricerca in corso...",

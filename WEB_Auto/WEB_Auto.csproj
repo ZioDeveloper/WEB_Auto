@@ -138,6 +138,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\AreaTestController.cs" />
     <Compile Include="Controllers\DocumentiController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ListaPerizieController.cs" />
@@ -472,6 +473,7 @@
     <Content Include="Views\Storico\CercaTelaioSingolo.cshtml" />
     <Content Include="Views\TelaiAnagrafica\SalvaPeriziaDettagliRapid.cshtml" />
     <Content Include="Views\ListaPerizie\CarouselFoto.cshtml" />
+    <Content Include="Views\AreaTest\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

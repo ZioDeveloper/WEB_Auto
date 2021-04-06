@@ -163,6 +163,7 @@ namespace WEB_Auto.Controllers
                         where m.IDPerizia == aIDPerizia
                         select m).ToList();
             model.WEB_AUTO_FOTO = foto;
+            
             return View(model);
         }
     }

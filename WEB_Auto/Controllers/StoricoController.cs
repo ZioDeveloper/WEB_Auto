@@ -44,5 +44,18 @@ namespace WEB_Auto.Controllers
 
             return View(model);
         }
+
+        public ActionResult VisualizzaPreload(string aViaggio)
+        {
+            var model = new Models.HomeModel();
+
+            var ListaTelai = from m in db.WEB_ListaPerizieFlat_MVC_vw
+                           where m.Viaggio == aViaggio
+                           where m.IDTipoPerizia == "C"
+                           select m;
+            model.WEB_ListaPerizieFlat_MVC_vw = ListaTelai.ToList().OrderBy(s=>s.Telaio);
+
+            return View(model);
+        }
     }
 }

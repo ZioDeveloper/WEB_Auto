@@ -25,6 +25,10 @@ namespace WEB_Auto.Controllers
                               where s.Name == usr
                               select s.IDPerito).FirstOrDefault();
 
+            var myIDOperatore = (from s in db.AGR_Periti_WEB
+                              where s.Name == usr
+                              select s.ID).FirstOrDefault();
+
             var myIDPeritoVero = (from s in db.AGR_Periti_WEB
                               where s.Name == usr
                               select s.IDVero).FirstOrDefault();
@@ -101,6 +105,7 @@ namespace WEB_Auto.Controllers
 
             Session["User"] = usr;
             Session["IDPerito"] = myIDPerito;
+            Session["IDOperatore"] = myIDOperatore;
             Session["IDPeritoVero"] = myIDPeritoVero;
             Session["RTB"] = "";
             ViewData["ElencoSpedizioni"] = ElencoSpedizioni;

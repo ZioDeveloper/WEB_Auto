@@ -20,5 +20,6 @@ namespace WEB_Auto.Models
         public string IDModelloCasa { get; set; }
         public string IDCliente { get; set; }
         public string Produzione { get; set; }
+        public string Descrizione { get; set; }
     }
 }

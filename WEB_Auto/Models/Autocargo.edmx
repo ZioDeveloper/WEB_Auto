@@ -118,6 +118,7 @@
           <Property Name="TotaleItems" Type="float" />
           <Property Name="NumPDF" Type="int" Nullable="false" />
           <Property Name="IsClosed" Type="bit" Nullable="false" />
+          <Property Name="IDOperatore" Type="int" />
         </EntityType>
         <EntityType Name="AGR_PerizieExpGrim_Temp_MVC">
           <Key>
@@ -316,6 +317,7 @@ warning 6002: The table/view 'wisedb.dbo.AGR_ModelliAuto_vw' does not have a pri
             <PropertyRef Name="IDModelloCasa" />
             <PropertyRef Name="IDCliente" />
             <PropertyRef Name="Produzione" />
+            <PropertyRef Name="Descrizione" />
           </Key>
           <Property Name="ID" Type="int" Nullable="false" />
           <Property Name="Descr" Type="varchar" MaxLength="278" Nullable="false" />
@@ -323,6 +325,7 @@ warning 6002: The table/view 'wisedb.dbo.AGR_ModelliAuto_vw' does not have a pri
           <Property Name="IDModelloCasa" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="IDCliente" Type="varchar" MaxLength="2" Nullable="false" />
           <Property Name="Produzione" Type="varchar" MaxLength="1" Nullable="false" />
+          <Property Name="Descrizione" Type="varchar" MaxLength="255" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'wisedb.dbo.AGR_PERIZIE_DETT_TEMP_MVC_vw' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -727,7 +730,8 @@ warning 6002: The table/view 'wisedb.dbo.WEB_ListaPerizieFlat_TMP_vw' does not h
     [AGR_ModelliAuto_vw].[IDCasa] AS [IDCasa], 
     [AGR_ModelliAuto_vw].[IDModelloCasa] AS [IDModelloCasa], 
     [AGR_ModelliAuto_vw].[IDCliente] AS [IDCliente], 
-    [AGR_ModelliAuto_vw].[Produzione] AS [Produzione]
+    [AGR_ModelliAuto_vw].[Produzione] AS [Produzione], 
+    [AGR_ModelliAuto_vw].[Descrizione] AS [Descrizione]
     FROM [dbo].[AGR_ModelliAuto_vw] AS [AGR_ModelliAuto_vw]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="AGR_PERIZIE_DETT_TEMP_MVC_vw" EntityType="Self.AGR_PERIZIE_DETT_TEMP_MVC_vw" store:Type="Views" store:Schema="dbo">
@@ -1414,6 +1418,7 @@ warning 6002: The table/view 'wisedb.dbo.WEB_ListaPerizieFlat_TMP_vw' does not h
           <Property Name="NumPDF" Type="Int32" Nullable="false" />
           <Property Name="IsClosed" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="AGR_PerizieExpGrim_Temp_MVC" Relationship="wisedbModel.FK_AGR_PerizieExpGrim_Temp_AGR_PERIZIE_TEMP_MVC" FromRole="AGR_PERIZIE_TEMP_MVC" ToRole="AGR_PerizieExpGrim_Temp_MVC" />
+          <Property Name="IDOperatore" Type="Int32" />
         </EntityType>
         <EntityType Name="AGR_PerizieExpGrim_Temp_MVC">
           <Key>
@@ -1673,6 +1678,7 @@ warning 6002: The table/view 'wisedb.dbo.WEB_ListaPerizieFlat_TMP_vw' does not h
             <PropertyRef Name="IDModelloCasa" />
             <PropertyRef Name="IDCliente" />
             <PropertyRef Name="Produzione" />
+            <PropertyRef Name="Descrizione" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" />
           <Property Name="Descr" Type="String" Nullable="false" MaxLength="278" FixedLength="false" Unicode="false" />
@@ -1680,6 +1686,7 @@ warning 6002: The table/view 'wisedb.dbo.WEB_ListaPerizieFlat_TMP_vw' does not h
           <Property Name="IDModelloCasa" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="IDCliente" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
           <Property Name="Produzione" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="Descrizione" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -1983,6 +1990,7 @@ warning 6002: The table/view 'wisedb.dbo.WEB_ListaPerizieFlat_TMP_vw' does not h
           <EntitySetMapping Name="AGR_PERIZIE_TEMP_MVC">
             <EntityTypeMapping TypeName="wisedbModel.AGR_PERIZIE_TEMP_MVC">
               <MappingFragment StoreEntitySet="AGR_PERIZIE_TEMP_MVC">
+                <ScalarProperty Name="IDOperatore" ColumnName="IDOperatore" />
                 <ScalarProperty Name="IsClosed" ColumnName="IsClosed" />
                 <ScalarProperty Name="NumPDF" ColumnName="NumPDF" />
                 <ScalarProperty Name="TotaleItems" ColumnName="TotaleItems" />
@@ -2267,6 +2275,7 @@ warning 6002: The table/view 'wisedb.dbo.WEB_ListaPerizieFlat_TMP_vw' does not h
           <EntitySetMapping Name="AGR_ModelliAuto_vw">
             <EntityTypeMapping TypeName="wisedbModel.AGR_ModelliAuto_vw">
               <MappingFragment StoreEntitySet="AGR_ModelliAuto_vw">
+                <ScalarProperty Name="Descrizione" ColumnName="Descrizione" />
                 <ScalarProperty Name="Produzione" ColumnName="Produzione" />
                 <ScalarProperty Name="IDCliente" ColumnName="IDCliente" />
                 <ScalarProperty Name="IDModelloCasa" ColumnName="IDModelloCasa" />

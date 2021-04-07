@@ -55,6 +55,7 @@ namespace WEB_Auto.Models
         public Nullable<double> TotaleItems { get; set; }
         public int NumPDF { get; set; }
         public bool IsClosed { get; set; }
+        public Nullable<int> IDOperatore { get; set; }
     
         public virtual AGR_PerizieExpGrim_Temp_MVC AGR_PerizieExpGrim_Temp_MVC { get; set; }
     }

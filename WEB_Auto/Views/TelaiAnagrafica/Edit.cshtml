@@ -180,11 +180,27 @@ else
                 </tr>*@
             <tr>
                 <td>
-                    @Html.Label("Modello")
-
+                    @if (ViewBag.IsTrasportatore)
+                    {
+                        @Html.Label("Trasportatore")
+                    }
+                    else
+                    {
+                        @Html.Label("Modello")
+                    }
                 </td>
                 <td>
-                    @Html.DropDownList("IDModelloCasa", new SelectList((SelectList)ViewData["ElencoModelli"], "Value", "Text", ViewBag.aIDModelloCasa), "-- Seleziona modello --", new { @class = "form-control selectpicker dropupAuto=false data-live-search=true data-size=5", @onchange = "submitform();" })
+                    @if (ViewBag.IsTrasportatore)
+                    {
+                        @Html.DropDownList("IDModelloCasa", new SelectList((SelectList)ViewData["ElencoModelli"], "Value", "Text", ViewBag.aIDModelloCasa), "-- Seleziona trasportatore --", new { @class = "form-control selectpicker dropupAuto=false data-live-search=true data-size=5", @onchange = "submitform();" })
+
+                    }
+                    else
+                    {
+                        @Html.DropDownList("IDModelloCasa", new SelectList((SelectList)ViewData["ElencoModelli"], "Value", "Text", ViewBag.aIDModelloCasa), "-- Seleziona valore --", new { @class = "form-control selectpicker dropupAuto=false data-live-search=true data-size=5", @onchange = "submitform();" })
+
+                    }
+                    @*@Html.DropDownList("IDModelloCasa", new SelectList((SelectList)ViewData["ElencoModelli"], "Value", "Text", ViewBag.aIDModelloCasa), "-- Seleziona valore --", new { @class = "form-control selectpicker dropupAuto=false data-live-search=true data-size=5", @onchange = "submitform();" })*@
                     @if (item1[0].IDCasa.ToUpper() == "CAB")
                     {
                         <div style="font-size:smaller">Solo trasportatori in uso !  @Html.CheckBox("Filtrati", true, new { @onchange = "this.form.submit();" })</div>
@@ -362,13 +378,13 @@ else
 
     @if (ViewBag.IsUpdate == true)
     {
-        @Html.ActionLink("Nuova perizia", "EditSpedizione", "ListaPerizie", new { IDSpedizione = ViewBag.IDSpedizione, ViewBag.IDTP }, new { @class = "btn btn-success custom" })
+        @Html.ActionLink("Finito", "EditSpedizione", "ListaPerizie", new { IDSpedizione = ViewBag.IDSpedizione, ViewBag.IDTP }, new { @class = "btn btn-success custom" })
     }
     else
     {
         if (ViewBag.ErrMess == "" || ViewBag.ErrMess == "Sbloccato" || ViewBag.ErrMess == "In modifica" || ViewBag.ErrMess == "TARGA CONOSCIUTA")
         {
-            @Html.ActionLink("Nuova perizia", "InputTelaio", new
+            @Html.ActionLink("Finito", "InputTelaio", new
             {
                 IDPerito = ViewBag.IDPerito,
                 IDSpedizione = ViewBag.IDSpedizione,
@@ -381,7 +397,7 @@ else
 
         else
         {
-            @Html.ActionLink("Nuova perizia", "InputTelaio", new
+            @Html.ActionLink("Finito", "InputTelaio", new
             {
                 IDPerito = ViewBag.IDPerito,
                 IDSpedizione = ViewBag.IDSpedizione,

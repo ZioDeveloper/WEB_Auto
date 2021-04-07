@@ -131,9 +131,9 @@ namespace WEB_Auto.Controllers
                 myNote = "No foto causa pioggia ";
             //string myDataPerizia = DataPerizia.Substring(6, 4) + DataPerizia.Substring(3, 2) + DataPerizia.Substring(0, 2);
             string sqlcmd = " INSERT INTO AGR_PERIZIE_Temp_MVC (ID, IDSpedizione, IDPerito, IDTipoPerizia, DataPerizia, IDNazione, Telaio, NumFoto, " +
-                            "  Flags, IRichiesta, IDefinizione, IContab, DataModPerito, FlagControllo, IDMeteo, NumPDF,Note) " +
+                            "  Flags, IRichiesta, IDefinizione, IContab, DataModPerito, FlagControllo, IDMeteo, NumPDF,Note,IDOperatore) " +
                             "VALUES (@ID, @IDSpedizione, @IDPerito, @IDTipoPerizia, @DataPerizia, @IDNazione, @Telaio, @NumFoto, " +
-                            "  @Flags, @IRichiesta, @IDefinizione, @IContab, @DataModPerito, @FlagControllo, @IDMeteo, @NumPDF, @Note)";
+                            "  @Flags, @IRichiesta, @IDefinizione, @IContab, @DataModPerito, @FlagControllo, @IDMeteo, @NumPDF, @Note,@IDOperatore)";
             int Inserted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@ID", myIDPerizia),
                                                                  new SqlParameter("@IDSpedizione", IDSpedizione),
                                                                  new SqlParameter("@IDPerito", IDPerito),
@@ -150,7 +150,8 @@ namespace WEB_Auto.Controllers
                                                                  new SqlParameter("@FlagControllo", "0"),
                                                                  new SqlParameter("@IDMeteo", IDMeteo),
                                                                  new SqlParameter("@NumPDF", "0"),
-                                                                 new SqlParameter("@Note", myNote));
+                                                                 new SqlParameter("@Note", myNote),
+                                                                 new SqlParameter("@IDOperatore", (int)Session["IDOperatore"]));
             if (Inserted > 0)
             {
 
@@ -192,6 +193,9 @@ namespace WEB_Auto.Controllers
                                          string aIDTipoRotabile, string aIDModelloCasa, string myIDPerizia,string flagNU, string Annotazioni, bool Filtrati = true ,
                                          string errMess = " ", bool IsUpdate = false) // errMess = " " per eludere primo controllo in View Edit
         {
+            // Default = modello, diventa trasportatore per CAB non rotabili
+            ViewBag.IsTrasportatore = false;
+
             if (myIDPerizia == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -302,10 +306,10 @@ namespace WEB_Auto.Controllers
                                                                   || m.IDModelloCasa == "1896" || m.IDModelloCasa == "1479" || m.IDModelloCasa == "2014"
                                                                   || m.IDModelloCasa == "2053" || m.IDModelloCasa == "219"
                                   select m;
-                    model.AGR_ModelliAuto_vw = modello.ToList().OrderBy(m => m.Descr);
+                    model.AGR_ModelliAuto_vw = modello.ToList().OrderBy(m => m.Descrizione);
                     var ElencoModelli = new SelectList(model.AGR_ModelliAuto_vw.ToList(), "ID", "Descr");
                     ViewData["ElencoModelli"] = ElencoModelli;
-
+                    ViewBag.IsTrasportatore = false;
                     //var modello = from m in db.AGR_ModelliAuto
                     //              where m.IDCliente == "**"
                     //              where m.IDCasa == aCasa
@@ -324,6 +328,7 @@ namespace WEB_Auto.Controllers
                     model.AGR_ModelliAuto_vw = modello.ToList().OrderBy(m => m.Descr);
                     var ElencoModelli = new SelectList(model.AGR_ModelliAuto_vw.ToList(), "ID", "Descr");
                     ViewData["ElencoModelli"] = ElencoModelli;
+                    ViewBag.IsTrasportatore = false;
 
                     //var modello = from m in db.AGR_ModelliAuto
                     //              where m.IDCliente == "**"
@@ -351,6 +356,7 @@ namespace WEB_Auto.Controllers
                                   select m;
                     model.AGR_ModelliAuto_vw = modello.ToList().OrderBy(m => m.Descr);
                     var ElencoModelli = new SelectList(model.AGR_ModelliAuto_vw.ToList(), "ID", "Descr");
+                    ViewBag.IsTrasportatore = false;
                     ViewData["ElencoModelli"] = ElencoModelli;
                 }
 

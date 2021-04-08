@@ -138,17 +138,19 @@
         <br />
         <div class="card-body">
             <br /><br />
-            <table id="DataTable" style="width:100%;" class="table table-bordered">
+            <table id="qw" style="width:100%;" class="table table-bordered">
                 <thead>
                     <tr>
 
-
+                        @*<th>ID</th>*@
                         <th>Telaio</th>
                         <th>Modello</th>
                         <th>Data perizia</th>
                         <th>Trasportatore</th>
+                        <th>Status</th>
                         <th>Componente</th>
                         <th>Danno</th>
+                        <th>N° foto</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -156,6 +158,7 @@
                     {
 
                     <tr>
+                        @*<td>@Html.DisplayFor(modelItem => item.ID)</td>*@
                         @{OldVin = item.Telaio;}
                         @if (OldVin != NewVin)
                         {
@@ -163,18 +166,53 @@
                             <td>@Html.DisplayFor(modelItem => item.Modello)</td>
                             <td>@Html.DisplayFor(modelItem => item.DataPerizia)</td>
                             <td>@Html.DisplayFor(modelItem => item.Trasportatore)</td>
+                            if (item.Status == "DMG")
+                            {
+                                <td style="color:red">@Html.DisplayFor(modelItem => item.Status)</td>
+                            }
+                            else
+                            {
+                                <td style="color:forestgreen">@Html.DisplayFor(modelItem => item.Status)</td>
+                            }
                         }
                         else
                         {
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
                         }
 
-                        <td>-</td>
+
                         <td>@Html.DisplayFor(modelItem => item.Parte)</td>
                         <td>@Html.DisplayFor(modelItem => item.Danno)</td>
+
+                        @{OldVin = item.Telaio;}
+                        @if (OldVin != NewVin)
+                        {
+                            <td>
+                                @Html.DisplayFor(modelItem => item.NumFoto)
+                                @Html.ActionLink("Mostra foto", "CarouselFoto", "ListaPerizie", new
+                           {
+                               aIDPerizia = item.IDPerizia,
+                               IDPerito = ViewBag.IDPerito,
+                               IDSpedizione = ViewBag.IDSpedizione,
+                               IDMeteo = ViewBag.IDMeteo,
+                               IDTP = ViewBag.IDTP,
+                               aIDTrasportatore = ViewBag.aIDTrasportatore,
+                               aIDTipoRotabile = ViewBag.aIDTipoRotabile,
+                               aIDModelloCasa = ViewBag.aIDModelloCasa,
+                               ErrMess = ViewBag.ErrMess,
+                               IsUpdate = ViewBag.IsUpdate
+                           }, new { @class = "photoImg" })
+                            </td>
+                        }
+                        else
+                        {
+                            <td>&nbsp;</td>
+
+                        }
                         @{NewVin = OldVin;}
                     </tr>
                     }
@@ -184,7 +222,11 @@
         </div>
     </div>
 </div>
-
+<script>
+    $(document).ready(function () {
+        $('#example').DataTable();
+    });
+</script>
 <script>
     $(document).ready(function () {
         var table = $('#DataTable').DataTable({

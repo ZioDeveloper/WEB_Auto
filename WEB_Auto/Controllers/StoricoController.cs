@@ -53,7 +53,7 @@ namespace WEB_Auto.Controllers
                            where m.Viaggio == aViaggio
                            where m.IDTipoPerizia == "C"
                            select m;
-            model.WEB_ListaPerizieFlat_MVC_vw = ListaTelai.ToList().OrderBy(s=>s.Telaio);
+            model.WEB_ListaPerizieFlat_MVC_vw = ListaTelai.ToList().OrderBy(s=>s.Status);
 
             return View(model);
         }

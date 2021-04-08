@@ -73,6 +73,11 @@ namespace WEB_Auto.Controllers
                 ini = DateTime.Today.AddDays(-27);
                 end = DateTime.Today.AddDays(7);
             }
+            else if (Filtro == "VENTUNO")
+            {
+                ini = DateTime.Today.AddDays(-21);
+                end = DateTime.Today.AddDays(+21);
+            }
 
             var Spedizioni = from m in db.AGR_SpedizioniWEB_vw
                              where m.DataInizioImbarco >= ini

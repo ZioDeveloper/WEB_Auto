@@ -43,16 +43,18 @@
         </div>
         @using (Html.BeginForm("ModificaViaggio", "ModificaViaggio", new { }, FormMethod.Get))
         {
+            @Html.Label("Viaggio da modificare")<br/>
             @Html.TextBox("aViaggio")
-            <button type="submit" value="Cerca" class="btn btn-sm btn-dark rounded-0" ><i class="fa fa-search fa-lg"></i> Ricerca  viaggio</button>
+            <button type="submit" value="Cerca" class="btn btn-sm btn-dark rounded-0"><i class="fa fa-search fa-lg"></i> Ricerca  viaggio</button>
         }
         <br />
         <div class="card-body">
             @using (Html.BeginForm("ModificaViaggio", "ModificaViaggio", new { VecchioViaggio = ViewBag.myViaggio }, FormMethod.Post))
             {
+                @Html.Label("Nuovo numero di viaggio ")<br /> 
                 @Html.TextBox("NuovoViaggio")
 
-                <button type="submit" value="Confirm" class="btn btn-sm btn-danger rounded-0" onclick="return confirm('Procedere con modifica dati viaggio?')"><i class="fa fa-floppy-o fa-lg"></i> Modifica  viaggio</button>
+                <button type="submit" value="Confirm" class="btn btn-sm btn-danger rounded-0" onclick="return confirm('Procedere con modifica dati viaggio?')"><i class="fa fa-floppy-o fa-lg"></i>Modifica</button>
                 <br /><br />
                 <table id="DataTable" style="width:100%;" class="table table-bordered">
                     <thead>
@@ -67,14 +69,14 @@
                         @foreach (var item in Model.WEB_Auto_ListaPerizieXSpedizione_vw)
                         {
 
-                        <tr>
+                            <tr>
 
-                            <td>@Html.CheckBox("ID", new { value = item.ID, @class = "custom-checkbox chkCheckBoxId" })</td>
+                                <td>@Html.CheckBox("ID", new { value = item.ID, @class = "custom-checkbox chkCheckBoxId" })</td>
 
-                            <td>@Html.DisplayFor(modelItem => item.Telaio)</td>
-                            <td>@Html.DisplayFor(modelItem => item.Modello)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Telaio)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Modello)</td>
 
-                        </tr>
+                            </tr>
                         }
                     </tbody>
                 </table>

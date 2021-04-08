@@ -599,8 +599,10 @@ warning 6002: The table/view 'wisedb.dbo.WEB_ListaPerizieFlat_MVC_vw' does not h
         <EntityType Name="WEB_ListaPerizieFlat_MVC_vw">
           <Key>
             <PropertyRef Name="ID" />
+            <PropertyRef Name="Status" />
           </Key>
           <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="IDPerizia" Type="varchar" MaxLength="18" />
           <Property Name="IDSpedizione" Type="varchar" MaxLength="8" />
           <Property Name="Viaggio" Type="varchar" MaxLength="30" />
           <Property Name="POL" Type="varchar" MaxLength="29" />
@@ -619,6 +621,9 @@ warning 6002: The table/view 'wisedb.dbo.WEB_ListaPerizieFlat_MVC_vw' does not h
           <Property Name="Parte" Type="varchar" MaxLength="259" />
           <Property Name="Danno" Type="varchar" MaxLength="276" />
           <Property Name="Gravita" Type="varchar" MaxLength="121" />
+          <Property Name="Cnt" Type="int" />
+          <Property Name="Status" Type="varchar" MaxLength="4" Nullable="false" />
+          <Property Name="NumFoto" Type="smallint" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'wisedb.dbo.WEB_ListaPerizieFlat_TMP_vw' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -932,6 +937,7 @@ warning 6002: The table/view 'wisedb.dbo.WEB_ListaPerizieFlat_TMP_vw' does not h
           <EntitySet Name="WEB_ListaPerizieFlat_MVC_vw" EntityType="Self.WEB_ListaPerizieFlat_MVC_vw" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [WEB_ListaPerizieFlat_MVC_vw].[ID] AS [ID], 
+    [WEB_ListaPerizieFlat_MVC_vw].[IDPerizia] AS [IDPerizia], 
     [WEB_ListaPerizieFlat_MVC_vw].[IDSpedizione] AS [IDSpedizione], 
     [WEB_ListaPerizieFlat_MVC_vw].[Viaggio] AS [Viaggio], 
     [WEB_ListaPerizieFlat_MVC_vw].[POL] AS [POL], 
@@ -949,7 +955,10 @@ warning 6002: The table/view 'wisedb.dbo.WEB_ListaPerizieFlat_TMP_vw' does not h
     [WEB_ListaPerizieFlat_MVC_vw].[Note] AS [Note], 
     [WEB_ListaPerizieFlat_MVC_vw].[Parte] AS [Parte], 
     [WEB_ListaPerizieFlat_MVC_vw].[Danno] AS [Danno], 
-    [WEB_ListaPerizieFlat_MVC_vw].[Gravita] AS [Gravita]
+    [WEB_ListaPerizieFlat_MVC_vw].[Gravita] AS [Gravita], 
+    [WEB_ListaPerizieFlat_MVC_vw].[Cnt] AS [Cnt], 
+    [WEB_ListaPerizieFlat_MVC_vw].[Status] AS [Status], 
+    [WEB_ListaPerizieFlat_MVC_vw].[NumFoto] AS [NumFoto]
     FROM [dbo].[WEB_ListaPerizieFlat_MVC_vw] AS [WEB_ListaPerizieFlat_MVC_vw]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="WEB_ListaPerizieFlat_TMP_vw" EntityType="Self.WEB_ListaPerizieFlat_TMP_vw" store:Type="Views" store:Schema="dbo">
@@ -1601,6 +1610,7 @@ warning 6002: The table/view 'wisedb.dbo.WEB_ListaPerizieFlat_TMP_vw' does not h
         <EntityType Name="WEB_ListaPerizieFlat_MVC_vw">
           <Key>
             <PropertyRef Name="ID" />
+            <PropertyRef Name="Status" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" />
           <Property Name="IDSpedizione" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
@@ -1621,6 +1631,10 @@ warning 6002: The table/view 'wisedb.dbo.WEB_ListaPerizieFlat_TMP_vw' does not h
           <Property Name="DataPartenzaImbarco" Type="DateTime" Precision="3" />
           <Property Name="DataArrivoSbarco" Type="DateTime" Precision="3" />
           <Property Name="Trasportatore" Type="String" MaxLength="54" FixedLength="false" Unicode="false" />
+          <Property Name="Cnt" Type="Int32" />
+          <Property Name="Status" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="NumFoto" Type="Int16" />
+          <Property Name="IDPerizia" Type="String" MaxLength="18" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="WEB_ListaPerizieFlat_DEF_vw">
           <Key>
@@ -2200,6 +2214,10 @@ warning 6002: The table/view 'wisedb.dbo.WEB_ListaPerizieFlat_TMP_vw' does not h
           <EntitySetMapping Name="WEB_ListaPerizieFlat_MVC_vw">
             <EntityTypeMapping TypeName="wisedbModel.WEB_ListaPerizieFlat_MVC_vw">
               <MappingFragment StoreEntitySet="WEB_ListaPerizieFlat_MVC_vw">
+                <ScalarProperty Name="IDPerizia" ColumnName="IDPerizia" />
+                <ScalarProperty Name="NumFoto" ColumnName="NumFoto" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Cnt" ColumnName="Cnt" />
                 <ScalarProperty Name="Trasportatore" ColumnName="Trasportatore" />
                 <ScalarProperty Name="DataArrivoSbarco" ColumnName="DataArrivoSbarco" />
                 <ScalarProperty Name="DataPartenzaImbarco" ColumnName="DataPartenzaImbarco" />

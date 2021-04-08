@@ -33,5 +33,9 @@ namespace WEB_Auto.Models
         public Nullable<System.DateTime> DataPartenzaImbarco { get; set; }
         public Nullable<System.DateTime> DataArrivoSbarco { get; set; }
         public string Trasportatore { get; set; }
+        public Nullable<int> Cnt { get; set; }
+        public string Status { get; set; }
+        public Nullable<short> NumFoto { get; set; }
+        public string IDPerizia { get; set; }
     }
 }

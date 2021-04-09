@@ -18,7 +18,7 @@ namespace WEB_Auto.Controllers
             var lista = (from m in db.WEB_Auto_ListaPerizieXSpedizione_vw
                          where m.IDOriginale1 == aViaggio
 
-                         select m).ToList();
+                         select m).ToList().OrderBy(s=>s.Telaio);
             model.WEB_Auto_ListaPerizieXSpedizione_vw = lista;
             ViewBag.myViaggio = aViaggio;
             return View(model);

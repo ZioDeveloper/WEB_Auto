@@ -166,5 +166,16 @@ namespace WEB_Auto.Controllers
             
             return View(model);
         }
+
+        public ActionResult MostraPDF(string aIDPerizia)
+        {
+            var model = new Models.HomeModel();
+            var pdf = (from m in db.WEB_AUTO_PDF
+                        where m.IDPerizia == aIDPerizia
+                        select m).ToList();
+            model.WEB_AUTO_PDF = pdf;
+
+            return View(model);
+        }
     }
 }

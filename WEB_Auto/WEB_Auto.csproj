@@ -477,6 +477,9 @@
     <Content Include="Views\AreaTest\Index.cshtml" />
     <Content Include="Views\ModificaViaggio\ModificaViaggio.cshtml" />
     <Content Include="Views\Storico\VisualizzaPreload.cshtml" />
+    <Content Include="Views\ListaPerizie\MostraPDF.cshtml" />
+    <Content Include="Views\Storico\CercaStoriaTelaio.cshtml" />
+    <Content Include="Views\Storico\CarouselFotoStoriche.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

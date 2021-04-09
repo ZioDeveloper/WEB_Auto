@@ -1,0 +1,37 @@
+﻿@model WEB_Auto.Models.HomeModel
+@{
+    ViewBag.Title = "MostraPDF";
+}
+
+<h4>PDF allegati</h4>
+
+@foreach (var item in Model.WEB_AUTO_PDF)
+{
+    <table border="0">
+        <tr>
+            <td></td>
+            <td>
+                @*<img src="@Url.Content("~/DocumentiXTelai/PDF/" + item.FileName)" title="@Url.Content(item.FileName)" alt="Image" style='height: 480px; width: 640; object-fit: contain'>*@
+                <iframe frameborder="1" scrolling="no" width="600px" style="height:800px"  src=@Url.Content("~/DocumentiXTelai/PDF/" + item.FileName)></iframe>
+            </td>
+
+
+
+            @*<td>
+
+                @Html.ActionLink("Elimina", "CancellaPDF", new { IDDocumento = item.ID,
+               myIDPerizia = item.IDPerizia,
+               nomefile = item.FileName,
+               IDPerito = ViewBag.IDPerito,
+               IDSpedizione = ViewBag.IDSpedizione,
+               IDMeteo = ViewBag.IDMeteo,
+               IDTP = ViewBag.IDTP,
+               IsUpdate = ViewBag.IsUpdate
+           }, new { @class = "btn btn-danger btn-xs", onclick = "return confirm('Vuoi davvero cancellare il PDF ?');" })
+            </td>*@
+        </tr>
+        <br />
+
+    </table>
+
+}

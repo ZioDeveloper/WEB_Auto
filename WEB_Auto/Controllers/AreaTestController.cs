@@ -46,21 +46,29 @@ namespace WEB_Auto.Controllers
 
         public void CreateFile()
         {
-            ////todo: add some data from your database into that string:
-            //var string_with_your_data = "TEST !";
+           
 
-            //var byteArray = Encoding.ASCII.GetBytes(string_with_your_data);
-            //var stream = new MemoryStream(byteArray);
-
-            //return File(stream, "text/plain", "C:\\test\\your_file_name.txt");
+            string fileName = @"D:\TFS\MVC\Web_Auto\WEB_Auto\DocumentiXTelai\TXT\ZioTest.txt";
+            string aFileName = "ZioTest.txt";
             
-            string fileName = @"ZioTest.txt";
-            string path = System.IO.Path.Combine(Server.MapPath("~/DocumentiXTelai/TXT"), fileName);
             FileInfo fi = new FileInfo(fileName);
             using (StreamWriter sw = fi.CreateText())
             {
                 sw.WriteLine("New file created: {0}", DateTime.Now.ToString());
                 sw.WriteLine("Author: Mahesh Chand");
+                sw.WriteLine("Add one more line ");
+                sw.WriteLine("Add one more line ");
+                sw.WriteLine("Done! ");
+            }
+
+             aFileName = "ZioTWOTest.txt";
+            string path = Server.MapPath("~/DocumentiXTelai/TXT");
+            path = path + "\\" + aFileName;
+            fi = new FileInfo(path);
+            using (StreamWriter sw = fi.CreateText())
+            {
+                sw.WriteLine("New file created: {0}", DateTime.Now.ToString());
+                sw.WriteLine("Author: Zietto!");
                 sw.WriteLine("Add one more line ");
                 sw.WriteLine("Add one more line ");
                 sw.WriteLine("Done! ");

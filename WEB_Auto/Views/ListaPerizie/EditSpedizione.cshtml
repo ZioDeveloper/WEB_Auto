@@ -41,9 +41,10 @@
                 <th>TP</th>
 
                 @*<th>ETD</th>
-                    <th>ETA</th>*@
+        <th>ETA</th>*@
                 <th>Status</th>
                 <th>N° foto</th>
+                <th>N° PDF</th>
             </tr>
 
         </thead>
@@ -132,6 +133,8 @@
                     }
                     <td>
                         @Html.DisplayFor(modelItem => item.NumFoto)
+                        @if(item.NumFoto > 0)
+                        {
                         @Html.ActionLink("Mostra foto", "CarouselFoto", "ListaPerizie", new
                             {
                                 aIDPerizia = item.ID,
@@ -145,7 +148,27 @@
                                 ErrMess = ViewBag.ErrMess,
                                 IsUpdate = ViewBag.IsUpdate
                             }, new { @class = "photoImg" })
+                        }
                     </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NumPDF)
+                        @if (item.NumPDF > 0)
+                        {
+                            @Html.ActionLink("Mostra PDF", "MostraPDF", "ListaPerizie", new
+                               {
+                                   aIDPerizia = item.ID,
+                                   IDPerito = ViewBag.IDPerito,
+                                   IDSpedizione = ViewBag.IDSpedizione,
+                                   IDMeteo = ViewBag.IDMeteo,
+                                   IDTP = ViewBag.IDTP,
+                                   aIDTrasportatore = ViewBag.aIDTrasportatore,
+                                   aIDTipoRotabile = ViewBag.aIDTipoRotabile,
+                                   aIDModelloCasa = ViewBag.aIDModelloCasa,
+                                   ErrMess = ViewBag.ErrMess,
+                                   IsUpdate = ViewBag.IsUpdate
+                               }, new { @class = "pdfImg" })
+                        }
+                        </td>
 
                 </tr>
             }

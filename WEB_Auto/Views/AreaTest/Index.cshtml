@@ -41,13 +41,17 @@
 </head>
 
 <body>
+
+    <img src="https://isp.interconsult.it/photo/winauto/FMT202104060722010_0001.JPG">
+    
+
     <div class="container py-4">
         <div class="card">
             <div class="card-header bg-primary text-white">
                 <h5>Telai da modificare</h5>
             </div>
             <div class="card-body">
-                @using (Html.BeginForm("Index", "AreaTest",new {  },FormMethod.Post))
+                @using (Html.BeginForm("Index", "AreaTest", new { }, FormMethod.Post))
                 {
                     @Html.TextBox("test")
                     <br />

@@ -35,5 +35,6 @@ namespace WEB_Auto.Models
         public string Note { get; set; }
         public bool IsClosed { get; set; }
         public string IDOriginale1 { get; set; }
+        public Nullable<int> NumPDF { get; set; }
     }
 }

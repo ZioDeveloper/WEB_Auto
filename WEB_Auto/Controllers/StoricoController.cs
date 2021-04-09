@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -84,12 +85,16 @@ namespace WEB_Auto.Controllers
 
         public ActionResult CarouselFotoStoriche(string aIDPerizia)
         {
+            
+
+
             var model = new Models.HomeModel();
             var foto = (from m in db.WEB_ListaPerizieFlat_DEF_vw
                         where m.IDPerizia == aIDPerizia
                         select m).ToList();
             model.WEB_ListaPerizieFlat_DEF_vw = foto;
-
+            ViewBag.NumFoto = foto[0].NumFoto;
+            ViewBag.IDPErizia = foto[0].IDPerizia;
             return View(model);
         }
     }

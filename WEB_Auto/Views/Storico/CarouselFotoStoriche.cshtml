@@ -24,13 +24,37 @@
         <!-- Wrapper for slides -->
         <div class="carousel-inner">
 
-            @foreach (var item in Model.WEB_ListaPerizieFlat_DEF_vw)
+
+            @for (int i = 0; i < ViewBag.NumFoto; i++)
+            {
+                if (cnt == 0)
+                {
+                    <div class="item active">
+                        @{aFoto = aPath + ViewBag.IDPerizia + "_" + progFoto.ToString("0000") + ".JPG";}
+                        <img src=@aFoto />
+
+                    </div>
+                }
+                else
+                {
+                    <div class="item">
+                        @{aFoto = aPath + ViewBag.IDPerizia + "_" + progFoto.ToString("0000") + ".JPG";}
+                        <img src=@aFoto />
+
+                    </div>
+
+                }
+                cnt++;
+                progFoto++;
+            }
+
+            @*@foreach (var item in Model.WEB_ListaPerizieFlat_DEF_vw)
             {
 
                 if (cnt == 0)
                 {
                     <div class="item active">
-                        @{aFoto = aPath + item.IDPerizia + "_" + progFoto.ToString("0000") + ".JPG";} 
+                        @{aFoto = aPath + item.IDPerizia + "_" + progFoto.ToString("0000") + ".JPG";}
                         <img src=@aFoto />
 
                     </div>
@@ -44,9 +68,9 @@
                     </div>
 
                 }
-                    cnt++;
-                 progFoto++;
-            }
+                cnt++;
+                progFoto++;
+            }*@
 
 
 

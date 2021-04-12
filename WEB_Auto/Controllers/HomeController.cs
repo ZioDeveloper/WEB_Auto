@@ -70,7 +70,7 @@ namespace WEB_Auto.Controllers
             }
             else if (Filtro == "SETTE")
             {
-                ini = DateTime.Today.AddDays(-27);
+                ini = DateTime.Today.AddDays(-7);
                 end = DateTime.Today.AddDays(7);
             }
             else if (Filtro == "VENTUNO")

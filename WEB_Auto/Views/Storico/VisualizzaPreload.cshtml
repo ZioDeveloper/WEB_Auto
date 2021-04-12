@@ -164,7 +164,8 @@
                         {
                             <td>@Html.DisplayFor(modelItem => item.Telaio)</td>
                             <td>@Html.DisplayFor(modelItem => item.Modello)</td>
-                            <td>@Html.DisplayFor(modelItem => item.DataPerizia)</td>
+                            @*<td>@Html.DisplayFor(modelItem => item.DataPerizia)</td>*@
+                            <td> @Convert.ToDateTime(item.DataPerizia).ToString("dd/MM/yyyy")</td>
                             <td>@Html.DisplayFor(modelItem => item.Trasportatore)</td>
                             if (item.Status == "DMG")
                             {

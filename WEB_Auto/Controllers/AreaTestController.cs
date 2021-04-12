@@ -97,24 +97,34 @@ namespace WEB_Auto.Controllers
             ws.Cell(7, 1).Value = "Rotabili :";
             ws.Cell(7, 2).Value = rtb;
             ws.Cell(7, 3).Value = "DAMAGED :";
+            ws.Cell(7, 3).Style.Font.FontColor = XLColor.Red;
             ws.Cell(7, 4).Value = rtbD;
+            ws.Cell(7, 4).Style.Font.FontColor = XLColor.Red;
             ws.Cell(7, 5).Value = "GOOD :";
             ws.Cell(7, 6).Value = rtb-rtbD;
-
+            ws.Cell(7, 5).Style.Font.FontColor = XLColor.ForestGreen;
+            ws.Cell(7, 6).Style.Font.FontColor = XLColor.ForestGreen;
             ws.Cell(8, 1).Value = "Veicoli :";
             ws.Cell(8, 2).Value = auto;
             ws.Cell(8, 3).Value = "DAMAGED :";
+            ws.Cell(8, 3).Style.Font.FontColor = XLColor.Red;
             ws.Cell(8, 4).Value = autoD;
+            ws.Cell(8, 4).Style.Font.FontColor = XLColor.Red;
             ws.Cell(8, 5).Value = "GOOD :";
             ws.Cell(8, 6).Value = auto - autoD;
-
+            ws.Cell(8, 5).Style.Font.FontColor = XLColor.ForestGreen;
+            ws.Cell(8, 6).Style.Font.FontColor = XLColor.ForestGreen;
 
             ws.Cell(9, 1).Value = "Totale perizie :";
             ws.Cell(9, 2).Value = rtb + auto;
-            ws.Cell(9, 3).Value = "Con danno :";
+            ws.Cell(9, 3).Value = "DAMAGED:";
             ws.Cell(9, 4).Value = rtbD + autoD;
-            ws.Cell(9, 5).Value = "Senza danno :";
+            ws.Cell(9, 3).Style.Font.FontColor = XLColor.Red;
+            ws.Cell(9, 4).Style.Font.FontColor = XLColor.Red;
+            ws.Cell(9, 5).Value = "GOOD :";
             ws.Cell(9, 6).Value = (rtb + auto) - (rtbD + autoD);
+            ws.Cell(9, 5).Style.Font.FontColor = XLColor.ForestGreen;
+            ws.Cell(9, 6).Style.Font.FontColor = XLColor.ForestGreen;
 
             ws.Cell(11, 1).Value = "Telaio";
             ws.Cell(11, 2).Value = "Modello";
@@ -137,6 +147,7 @@ namespace WEB_Auto.Controllers
                     ws.Cell(prog, 1).Value = item.Telaio;
                     ws.Cell(prog, 2).Value = item.Modello;
                     ws.Cell(prog, 3).Value = item.DataPerizia;
+                    ws.Cell(prog, 3).Style.NumberFormat.Format = "mm/dd/yyyy";
                     ws.Cell(prog, 4).Value = item.Trasportatore;
                     ws.Cell(prog, 5).Value = item.Status;
                 }

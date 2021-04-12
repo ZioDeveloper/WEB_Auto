@@ -106,7 +106,8 @@
                         @Html.DisplayFor(modelItem => item.IDOriginale1)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.DataPerizia)
+                        @*@Html.DisplayFor(modelItem => item.DataPerizia)*@
+                        @Convert.ToDateTime(item.DataPerizia).ToString("dd/MM/yyyy")
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.IDTipoPerizia)

@@ -52,7 +52,8 @@
             <th>Damaged</th>
             <th>Chiuse</th>
             <th>Chiudi</th>
-
+            <th>PDF</th>
+            <th>n°</th>
         </tr>
 
     </thead>
@@ -97,6 +98,12 @@
             <td>
                 @Html.ActionLink("Chiudi", "ChiudiSpedizione", new { IDSpedizione = item.ID, IDTP = item.IDTipoPerizia }, new { @class = "btn btn-warning btn-xs" })
             </td>
+            <td>
+                @Html.ActionLink("Inserisci PDF", "ScattaPDFSpedizione", "Documenti", new { myIDSpedizione = item.ID }, new { @class = "pdfImg" })
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NumPDF)
+            </td>
 
         </tr>
         }
@@ -115,6 +122,8 @@
             <th>Damaged</th>
             <th>Chiuse</th>
             <th>Chiudi</th>
+            <th>PDF</th>
+            <th>n°</th>
 
         </tr>
     </tfoot>

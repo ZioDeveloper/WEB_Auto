@@ -119,6 +119,7 @@
           <Property Name="NumPDF" Type="int" Nullable="false" />
           <Property Name="IsClosed" Type="bit" Nullable="false" />
           <Property Name="IDOperatore" Type="int" />
+          <Property Name="IsTransferred" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="AGR_PerizieExpGrim_Temp_MVC">
           <Key>
@@ -511,6 +512,7 @@ warning 6002: The table/view 'wisedb.dbo.WEB_Auto_ListaPerizieXSpedizione_vw' do
             <PropertyRef Name="POD" />
             <PropertyRef Name="Status" />
             <PropertyRef Name="IsClosed" />
+            <PropertyRef Name="IDCasa" />
           </Key>
           <Property Name="ID" Type="varchar" MaxLength="18" Nullable="false" />
           <Property Name="Telaio" Type="varchar" MaxLength="30" />
@@ -534,6 +536,7 @@ warning 6002: The table/view 'wisedb.dbo.WEB_Auto_ListaPerizieXSpedizione_vw' do
           <Property Name="IsClosed" Type="bit" Nullable="false" />
           <Property Name="IDOriginale1" Type="varchar" MaxLength="30" />
           <Property Name="NumPDF" Type="int" />
+          <Property Name="IDCasa" Type="varchar" MaxLength="3" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'wisedb.dbo.WEB_AUTO_ListaSpedizioni_2_vw' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -552,6 +555,7 @@ warning 6002: The table/view 'wisedb.dbo.WEB_AUTO_ListaSpedizioni_2_vw' does not
           <Property Name="IDPerito" Type="varchar" MaxLength="2" />
           <Property Name="DataPartenzaImbarco" Type="datetime" />
           <Property Name="DataArrivoSbarco" Type="datetime" />
+          <Property Name="NumPDF" Type="int" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'wisedb.dbo.WEB_AUTO_ListaSpedizioni_vw' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -636,8 +640,10 @@ warning 6002: The table/view 'wisedb.dbo.WEB_ListaPerizieFlat_TMP_vw' does not h
         <EntityType Name="WEB_ListaPerizieFlat_TMP_vw">
           <Key>
             <PropertyRef Name="ID" />
+            <PropertyRef Name="Status" />
           </Key>
           <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="IDPerizia" Type="varchar" MaxLength="18" />
           <Property Name="IDSpedizione" Type="varchar" MaxLength="8" />
           <Property Name="Viaggio" Type="varchar" MaxLength="30" />
           <Property Name="POL" Type="varchar" MaxLength="29" />
@@ -656,6 +662,9 @@ warning 6002: The table/view 'wisedb.dbo.WEB_ListaPerizieFlat_TMP_vw' does not h
           <Property Name="Parte" Type="varchar" MaxLength="259" />
           <Property Name="Danno" Type="varchar" MaxLength="276" />
           <Property Name="Gravita" Type="varchar" MaxLength="121" />
+          <Property Name="Cnt" Type="int" />
+          <Property Name="Status" Type="varchar" MaxLength="4" Nullable="false" />
+          <Property Name="NumFoto" Type="smallint" />
         </EntityType>
         <Association Name="FK___5__50">
           <End Role="AGR_Porti" Type="Self.AGR_Porti" Multiplicity="1" />
@@ -889,7 +898,8 @@ warning 6002: The table/view 'wisedb.dbo.WEB_ListaPerizieFlat_TMP_vw' does not h
     [WEB_Auto_ListaPerizieXSpedizione_vw].[Note] AS [Note], 
     [WEB_Auto_ListaPerizieXSpedizione_vw].[IsClosed] AS [IsClosed], 
     [WEB_Auto_ListaPerizieXSpedizione_vw].[IDOriginale1] AS [IDOriginale1], 
-    [WEB_Auto_ListaPerizieXSpedizione_vw].[NumPDF] AS [NumPDF]
+    [WEB_Auto_ListaPerizieXSpedizione_vw].[NumPDF] AS [NumPDF], 
+    [WEB_Auto_ListaPerizieXSpedizione_vw].[IDCasa] AS [IDCasa]
     FROM [dbo].[WEB_Auto_ListaPerizieXSpedizione_vw] AS [WEB_Auto_ListaPerizieXSpedizione_vw]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="WEB_AUTO_ListaSpedizioni_2_vw" EntityType="Self.WEB_AUTO_ListaSpedizioni_2_vw" store:Type="Views" store:Schema="dbo">
@@ -903,7 +913,8 @@ warning 6002: The table/view 'wisedb.dbo.WEB_ListaPerizieFlat_TMP_vw' does not h
     [WEB_AUTO_ListaSpedizioni_2_vw].[IsClosed] AS [IsClosed], 
     [WEB_AUTO_ListaSpedizioni_2_vw].[IDPerito] AS [IDPerito], 
     [WEB_AUTO_ListaSpedizioni_2_vw].[DataPartenzaImbarco] AS [DataPartenzaImbarco], 
-    [WEB_AUTO_ListaSpedizioni_2_vw].[DataArrivoSbarco] AS [DataArrivoSbarco]
+    [WEB_AUTO_ListaSpedizioni_2_vw].[DataArrivoSbarco] AS [DataArrivoSbarco], 
+    [WEB_AUTO_ListaSpedizioni_2_vw].[NumPDF] AS [NumPDF]
     FROM [dbo].[WEB_AUTO_ListaSpedizioni_2_vw] AS [WEB_AUTO_ListaSpedizioni_2_vw]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="WEB_AUTO_ListaSpedizioni_vw" EntityType="Self.WEB_AUTO_ListaSpedizioni_vw" store:Type="Views" store:Schema="dbo">
@@ -975,6 +986,7 @@ warning 6002: The table/view 'wisedb.dbo.WEB_ListaPerizieFlat_TMP_vw' does not h
           <EntitySet Name="WEB_ListaPerizieFlat_TMP_vw" EntityType="Self.WEB_ListaPerizieFlat_TMP_vw" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [WEB_ListaPerizieFlat_TMP_vw].[ID] AS [ID], 
+    [WEB_ListaPerizieFlat_TMP_vw].[IDPerizia] AS [IDPerizia], 
     [WEB_ListaPerizieFlat_TMP_vw].[IDSpedizione] AS [IDSpedizione], 
     [WEB_ListaPerizieFlat_TMP_vw].[Viaggio] AS [Viaggio], 
     [WEB_ListaPerizieFlat_TMP_vw].[POL] AS [POL], 
@@ -992,7 +1004,10 @@ warning 6002: The table/view 'wisedb.dbo.WEB_ListaPerizieFlat_TMP_vw' does not h
     [WEB_ListaPerizieFlat_TMP_vw].[Note] AS [Note], 
     [WEB_ListaPerizieFlat_TMP_vw].[Parte] AS [Parte], 
     [WEB_ListaPerizieFlat_TMP_vw].[Danno] AS [Danno], 
-    [WEB_ListaPerizieFlat_TMP_vw].[Gravita] AS [Gravita]
+    [WEB_ListaPerizieFlat_TMP_vw].[Gravita] AS [Gravita], 
+    [WEB_ListaPerizieFlat_TMP_vw].[Cnt] AS [Cnt], 
+    [WEB_ListaPerizieFlat_TMP_vw].[Status] AS [Status], 
+    [WEB_ListaPerizieFlat_TMP_vw].[NumFoto] AS [NumFoto]
     FROM [dbo].[WEB_ListaPerizieFlat_TMP_vw] AS [WEB_ListaPerizieFlat_TMP_vw]</DefiningQuery>
           </EntitySet>
           <AssociationSet Name="FK___5__50" Association="Self.FK___5__50">
@@ -1439,6 +1454,7 @@ warning 6002: The table/view 'wisedb.dbo.WEB_ListaPerizieFlat_TMP_vw' does not h
           <Property Name="IsClosed" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="AGR_PerizieExpGrim_Temp_MVC" Relationship="wisedbModel.FK_AGR_PerizieExpGrim_Temp_AGR_PERIZIE_TEMP_MVC" FromRole="AGR_PERIZIE_TEMP_MVC" ToRole="AGR_PerizieExpGrim_Temp_MVC" />
           <Property Name="IDOperatore" Type="Int32" />
+          <Property Name="IsTransferred" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="AGR_PerizieExpGrim_Temp_MVC">
           <Key>
@@ -1534,6 +1550,7 @@ warning 6002: The table/view 'wisedb.dbo.WEB_ListaPerizieFlat_TMP_vw' does not h
             <PropertyRef Name="POD" />
             <PropertyRef Name="Status" />
             <PropertyRef Name="IsClosed" />
+            <PropertyRef Name="IDCasa" />
           </Key>
           <Property Name="ID" Type="String" Nullable="false" MaxLength="18" FixedLength="false" Unicode="false" />
           <Property Name="Telaio" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
@@ -1557,6 +1574,7 @@ warning 6002: The table/view 'wisedb.dbo.WEB_ListaPerizieFlat_TMP_vw' does not h
           <Property Name="IsClosed" Type="Boolean" Nullable="false" />
           <Property Name="IDOriginale1" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="NumPDF" Type="Int32" />
+          <Property Name="IDCasa" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="AGR_DatiRotabiliInUSo_vw">
           <Key>
@@ -1595,6 +1613,7 @@ warning 6002: The table/view 'wisedb.dbo.WEB_ListaPerizieFlat_TMP_vw' does not h
           <Property Name="IDPerito" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
           <Property Name="DataPartenzaImbarco" Type="DateTime" Precision="3" />
           <Property Name="DataArrivoSbarco" Type="DateTime" Precision="3" />
+          <Property Name="NumPDF" Type="Int32" />
         </EntityType>
         <EntityType Name="AGR_ModelliAuto_CAB_vw">
           <Key>
@@ -1680,6 +1699,7 @@ warning 6002: The table/view 'wisedb.dbo.WEB_ListaPerizieFlat_TMP_vw' does not h
         <EntityType Name="WEB_ListaPerizieFlat_TMP_vw">
           <Key>
             <PropertyRef Name="ID" />
+            <PropertyRef Name="Status" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" />
           <Property Name="IDSpedizione" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
@@ -1700,6 +1720,10 @@ warning 6002: The table/view 'wisedb.dbo.WEB_ListaPerizieFlat_TMP_vw' does not h
           <Property Name="Parte" Type="String" MaxLength="259" FixedLength="false" Unicode="false" />
           <Property Name="Danno" Type="String" MaxLength="276" FixedLength="false" Unicode="false" />
           <Property Name="Gravita" Type="String" MaxLength="121" FixedLength="false" Unicode="false" />
+          <Property Name="IDPerizia" Type="String" MaxLength="18" FixedLength="false" Unicode="false" />
+          <Property Name="Cnt" Type="Int32" />
+          <Property Name="Status" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="NumFoto" Type="Int16" />
         </EntityType>
         <EntityType Name="AGR_ModelliAuto_vw">
           <Key>
@@ -2021,6 +2045,7 @@ warning 6002: The table/view 'wisedb.dbo.WEB_ListaPerizieFlat_TMP_vw' does not h
           <EntitySetMapping Name="AGR_PERIZIE_TEMP_MVC">
             <EntityTypeMapping TypeName="wisedbModel.AGR_PERIZIE_TEMP_MVC">
               <MappingFragment StoreEntitySet="AGR_PERIZIE_TEMP_MVC">
+                <ScalarProperty Name="IsTransferred" ColumnName="IsTransferred" />
                 <ScalarProperty Name="IDOperatore" ColumnName="IDOperatore" />
                 <ScalarProperty Name="IsClosed" ColumnName="IsClosed" />
                 <ScalarProperty Name="NumPDF" ColumnName="NumPDF" />
@@ -2146,6 +2171,7 @@ warning 6002: The table/view 'wisedb.dbo.WEB_ListaPerizieFlat_TMP_vw' does not h
           <EntitySetMapping Name="WEB_Auto_ListaPerizieXSpedizione_vw">
             <EntityTypeMapping TypeName="wisedbModel.WEB_Auto_ListaPerizieXSpedizione_vw">
               <MappingFragment StoreEntitySet="WEB_Auto_ListaPerizieXSpedizione_vw">
+                <ScalarProperty Name="IDCasa" ColumnName="IDCasa" />
                 <ScalarProperty Name="NumPDF" ColumnName="NumPDF" />
                 <ScalarProperty Name="IDOriginale1" ColumnName="IDOriginale1" />
                 <ScalarProperty Name="IsClosed" ColumnName="IsClosed" />
@@ -2196,6 +2222,7 @@ warning 6002: The table/view 'wisedb.dbo.WEB_ListaPerizieFlat_TMP_vw' does not h
           <EntitySetMapping Name="WEB_AUTO_ListaSpedizioni_2_vw">
             <EntityTypeMapping TypeName="wisedbModel.WEB_AUTO_ListaSpedizioni_2_vw">
               <MappingFragment StoreEntitySet="WEB_AUTO_ListaSpedizioni_2_vw">
+                <ScalarProperty Name="NumPDF" ColumnName="NumPDF" />
                 <ScalarProperty Name="DataArrivoSbarco" ColumnName="DataArrivoSbarco" />
                 <ScalarProperty Name="DataPartenzaImbarco" ColumnName="DataPartenzaImbarco" />
                 <ScalarProperty Name="IDPerito" ColumnName="IDPerito" />
@@ -2290,6 +2317,10 @@ warning 6002: The table/view 'wisedb.dbo.WEB_ListaPerizieFlat_TMP_vw' does not h
           <EntitySetMapping Name="WEB_ListaPerizieFlat_TMP_vw">
             <EntityTypeMapping TypeName="wisedbModel.WEB_ListaPerizieFlat_TMP_vw">
               <MappingFragment StoreEntitySet="WEB_ListaPerizieFlat_TMP_vw">
+                <ScalarProperty Name="NumFoto" ColumnName="NumFoto" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Cnt" ColumnName="Cnt" />
+                <ScalarProperty Name="IDPerizia" ColumnName="IDPerizia" />
                 <ScalarProperty Name="Gravita" ColumnName="Gravita" />
                 <ScalarProperty Name="Danno" ColumnName="Danno" />
                 <ScalarProperty Name="Parte" ColumnName="Parte" />

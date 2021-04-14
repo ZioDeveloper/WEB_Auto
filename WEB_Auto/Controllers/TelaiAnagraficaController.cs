@@ -831,12 +831,17 @@ namespace WEB_Auto.Controllers
             var myFoto = (from f in db.WEB_AUTO_FOTO
                           where f.IDPerizia == aIDPerizia
                           select f).Count();
+            var myPDF = (from f in db.WEB_AUTO_PDF
+                         where f.IDPerizia == aIDPerizia
+                          select f).Count();
+
             string sqlcmd = " UPDATE AGR_PERIZIE_Temp_MVC " +
-                                " SET NumFoto = @NumFoto " +
+                                " SET NumFoto = @NumFoto, " +
+                                "     NumPDF = @NumPDF " +
                                 " WHERE ID = @IDPerizia";
 
 
-            int Inserted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@NumFoto", myFoto), new SqlParameter("@IDPerizia", aIDPerizia));
+            int Inserted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@NumFoto", myFoto), new SqlParameter("@NumPDF", myPDF), new SqlParameter("@IDPerizia", aIDPerizia));
         }
 
         public bool pISGEFCO_GN_51(string aIDPerizia)

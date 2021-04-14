@@ -102,7 +102,7 @@ namespace WEB_Auto.Controllers
             //}
 
         }
-
+        
         public ActionResult EditSpedizione(string IDSpedizione, string IDTP, string TipoMezzo = "TUTTE")
         {
             var model = new Models.HomeModel();
@@ -159,7 +159,15 @@ namespace WEB_Auto.Controllers
 
             if(Inserted >0)
             {
-                string aFile = @"C:\Test\MioExcel.xlsx";
+                string aFile = @"C:\Test\";
+                
+                var datiFile = (from m in db.AGR_Spedizioni
+                            where m.ID == IDSpedizione
+                            select new { m.IDOriginale1 ,m.DataInizioImbarco}).FirstOrDefault();
+
+                string aIDOrig = datiFile.IDOriginale1.Replace(@"\","-");
+                aIDOrig = datiFile.IDOriginale1.Replace(@"/", "-");
+                aFile += "GNV_" + aIDOrig + "_" + datiFile.DataInizioImbarco.Value.ToString("dd-MM-yyyy") + "_" + IDSpedizione + ".XLSX";
                 Create(aFile);
             }
             return RedirectToAction("ListaSpedizioni");
@@ -227,6 +235,7 @@ namespace WEB_Auto.Controllers
             var rng2 = rngTable.Range("C7:C9");
             var rng3 = rngTable.Range("E7:E9");
             var rng4 = rngTable.Range("A11:M11");
+            var rng5 = rngTable.Range("C3:C3");
 
             rng1.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Left;
             rng1.Style.Font.Bold = true;
@@ -236,11 +245,14 @@ namespace WEB_Auto.Controllers
             rng3.Style.Font.Bold = true;
             rng4.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
             rng4.Style.Font.Bold = true;
+            rng5.Style.Font.Bold = true;
             //rngHeaders.Style.Fill.BackgroundColor = XLColor.LightGray;
 
             ws.Cell(1, 1).Value = "Astrea Claim Solutions S.r.l.";
             ws.Cell(3, 1).Value = "Spedizione :";
             ws.Cell(3, 2).Value = lista[0].IDSpedizione;
+            ws.Cell(3, 3).Value = "Viaggio :";
+            ws.Cell(3, 4).Value = lista[0].Viaggio;
 
             ws.Cell(4, 1).Value = "Porto Imbarco :";
             ws.Cell(4, 2).Value = lista[0].POL;

@@ -55,17 +55,34 @@ namespace WEB_Auto.Controllers
 
         public void ModificaSpedizione( string newViaggio,string IDPerizia)
         {
-            var myIDNew = (from m in db.AGR_Spedizioni
-                            where m.IDOriginale1 == newViaggio
-                            select m.ID).FirstOrDefault();
 
-            string sqlcmd = " UPDATE AGR_PERIZIE_Temp_MVC " +
-                                    " SET  IDSpedizione = @IDSpedizione " +
-                                    " WHERE ID = @IDPerizia";
+            var myPerizia = (from m in db.WEB_Auto_ListaPerizieXSpedizione_vw
+                             where m.ID == IDPerizia
+                             select new { m.IDSpedizione, m.IDCasa }).FirstOrDefault();
+
+            string myIDSpedizione = myPerizia.IDSpedizione;
+            string myIDCasa = myPerizia.IDCasa;
+
+            var myNewIDSped = (from m in db.AGR_Spedizioni
+                               where m.IDOriginale1 == newViaggio
+                               where m.IDCasa == myIDCasa
+                               select m.ID).FirstOrDefault();
 
 
-            int Inserted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@IDPerizia", IDPerizia),
-                                                                 new SqlParameter("@IDSpedizione", myIDNew));
+            //var myIDNew = (from m in db.AGR_Spedizioni
+            //                where m.IDOriginale1 == newViaggio
+            //                select m.ID).FirstOrDefault();
+
+            if (!String.IsNullOrEmpty(myNewIDSped))
+            {
+                string sqlcmd = " UPDATE AGR_PERIZIE_Temp_MVC " +
+                                        " SET  IDSpedizione = @IDSpedizione " +
+                                        " WHERE ID = @IDPerizia";
+                int Inserted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@IDPerizia", IDPerizia),
+                                                                 new SqlParameter("@IDSpedizione", myNewIDSped));
+            }
+
+            
 
         }
     }

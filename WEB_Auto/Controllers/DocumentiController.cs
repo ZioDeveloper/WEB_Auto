@@ -170,6 +170,27 @@ namespace WEB_Auto.Controllers
 
         }
 
+        public ActionResult ScattaPDFSpedizione(string myIDSpedizione)
+        {
+
+            var model = new Models.HomeModel();
+
+
+
+            var myFoto = (from f in db.WEB_AUTO_PDF
+                          where f.IDPerizia == myIDSpedizione
+                          select f);
+            model.WEB_AUTO_PDF = myFoto.ToList();
+            UpdateModel(myFoto);
+
+            ViewBag.IDSpedizione = myIDSpedizione;
+            
+            return View("ScattaPDFSpedizione", myFoto);
+
+
+
+        }
+
         public ActionResult UploadPDF(IEnumerable<HttpPostedFileBase> files, string myIDPerizia, string IDPerito, string IDSpedizione, string IDMeteo,
                string IDTP, string aIDTrasportatore, string aIDTipoRotabile, string aIDModelloCasa, string ErrMess = "", bool IsUpdate = false)
         {
@@ -229,6 +250,58 @@ namespace WEB_Auto.Controllers
             ViewBag.IsUpdate = IsUpdate;
             return View("ScattaPDF", myFoto);
         }
+
+        public ActionResult UploadPDFSpedizione(IEnumerable<HttpPostedFileBase> files,  string IDSpedizione)
+        {
+            string filename = "";
+            string path = "";
+
+
+            foreach (var file in files)
+            {
+                if (file != null)
+                {
+                    filename = System.IO.Path.GetFileName(file.FileName);
+
+                    path = System.IO.Path.Combine(Server.MapPath("~/DocumentiXTelai/PDF"), filename);
+                    if (file != null)
+                    {
+                        file.SaveAs(path);
+                    }
+                    int cnt = 0;
+                    try
+                    {
+                        cnt = (int)(from m in db.WEB_AUTO_PDF
+                                    where m.IDPerizia == IDSpedizione
+                                    select m.Prog).Max();
+                    }
+                    catch { }
+                    cnt++;
+
+                    var sql = @"INSERT INTO WEB_AUTO_PDF (IDPerizia, FileName,Prog) Values (@IDPerizia, @FileName,@Prog)";
+                    int noOfRowInserted = db.Database.ExecuteSqlCommand(sql,
+                        new SqlParameter("@IDPerizia", IDSpedizione),
+                        new SqlParameter("@FileName", filename),
+                        new SqlParameter("@Prog", cnt));
+                }
+            }
+
+            var model = new Models.HomeModel();
+
+
+
+            var myFoto = (from f in db.WEB_AUTO_PDF
+                          where f.IDPerizia == IDSpedizione
+                          select f);
+            model.WEB_AUTO_PDF = myFoto.ToList();
+            UpdateModel(myFoto);
+
+
+            
+            ViewBag.IDSpedizione = IDSpedizione;
+            
+            return View("ScattaPDFSpedizione", myFoto);
+        }
         public ActionResult CancellaPDF(int? IDDocumento, string myIDPerizia, string nomefile, string IDPerito, string IDSpedizione, string IDMeteo, string IDTP, bool IsUpdate = false)
         {
             var sql = @"DELETE FROM WEB_AUTO_PDF WHERE ID = @IDDocumento";
@@ -252,6 +325,37 @@ namespace WEB_Auto.Controllers
             //ViewBag.IDTelaio = myIDPerizia;
             return RedirectToAction("ScattaPDF", "Documenti", new { myIDPerizia = myIDPerizia, IDPerito = IDPerito, IDSpedizione = IDSpedizione,
                                                                     IDMeteo = IDMeteo, IDTP = IDTP,  IsUpdate = IsUpdate
+            });
+
+            //return View("ScattaFoto", myIDPerizia);
+        }
+
+        public ActionResult CancellaPDFSpedizione(string IDSpedizione , string nomefile)
+        {
+            var sql = @"DELETE FROM WEB_AUTO_PDF WHERE IDPerizia = @IDDocumento";
+            int myRecordCounter = db.Database.ExecuteSqlCommand(sql, new SqlParameter("@IDDocumento", IDSpedizione));
+
+            string fullPath = Request.MapPath("~/DocumentiXTelai/PDF/" + nomefile);
+            if (System.IO.File.Exists(fullPath))
+            {
+                System.IO.File.Delete(fullPath);
+            }
+
+            var model = new Models.HomeModel();
+
+
+
+            var myFoto = (from f in db.WEB_AUTO_PDF
+                          where f.IDPerizia == IDSpedizione
+                          select f);
+            model.WEB_AUTO_PDF = myFoto.ToList();
+
+            //ViewBag.IDTelaio = myIDPerizia;
+            return RedirectToAction("ScattaPDFSpedizione", "Documenti", new
+            {
+                
+                IDSpedizione = IDSpedizione
+                
             });
 
             //return View("ScattaFoto", myIDPerizia);

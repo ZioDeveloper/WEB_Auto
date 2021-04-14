@@ -33,5 +33,9 @@ namespace WEB_Auto.Models
         public string Parte { get; set; }
         public string Danno { get; set; }
         public string Gravita { get; set; }
+        public string IDPerizia { get; set; }
+        public Nullable<int> Cnt { get; set; }
+        public string Status { get; set; }
+        public Nullable<short> NumFoto { get; set; }
     }
 }

@@ -291,41 +291,52 @@ else
                 <td></td>
 
                 <td>
+
                     @Html.Label("DMG") &nbsp
                     @if (ViewBag.ErrMess == "" || ViewBag.ErrMess == "Sbloccato" || ViewBag.ErrMess == "In fase modifica" || ViewBag.ErrMess == "In modifica")
                     {
                         @Html.CheckBox("isDamaged", false, new { @onchange = "submitform();" })
 
+                        if (Session["RTB"].ToString().ToUpper() == "TRUE")
+                        {
 
-                        @Html.Label("Rapido")
+                            <td>
+                                @Html.Label("Rapido")
+                                @Html.CheckBox("isRapid", false, new { @onchange = "submitform();" })
+                            </td>
+                        }
 
 
-                        @Html.CheckBox("isRapid", false, new { @onchange = "submitform();" })
                     }
                     else
                     {
                         @Html.CheckBox("isDamaged", false, new { disabled = "disabled" })
-                        @Html.Label("DMG rapido ")
-                        @Html.CheckBox("isRapid", false, new { disabled = "disabled" })
+                        if (Session["RTB"].ToString().ToUpper() == "TRUE")
+                        {
+                            <td>
+                                @Html.Label("Rapido")
+                                @Html.CheckBox("isRapid", false, new { @onchange = "submitform();" })
+                            </td>
+                        }
 
                     }
-                </td>
-                @if (@ViewBag.HasDanni == "Perizia GOOD")
-                {
-                    <td style="color:seagreen">
-                        @ViewBag.HasDanni
                     </td>
+                    @if (@ViewBag.HasDanni == "Perizia GOOD")
+                    {
+                        <td style="color:seagreen">
+                            @ViewBag.HasDanni
+                        </td>
 
-                }
-                else
-                {
-                    <td style="color:red">
-                        @ViewBag.HasDanni
-                    </td>
-                }
+                    }
+                    else
+                    {
+                        <td style="color:red">
+                            @ViewBag.HasDanni
+                        </td>
+                    }
 
 
-            </tr>
+                </tr>
 
         </table>
 
@@ -385,26 +396,28 @@ else
         if (ViewBag.ErrMess == "" || ViewBag.ErrMess == "Sbloccato" || ViewBag.ErrMess == "In modifica" || ViewBag.ErrMess == "TARGA CONOSCIUTA")
         {
             @Html.ActionLink("Finito", "InputTelaio", new
-            {
-                IDPerito = ViewBag.IDPerito,
-                IDSpedizione = ViewBag.IDSpedizione,
-                IDMeteo = ViewBag.IDMeteo,
-                IDTP = ViewBag.IDTP,
-                IsUpdate = ViewBag.IsUpdate,
-                IsRTB = Session["RTB"]
-            }, new { @class = "btn btn-success custom" })
+       {
+           IDPerito = ViewBag.IDPerito,
+           IDSpedizione = ViewBag.IDSpedizione,
+           IDMeteo = ViewBag.IDMeteo,
+           IDTP = ViewBag.IDTP,
+           IsUpdate = ViewBag.IsUpdate,
+           aIDModello = ViewBag.aIDModelloCasa,
+           IsRTB = Session["RTB"]
+       }, new { @class = "btn btn-success custom" })
         }
 
         else
         {
             @Html.ActionLink("Finito", "InputTelaio", new
-            {
-                IDPerito = ViewBag.IDPerito,
-                IDSpedizione = ViewBag.IDSpedizione,
-                IDMeteo = ViewBag.IDMeteo,
-                IDTP = ViewBag.IDTP,
-                IsRTB =  Session["RTB"]
-            }, new { @class = "btn btn-success custom disabled" })}
+       {
+           IDPerito = ViewBag.IDPerito,
+           IDSpedizione = ViewBag.IDSpedizione,
+           IDMeteo = ViewBag.IDMeteo,
+           IDTP = ViewBag.IDTP,
+           aIDModello = ViewBag.aIDModelloCasa,
+           IsRTB =  Session["RTB"]
+       }, new { @class = "btn btn-success custom disabled" })}
     }
     &nbsp;&nbsp;&nbsp;
     @Html.ActionLink("Elimina", "EliminaPerizia", "TelaiAnagrafica", new

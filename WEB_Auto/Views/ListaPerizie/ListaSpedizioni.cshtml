@@ -25,7 +25,7 @@
 <br />
 
 
-@Html.ActionLink("Torna a Home", "Index", "Home", null, new { @class = "btn btn-primary" })
+@Html.ActionLink("Torna a Home", "Index", "Home", new { usr = Session["User"].ToString() }, new { @class = "btn btn-primary" })
 <br /><br />
 @using (Html.BeginForm("ListaSpedizioni", "ListaPerizie"))
 {

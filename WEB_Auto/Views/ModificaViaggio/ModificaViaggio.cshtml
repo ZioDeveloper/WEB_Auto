@@ -34,7 +34,11 @@
         });
     });
 </script>
-
+<br />
+<div>
+    @Html.ActionLink("Chiudi", "Index", "Home", new { usr = Session["User"].ToString() }, new { @class = "btn btn-primary" })
+</div>
+<br />
 <div class="container py-4">
     <div class="card">
         <div class="card-header bg-primary text-white">

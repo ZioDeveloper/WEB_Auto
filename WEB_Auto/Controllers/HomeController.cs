@@ -19,7 +19,7 @@ namespace WEB_Auto.Controllers
             Session["User"] = usr;
 
             if (String.IsNullOrEmpty(usr))
-                usr = "Test";
+                usr = "pierangeli";
 
             var myIDPerito = (from s in db.AGR_Periti_WEB
                               where s.Name == usr

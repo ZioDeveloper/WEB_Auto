@@ -43,7 +43,11 @@
     string OldVin = "";
     string NewVin = "";
 }
-
+<br />
+<div>
+    @Html.ActionLink("Chiudi", "Index", "Home", new { usr = Session["User"].ToString() }, new { @class = "btn btn-primary" })
+</div>
+<br />
 <div class="container py-4">
     <div class="card">
         <div class="card-header">
@@ -99,13 +103,13 @@
                 @*<td>&nbsp;&nbsp;</td>*@
             </tr>
             @*<tr>
-                <td>
-                    @Html.Label("Del : ")
-                </td>
-                <td>
-                    @Html.Label(item1[0].DataInizioImbarco.ToString().Substring(0, 10))
-                </td>
-            </tr>*@
+                    <td>
+                        @Html.Label("Del : ")
+                    </td>
+                    <td>
+                        @Html.Label(item1[0].DataInizioImbarco.ToString().Substring(0, 10))
+                    </td>
+                </tr>*@
             <tr>
                 <td>
                     @Html.Label("POL : ")
@@ -134,7 +138,7 @@
             </tr>
 
         </table>
-        
+
         <br />
         <div class="card-body">
             <br /><br />
@@ -157,65 +161,65 @@
                     @foreach (var item in Model.WEB_ListaPerizieFlat_MVC_vw)
                     {
 
-                    <tr>
-                        @*<td>@Html.DisplayFor(modelItem => item.ID)</td>*@
-                        @{OldVin = item.Telaio;}
-                        @if (OldVin != NewVin)
-                        {
-                            <td>@Html.DisplayFor(modelItem => item.Telaio)</td>
-                            <td>@Html.DisplayFor(modelItem => item.Modello)</td>
-                            @*<td>@Html.DisplayFor(modelItem => item.DataPerizia)</td>*@
-                            <td> @Convert.ToDateTime(item.DataPerizia).ToString("dd/MM/yyyy")</td>
-                            <td>@Html.DisplayFor(modelItem => item.Trasportatore)</td>
-                            if (item.Status == "DMG")
+                        <tr>
+                            @*<td>@Html.DisplayFor(modelItem => item.ID)</td>*@
+                            @{OldVin = item.Telaio;}
+                            @if (OldVin != NewVin)
                             {
-                                <td style="color:red">@Html.DisplayFor(modelItem => item.Status)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Telaio)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Modello)</td>
+                                @*<td>@Html.DisplayFor(modelItem => item.DataPerizia)</td>*@
+                                <td> @Convert.ToDateTime(item.DataPerizia).ToString("dd/MM/yyyy")</td>
+                                <td>@Html.DisplayFor(modelItem => item.Trasportatore)</td>
+                                if (item.Status == "DMG")
+                                {
+                                    <td style="color:red">@Html.DisplayFor(modelItem => item.Status)</td>
+                                }
+                                else
+                                {
+                                    <td style="color:forestgreen">@Html.DisplayFor(modelItem => item.Status)</td>
+                                }
                             }
                             else
                             {
-                                <td style="color:forestgreen">@Html.DisplayFor(modelItem => item.Status)</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
                             }
-                        }
-                        else
-                        {
-                            <td>&nbsp;</td>
-                            <td>&nbsp;</td>
-                            <td>&nbsp;</td>
-                            <td>&nbsp;</td>
-                            <td>&nbsp;</td>
-                        }
 
 
-                        <td>@Html.DisplayFor(modelItem => item.Parte)</td>
-                        <td>@Html.DisplayFor(modelItem => item.Danno)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Parte)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Danno)</td>
 
-                        @{OldVin = item.Telaio;}
-                        @if (OldVin != NewVin)
-                        {
-                            <td>
-                                @Html.DisplayFor(modelItem => item.NumFoto)
-                                @Html.ActionLink("Mostra foto", "CarouselFoto", "ListaPerizie", new
-                           {
-                               aIDPerizia = item.IDPerizia,
-                               IDPerito = ViewBag.IDPerito,
-                               IDSpedizione = ViewBag.IDSpedizione,
-                               IDMeteo = ViewBag.IDMeteo,
-                               IDTP = ViewBag.IDTP,
-                               aIDTrasportatore = ViewBag.aIDTrasportatore,
-                               aIDTipoRotabile = ViewBag.aIDTipoRotabile,
-                               aIDModelloCasa = ViewBag.aIDModelloCasa,
-                               ErrMess = ViewBag.ErrMess,
-                               IsUpdate = ViewBag.IsUpdate
-                           }, new { @class = "photoImg" })
-                            </td>
-                        }
-                        else
-                        {
-                            <td>&nbsp;</td>
+                            @{OldVin = item.Telaio;}
+                            @if (OldVin != NewVin)
+                            {
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.NumFoto)
+                                    @Html.ActionLink("Mostra foto", "CarouselFoto", "ListaPerizie", new
+                               {
+                                   aIDPerizia = item.IDPerizia,
+                                   IDPerito = ViewBag.IDPerito,
+                                   IDSpedizione = ViewBag.IDSpedizione,
+                                   IDMeteo = ViewBag.IDMeteo,
+                                   IDTP = ViewBag.IDTP,
+                                   aIDTrasportatore = ViewBag.aIDTrasportatore,
+                                   aIDTipoRotabile = ViewBag.aIDTipoRotabile,
+                                   aIDModelloCasa = ViewBag.aIDModelloCasa,
+                                   ErrMess = ViewBag.ErrMess,
+                                   IsUpdate = ViewBag.IsUpdate
+                               }, new { @class = "photoImg" })
+                                </td>
+                            }
+                            else
+                            {
+                                <td>&nbsp;</td>
 
-                        }
-                        @{NewVin = OldVin;}
-                    </tr>
+                            }
+                            @{NewVin = OldVin;}
+                        </tr>
                     }
                 </tbody>
             </table>

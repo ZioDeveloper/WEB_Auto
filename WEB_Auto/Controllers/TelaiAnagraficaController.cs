@@ -14,7 +14,7 @@ namespace WEB_Auto.Controllers
     {
         private wisedbEntities db = new wisedbEntities();
         // GET: TelaiAnagrafica
-        public ActionResult InputTelaio(string IDPerito, string IDSpedizione,string IDMeteo, string IDTP, string Chassis, bool IsRTB = false)
+        public ActionResult InputTelaio(string IDPerito, string IDSpedizione,string IDMeteo, string IDTP, string Chassis,string aIDModello, bool IsRTB = false)
         {
             if(!String.IsNullOrEmpty(IDPerito))
                 EliminaTelaiSenzaModello(IDPerito);
@@ -75,7 +75,8 @@ namespace WEB_Auto.Controllers
                 {
 
                    string myIDPerizia = CreaNuovaPerizia(IDPerito, IDSpedizione, IDMeteo, IDTP, myTelaio);
-                   return RedirectToAction("Edit", "TelaiAnagrafica", new { IDPerito, IDSpedizione, IDMeteo, IDTP, Chassis, myIDPerizia });
+                   return RedirectToAction("Edit", "TelaiAnagrafica", new { IDPerito = IDPerito, IDSpedizione=  IDSpedizione, IDMeteo= IDMeteo,
+                       IDTP = IDTP,  Chassis=Chassis, myIDPerizia= myIDPerizia,  aIDModelloCasa = aIDModello });
                     //return View("Edit");
                 }
                 else
@@ -113,17 +114,27 @@ namespace WEB_Auto.Controllers
             }
 
             // Se invece devo ancora inputare il telaio...
+            if (Session["RTB"].ToString().ToUpper() == "TRUE" || IsRTB)
+                aIDModello = null;
             ViewBag.IDPerito = IDPerito;
             ViewBag.Casa = aCasa;
             ViewBag.IDSpedizione = IDSpedizione;
             ViewBag.IDMeteo = IDMeteo;
             ViewBag.IDTP = IDTP;
+            ViewBag.aIDModello = aIDModello;
             return View();
         }
 
 
         public string CreaNuovaPerizia(string IDPerito, string IDSpedizione, string IDMeteo, string IDTP, string Chassis)
         {
+
+            var charsToRemove = new string[] { "@", ",", ";", "-", "_", "'" ,"?","^","|" ,"!",":",".","#","[", "]"};
+            foreach (var c in charsToRemove)
+            {
+                Chassis = Chassis.Replace(c, string.Empty);
+            }
+
             DateTime DataPerizia = DateTime.Now;
             string myIDPerizia = GetNewCode_AUTO(IDPerito,IDSpedizione);
             string myNote = "";

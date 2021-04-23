@@ -27,7 +27,9 @@
                     <br />
                     <button type="submit" id="btnConfirm" class="btn btn-success">Cerca</button>
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <button onclick="document.getElementById('Telaio').value = ''" class="btn btn-primary">Chiudi</button>
+                    @*<button onclick="document.getElementById('Telaio').value = ''" class="btn btn-primary">Chiudi</button>*@
+                    @Html.ActionLink("Chiudi", "Index", "Home", new { usr = Session["User"].ToString() }, new { @class = "btn btn-primary" })
+
 
                 </td>
             </tr>

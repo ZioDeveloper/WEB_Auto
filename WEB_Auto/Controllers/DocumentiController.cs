@@ -110,6 +110,7 @@ namespace WEB_Auto.Controllers
             return View("ScattaFoto", myFoto);
         }
 
+
         public ActionResult CancellaDocumento(int? IDDocumento ,string myIDPerizia, string nomefile, string IDPerito, string IDSpedizione, string IDMeteo, string IDTP, bool IsUpdate = false)
         {
             var sql = @"DELETE FROM WEB_AUTO_FOTO WHERE ID = @IDDocumento";
@@ -170,6 +171,7 @@ namespace WEB_Auto.Controllers
 
         }
 
+
         public ActionResult ScattaPDFSpedizione(string myIDSpedizione)
         {
 
@@ -190,6 +192,7 @@ namespace WEB_Auto.Controllers
 
 
         }
+
 
         public ActionResult UploadPDF(IEnumerable<HttpPostedFileBase> files, string myIDPerizia, string IDPerito, string IDSpedizione, string IDMeteo,
                string IDTP, string aIDTrasportatore, string aIDTipoRotabile, string aIDModelloCasa, string ErrMess = "", bool IsUpdate = false)

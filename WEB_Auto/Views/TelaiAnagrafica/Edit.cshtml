@@ -288,8 +288,6 @@ else
             </tr>
 
             <tr>
-                <td></td>
-
                 <td>
 
                     @Html.Label("DMG") &nbsp
@@ -297,11 +295,11 @@ else
                     {
                         @Html.CheckBox("isDamaged", false, new { @onchange = "submitform();" })
 
-                        if (Session["RTB"].ToString().ToUpper() == "TRUE")
+                        if (Session["RTB"].ToString().ToUpper() == "TRUE" || ViewBag.aIDModelloCasa =="1240" || ViewBag.aIDModelloCasa=="1241")
                         {
 
                             <td>
-                                @Html.Label("Rapido")
+                                @Html.Label("DMG Rapido")
                                 @Html.CheckBox("isRapid", false, new { @onchange = "submitform();" })
                             </td>
                         }
@@ -321,22 +319,24 @@ else
 
                     }
                     </td>
+            <tr>
+                
+
                     @if (@ViewBag.HasDanni == "Perizia GOOD")
                     {
-                        <td style="color:seagreen">
-                            @ViewBag.HasDanni
-                        </td>
+                    <td style="color:green; font-weight:bold;">
+                        @ViewBag.HasDanni
+                    </td>
 
-                    }
-                    else
-                    {
-                        <td style="color:red">
-                            @ViewBag.HasDanni
-                        </td>
-                    }
+                }
+                else
+                {
+                    <td style="color:red; font-weight:bold;">
+                        @ViewBag.HasDanni
+                    </td>
+                }
 
 
-                </tr>
 
         </table>
 

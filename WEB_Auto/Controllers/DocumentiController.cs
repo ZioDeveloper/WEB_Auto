@@ -111,7 +111,8 @@ namespace WEB_Auto.Controllers
         }
 
 
-        public ActionResult CancellaDocumento(int? IDDocumento ,string myIDPerizia, string nomefile, string IDPerito, string IDSpedizione, string IDMeteo, string IDTP, bool IsUpdate = false)
+        public ActionResult CancellaDocumento(int? IDDocumento ,string myIDPerizia, string nomefile, string IDPerito, string IDSpedizione, string IDMeteo, string IDTP, 
+                                             string aIDTrasportatore , string aIDTipoRotabile , string aIDModelloCasa , bool IsUpdate = false)
         {
             var sql = @"DELETE FROM WEB_AUTO_FOTO WHERE ID = @IDDocumento";
             int myRecordCounter = db.Database.ExecuteSqlCommand(sql, new SqlParameter("@IDDocumento", IDDocumento));
@@ -133,7 +134,8 @@ namespace WEB_Auto.Controllers
 
             //ViewBag.IDTelaio = myIDPerizia;
             return RedirectToAction("ScattaFoto", "Documenti", new { myIDPerizia= myIDPerizia, IDPerito= IDPerito, IDSpedizione = IDSpedizione,
-                                                                     IDMeteo = IDMeteo, IDTP= IDTP, IsUpdate= IsUpdate
+                                                                     IDMeteo = IDMeteo, IDTP= IDTP, aIDTrasportatore = aIDTrasportatore ,
+                                                                    aIDTipoRotabile = aIDTipoRotabile ,  aIDModelloCasa = aIDModelloCasa ,IsUpdate = IsUpdate
             });
 
             //return View("ScattaFoto", myIDPerizia);
@@ -305,7 +307,8 @@ namespace WEB_Auto.Controllers
             
             return View("ScattaPDFSpedizione", myFoto);
         }
-        public ActionResult CancellaPDF(int? IDDocumento, string myIDPerizia, string nomefile, string IDPerito, string IDSpedizione, string IDMeteo, string IDTP, bool IsUpdate = false)
+        public ActionResult CancellaPDF(int? IDDocumento, string myIDPerizia, string nomefile, string IDPerito, string IDSpedizione, string IDMeteo, string IDTP, 
+                                        string aIDTrasportatore, string aIDTipoRotabile, string aIDModelloCasa ,  bool IsUpdate = false)
         {
             var sql = @"DELETE FROM WEB_AUTO_PDF WHERE ID = @IDDocumento";
             int myRecordCounter = db.Database.ExecuteSqlCommand(sql, new SqlParameter("@IDDocumento", IDDocumento));
@@ -327,8 +330,8 @@ namespace WEB_Auto.Controllers
 
             //ViewBag.IDTelaio = myIDPerizia;
             return RedirectToAction("ScattaPDF", "Documenti", new { myIDPerizia = myIDPerizia, IDPerito = IDPerito, IDSpedizione = IDSpedizione,
-                                                                    IDMeteo = IDMeteo, IDTP = IDTP,  IsUpdate = IsUpdate
-            });
+                                                                    IDMeteo = IDMeteo, IDTP = IDTP,  aIDTrasportatore = aIDTrasportatore,    aIDTipoRotabile = aIDTipoRotabile,
+                                                                    aIDModelloCasa = aIDModelloCasa, IsUpdate = IsUpdate  });
 
             //return View("ScattaFoto", myIDPerizia);
         }

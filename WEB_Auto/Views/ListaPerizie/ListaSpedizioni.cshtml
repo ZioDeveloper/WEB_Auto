@@ -45,7 +45,7 @@
             <th>Spedizione</th>
             <th>Viaggio</th>
             <th>Partenza</th>
-            <th>Arrivo</th>
+            @*<th>Arrivo</th>*@
             <th>TP</th>
             <th>Num perizie</th>
             <th>Good</th>
@@ -75,11 +75,7 @@
                 @Convert.ToDateTime(item.DataPartenzaImbarco).ToString("dd/MM/yyyy")
                 @*@Html.DisplayFor(modelItem => item.DataPartenzaImbarco)*@
             </td>
-            <td>
-                @*@Html.DisplayFor(modelItem => item.DataArrivoSbarco)*@
-                @Convert.ToDateTime(item.DataArrivoSbarco).ToString("dd/MM/yyyy")
-
-            </td>
+           
             <td>
                 @Html.DisplayFor(modelItem => item.IDTipoPerizia)
             </td>
@@ -114,7 +110,7 @@
             <th>Spedizione</th>
             <th>Viaggio</th>
             <th>Partenza</th>
-            <th>Arrivo</th>
+            @*<th>Arrivo</th>*@
 
             <th>TP</th>
             <th>Num perizie</th>

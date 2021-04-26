@@ -16,10 +16,13 @@
 @{string myIDPerizia = ViewBag.IDPerizia;
     bool ISGravitaEnabled = ViewBag.ISGravitaEnabled;}
 
+<div style="color:red">
+
 @ViewBag.ErrMess
-@*<br />
+    </div>
+<br />
    
-<br />*@
+<br />
       <div>
           @using (Html.BeginForm("SalvaPeriziaDettagliRapid", "TelaiAnagrafica", new { myIDPerizia, IsUpdate = ViewBag.IsUpdate }, FormMethod.Post))
           {

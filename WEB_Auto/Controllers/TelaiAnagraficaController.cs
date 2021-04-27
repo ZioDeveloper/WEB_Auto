@@ -731,7 +731,7 @@ namespace WEB_Auto.Controllers
         public ActionResult SalvaPeriziaDettagli(string myIDPerizia, string IDParte, string IDDanno, string Qta, string Note, string Flags,
             string IDGravita, string IDResponsabilita, string IDAttribuzione , bool IsUpdate = false)
         {
-
+            
             string myMessDett = "";
             bool isOK = CheckAllDetails(IDParte, IDDanno, Note, out myMessDett);
             if (isOK)
@@ -758,7 +758,7 @@ namespace WEB_Auto.Controllers
                                                                          new SqlParameter("@IDDanno", IDDanno),
                                                                          new SqlParameter("@Qta", Qta),
                                                                          new SqlParameter("@Note", Note),
-                                                                         new SqlParameter("@Flags", 16),
+                                                                         new SqlParameter("@Flags", "0"),
                                                                          new SqlParameter("@IDGravita", IDGravita),
                                                                          new SqlParameter("@IDResponsabilita", IDResponsabilita),
                                                                          new SqlParameter("@IDAttribuzione", IDAttribuzione));
@@ -1051,6 +1051,8 @@ namespace WEB_Auto.Controllers
             var model = new Models.HomeModel();
             bool ISGravitaEnabled = true;
 
+            
+
             // Carichiamo UN PO' DI DATI...
             // *******************************
             bool ISGEFCO_GN_51 = pISGEFCO_GN_51(myIDPerizia);
@@ -1148,6 +1150,7 @@ namespace WEB_Auto.Controllers
             string IDGravita, string IDResponsabilita, string IDAttribuzione, bool IsUpdate = false)
         {
             string myMessDett = "";
+            IDDanno = IDDanno.ToUpper();
             bool isOK = CheckAllDetailsRapid(IDParte, IDDanno , Note , out myMessDett);
 
             if (isOK)
@@ -1165,6 +1168,29 @@ namespace WEB_Auto.Controllers
                 if (String.IsNullOrEmpty(IDGravita))
                     IDGravita = "";
 
+                // Decodifico Gravità
+                if (IDGravita == "*")
+                    IDGravita = "*";
+
+                if (IDGravita == "1")
+                    IDGravita = "08";
+
+                if (IDGravita == "2")
+                    IDGravita = "09";
+
+                if (IDGravita == "3")
+                    IDGravita = "10";
+
+                if (IDGravita == "4")
+                    IDGravita = "11";
+
+                if (IDGravita == "5")
+                    IDGravita = "12";
+
+                if (IDGravita == "6")
+                    IDGravita = "13";
+
+
                 if (!String.IsNullOrEmpty(myIDPerizia) && !String.IsNullOrEmpty(IDParte) && !String.IsNullOrEmpty(IDDanno) && !String.IsNullOrEmpty(myIDPerizia))
                 {
 
@@ -1175,7 +1201,7 @@ namespace WEB_Auto.Controllers
                                                                          new SqlParameter("@IDDanno", IDDanno),
                                                                          new SqlParameter("@Qta", Qta),
                                                                          new SqlParameter("@Note", Note),
-                                                                         new SqlParameter("@Flags", 16),
+                                                                         new SqlParameter("@Flags", "0"),
                                                                          new SqlParameter("@IDGravita", IDGravita),
                                                                          new SqlParameter("@IDResponsabilita", IDResponsabilita),
                                                                          new SqlParameter("@IDAttribuzione", IDAttribuzione));

@@ -578,20 +578,23 @@ warning 6002: The table/view 'wisedb.dbo.WEB_ListaPerizieFlat_DEF_vw' does not h
         <EntityType Name="WEB_ListaPerizieFlat_DEF_vw">
           <Key>
             <PropertyRef Name="ID" />
+            
+            
+            
             <PropertyRef Name="Status" />
           </Key>
           <Property Name="ID" Type="int" Nullable="false" />
           <Property Name="IDPerizia" Type="varchar" MaxLength="18" />
           <Property Name="IDSpedizione" Type="varchar" MaxLength="8" />
           <Property Name="Viaggio" Type="varchar" MaxLength="30" />
-          <Property Name="POL" Type="varchar" MaxLength="29" />
-          <Property Name="POD" Type="varchar" MaxLength="29" />
+          <Property Name="POL" Type="varchar" MaxLength="29" Nullable="false" />
+          <Property Name="POD" Type="varchar" MaxLength="29" Nullable="false" />
           <Property Name="DataPartenzaImbarco" Type="datetime" />
           <Property Name="DataArrivoSbarco" Type="datetime" />
           <Property Name="Nave" Type="varchar" MaxLength="259" />
           <Property Name="Cliente" Type="varchar" MaxLength="33" />
           <Property Name="Telaio" Type="varchar" MaxLength="30" />
-          <Property Name="Modello" Type="varchar" MaxLength="276" />
+          <Property Name="Modello" Type="varchar" MaxLength="276" Nullable="false" />
           <Property Name="DataPerizia" Type="datetime" />
           <Property Name="IDTipoPerizia" Type="varchar" MaxLength="1" />
           <Property Name="Trasportatore" Type="varchar" MaxLength="54" />
@@ -1675,14 +1678,14 @@ warning 6002: The table/view 'wisedb.dbo.WEB_ListaPerizieFlat_TMP_vw' does not h
           <Property Name="ID" Type="Int32" Nullable="false" />
           <Property Name="IDSpedizione" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
           <Property Name="Viaggio" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="POL" Type="String" MaxLength="29" FixedLength="false" Unicode="false" />
-          <Property Name="POD" Type="String" MaxLength="29" FixedLength="false" Unicode="false" />
+          <Property Name="POL" Type="String" MaxLength="29" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="POD" Type="String" MaxLength="29" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="DataPartenzaImbarco" Type="DateTime" Precision="3" />
           <Property Name="DataArrivoSbarco" Type="DateTime" Precision="3" />
           <Property Name="Nave" Type="String" MaxLength="259" FixedLength="false" Unicode="false" />
           <Property Name="Cliente" Type="String" MaxLength="33" FixedLength="false" Unicode="false" />
           <Property Name="Telaio" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="Modello" Type="String" MaxLength="276" FixedLength="false" Unicode="false" />
+          <Property Name="Modello" Type="String" MaxLength="276" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="DataPerizia" Type="DateTime" Precision="3" />
           <Property Name="IDTipoPerizia" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
           <Property Name="Trasportatore" Type="String" MaxLength="54" FixedLength="false" Unicode="false" />

@@ -16,126 +16,127 @@
     @*<link rel="stylesheet" type="text/css" href="https://nightly.datatables.net/searchpanes/css/searchPanes.dataTables.min.css" />
         <script type="text/javascript" src="https://nightly.datatables.net/searchpanes/js/dataTables.searchPanes.min.js"</script>*@
 </head>
-<h4>Lista telai spedizione : @ViewBag.IDSpedizione</h4>
+<h4>Viaggio : <b>@ViewBag.myViaggio</b></h4>
+<h4>Spedizione : <b> @ViewBag.IDSpedizione</b></h4>
 <br />
 <td>
     @Html.ActionLink("Torna a lista spedizioni", "ListaSpedizioni", null, new { @class = "btn btn-primary btn-xs" })
 </td>
 <hr />
 
-    @using (Html.BeginForm("EditSpedizione", "ListaPerizie", new { ViewBag.IDSpedizione, ViewBag.IDTP}, FormMethod.Post))
-    {
-        <label>Solo Rotabili : @Html.RadioButton("TipoMezzo", "RTB", false, new { onclick = "this.form.submit()" })</label>
-        <label>&nbsp;&nbsp; &nbsp;&nbsp; Solo auto  @Html.RadioButton("TipoMezzo", "AUTO", false, new { onclick = "this.form.submit()" })</label>
-        <label>&nbsp;&nbsp; &nbsp;&nbsp; Tutte:  @Html.RadioButton("TipoMezzo", "TUTTE", true, new { onclick = "this.form.submit()" })</label>
-    }
+@using (Html.BeginForm("EditSpedizione", "ListaPerizie", new { ViewBag.IDSpedizione, ViewBag.IDTP }, FormMethod.Post))
+{
+    <label>Solo Rotabili : @Html.RadioButton("TipoMezzo", "RTB", false, new { onclick = "this.form.submit()" })</label>
+    <label>&nbsp;&nbsp; &nbsp;&nbsp; Solo auto  @Html.RadioButton("TipoMezzo", "AUTO", false, new { onclick = "this.form.submit()" })</label>
+    <label>&nbsp;&nbsp; &nbsp;&nbsp; Tutte:  @Html.RadioButton("TipoMezzo", "TUTTE", true, new { onclick = "this.form.submit()" })</label>
+}
 
-    <table id="ElencoPerizie" class="display" style="width:100%">
-        <thead>
+<table id="ElencoPerizie" class="display" style="width:100%">
+    <thead>
+        <tr>
+            <th>Modifica</th>
+            <th>Telaio</th>
+            <th>Modello</th>
+            <th>Viaggio</th>
+            <th>Data perizia</th>
+            <th>TP</th>
+
+            @*<th>ETD</th>
+                <th>ETA</th>*@
+            <th>Status</th>
+            <th>N° foto</th>
+            <th>N° PDF</th>
+        </tr>
+
+    </thead>
+    <tbody>
+        @foreach (var item in Model.WEB_Auto_ListaPerizieXSpedizione_vw)
+        {
+            string ETD = item.ETD.ToString().Left(10);
+            string ETA = item.ETA.ToString().Left(10);
+            string aStatus = item.Status;
+            bool IsClosed = item.IsClosed;
+
+
             <tr>
-                <th>Modifica</th>
-                <th>Telaio</th>
-                <th>Modello</th>
-                <th>Viaggio</th>
-                <th>Data perizia</th>
-                <th>TP</th>
-
-                @*<th>ETD</th>
-        <th>ETA</th>*@
-                <th>Status</th>
-                <th>N° foto</th>
-                <th>N° PDF</th>
-            </tr>
-
-        </thead>
-        <tbody>
-            @foreach (var item in Model.WEB_Auto_ListaPerizieXSpedizione_vw)
-            {
-                string ETD = item.ETD.ToString().Left(10);
-                string ETA = item.ETA.ToString().Left(10);
-                string aStatus = item.Status;
-                bool IsClosed = item.IsClosed;
-
-
-                <tr>
-                    <td>
-                        @if (!IsClosed)
-                        {
-                            @Html.ActionLink("Modifica", "Edit", "TelaiAnagrafica", new
-                       {
-                           IDPerito = item.IDPerito,
-                           IDSpedizione = item.IDSpedizione,
-                           IDMeteo = item.IDMeteo,
-                           IDTP = item.IDTipoPerizia,
-                           aIDTrasportatore = item.ID_TrasportatoreGrimaldi,
-                           aIDTipoRotabile = item.ID_TipoRotabile,
-                           aIDModelloCasa = item.IDModello,
-                           myIDPerizia = item.ID,
-                           flagNU = item.FlgNuovoUsato,
-                           Annotazioni = item.Note,
-                           errMess = "In fase modifica",
-                           IsUpdate = true
-                       }, new { @class = "btn btn-success btn-xs" })
-                        }
-                        else
-                        {
-                            @Html.ActionLink("Modifica", "Edit", "TelaiAnagrafica", new
-                       {
-                           IDPerito = item.IDPerito,
-                           IDSpedizione = item.IDSpedizione,
-                           IDMeteo = item.IDMeteo,
-                           IDTP = item.IDTipoPerizia,
-                           aIDTrasportatore = item.ID_TrasportatoreGrimaldi,
-                           aIDTipoRotabile = item.ID_TipoRotabile,
-                           aIDModelloCasa = item.IDModello,
-                           myIDPerizia = item.ID,
-                           flagNU = item.FlgNuovoUsato,
-                           Annotazioni = item.Note,
-                           errMess = "In fase modifica",
-                           IsUpdate = true
-                       }, new { @class = "btn btn-success btn-xs  disabled" })}
-
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Telaio)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Modello)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.IDOriginale1)
-                    </td>
-                    <td>
-                        @*@Html.DisplayFor(modelItem => item.DataPerizia)*@
-                        @Convert.ToDateTime(item.DataPerizia).ToString("dd/MM/yyyy")
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.IDTipoPerizia)
-                    </td>
-                    @*<td>
-                            @Html.DisplayFor(modelItem => ETD)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => ETA)
-                        </td>*@
-                    @if (aStatus.ToUpper() == "GOOD")
+                <td>
+                    @if (!IsClosed)
                     {
-                        <td style="color:forestgreen">
-
-                            @Html.DisplayFor(modelItem => item.Status)
-                        </td>
+                        @Html.ActionLink("Modifica", "Edit", "TelaiAnagrafica", new
+                   {
+                       IDPerito = item.IDPerito,
+                       IDSpedizione = item.IDSpedizione,
+                       IDMeteo = item.IDMeteo,
+                       IDTP = item.IDTipoPerizia,
+                       aIDTrasportatore = item.ID_TrasportatoreGrimaldi,
+                       aIDTipoRotabile = item.ID_TipoRotabile,
+                       aIDModelloCasa = item.IDModello,
+                       myIDPerizia = item.ID,
+                       flagNU = item.FlgNuovoUsato,
+                       Annotazioni = item.Note,
+                       errMess = "In fase modifica",
+                       IsUpdate = true
+                   }, new { @class = "btn btn-success btn-xs" })
                     }
                     else
                     {
-                        <td style="color:red">
+                        @Html.ActionLink("Modifica", "Edit", "TelaiAnagrafica", new
+                   {
+                       IDPerito = item.IDPerito,
+                       IDSpedizione = item.IDSpedizione,
+                       IDMeteo = item.IDMeteo,
+                       IDTP = item.IDTipoPerizia,
+                       aIDTrasportatore = item.ID_TrasportatoreGrimaldi,
+                       aIDTipoRotabile = item.ID_TipoRotabile,
+                       aIDModelloCasa = item.IDModello,
+                       myIDPerizia = item.ID,
+                       flagNU = item.FlgNuovoUsato,
+                       Annotazioni = item.Note,
+                       errMess = "In fase modifica",
+                       IsUpdate = true
+                   }, new { @class = "btn btn-success btn-xs  disabled" })}
 
-                            @Html.DisplayFor(modelItem => item.Status)
-                        </td>
-                    }
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Telaio)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Modello)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IDOriginale1)
+                </td>
+                <td>
+                    @*@Html.DisplayFor(modelItem => item.DataPerizia)*@
+                    @Convert.ToDateTime(item.DataPerizia).ToString("dd/MM/yyyy")
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IDTipoPerizia)
+                </td>
+                @*<td>
+                        @Html.DisplayFor(modelItem => ETD)
+                    </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.NumFoto)
-                        @if(item.NumFoto > 0)
-                        {
+                        @Html.DisplayFor(modelItem => ETA)
+                    </td>*@
+                @if (aStatus.ToUpper() == "GOOD")
+                {
+                    <td style="color:forestgreen">
+
+                        @Html.DisplayFor(modelItem => item.Status)
+                    </td>
+                }
+                else
+                {
+                    <td style="color:red">
+
+                        @Html.DisplayFor(modelItem => item.Status)
+                    </td>
+                }
+                <td>
+                    @Html.DisplayFor(modelItem => item.NumFoto)
+                    @if (item.NumFoto > 0)
+                    {
                         @Html.ActionLink("Mostra foto", "CarouselFoto", "ListaPerizie", new
                             {
                                 aIDPerizia = item.ID,
@@ -149,145 +150,145 @@
                                 ErrMess = ViewBag.ErrMess,
                                 IsUpdate = ViewBag.IsUpdate
                             }, new { @class = "photoImg" })
-                        }
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.NumPDF)
-                        @if (item.NumPDF > 0)
-                        {
-                            @Html.ActionLink("Mostra PDF", "MostraPDF", "ListaPerizie", new
-                               {
-                                   aIDPerizia = item.ID,
-                                   IDPerito = ViewBag.IDPerito,
-                                   IDSpedizione = ViewBag.IDSpedizione,
-                                   IDMeteo = ViewBag.IDMeteo,
-                                   IDTP = ViewBag.IDTP,
-                                   aIDTrasportatore = ViewBag.aIDTrasportatore,
-                                   aIDTipoRotabile = ViewBag.aIDTipoRotabile,
-                                   aIDModelloCasa = ViewBag.aIDModelloCasa,
-                                   ErrMess = ViewBag.ErrMess,
-                                   IsUpdate = ViewBag.IsUpdate
-                               }, new { @class = "pdfImg" })
-                        }
-                        </td>
+                    }
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NumPDF)
+                    @if (item.NumPDF > 0)
+                    {
+                        @Html.ActionLink("Mostra PDF", "MostraPDF", "ListaPerizie", new
+                           {
+                               aIDPerizia = item.ID,
+                               IDPerito = ViewBag.IDPerito,
+                               IDSpedizione = ViewBag.IDSpedizione,
+                               IDMeteo = ViewBag.IDMeteo,
+                               IDTP = ViewBag.IDTP,
+                               aIDTrasportatore = ViewBag.aIDTrasportatore,
+                               aIDTipoRotabile = ViewBag.aIDTipoRotabile,
+                               aIDModelloCasa = ViewBag.aIDModelloCasa,
+                               ErrMess = ViewBag.ErrMess,
+                               IsUpdate = ViewBag.IsUpdate
+                           }, new { @class = "pdfImg" })
+                    }
+                </td>
 
-                </tr>
-            }
-        </tbody>
-        <tfoot>
-            <tr>
-                <th>Modifica</th>
-                <th>Telaio</th>
-                <th>Modello</th>
-                <th>Viaggio</th>
-                <th>Data perizia</th>
-                <th>TP</th>
-                @*<th>ETD</th>
-                 <th>ETA</th>*@
-                <th>Status</th>
-                <th>N° foto</th>
-                <th>N° PDF</th>
             </tr>
-        </tfoot>
-    </table>
+        }
+    </tbody>
+    <tfoot>
+        <tr>
+            <th>Modifica</th>
+            <th>Telaio</th>
+            <th>Modello</th>
+            <th>Viaggio</th>
+            <th>Data perizia</th>
+            <th>TP</th>
+            @*<th>ETD</th>
+                <th>ETA</th>*@
+            <th>Status</th>
+            <th>N° foto</th>
+            <th>N° PDF</th>
+        </tr>
+    </tfoot>
+</table>
 
 
-    <script>
-        $(document).ready(function () {
-            var table = $('#ElencoPerizie').DataTable({
-                "autoWidth": false,
-                stateSave: true,
-                "lengthMenu": [[10, 50, 100, -1], [10, 50, 100, "Tutti"]],
-                "iDisplayLength": 50,
-                buttons: [
-                    //{
-                    //    extend: 'searchPanes',
-                    //    config: {
-                    //        cascadePanes: true
-                    //    }
-                    //},
-                    {
-                        extend: 'excelHtml5',
-                        text: 'Crea excel ',
-                        exportOptions: {
-                            modifier: {
-                                search: 'none'
-                            }
+<script>
+    $(document).ready(function () {
+        var table = $('#ElencoPerizie').DataTable({
+            "autoWidth": false,
+            stateSave: true,
+            "lengthMenu": [[10, 50, 100, -1], [10, 50, 100, "Tutti"]],
+            "iDisplayLength": 50,
+            buttons: [
+                //{
+                //    extend: 'searchPanes',
+                //    config: {
+                //        cascadePanes: true
+                //    }
+                //},
+                {
+                    extend: 'excelHtml5',
+                    text: 'Crea excel ',
+                    exportOptions: {
+                        modifier: {
+                            search: 'none'
                         }
                     }
-                    ,
-                    {
-                        extend: 'print',
-                        text: 'Stampa griglia',
-                        exportOptions: {
-                            modifier: {
-                                search: 'none'
-                            }
-                        }
-                    },
-                    {
-                        extend: 'pdf',
-                        text: 'Crea PDF',
-                        exportOptions: {
-                            modifier: {
-                                page: 'current'
-                            }
-                        }
-                    }
-
-                ],
-
-
-                dom: 'Blfrtip',
-                //buttons: [
-                //    'copy', 'csv', 'excel',  'print'
-                //],
-                //"columnDefs": [
-                //    { "width": "110px", "targets": 0 },
-                //    { "width": "40px", "targets": 1 },
-                //    { "width": "100px", "targets": 2 },
-                //    { "width": "70px", "targets": 3 },
-                //    { "width": "270px", "targets": 4 },
-                //    { "width": "70px", "targets": 5 }
-                //],
-                //stateSave: true,
-                language: {
-
-                    processing: "Ricerca in corso...",
-                    search: "Ricerca:",
-                    //lengthMenu: "Visualizza _MENU_ elementi",
-
-                    info: "Elenca da _START_ a _END_ di _TOTAL_ elementi",
-                    infoEmpty: "Elenca da 0 a 0 di 0 elementi",
-                    infoFiltered: "(filtrati da _MAX_ elementi totali)",
-                    infoPostFix: "",
-                    loadingRecords: "Caricamento...",
-                    zeroRecords: "La ricerca non ha portato alcun risultato.",
-                    emptyTable: "Nessun record presente in tabella",
-                    paginate: {
-                        first: "Inizio",
-                        previous: "Precedente",
-                        next: "Successivo",
-                        last: "Fine"
-                    },
-                    aria: {
-                        sortAscending: ": attiva per ordinare la colonna in ordine crescente",
-                        sortDescending: ": attiva per ordinare la colonna in ordine decrescente"
-                    },
-                    searchPanes: {
-                        title: {
-                            _: 'Filtri selezionati : %d',
-                            0: 'Nessun filtro selezionato',
-                            1: 'Un solo filtro selezionato'
-                        },
-                        clearMessage: 'Azzera filtri !',
-                        collapse: { 0: 'Ricerca avanzata', _: 'Scelte selezionate (%d)' }
-                    },
-                    buttons: [
-                        'copy', 'csv', 'excel', 'print'
-                    ]
                 }
-            });
-        });
+                ,
+                {
+                    extend: 'print',
+                    text: 'Stampa griglia',
+                    exportOptions: {
+                        modifier: {
+                            search: 'none'
+                        }
+                    }
+                },
+                {
+                    extend: 'pdf',
+                    text: 'Crea PDF',
+                    exportOptions: {
+                        modifier: {
+                            page: 'current'
+                        }
+                    }
+                }
 
-    </script>
+            ],
+
+
+            dom: 'Blfrtip',
+            //buttons: [
+            //    'copy', 'csv', 'excel',  'print'
+            //],
+            //"columnDefs": [
+            //    { "width": "110px", "targets": 0 },
+            //    { "width": "40px", "targets": 1 },
+            //    { "width": "100px", "targets": 2 },
+            //    { "width": "70px", "targets": 3 },
+            //    { "width": "270px", "targets": 4 },
+            //    { "width": "70px", "targets": 5 }
+            //],
+            //stateSave: true,
+            language: {
+
+                processing: "Ricerca in corso...",
+                search: "Ricerca:",
+                //lengthMenu: "Visualizza _MENU_ elementi",
+
+                info: "Elenca da _START_ a _END_ di _TOTAL_ elementi",
+                infoEmpty: "Elenca da 0 a 0 di 0 elementi",
+                infoFiltered: "(filtrati da _MAX_ elementi totali)",
+                infoPostFix: "",
+                loadingRecords: "Caricamento...",
+                zeroRecords: "La ricerca non ha portato alcun risultato.",
+                emptyTable: "Nessun record presente in tabella",
+                paginate: {
+                    first: "Inizio",
+                    previous: "Precedente",
+                    next: "Successivo",
+                    last: "Fine"
+                },
+                aria: {
+                    sortAscending: ": attiva per ordinare la colonna in ordine crescente",
+                    sortDescending: ": attiva per ordinare la colonna in ordine decrescente"
+                },
+                searchPanes: {
+                    title: {
+                        _: 'Filtri selezionati : %d',
+                        0: 'Nessun filtro selezionato',
+                        1: 'Un solo filtro selezionato'
+                    },
+                    clearMessage: 'Azzera filtri !',
+                    collapse: { 0: 'Ricerca avanzata', _: 'Scelte selezionate (%d)' }
+                },
+                buttons: [
+                    'copy', 'csv', 'excel', 'print'
+                ]
+            }
+        });
+    });
+
+</script>

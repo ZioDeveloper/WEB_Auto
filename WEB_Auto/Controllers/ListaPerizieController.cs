@@ -108,6 +108,10 @@ namespace WEB_Auto.Controllers
             var model = new Models.HomeModel();
             string aPerito = Session["IDPeritoVero"].ToString();
 
+            string myViaggio = (from m in db.WEB_Auto_ListaPerizieXSpedizione_vw
+                            where m.IDSpedizione == IDSpedizione
+                            select m.IDOriginale1).FirstOrDefault();
+
             if (TipoMezzo == "TUTTE")
             {
                 var lista = (from m in db.WEB_Auto_ListaPerizieXSpedizione_vw
@@ -141,6 +145,7 @@ namespace WEB_Auto.Controllers
             
             ViewBag.IDSpedizione = IDSpedizione;
             ViewBag.IDTP = IDTP;
+            ViewBag.myViaggio = myViaggio;
             return View(model);
         }
 
@@ -168,7 +173,7 @@ namespace WEB_Auto.Controllers
                 string aIDOrig = datiFile.IDOriginale1.Replace(@"\","-");
                 aIDOrig = datiFile.IDOriginale1.Replace(@"/", "-");
                 aFile += "GNV_" + aIDOrig + "_" + datiFile.DataInizioImbarco.Value.ToString("dd-MM-yyyy") + "_" + IDSpedizione + ".XLSX";
-                Create(aFile);
+                Create(aFile, IDSpedizione);
             }
             return RedirectToAction("ListaSpedizioni");
         }
@@ -195,31 +200,35 @@ namespace WEB_Auto.Controllers
             return View(model);
         }
 
-        public void Create(String filePath)
+        public void Create(string filePath,string IDSpedizione )
         {
             var model = new Models.HomeModel();
 
+            string aViaggio = (from m in db.AGR_Spedizioni
+                               where m.ID == IDSpedizione
+                               select m.IDOriginale1).FirstOrDefault();
+
             int rtb = (from m in db.WEB_ListaPerizieFlat_MVC_vw
-                       where m.Viaggio == "54207"
-                       where m.Modello == "1240-ROTABILI"
+                       where m.IDSpedizione == IDSpedizione
+                       where m.Modello.Left(4) == "1240" || m.Modello.Left(4) == "1241"
                        select m.IDPerizia).Distinct().Count();
             int rtbD = (from m in db.WEB_ListaPerizieFlat_MVC_vw
-                        where m.Viaggio == "54207"
-                        where m.Modello == "1240-ROTABILI"
+                        where m.IDSpedizione == IDSpedizione
+                        where m.Modello.Left(4) == "1240" || m.Modello.Left(4) == "1241"
                         where m.Status == "DMG"
                         select m.IDPerizia).Distinct().Count();
             int auto = (from m in db.WEB_ListaPerizieFlat_MVC_vw
-                        where m.Viaggio == "54207"
-                        where m.Modello != "1240-ROTABILI"
+                        where m.IDSpedizione == IDSpedizione
+                        where m.Modello.Left(4) != "1240" &&  m.Modello.Left(4) != "1241"
                         select m.IDPerizia).Distinct().Count();
             int autoD = (from m in db.WEB_ListaPerizieFlat_MVC_vw
-                         where m.Viaggio == "54207"
-                         where m.Modello != "1240-ROTABILI"
+                         where m.IDSpedizione == IDSpedizione
+                         where m.Modello.Left(4) != "1240" && m.Modello.Left(4) != "1241"
                          where m.Status == "DMG"
                          select m.IDPerizia).Distinct().Count();
 
             var lista = (from m in db.WEB_ListaPerizieFlat_MVC_vw
-                         where m.Viaggio == "54207"
+                         where m.IDSpedizione == IDSpedizione
                          select m).OrderBy(s => s.Status).ToList();
             model.WEB_ListaPerizieFlat_MVC_vw = lista;
 

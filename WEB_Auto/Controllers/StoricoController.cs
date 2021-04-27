@@ -89,6 +89,7 @@ namespace WEB_Auto.Controllers
 
 
             var model = new Models.HomeModel();
+
             var foto = (from m in db.WEB_ListaPerizieFlat_DEF_vw
                         where m.IDPerizia == aIDPerizia
                         select m).ToList();

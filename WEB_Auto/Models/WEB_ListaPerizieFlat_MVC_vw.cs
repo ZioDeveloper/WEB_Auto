@@ -37,5 +37,6 @@ namespace WEB_Auto.Models
         public string Status { get; set; }
         public Nullable<short> NumFoto { get; set; }
         public string IDPerizia { get; set; }
+        public string IDModelloCasa { get; set; }
     }
 }

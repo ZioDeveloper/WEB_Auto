@@ -637,6 +637,7 @@ warning 6002: The table/view 'wisedb.dbo.WEB_ListaPerizieFlat_MVC_vw' does not h
           <Property Name="Cnt" Type="int" />
           <Property Name="Status" Type="varchar" MaxLength="4" Nullable="false" />
           <Property Name="NumFoto" Type="smallint" />
+          <Property Name="IDModelloCasa" Type="varchar" MaxLength="20" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'wisedb.dbo.WEB_ListaPerizieFlat_TMP_vw' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -983,7 +984,8 @@ warning 6002: The table/view 'wisedb.dbo.WEB_ListaPerizieFlat_TMP_vw' does not h
     [WEB_ListaPerizieFlat_MVC_vw].[Gravita] AS [Gravita], 
     [WEB_ListaPerizieFlat_MVC_vw].[Cnt] AS [Cnt], 
     [WEB_ListaPerizieFlat_MVC_vw].[Status] AS [Status], 
-    [WEB_ListaPerizieFlat_MVC_vw].[NumFoto] AS [NumFoto]
+    [WEB_ListaPerizieFlat_MVC_vw].[NumFoto] AS [NumFoto], 
+    [WEB_ListaPerizieFlat_MVC_vw].[IDModelloCasa] AS [IDModelloCasa]
     FROM [dbo].[WEB_ListaPerizieFlat_MVC_vw] AS [WEB_ListaPerizieFlat_MVC_vw]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="WEB_ListaPerizieFlat_TMP_vw" EntityType="Self.WEB_ListaPerizieFlat_TMP_vw" store:Type="Views" store:Schema="dbo">
@@ -1669,6 +1671,7 @@ warning 6002: The table/view 'wisedb.dbo.WEB_ListaPerizieFlat_TMP_vw' does not h
           <Property Name="Status" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
           <Property Name="NumFoto" Type="Int16" />
           <Property Name="IDPerizia" Type="String" MaxLength="18" FixedLength="false" Unicode="false" />
+          <Property Name="IDModelloCasa" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="WEB_ListaPerizieFlat_DEF_vw">
           <Key>
@@ -2262,6 +2265,7 @@ warning 6002: The table/view 'wisedb.dbo.WEB_ListaPerizieFlat_TMP_vw' does not h
           <EntitySetMapping Name="WEB_ListaPerizieFlat_MVC_vw">
             <EntityTypeMapping TypeName="wisedbModel.WEB_ListaPerizieFlat_MVC_vw">
               <MappingFragment StoreEntitySet="WEB_ListaPerizieFlat_MVC_vw">
+                <ScalarProperty Name="IDModelloCasa" ColumnName="IDModelloCasa" />
                 <ScalarProperty Name="IDPerizia" ColumnName="IDPerizia" />
                 <ScalarProperty Name="NumFoto" ColumnName="NumFoto" />
                 <ScalarProperty Name="Status" ColumnName="Status" />

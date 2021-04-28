@@ -44,8 +44,8 @@ namespace WEB_Auto.Controllers
             ViewBag.IsUpdate = IsUpdate;
             return View("ScattaFoto", myFoto);
 
-            ViewBag.myIDPerizia = myIDPerizia;
-            return View();
+            //ViewBag.myIDPerizia = myIDPerizia;
+            //return View();
 
         }
         
@@ -168,8 +168,8 @@ namespace WEB_Auto.Controllers
             ViewBag.IsUpdate = IsUpdate;
             return View("ScattaPDF", myFoto);
 
-            ViewBag.myIDPerizia = myIDPerizia;
-            return View();
+            //ViewBag.myIDPerizia = myIDPerizia;
+           // return View();
 
         }
 

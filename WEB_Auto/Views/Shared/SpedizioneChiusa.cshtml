@@ -1,0 +1,18 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Errore</title>
+</head>
+<body>
+    <hgroup>
+        <h3>Errore</h3>
+        <h4>Viaggio già chiuso, non si possono inserire altre perizie.</h4>
+    </hgroup>
+
+    <br />
+    @Html.ActionLink("Torna a Home", "Index", "Home", new { usr = Session["User"].ToString() }, new { @class = "btn btn-primary" })
+
+</body>
+</html>
+

@@ -210,20 +210,20 @@ namespace WEB_Auto.Controllers
 
             int rtb = (from m in db.WEB_ListaPerizieFlat_MVC_vw
                        where m.IDSpedizione == IDSpedizione
-                       where m.Modello.Left(4) == "1240" || m.Modello.Left(4) == "1241"
+                       where m.IDModelloCasa == "1240" || m.IDModelloCasa == "1241"
                        select m.IDPerizia).Distinct().Count();
             int rtbD = (from m in db.WEB_ListaPerizieFlat_MVC_vw
                         where m.IDSpedizione == IDSpedizione
-                        where m.Modello.Left(4) == "1240" || m.Modello.Left(4) == "1241"
+                        where m.IDModelloCasa == "1240" || m.IDModelloCasa == "1241"
                         where m.Status == "DMG"
                         select m.IDPerizia).Distinct().Count();
             int auto = (from m in db.WEB_ListaPerizieFlat_MVC_vw
                         where m.IDSpedizione == IDSpedizione
-                        where m.Modello.Left(4) != "1240" &&  m.Modello.Left(4) != "1241"
+                        where m.IDModelloCasa != "1240" &&  m.IDModelloCasa != "1241"
                         select m.IDPerizia).Distinct().Count();
             int autoD = (from m in db.WEB_ListaPerizieFlat_MVC_vw
                          where m.IDSpedizione == IDSpedizione
-                         where m.Modello.Left(4) != "1240" && m.Modello.Left(4) != "1241"
+                         where m.IDModelloCasa != "1240" && m.IDModelloCasa != "1241"
                          where m.Status == "DMG"
                          select m.IDPerizia).Distinct().Count();
 

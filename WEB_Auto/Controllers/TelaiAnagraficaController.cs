@@ -19,6 +19,13 @@ namespace WEB_Auto.Controllers
             if(!String.IsNullOrEmpty(IDPerito))
                 EliminaTelaiSenzaModello(IDPerito);
 
+            int chiuse = (from m in db.AGR_PERIZIE_TEMP_MVC
+                      
+                       where m.IDSpedizione == IDSpedizione
+                       where m.IsClosed == true
+                       select m.ID).Count();
+            if (chiuse > 0)
+                return View("SpedizioneChiusa");
 
             if (String.IsNullOrEmpty(IDSpedizione))
             {

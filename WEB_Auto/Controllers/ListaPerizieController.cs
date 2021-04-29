@@ -338,6 +338,17 @@ namespace WEB_Auto.Controllers
 
             ws.Columns("A", "H").AdjustToContents();
             wb.SaveAs(path + "/" + Path.GetFileName(filePath));
+
+            // Salvo dati file in tabella
+
+            //string sqlcmd = " INSERT INTO AGR_PERIZIE_Temp_MVC " +
+            //               " SET ISClosed = 1  " +
+            //               " WHERE IDSpedizione = @IDSpedizione " +
+            //               " AND IDTipoPerizia = @IDTipoPerizia";
+
+
+            //int Inserted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@IDSpedizione", IDSpedizione),
+            //                                                     new SqlParameter("@IDTipoPerizia", IDTP));
         }
     }
 }

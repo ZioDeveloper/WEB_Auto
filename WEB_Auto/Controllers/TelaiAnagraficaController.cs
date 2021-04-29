@@ -570,14 +570,15 @@ namespace WEB_Auto.Controllers
                         if (hasdanni == 0)
                         {
 
-                            sqlcmd = " INSERT INTO AGR_PERIZIE_DETT_TEMP_MVC (IDPerizia,IDParte, IDDanno, QTA, Note)" +
-                                     " VALUES(@IDPerizia,@IDParte, @IDDanno, @QTA, @Note)";
+                            sqlcmd = " INSERT INTO AGR_PERIZIE_DETT_TEMP_MVC (IDPerizia,IDParte, IDDanno, QTA,Flags, Note)" +
+                                     " VALUES(@IDPerizia,@IDParte, @IDDanno, @QTA,@Flags, @Note)";
                             try
                             {
                                 Inserted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@IDPerizia", myIDPerizia),
                                                                              new SqlParameter("@IDParte", "045"),
                                                                              new SqlParameter("@IDDanno", "Y"),
                                                                              new SqlParameter("@QTA", 1),
+                                                                              new SqlParameter("@Flags", "0"),
                                                                              new SqlParameter("@Note", "Danni da utilizzo")
                                                                              );
                             }

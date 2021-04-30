@@ -1002,6 +1002,11 @@ namespace WEB_Auto.Controllers
                 return false;
             }
 
+            else if (IDParte.Left(1) != "2" && IDParte.Left(1) != "3")
+            {
+                errMEss = "Codice parte danneggiata NON VALIDO";
+                return false;
+            }
             else if((IDParte == "300" || IDParte == "045") && String.IsNullOrEmpty(Note))
             {
                 errMEss = "Note obbligatorie per questo componente";
@@ -1009,11 +1014,7 @@ namespace WEB_Auto.Controllers
 
             }
 
-            else if (IDParte.Left(1) != "2" && IDParte.Left(1) != "3")
-            {
-                errMEss = "Note obbligatorie per questo componente";
-                return false;
-            }
+           
             else
             {
                 errMEss = "";

@@ -185,7 +185,13 @@ namespace WEB_Auto.Controllers
                         where m.IDPerizia == aIDPerizia
                         select m).ToList();
             model.WEB_AUTO_FOTO = foto;
-            
+
+            var myIDSpedizione = (from m in db.AGR_PERIZIE_TEMP_MVC
+                        where m.ID == aIDPerizia
+                        select new { m.IDSpedizione, m.IDTipoPerizia }).FirstOrDefault();
+           
+            ViewBag.IDSpedizione = myIDSpedizione.IDSpedizione;
+            ViewBag.IDTP = myIDSpedizione.IDTipoPerizia;
             return View(model);
         }
 
@@ -341,14 +347,71 @@ namespace WEB_Auto.Controllers
 
             // Salvo dati file in tabella
 
-            //string sqlcmd = " INSERT INTO AGR_PERIZIE_Temp_MVC " +
-            //               " SET ISClosed = 1  " +
-            //               " WHERE IDSpedizione = @IDSpedizione " +
-            //               " AND IDTipoPerizia = @IDTipoPerizia";
+           
+
+            string aNomeFile = Path.GetFileName(filePath);
+            string aContenuto = ""; // Deve essere blank
+            string aIDGestione = "GN";
+            string aPOL = "";
+            if (lista[0].POL.Left(3) == "GOA")
+            {
+                aPOL = "GENOA";
+            }
+            if (lista[0].POL.Left(3) == "NAP")
+            {
+                aPOL = "NAPLES";
+            }
+            if (lista[0].POL.Left(3) == "PMO")
+            {
+                aPOL = "PALERMO";
+            }
+            if (lista[0].POL.Left(3) == "TRI")
+            {
+                aPOL = "TERMINI IMERESE";
+            }
+            if (lista[0].POL.Left(3) == "TUN")
+            {
+                aPOL = "TUNISI";
+            }
 
 
-            //int Inserted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@IDSpedizione", IDSpedizione),
-            //                                                     new SqlParameter("@IDTipoPerizia", IDTP));
+            string aPOD = "";
+            if (lista[0].POD.Left(3) == "GOA")
+            {
+                aPOD = "GENOA";
+            }
+            if (lista[0].POD.Left(3) == "NAP")
+            {
+                aPOD = "NAPLES";
+            }
+            if (lista[0].POD.Left(3) == "PMO")
+            {
+                aPOD = "PALERMO";
+            }
+            if (lista[0].POD.Left(3) == "TRI")
+            {
+                aPOD = "TERMINI IMERESE";
+            }
+            if (lista[0].POD.Left(3) == "TUN")
+            {
+                aPOD = "TUNISI";
+            }
+
+
+
+            string aIDSpedizione = lista[0].IDSpedizione.ToString();
+            string aIDOriginale = lista[0].Viaggio.ToString();
+
+            string sqlcmd = " INSERT INTO AGR_FilesTxt (NomeFile, Contenuto, IDGestione,  POL, POD, IDSpedizione, IDOriginale) " +
+                           " VALUES(@NomeFile, @Contenuto, @IDGestione,  @POL, @POD, @IDSpedizione, @IDOriginale) ";
+
+            int Inserted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@NomeFile", aNomeFile),
+                                                               new SqlParameter("@Contenuto", aContenuto),
+                                                               new SqlParameter("@IDGestione", aIDGestione),
+                                                               new SqlParameter("@POL", aPOL),
+                                                               new SqlParameter("@POD", aPOD),
+                                                               new SqlParameter("@IDSpedizione", aIDSpedizione),
+                                                               new SqlParameter("@IDOriginale", aIDOriginale));
         }
     }
 }

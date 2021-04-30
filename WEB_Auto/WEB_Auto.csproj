@@ -171,6 +171,9 @@
     <Compile Include="Models\AGR_DatiRotabiliInUSo_vw.cs">
       <DependentUpon>Autocargo.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\AGR_FilesTxt.cs">
+      <DependentUpon>Autocargo.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\AGR_Meteo.cs">
       <DependentUpon>Autocargo.tt</DependentUpon>
     </Compile>

@@ -7,16 +7,19 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 @{int cnt = 0;}
 
-
+<div>
+    @Html.ActionLink("Esci da visualizzazione foto", "EditSpedizione", "ListaPerizie", new { IDSpedizione = ViewBag.IDSpedizione, IDTP = ViewBag.IDTP }, new { @class = "btn btn-success custom" })
+</div>
+<br />
 <div class="container">
     <h4>Foto allegate</h4>
     <div id="myCarousel" class="carousel slide" data-ride="carousel">
         <!-- Indicators -->
         @*<ol class="carousel-indicators">
-            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-            <li data-target="#myCarousel" data-slide-to="1"></li>
-            <li data-target="#myCarousel" data-slide-to="2"></li>
-        </ol>*@
+                <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                <li data-target="#myCarousel" data-slide-to="1"></li>
+                <li data-target="#myCarousel" data-slide-to="2"></li>
+            </ol>*@
 
         <!-- Wrapper for slides -->
         <div class="carousel-inner">
@@ -26,19 +29,19 @@
 
                 if (cnt == 0)
                 {
-                <div class="item active">
-                    <img src="@Url.Content("~/DocumentiXTelai/Foto/" + item.FileName)" title="@Url.Content(item.FileName)" alt="Image" style='height: 600; width: 800; object-fit: contain'>
+                    <div class="item active">
+                        <img src="@Url.Content("~/DocumentiXTelai/Foto/" + item.FileName)" title="@Url.Content(item.FileName)" alt="Image" style='height: 600; width: 800; object-fit: contain'>
 
-                 </div>
+                    </div>
                 }
                 else
                 {
 
 
-                <div class="item">
-                    <img src="@Url.Content("~/DocumentiXTelai/Foto/" + item.FileName)" title="@Url.Content(item.FileName)" alt="Image" style='height: 600; width: 800; object-fit: contain'>
+                    <div class="item">
+                        <img src="@Url.Content("~/DocumentiXTelai/Foto/" + item.FileName)" title="@Url.Content(item.FileName)" alt="Image" style='height: 600; width: 800; object-fit: contain'>
 
-                </div>
+                    </div>
 
                 }
                 cnt++;
@@ -59,4 +62,6 @@
         </a>
     </div>
 </div>
+
+
 @*</div>*@

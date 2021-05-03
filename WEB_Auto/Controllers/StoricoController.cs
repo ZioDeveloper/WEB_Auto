@@ -79,11 +79,11 @@ namespace WEB_Auto.Controllers
                            where m.IDTipoPerizia == "C"
                            select m;
             model.WEB_ListaPerizieFlat_MVC_vw = ListaTelai.ToList().OrderBy(s=>s.Status);
-
+            ViewBag.Viaggio = aViaggio;
             return View(model);
         }
 
-        public ActionResult CarouselFotoStoriche(string aIDPerizia)
+        public ActionResult CarouselFotoStoriche(string aIDPerizia, string aTelaio)
         {
             
 
@@ -96,6 +96,7 @@ namespace WEB_Auto.Controllers
             model.WEB_ListaPerizieFlat_DEF_vw = foto;
             ViewBag.NumFoto = foto[0].NumFoto;
             ViewBag.IDPErizia = foto[0].IDPerizia;
+            ViewBag.Telaio = aTelaio;
             return View(model);
         }
     }

@@ -1,6 +1,6 @@
 ﻿@model WEB_Auto.Models.HomeModel
 @{
-    ViewBag.Title = "CarouselFoto";
+    ViewBag.Title = "CarouselFotoStoriche";
 }
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -9,8 +9,10 @@
     string aPath = "https://isp.interconsult.it/photo/winauto/" ;
     string aFoto = "";
     int progFoto = 1;}
-
-
+<br />
+<div>
+    @Html.ActionLink("Esci da visualizzazione foto", "CercaStoriaTelaio", "Storico", new { aTelaio = ViewBag.Telaio }, new { @class = "btn btn-success custom" })
+</div>
 <div class="container">
     <h4>Foto allegate</h4>
     <div id="myCarousel" class="carousel slide" data-ride="carousel">

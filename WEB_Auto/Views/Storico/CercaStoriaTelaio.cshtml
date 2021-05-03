@@ -192,7 +192,9 @@
                                aIDTipoRotabile = ViewBag.aIDTipoRotabile,
                                aIDModelloCasa = ViewBag.aIDModelloCasa,
                                ErrMess = ViewBag.ErrMess,
-                               IsUpdate = ViewBag.IsUpdate
+                               IsUpdate = ViewBag.IsUpdate,
+                               aTelaio = item.Telaio,
+                               CntrProvenienza = "STORICO"
                            }, new { @class = "photoImg" })
                             </td>
                         }
@@ -309,7 +311,8 @@
                                    aIDTipoRotabile = ViewBag.aIDTipoRotabile,
                                    aIDModelloCasa = ViewBag.aIDModelloCasa,
                                    ErrMess = ViewBag.ErrMess,
-                                   IsUpdate = ViewBag.IsUpdate
+                                   IsUpdate = ViewBag.IsUpdate,
+                                   aTelaio = item.Telaio
                                }, new { @class = "photoImg" })
                                 </td>
                             }

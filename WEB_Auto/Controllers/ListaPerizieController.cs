@@ -178,7 +178,7 @@ namespace WEB_Auto.Controllers
             return RedirectToAction("ListaSpedizioni");
         }
 
-        public ActionResult CarouselFoto(string aIDPerizia)
+        public ActionResult CarouselFoto(string aIDPerizia, string aTelaio, string CntrProvenienza = "")
         {
             var model = new Models.HomeModel();
             var foto = (from m in db.WEB_AUTO_FOTO
@@ -192,16 +192,20 @@ namespace WEB_Auto.Controllers
            
             ViewBag.IDSpedizione = myIDSpedizione.IDSpedizione;
             ViewBag.IDTP = myIDSpedizione.IDTipoPerizia;
+            ViewBag.Telaio = aTelaio;
+            ViewBag.CntrProvenienza = CntrProvenienza;
             return View(model);
         }
 
-        public ActionResult MostraPDF(string aIDPerizia)
+        public ActionResult MostraPDF(string aIDPerizia, string IDSpedizione, string IDTP)
         {
             var model = new Models.HomeModel();
             var pdf = (from m in db.WEB_AUTO_PDF
                         where m.IDPerizia == aIDPerizia
                         select m).ToList();
             model.WEB_AUTO_PDF = pdf;
+            ViewBag.IDSpedizione = IDSpedizione;
+            ViewBag.IDTP = IDTP;
 
             return View(model);
         }

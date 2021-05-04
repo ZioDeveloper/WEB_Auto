@@ -319,9 +319,10 @@ namespace WEB_Auto.Controllers
             ws.Cell(11, 3).Value = "Data perizia";
             ws.Cell(11, 4).Value = "Trasportatore";
             ws.Cell(11, 5).Value = "Status";
-            ws.Cell(11, 6).Value = "Componente";
-            ws.Cell(11, 7).Value = "Danno";
-
+            ws.Cell(11, 6).Value = "N° foto";
+            ws.Cell(11, 7).Value = "Componente";
+            ws.Cell(11, 8).Value = "Danno";
+            ws.Cell(11, 9).Value = "Note";
 
 
             int prog = 12;
@@ -339,9 +340,11 @@ namespace WEB_Auto.Controllers
                     ws.Cell(prog, 4).Value = item.Trasportatore;
                     ws.Cell(prog, 5).Value = item.Status;
                 }
-
-                ws.Cell(prog, 6).Value = item.Parte;
-                ws.Cell(prog, 7).Value = item.Danno;
+                ws.Cell(prog, 6).Value = item.NumFoto;
+                ws.Cell(prog, 7).Value = item.Parte;
+                ws.Cell(prog, 8).Value = item.Danno;
+                ws.Cell(prog, 9).Value = item.Note;
+                
                 mynew = myold;
                 prog++;
             }

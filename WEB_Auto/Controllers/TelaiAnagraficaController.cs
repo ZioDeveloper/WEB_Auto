@@ -69,13 +69,14 @@ namespace WEB_Auto.Controllers
                 return RedirectToAction("Index", "Home", new { usr = usr, errMess = "Selezionare un tipo perizia " });
             }
             // Se sto cercando telaio...
-            if (!String.IsNullOrEmpty(Chassis))
+            if (!String.IsNullOrEmpty(Chassis) && Session["Classe"].ToString() == "0")
             {
                 string myTelaio = Chassis.ToUpper();
 
                 int cnt = (from m in db.AGR_PERIZIE_TEMP_MVC
                            where m.Telaio == Chassis
                            where m.IDSpedizione == IDSpedizione
+                           where m.IDTipoPerizia == IDTP
                            select m.ID).Count();
 
                 if (cnt == 0)
@@ -120,6 +121,73 @@ namespace WEB_Auto.Controllers
                 }
             }
 
+            else if (!String.IsNullOrEmpty(Chassis) && Session["Classe"].ToString() == "1")
+            {
+                string myTelaio = Chassis.ToUpper();
+
+                int cnt = (from m in db.AGR_PERIZIE_TEMP_MVC
+                           where m.Telaio == Chassis
+                           where m.IDSpedizione == IDSpedizione
+                           where m.IDTipoPerizia == IDTP
+                           select m.ID).Count();
+
+                if (cnt == 0)
+                {
+
+                    string myIDPerizia = CreaNuovaPerizia(IDPerito, IDSpedizione, IDMeteo, IDTP, myTelaio);
+                    return RedirectToAction("Edit", "TelaiAnagrafica", new
+                    {
+                        IDPerito = IDPerito,
+                        IDSpedizione = IDSpedizione,
+                        IDMeteo = IDMeteo,
+                        IDTP = IDTP,
+                        Chassis = Chassis,
+                        myIDPerizia = myIDPerizia,
+                        aIDModelloCasa = aIDModello
+                    });
+                    //return View("Edit");
+                }
+                else
+                {
+
+                    string ID_Trasportatore = "";
+                    string ID_TipoRotabile = "";
+                    string flagNU = "";
+                    string Annotazioni = "";
+                    var dati = (from m in db.AGR_Perizie_MVC_Flat_vw
+                                where m.Telaio == myTelaio
+                                where m.IDSpedizione == IDSpedizione
+                                select new { m.ID_TrasportatoreGrimaldi, m.ID_TipoRotabile, m.IDModello, m.ID, m.FlgNuovoUsato, m.Note }).FirstOrDefault();
+                    try
+                    {
+                        ID_Trasportatore = dati.ID_TrasportatoreGrimaldi.ToString();
+                    }
+                    catch { ID_Trasportatore = ""; }
+                    try { ID_TipoRotabile = dati.ID_TipoRotabile.ToString(); }
+                    catch { ID_TipoRotabile = ""; }
+                    string myIDPerizia = dati.ID.ToString();
+                    try { flagNU = dati.FlgNuovoUsato.ToString(); } catch { flagNU = ""; }
+                    try { Annotazioni = dati.Note.ToString(); } catch { Annotazioni = ""; }
+                    string IDModello = dati.IDModello.ToString();
+                    return RedirectToAction("Edit", "TelaiAnagrafica", new
+                    {
+                        IDPerito = IDPerito,
+                        IDSpedizione = IDSpedizione,
+                        IDMeteo = IDMeteo,
+                        IDTP = IDTP,
+                        aIDTrasportatore = ID_Trasportatore,
+                        aIDTipoRotabile = ID_TipoRotabile,
+                        aIDModelloCasa = IDModello,
+                        myIDPerizia = myIDPerizia,
+                        Annotazioni = Annotazioni,
+                        errMess = "In modifica"
+
+                    });
+
+                }
+            }
+
+
             // Se invece devo ancora inputare il telaio...
             if (Session["RTB"].ToString().ToUpper() == "TRUE" || IsRTB)
                 aIDModello = null;
@@ -144,14 +212,15 @@ namespace WEB_Auto.Controllers
 
             DateTime DataPerizia = DateTime.Now;
             string myIDPerizia = GetNewCode_AUTO(IDPerito,IDSpedizione);
+            string OS = Session["OS"].ToString();
             string myNote = "";
             if (IDMeteo == "3" || IDMeteo == "4")
                 myNote = "No foto causa pioggia ";
             //string myDataPerizia = DataPerizia.Substring(6, 4) + DataPerizia.Substring(3, 2) + DataPerizia.Substring(0, 2);
             string sqlcmd = " INSERT INTO AGR_PERIZIE_Temp_MVC (ID, IDSpedizione, IDPerito, IDTipoPerizia, DataPerizia, IDNazione, Telaio, NumFoto, " +
-                            "  Flags, IRichiesta, IDefinizione, IContab, DataModPerito, FlagControllo, IDMeteo, NumPDF,Note,IDOperatore) " +
+                            "  Flags, IRichiesta, IDefinizione, IContab, DataModPerito, FlagControllo, IDMeteo, NumPDF,Note,IDOperatore,MachineName) " +
                             "VALUES (@ID, @IDSpedizione, @IDPerito, @IDTipoPerizia, @DataPerizia, @IDNazione, @Telaio, @NumFoto, " +
-                            "  @Flags, @IRichiesta, @IDefinizione, @IContab, @DataModPerito, @FlagControllo, @IDMeteo, @NumPDF, @Note,@IDOperatore)";
+                            "  @Flags, @IRichiesta, @IDefinizione, @IContab, @DataModPerito, @FlagControllo, @IDMeteo, @NumPDF, @Note,@IDOperatore,@MachineName)";
             int Inserted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@ID", myIDPerizia),
                                                                  new SqlParameter("@IDSpedizione", IDSpedizione),
                                                                  new SqlParameter("@IDPerito", IDPerito),
@@ -169,7 +238,8 @@ namespace WEB_Auto.Controllers
                                                                  new SqlParameter("@IDMeteo", IDMeteo),
                                                                  new SqlParameter("@NumPDF", "0"),
                                                                  new SqlParameter("@Note", myNote),
-                                                                 new SqlParameter("@IDOperatore", (int)Session["IDOperatore"]));
+                                                                 new SqlParameter("@IDOperatore", (int)Session["IDOperatore"]),
+                                                                 new SqlParameter("@MachineName", OS));
             if (Inserted > 0)
             {
 
@@ -368,14 +438,45 @@ namespace WEB_Auto.Controllers
                 //}
                 else
                 {
-                    var modello = from m in db.AGR_ModelliAuto_vw
-                                  where m.IDCliente == "**"
-                                  where m.IDCasa == aCasa
-                                  select m;
-                    model.AGR_ModelliAuto_vw = modello.ToList().OrderBy(m => m.Descr);
-                    var ElencoModelli = new SelectList(model.AGR_ModelliAuto_vw.ToList(), "ID", "Descr");
-                    ViewBag.IsTrasportatore = false;
-                    ViewData["ElencoModelli"] = ElencoModelli;
+                    var myTelaio = (from m in db.AGR_Perizie_MVC_Flat_vw
+                                  where m.ID == myIDPerizia
+                                  select m.Telaio).FirstOrDefault();
+
+                    var cnt = (from m in db.AGR_Perizie_MVC_Flat_vw
+                                    where m.Telaio == myTelaio
+                                    select m.Telaio).Count();
+
+                    var myModello = (from m in db.AGR_Perizie_MVC_Flat_vw
+                                     where m.Telaio == myTelaio
+                                     select  new { m.IDModello }).FirstOrDefault();
+                   
+
+
+                    if (cnt == 1)
+                    {
+                        var modello = from m in db.AGR_ModelliAuto_vw
+                                      where m.IDCliente == "**"
+                                      where m.IDCasa == aCasa
+                                      select m;
+                        model.AGR_ModelliAuto_vw = modello.ToList().OrderBy(m => m.Descr);
+                        var ElencoModelli = new SelectList(model.AGR_ModelliAuto_vw.ToList(), "ID", "Descr");
+                        ViewBag.IsTrasportatore = false;
+                        ViewData["ElencoModelli"] = ElencoModelli;
+                    }
+                    else
+                    {
+                        var modello = from m in db.AGR_ModelliAuto_vw
+                                      where m.IDCliente == "**"
+                                      where m.IDCasa == aCasa
+                                      //where m.IDModelloCasa == myModello.IDModello.ToString()
+                                      select m;
+                        model.AGR_ModelliAuto_vw = modello.ToList().OrderBy(m => m.Descr);
+                        var ElencoModelli = new SelectList(model.AGR_ModelliAuto_vw.ToList(), "ID", "Descr");
+                        ViewBag.IsTrasportatore = false;
+                        ViewBag.aIDModelloCasa = myModello.IDModello.ToString();
+                        ViewData["ElencoModelli"] = ElencoModelli;
+
+                    }
                 }
 
             }
@@ -385,7 +486,8 @@ namespace WEB_Auto.Controllers
             }
             else
             {
-                ViewBag.aIDModelloCasa = aIDModelloCasa;
+                if (String.IsNullOrEmpty(ViewBag.aIDModelloCasa))
+                    ViewBag.aIDModelloCasa = aIDModelloCasa;
             }
             if(aCasa == "RTB")
             {
@@ -459,18 +561,35 @@ namespace WEB_Auto.Controllers
             }
 
             // Dati per dropdown Spedizione
-            DateTime ini = DateTime.Today.AddDays(-30);
-            DateTime end = DateTime.Today.AddDays(+30);
-            var Spedizione = from m in db.AGR_SpedizioniWEB_vw
-                             where m.DataInizioImbarco >= ini
-                             where m.DataInizioImbarco <= end
-                             select m;
-            model.AGR_SpedizioniWEB_vw = Spedizione.ToList();
-            var ElencoSpedizioni = new SelectList(model.AGR_SpedizioniWEB_vw.ToList(), "ID", "DescrMin");
+            if (Session["Classe"].ToString() == "0")
+            {
+                DateTime ini = DateTime.Today.AddDays(-30);
+                DateTime end = DateTime.Today.AddDays(+30);
+                var Spedizione = from m in db.AGR_SpedizioniWEB_vw
+                                 where m.DataInizioImbarco >= ini
+                                 where m.DataInizioImbarco <= end
+                                 select m;
+                model.AGR_SpedizioniWEB_vw = Spedizione.ToList();
+                var ElencoSpedizioni = new SelectList(model.AGR_SpedizioniWEB_vw.ToList(), "ID", "DescrMin");
 
 
-            ViewData["ElencoSpedizioni"] = ElencoSpedizioni;
-            ViewBag.IDSpedizione = IDSpedizione;
+                ViewData["ElencoSpedizioni"] = ElencoSpedizioni;
+                ViewBag.IDSpedizione = IDSpedizione;
+            }
+            else
+            {
+                var Spedizione = from m in db.AGR_SpedizioniWEB_vw
+                                 where m.IDCliente == "BE"
+                                 //where m.DataInizioImbarco >= ini
+                                 select m;
+                model.AGR_SpedizioniWEB_vw = Spedizione.ToList();
+                var ElencoSpedizioni = new SelectList(model.AGR_SpedizioniWEB_vw.ToList(), "ID", "DescrMin");
+
+
+                ViewData["ElencoSpedizioni"] = ElencoSpedizioni;
+                ViewBag.IDSpedizione = IDSpedizione;
+            }
+
 
             ViewBag.IDPerito = IDPerito;
             
@@ -684,7 +803,7 @@ namespace WEB_Auto.Controllers
 
             // Dati per dropdown AGR_Gravita
             // *******************************
-            if (ISGEFCO_GN_51)
+            if (ISGEFCO_GN_51 || Session["Classe"].ToString() == "1")
             {
                 var gravita = from m in db.WEB_AGR_Gravita_vw
                               where m.IDCliente == "FI"
@@ -720,6 +839,8 @@ namespace WEB_Auto.Controllers
             var test2 = (from m in db.AGR_PerizieExpGrim_Temp_MVC
                         where m.ID.ToString() == myIDPerizia
                         select new { m.ID_TipoRotabile,m.ID_TrasportatoreGrimaldi}).FirstOrDefault();
+
+            
 
             ViewBag.IDPerito = test.IDPerito;
             ViewBag.IDSpedizione = test.IDSpedizione;
@@ -1047,12 +1168,28 @@ namespace WEB_Auto.Controllers
                 return true;
             }
         }
-        public void EliminaTelaiSenzaModello(string IDPerito)
+        public void EliminaTelaiSenzaModello(string IDPerito, string aIDModello = null, string Chassis = null)
         {
-            string sqlcmd = " DELETE FROM AGR_PerizieExpGrim_Temp_MVC WHERE ID IN(SELECT ID FROM AGR_PERIZIE_TEMP_MVC WHERE IDPErito = @IDPErito  AND IDModello IS NULL)";
-            int deleted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@IDPErito", IDPerito));
-            sqlcmd = " DELETE FROM AGR_PERIZIE_TEMP_MVC WHERE IDPErito =  @IDPErito AND IDModello IS NULL";
-            deleted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@IDPErito", IDPerito));
+            if (String.IsNullOrEmpty(aIDModello))
+                {
+                string sqlcmd = " DELETE FROM AGR_PerizieExpGrim_Temp_MVC WHERE ID IN(SELECT ID FROM AGR_PERIZIE_TEMP_MVC WHERE IDPErito = @IDPErito  AND IDModello IS NULL)";
+                int deleted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@IDPErito", IDPerito));
+                sqlcmd = " DELETE FROM AGR_PERIZIE_TEMP_MVC WHERE IDPErito =  @IDPErito AND IDModello IS NULL";
+                deleted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@IDPErito", IDPerito));
+            }
+            else
+            {
+                string sqlcmd = " UPDATE AGR_PERIZIE_Temp_MVC " +
+                                                    " SET  IDModello = @IDModello " +
+                                                    " WHERE Telaio = @Chassis" +
+                                                    " AND IDPErito = @IDPErito " +
+                                                    " AND IDModello IS NULL ";
+
+
+                int Inserted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@IDPErito", IDPerito),
+                                                                     new SqlParameter("@IDModello", aIDModello),
+                                                                     new SqlParameter("@Chassis", Chassis));
+            }
         }
 
         public ActionResult SalvaPeriziaDettagliRapid(string myIDPerizia, string myIDParte, bool IsUpdate = false, string ErrMess="")

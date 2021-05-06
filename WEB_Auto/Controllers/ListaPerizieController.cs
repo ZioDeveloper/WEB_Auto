@@ -60,46 +60,73 @@ namespace WEB_Auto.Controllers
             #endregion
             string aPerito = Session["IDPeritoVero"].ToString();
 
-            if (Status == "TUTTE")
+            if (Session["Classe"].ToString() == "0")
             {
-                var lista = (from m in db.WEB_AUTO_ListaSpedizioni_2_vw
-                             where m.IDPerito == aPerito
-                             select m).ToList();
-                model.WEB_AUTO_ListaSpedizioni_2_vw = lista;
-               
+                if (Status == "TUTTE")
+                {
+                    var lista = (from m in db.WEB_AUTO_ListaSpedizioni_2_vw
+                                 where m.IDPerito == aPerito
+                                 select m).ToList();
+                    model.WEB_AUTO_ListaSpedizioni_2_vw = lista;
+
+                }
+                else if (Status == "APERTE")
+                {
+                    var lista = (from m in db.WEB_AUTO_ListaSpedizioni_2_vw
+                                 where m.IDPerito == aPerito
+                                 where m.IsClosed == false
+                                 select m).ToList();
+                    model.WEB_AUTO_ListaSpedizioni_2_vw = lista;
+
+                }
+                else if (Status == "CHIUSE")
+                {
+                    var lista = (from m in db.WEB_AUTO_ListaSpedizioni_2_vw
+                                 where m.IDPerito == aPerito
+                                 where m.IsClosed == true
+                                 select m).ToList();
+                    model.WEB_AUTO_ListaSpedizioni_2_vw = lista;
+
+                }
+
+
+
+                return View(model);
             }
-            else if (Status == "APERTE")
+            else
+
             {
-                var lista = (from m in db.WEB_AUTO_ListaSpedizioni_2_vw
-                             where m.IDPerito == aPerito
-                             where m.IsClosed == false
-                             select m).ToList();
-                model.WEB_AUTO_ListaSpedizioni_2_vw = lista;
-                
+                if (Status == "TUTTE")
+                {
+                    var lista = (from m in db.WEB_AUTO_ListaSpedizioni_CMN_vw
+                                 where m.IDPerito == aPerito
+                                 select m).ToList();
+                    model.WEB_AUTO_ListaSpedizioni_CMN_vw = lista;
+
+                }
+                else if (Status == "APERTE")
+                {
+                    var lista = (from m in db.WEB_AUTO_ListaSpedizioni_CMN_vw
+                                 where m.IDPerito == aPerito
+                                 where m.IsClosed == false
+                                 select m).ToList();
+                    model.WEB_AUTO_ListaSpedizioni_CMN_vw = lista;
+
+                }
+                else if (Status == "CHIUSE")
+                {
+                    var lista = (from m in db.WEB_AUTO_ListaSpedizioni_CMN_vw
+                                 where m.IDPerito == aPerito
+                                 where m.IsClosed == true
+                                 select m).ToList();
+                    model.WEB_AUTO_ListaSpedizioni_CMN_vw = lista;
+
+                }
+
+
+
+                return View(model);
             }
-            else if (Status == "CHIUSE")
-            {
-                var lista = (from m in db.WEB_AUTO_ListaSpedizioni_2_vw
-                             where m.IDPerito == aPerito
-                             where m.IsClosed == true
-                             select m).ToList();
-                model.WEB_AUTO_ListaSpedizioni_2_vw = lista;
-                
-            }
-
-            return View(model);
-
-
-            //using (var ctx = new wisedbEntities())
-            //{
-            //    //this will throw an exception
-            //    var myForwardings = ctx.WEB_AUTO_ListaSpedizioni_vw.SqlQuery("SELECT  P.IDSpedizione, S.IDOriginale1 AS RifCliente,0 AS NumPerizie,0 AS Good, 0 As Damaged ,  P.IsClosed, P.IDPerito " +
-            //" FROM            dbo.AGR_PERIZIE_TEMP_MVC AS P WITH(NOLOCK) INNER JOIN " +
-            //                                                               " dbo.AGR_Spedizioni AS S ON P.IDSpedizione = S.ID LEFT OUTER JOIN " +
-            //                                                               " dbo.AGR_PERIZIE_DETT_TEMP_MVC AS D WITH(NOLOCK) ON P.ID = D.IDPerizia " +
-            //                                                               " --GROUP BY P.IDSpedizione, P.IsClosed, P.IDPerito, S.IDOriginale1").ToList();
-            //return View(model.WEB_Auto_Test);
-            //}
 
         }
         

@@ -16,13 +16,31 @@ namespace WEB_Auto.Controllers
         {
             var model = new Models.HomeModel();
 
-            Session["User"] = usr;
+            //string a = Request.Browser.Platform;
+            //a = Request.Browser.Version;
+            string MachineName = "";
+            string OS = "";
+            
+            OS = Request.UserAgent;
+
+            if (OS.ToUpper().Contains("ANDROID"))
+                OS = "ANDROID";
+            else if (OS.ToUpper().Contains("WINDOWS"))
+                OS = "WINDOWS";
+            else
+                OS = "UNKNOWN";
+
+
+            Session["OS"] = OS;
 
             if (String.IsNullOrEmpty(usr))
             {
-                usr = "pierangeli";
+                usr = "caminita"; // pierangeli
+                //usr = "VGrimaldi";
+                //usr = "pierangeli"; // 
                 //usr = Session["User"].ToString();
             }
+
             var myIDPerito = (from s in db.AGR_Periti_WEB
                               where s.Name == usr
                               select s.IDPerito).FirstOrDefault();
@@ -38,6 +56,10 @@ namespace WEB_Auto.Controllers
             var myIDPorto = (from s in db.AGR_Periti_WEB
                               where s.Name == usr
                               select s.IDPorto).FirstOrDefault();
+            var myClasse = (from s in db.AGR_Periti_WEB
+                             where s.Name == usr
+                             select s.Classe).FirstOrDefault();
+            Session["Classe"] = myClasse;
 
             var datiperito = from m in db.Periti
                     where m.IDModem == myIDPerito.ToString()
@@ -81,45 +103,83 @@ namespace WEB_Auto.Controllers
                 end = DateTime.Today.AddDays(+21);
             }
 
-            var Spedizioni = from m in db.AGR_SpedizioniWEB_vw
-                             where m.DataInizioImbarco >= ini
-                             where m.DataInizioImbarco <= end
-                             where ( m.IDPortoImbarco == myIDPorto || m.IDPortoSbarco == myIDPorto)
-                             where m.IDCliente == "51" || m.IDCliente == "GN"
-                             select m;
-            model.AGR_SpedizioniWEB_vw = Spedizioni.ToList().OrderBy(s=>s.DataInizioImbarco);
 
-            var ElencoSpedizioni = new SelectList(model.AGR_SpedizioniWEB_vw.ToList(), "ID", "DescrAlt");
+            if (Session["Classe"].ToString() == "0")
+            {
+                var Spedizioni = from m in db.AGR_SpedizioniWEB_vw
+                                 where m.DataInizioImbarco >= ini
+                                 where m.DataInizioImbarco <= end
+                                 where (m.IDPortoImbarco == myIDPorto || m.IDPortoSbarco == myIDPorto)
+                                 where m.IDCliente == "51" || m.IDCliente == "GN"
+                                 select m;
+                model.AGR_SpedizioniWEB_vw = Spedizioni.ToList().OrderBy(s => s.DataInizioImbarco);
 
-            // Dati per dropdown Meteo
-            var Meteo = from m in db.AGR_Meteo
-                             select m;
-            model.AGR_Meteo = Meteo.ToList();
+                var ElencoSpedizioni = new SelectList(model.AGR_SpedizioniWEB_vw.ToList(), "ID", "DescrAlt");
 
-            var ElencoMeteo = new SelectList(model.AGR_Meteo.ToList(), "ID", "DescrITA");
+                // Dati per dropdown Meteo
+                var Meteo = from m in db.AGR_Meteo
+                            select m;
+                model.AGR_Meteo = Meteo.ToList();
 
-            // Dati per dropdown TipoPErizia
-            var TP = from m in db.AGR_TipiPerizia
-                     where m.ID == "C" ||
-                           m.ID == "D"
-                     select m;
-            model.AGR_TipiPerizia = TP.ToList();
-            var ElencoTP = new SelectList(model.AGR_TipiPerizia.ToList(), "ID", "DescrITA");
+                var ElencoMeteo = new SelectList(model.AGR_Meteo.ToList(), "ID", "DescrITA");
+
+                // Dati per dropdown TipoPErizia
+                var TP = from m in db.AGR_TipiPerizia
+                         where m.ID == "C" ||
+                               m.ID == "D"
+                         select m;
+                model.AGR_TipiPerizia = TP.ToList();
+                var ElencoTP = new SelectList(model.AGR_TipiPerizia.ToList(), "ID", "DescrITA");
+                Session["User"] = usr;
+                Session["IDPerito"] = myIDPerito;
+                Session["IDOperatore"] = myIDOperatore;
+                Session["IDPeritoVero"] = myIDPeritoVero;
+                Session["RTB"] = "";
+                ViewData["ElencoSpedizioni"] = ElencoSpedizioni;
+                ViewData["ElencoMeteo"] = ElencoMeteo;
+                ViewData["ElencoTP"] = ElencoTP;
+                ViewBag.errMess = errMess;
+                return View(model);
+            }
+            else  // GESTIONE Temporanea LIVORNO
+            {
+                var Spedizioni = from m in db.AGR_SpedizioniWEB_vw
+                                 where m.IDCliente == "BE"
+                                 //where m.DataInizioImbarco >= ini
+                                 select m;
+                model.AGR_SpedizioniWEB_vw = Spedizioni.ToList();
+
+                var ElencoSpedizioni = new SelectList(model.AGR_SpedizioniWEB_vw.ToList(), "ID", "DescrAlt");
+
+                // Dati per dropdown Meteo
+                var Meteo = from m in db.AGR_Meteo
+                            select m;
+                model.AGR_Meteo = Meteo.ToList();
+
+                var ElencoMeteo = new SelectList(model.AGR_Meteo.ToList(), "ID", "DescrITA");
+
+                // Dati per dropdown TipoPErizia
+                var TP = from m in db.AGR_TipiPerizia 
+                         where m.ID == "I" || m.ID == "N" || m.ID == "Z" || m.ID == "-" || m.ID == "+"
+                         select m;
+                model.AGR_TipiPerizia = TP.ToList().OrderBy(s=>s.Ordine);
+                var ElencoTP = new SelectList(model.AGR_TipiPerizia.ToList(), "ID", "DescrITA");
+                Session["User"] = usr;
+                Session["IDPerito"] = myIDPerito;
+                Session["IDOperatore"] = myIDOperatore;
+                Session["IDPeritoVero"] = myIDPeritoVero;
+                Session["RTB"] = "";
+                ViewData["ElencoSpedizioni"] = ElencoSpedizioni;
+                ViewData["ElencoMeteo"] = ElencoMeteo;
+                ViewData["ElencoTP"] = ElencoTP;
+                ViewBag.errMess = errMess;
+                return View(model);
+            }
 
             
 
 
 
-            Session["User"] = usr;
-            Session["IDPerito"] = myIDPerito;
-            Session["IDOperatore"] = myIDOperatore;
-            Session["IDPeritoVero"] = myIDPeritoVero;
-            Session["RTB"] = "";
-            ViewData["ElencoSpedizioni"] = ElencoSpedizioni;
-            ViewData["ElencoMeteo"] = ElencoMeteo;
-            ViewData["ElencoTP"] = ElencoTP;
-            ViewBag.errMess = errMess;
-            return View(model);
         }
 
         public ActionResult About()

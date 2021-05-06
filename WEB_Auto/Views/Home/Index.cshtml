@@ -19,7 +19,7 @@
         @{var item2 = Model.Periti.ToList();}
         @{var item3 = Model.AGR_Porti.ToList();}
         @{var item4 = Model.Periti.ToList();}
-        Benvenuto <b>@item1[0].Name </b>
+        Benvenuto <b>@item1[0].Descr </b>
         <br />
         Sei associato al gruppo periti  : @item2[0].IDModem  - @item2[0].Descr
         <br />
@@ -27,17 +27,18 @@
         <br />
     </div>
     <br />
-
-    @using (Html.BeginForm("Index", "Home", new { usr = Session["User"].ToString() }))
+    @if (Session["Classe"].ToString() == "0")
     {
-        <label>Oggi: @Html.RadioButton("Filtro", "OGGI", true, new { onclick = "this.form.submit()" })</label>
-        <label>&nbsp;&nbsp; &nbsp;&nbsp; +/- 3 gg :  @Html.RadioButton("Filtro", "TRE", false, new { onclick = "this.form.submit()" })</label>
-        <label>&nbsp;&nbsp; &nbsp;&nbsp; +/- 7 gg :  @Html.RadioButton("Filtro", "SETTE", false, new { onclick = "this.form.submit()" })</label>
-        <label>&nbsp;&nbsp; &nbsp;&nbsp; +/- 21 gg :  @Html.RadioButton("Filtro", "VENTUNO", false, new { onclick = "this.form.submit()" })</label>
+        using (Html.BeginForm("Index", "Home", new { usr = Session["User"].ToString() }))
+        {
+            <label>Oggi: @Html.RadioButton("Filtro", "OGGI", true, new { onclick = "this.form.submit()" })</label>
+            <label>&nbsp;&nbsp; &nbsp;&nbsp; +/- 3 gg :  @Html.RadioButton("Filtro", "TRE", false, new { onclick = "this.form.submit()" })</label>
+            <label>&nbsp;&nbsp; &nbsp;&nbsp; +/- 7 gg :  @Html.RadioButton("Filtro", "SETTE", false, new { onclick = "this.form.submit()" })</label>
+            <label>&nbsp;&nbsp; &nbsp;&nbsp; +/- 21 gg :  @Html.RadioButton("Filtro", "VENTUNO", false, new { onclick = "this.form.submit()" })</label>
 
 
+        }
     }
-
     <div style="color:red">
         @ViewBag.errMess
     </div>
@@ -49,8 +50,14 @@
         {
 
             @Html.Label("Seleziona spedizione")
-            @*@Html.DropDownList("IDSpedizione", (SelectList)ViewData["ElencoSpedizioni"], "-- Seleziona spedizione --", new { @class = "form-control" })*@
-            @Html.DropDownList("IDSpedizione", (SelectList)ViewData["ElencoSpedizioni"], "-- Seleziona spedizione --", new { @style = "font-size: 13px;", @class = "form-control selectpicker dropupAuto = false data-live-search=true data-size=5" })
+            if (Session["Classe"].ToString() == "0")
+            {
+                @Html.DropDownList("IDSpedizione", (SelectList)ViewData["ElencoSpedizioni"], "-- Seleziona spedizione --", new { @style = "font-size: 13px;", @class = "form-control selectpicker dropupAuto = false data-live-search=true data-size=5" })
+            }
+            else
+            {
+                @Html.DropDownList("IDSpedizione", (SelectList)ViewData["ElencoSpedizioni"], new { @style = "font-size: 13px;", @class = "form-control selectpicker dropupAuto = false data-live-search=true data-size=5" })
+            }
             <br />
 
             @Html.Label("Seleziona meteo")
@@ -65,11 +72,11 @@
 
             @*<div>
 
-                    @Html.Label("Chassis")
+                @Html.Label("Chassis")
 
-                    @Html.TextBox("Chassis", "", new { onkeyup = "InputToUpper(this);" })
+                @Html.TextBox("Chassis", "", new { onkeyup = "InputToUpper(this);" })
 
-                </div>*@
+            </div>*@
             <br /><br />
             <div>
                 <button type="submit" class="btn btn-primary custom">Inserisci perizie</button>

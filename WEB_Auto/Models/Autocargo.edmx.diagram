@@ -42,6 +42,7 @@
         <EntityTypeShape EntityType="wisedbModel.WEB_ListaPerizieFlat_TMP_vw" Width="1.5" PointX="12.375" PointY="17.75" />
         <EntityTypeShape EntityType="wisedbModel.AGR_ModelliAuto_vw" Width="1.5" PointX="14.375" PointY="17.75" />
         <EntityTypeShape EntityType="wisedbModel.AGR_FilesTxt" Width="1.5" PointX="17.375" PointY="16.75" />
+        <EntityTypeShape EntityType="wisedbModel.WEB_AUTO_ListaSpedizioni_CMN_vw" Width="1.5" PointX="0.75" PointY="18.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

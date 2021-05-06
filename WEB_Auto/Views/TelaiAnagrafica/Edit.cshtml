@@ -110,7 +110,7 @@
         </div>
     </div>
 </details>
-@*<br />*@
+<br />
 @if (ViewBag.ErrMess == "Sbloccato")
 {
     <div style="color:green">
@@ -125,11 +125,11 @@ else if (ViewBag.ErrMess == "TARGA CONOSCIUTA")
 }
 else
 {
-    <div style="color:red">
+    <div style="color:red;font-size:20px;text-align:center">
         @ViewBag.ErrMess
     </div>
 }
-<br />
+
 <div>
     @using (Html.BeginForm("SalvaPeriziaTesta", "TelaiAnagrafica", new
     {
@@ -157,6 +157,7 @@ else
                     @Html.Label("Inspection date")
                 </td>
                 <td>
+                    @*@Html.TextBox("DataPerizia", DateTime.Now.ToString("dd/MM/yyyy"))*@
                     @Html.TextBox("DataPerizia", DateTime.Now.ToString("dd/MM/yyyy"), new { @readonly = "readonly", style = "background:lightgrey" })
                 </td>
             </tr>
@@ -195,6 +196,10 @@ else
                         @Html.DropDownList("IDModelloCasa", new SelectList((SelectList)ViewData["ElencoModelli"], "Value", "Text", ViewBag.aIDModelloCasa), "-- Seleziona trasportatore --", new { @class = "form-control selectpicker dropupAuto=false data-live-search=true data-size=5", @onchange = "submitform();" })
 
                     }
+                    @*else if (Session["Classe"].ToString() == "1")
+                    {
+                        @Html.DropDownList("IDModelloCasa", new SelectList((SelectList)ViewData["ElencoModelli"], "Value", "Text", null), "-- Seleziona valore --", new { @class = "form-control selectpicker dropupAuto=false data-live-search=true data-size=5", @onchange = "submitform();" })
+                    }*@
                     else
                     {
                         @Html.DropDownList("IDModelloCasa", new SelectList((SelectList)ViewData["ElencoModelli"], "Value", "Text", ViewBag.aIDModelloCasa), "-- Seleziona valore --", new { @class = "form-control selectpicker dropupAuto=false data-live-search=true data-size=5", @onchange = "submitform();" })
@@ -241,46 +246,54 @@ else
                     </td>
                 </tr>*@
 
-            <tr>
-                <td>
-                    @Html.Label("Condizione")
+                <tr>
+                    <td>
+                        @Html.Label("Condizione")
 
-                </td>
-                @if (item1[0].IDCasa.ToUpper() != "RTB" && (item4[0].IDModello.ToString() != "1240") || (item4[0].IDModello.ToString() == "1240" && ViewBag.aIDModelloCasa != "1240"))
-                {
-                    if (item4[0].FlgNuovoUsato == "N")
+                    </td>
+                    @if (item1[0].IDCasa.ToUpper() == "YYY")
                     {
                         <td>
                             Nuovo:   @Html.RadioButton("Condizione", "N", new { @checked = true, @onchange = "submitform();" })
-                            Usato: @Html.RadioButton("Condizione", "U")
+                            Usato: @Html.RadioButton("Condizione", "U", new { disabled = "disabled" })
                             @*@Html.RadioButtonFor(model => item4[0].FlagControllo, "Test", new { @checked = true })*@
                         </td>
                     }
-                    else if (item4[0].FlgNuovoUsato == "U")
+                    else if (item1[0].IDCasa.ToUpper() != "RTB" && (item4[0].IDModello.ToString() != "1240") || (item4[0].IDModello.ToString() == "1240" && ViewBag.aIDModelloCasa != "1240"))
                     {
-                        <td>
-                            Nuovo:   @Html.RadioButton("Condizione", "N")
-                            Usato: @Html.RadioButton("Condizione", "U", new { @checked = true, @onchange = "submitform();" })
-                            @*@Html.RadioButtonFor(model => item4[0].FlagControllo, "Test", new { @checked = true })*@
-                        </td>
+                        if (item4[0].FlgNuovoUsato == "N")
+                        {
+                            <td>
+                                Nuovo:   @Html.RadioButton("Condizione", "N", new { @checked = true, @onchange = "submitform();" })
+                                Usato: @Html.RadioButton("Condizione", "U")
+                                @*@Html.RadioButtonFor(model => item4[0].FlagControllo, "Test", new { @checked = true })*@
+                            </td>
+                        }
+                        else if (item4[0].FlgNuovoUsato == "U")
+                        {
+                            <td>
+                                Nuovo:   @Html.RadioButton("Condizione", "N")
+                                Usato: @Html.RadioButton("Condizione", "U", new { @checked = true, @onchange = "submitform();" })
+                                @*@Html.RadioButtonFor(model => item4[0].FlagControllo, "Test", new { @checked = true })*@
+                            </td>
+                        }
+                        else
+                        {
+                            <td>
+                                Nuovo:   @Html.RadioButton("Condizione", "N", new { @onchange = "submitform();" })
+                                Usato: @Html.RadioButton("Condizione", "U", new { @onchange = "submitform();" })
+                                @*@Html.RadioButtonFor(model => item4[0].FlagControllo, "Test", new { @checked = true })*@
+                            </td>
+                        }
                     }
                     else
                     {
                         <td>
-                            Nuovo:   @Html.RadioButton("Condizione", "N", new { @onchange = "submitform();" })
-                            Usato: @Html.RadioButton("Condizione", "U", new { @onchange = "submitform();" })
-                            @*@Html.RadioButtonFor(model => item4[0].FlagControllo, "Test", new { @checked = true })*@
+                            Nuovo:   @Html.RadioButton("Condizione", "N", new { disabled = "disabled" })
+                            Usato: @Html.RadioButton("Condizione", "U", new { disabled = "disabled" })
                         </td>
                     }
-                }
-                else
-                {
-                    <td>
-                        Nuovo:   @Html.RadioButton("Condizione", "N", new { disabled = "disabled" })
-                        Usato: @Html.RadioButton("Condizione", "U", new { disabled = "disabled" })
-                    </td>
-                }
-            </tr>
+                </tr>
             <tr>
                 <td>
                     &nbsp;
@@ -391,23 +404,36 @@ else
     {
         @Html.ActionLink("Finito", "EditSpedizione", "ListaPerizie", new { IDSpedizione = ViewBag.IDSpedizione, ViewBag.IDTP }, new { @class = "btn btn-success custom" })
     }
+
     else
     {
-        if (ViewBag.ErrMess == "" || ViewBag.ErrMess == "Sbloccato" || ViewBag.ErrMess == "In modifica" || ViewBag.ErrMess == "TARGA CONOSCIUTA")
+        if ((ViewBag.ErrMess == "" || ViewBag.ErrMess == "Sbloccato" || ViewBag.ErrMess == "In modifica" || ViewBag.ErrMess == "TARGA CONOSCIUTA") && Session["Classe"].ToString() == "0")
         {
             @Html.ActionLink("Finito", "InputTelaio", new
-       {
-           IDPerito = ViewBag.IDPerito,
-           IDSpedizione = ViewBag.IDSpedizione,
-           IDMeteo = ViewBag.IDMeteo,
-           IDTP = ViewBag.IDTP,
-           IsUpdate = ViewBag.IsUpdate,
-           aIDModello = ViewBag.aIDModelloCasa,
-           IsRTB = Session["RTB"]
-       }, new { @class = "btn btn-success custom" })
+            {
+                IDPerito = ViewBag.IDPerito,
+                IDSpedizione = ViewBag.IDSpedizione,
+                IDMeteo = ViewBag.IDMeteo,
+                IDTP = ViewBag.IDTP,
+                IsUpdate = ViewBag.IsUpdate,
+                aIDModello = ViewBag.aIDModelloCasa,
+                IsRTB = Session["RTB"]
+            }, new { @class = "btn btn-success custom" })
         }
+        else if ((ViewBag.ErrMess == "" || ViewBag.ErrMess == "Sbloccato" || ViewBag.ErrMess == "In modifica" || ViewBag.ErrMess == "TARGA CONOSCIUTA") && Session["Classe"].ToString() == "1")
+        {
+            @Html.ActionLink("Finito", "InputTelaio", new
+            {
+                IDPerito = ViewBag.IDPerito,
+                IDSpedizione = ViewBag.IDSpedizione,
+                IDMeteo = ViewBag.IDMeteo,
+                IDTP = ViewBag.IDTP,
+                IsUpdate = ViewBag.IsUpdate,
 
-        else
+                IsRTB = Session["RTB"]
+            }, new { @class = "btn btn-success custom" })
+        }
+        else if(Session["Classe"].ToString() == "1")
         {
             @Html.ActionLink("Finito", "InputTelaio", new
        {
@@ -415,9 +441,23 @@ else
            IDSpedizione = ViewBag.IDSpedizione,
            IDMeteo = ViewBag.IDMeteo,
            IDTP = ViewBag.IDTP,
+           Chassis = item4[0].Telaio,
            aIDModello = ViewBag.aIDModelloCasa,
            IsRTB =  Session["RTB"]
-       }, new { @class = "btn btn-success custom disabled" })}
+       }, new { @class = "btn btn-success custom disabled " })
+        }
+        else
+        {
+                    @Html.ActionLink("Finito", "InputTelaio", new
+                    {
+                        IDPerito = ViewBag.IDPerito,
+                        IDSpedizione = ViewBag.IDSpedizione,
+                        IDMeteo = ViewBag.IDMeteo,
+                        IDTP = ViewBag.IDTP,
+                        aIDModello = ViewBag.aIDModelloCasa,
+                        IsRTB = Session["RTB"]
+                    }, new { @class = "btn btn-success custom disabled" })
+        }
     }
     &nbsp;&nbsp;&nbsp;
     @Html.ActionLink("Elimina", "EliminaPerizia", "TelaiAnagrafica", new

@@ -19,5 +19,7 @@ namespace WEB_Auto.Models
         public string IDPerito { get; set; }
         public string IDPorto { get; set; }
         public string IDVero { get; set; }
+        public int Classe { get; set; }
+        public string Descr { get; set; }
     }
 }

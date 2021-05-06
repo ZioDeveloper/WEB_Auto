@@ -59,5 +59,6 @@ namespace WEB_Auto.Models
         public virtual DbSet<WEB_ListaPerizieFlat_TMP_vw> WEB_ListaPerizieFlat_TMP_vw { get; set; }
         public virtual DbSet<AGR_ModelliAuto_vw> AGR_ModelliAuto_vw { get; set; }
         public virtual DbSet<AGR_FilesTxt> AGR_FilesTxt { get; set; }
+        public virtual DbSet<WEB_AUTO_ListaSpedizioni_CMN_vw> WEB_AUTO_ListaSpedizioni_CMN_vw { get; set; }
     }
 }

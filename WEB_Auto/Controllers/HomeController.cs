@@ -35,9 +35,9 @@ namespace WEB_Auto.Controllers
 
             if (String.IsNullOrEmpty(usr))
             {
-                usr = "caminita"; // pierangeli
+                //usr = "caminita"; // pierangeli
                 //usr = "VGrimaldi";
-                //usr = "pierangeli"; // 
+                usr = "pierangeli"; // 
                 //usr = Session["User"].ToString();
             }
 

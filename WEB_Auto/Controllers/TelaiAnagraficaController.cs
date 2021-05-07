@@ -143,7 +143,8 @@ namespace WEB_Auto.Controllers
                         IDTP = IDTP,
                         Chassis = Chassis,
                         myIDPerizia = myIDPerizia,
-                        aIDModelloCasa = aIDModello
+                        aIDModelloCasa = aIDModello,
+                        ToDoRefresh = true
                     });
                     //return View("Edit");
                 }
@@ -279,11 +280,11 @@ namespace WEB_Auto.Controllers
 
         public ActionResult Edit(string IDPerito, string IDSpedizione, string IDMeteo, string IDTP, string aIDTrasportatore,
                                          string aIDTipoRotabile, string aIDModelloCasa, string myIDPerizia,string flagNU, string Annotazioni, bool Filtrati = true ,
-                                         string errMess = " ", bool IsUpdate = false) // errMess = " " per eludere primo controllo in View Edit
+                                         string errMess = " ", bool IsUpdate = false,bool ToDoRefresh = false) // errMess = " " per eludere primo controllo in View Edit
         {
             // Default = modello, diventa trasportatore per CAB non rotabili
             ViewBag.IsTrasportatore = false;
-
+            ViewBag.ToDoRefresh = ToDoRefresh;
             if (myIDPerizia == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -623,7 +624,7 @@ namespace WEB_Auto.Controllers
 
         public ActionResult SalvaPeriziaTesta(string IDPerito, string IDSpedizione, string IDMeteo, string IDTP, string Chassis, string DataPerizia, string IDModelloCasa, string IDTrasportatoreGrim,
                                               string IDTipoRotabile, bool? isDamaged, string Condizione, string Annotazioni, string myIDPerizia, 
-                                              bool IsUpdate = false,bool Filtrati=true, bool isRapid = false )
+                                              bool IsUpdate = false,bool Filtrati=true, bool isRapid = false, bool ToDoRefresh = false)
         {
             if (isRapid == true)
                 isDamaged = false;
@@ -830,6 +831,13 @@ namespace WEB_Auto.Controllers
                            where m.IDPerizia == myIDPerizia
                            select m;
             model.AGR_PERIZIE_DETT_TEMP_MVC_vw = Dettagli.ToList();
+
+            // Ricerca dettagli altre tipi perizia dello stesso telaio
+            //var DettagliAltri = from m in db.AGR_PERIZIE_DETT_TEMP_MVC_vw
+            //                    where m.IDPerizia == myIDPerizia
+            //                    select m;
+            //model.AGR_PERIZIE_DETT_TEMP_MVC_vw_Altri = DettagliAltri.ToList();
+
             ViewBag.IDPerizia = myIDPerizia;
 
             var test = (from m in db.AGR_PERIZIE_TEMP_MVC
@@ -862,7 +870,7 @@ namespace WEB_Auto.Controllers
         {
             
             string myMessDett = "";
-            bool isOK = CheckAllDetails(IDParte, IDDanno, Note, out myMessDett);
+            bool isOK = CheckAllDetails(IDParte, IDDanno, Note, myIDPerizia, out myMessDett);
             if (isOK)
             {
                 // Inserisco dettagli danno perizia
@@ -1046,7 +1054,10 @@ namespace WEB_Auto.Controllers
             // Controllo modello
             if(String.IsNullOrEmpty(IDModelloCasa))
             {
-                errMEss = "Modello obbligatorio"; return false;
+                if(Session["Classe"].ToString() =="0")
+                { errMEss = "Modello obbligatorio"; return false; }
+                else
+                { errMEss = "Marca costruttore obbligatoria"; return false; }
             }
         
             // Usato NUovo
@@ -1110,8 +1121,19 @@ namespace WEB_Auto.Controllers
             return true;
         }
 
-        public bool CheckAllDetailsRapid(string IDParte, string IDDanno ,string Note, out string errMEss)
+        public bool CheckAllDetailsRapid(string IDParte, string IDDanno ,string Note,string myIDPerizia, out string errMEss)
         {
+            int contaitems = (from m in db.AGR_PERIZIE_DETT_TEMP_MVC
+                              where m.IDPerizia == myIDPerizia
+                              where m.IDParte == IDParte
+                              where m.IDDanno == IDDanno
+                              select m.ID).Count();
+            if (contaitems > 0)
+            {
+                errMEss = "Esiste già identico item /tipo danno !";
+                return false;
+            }
+
             if (String.IsNullOrEmpty(IDParte))
             {
                 errMEss = "Inserire codice parte...";
@@ -1143,8 +1165,20 @@ namespace WEB_Auto.Controllers
             }
         }
 
-        public bool CheckAllDetails(string IDParte, string IDDanno, string Note, out string errMEss)
+        public bool CheckAllDetails(string IDParte, string IDDanno, string Note, string myIDPerizia, out string errMEss)
         {
+            int contaitems = (from m in db.AGR_PERIZIE_DETT_TEMP_MVC
+                              where m.IDPerizia == myIDPerizia
+                              where m.IDParte == IDParte
+                              where m.IDDanno == IDDanno
+                              select m.ID).Count();
+            if (contaitems > 0)
+            {
+                errMEss = "Esiste già identico item /tipo danno !";
+                return false;
+            }
+
+
             if (String.IsNullOrEmpty(IDParte))
             {
                 errMEss = "Inserire codice parte...";
@@ -1162,6 +1196,9 @@ namespace WEB_Auto.Controllers
                 return false;
 
             }
+
+           
+
             else
             {
                 errMEss = "";
@@ -1297,7 +1334,7 @@ namespace WEB_Auto.Controllers
         {
             string myMessDett = "";
             IDDanno = IDDanno.ToUpper();
-            bool isOK = CheckAllDetailsRapid(IDParte, IDDanno , Note , out myMessDett);
+            bool isOK = CheckAllDetailsRapid(IDParte, IDDanno , Note , myIDPerizia, out myMessDett);
 
             if (isOK)
             {

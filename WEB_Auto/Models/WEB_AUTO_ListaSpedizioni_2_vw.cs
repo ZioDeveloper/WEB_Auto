@@ -25,5 +25,6 @@ namespace WEB_Auto.Models
         public Nullable<System.DateTime> DataPartenzaImbarco { get; set; }
         public Nullable<System.DateTime> DataArrivoSbarco { get; set; }
         public Nullable<int> NumPDF { get; set; }
+        public string IDCasa { get; set; }
     }
 }

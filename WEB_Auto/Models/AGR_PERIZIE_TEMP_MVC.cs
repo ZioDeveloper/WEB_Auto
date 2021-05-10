@@ -57,6 +57,7 @@ namespace WEB_Auto.Models
         public bool IsClosed { get; set; }
         public Nullable<int> IDOperatore { get; set; }
         public bool IsTransferred { get; set; }
+        public string MachineName { get; set; }
     
         public virtual AGR_PerizieExpGrim_Temp_MVC AGR_PerizieExpGrim_Temp_MVC { get; set; }
     }

@@ -44,6 +44,7 @@
             <th>Modifica</th>
             <th>Spedizione</th>
             <th>Viaggio</th>
+            <th>Casa</th>
             <th>Partenza</th>
             @*<th>Arrivo</th>*@
             <th>TP</th>
@@ -63,48 +64,51 @@
         {
             foreach (var item in Model.WEB_AUTO_ListaSpedizioni_2_vw)
             {
-                <tr>
-                    <td>
-                        @Html.ActionLink("Visualizza", "EditSpedizione", new { IDSpedizione = item.ID, IDTP = item.IDTipoPerizia }, new { @class = "btn btn-success btn-xs" })
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ID)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.IDOriginale1)
-                    </td>
+        <tr>
+            <td>
+                @Html.ActionLink("Visualizza", "EditSpedizione", new { IDSpedizione = item.ID, IDTP = item.IDTipoPerizia }, new { @class = "btn btn-success btn-xs" })
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IDOriginale1)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IDCasa)
+            </td>
 
-                    <td>
-                        @Convert.ToDateTime(item.DataPartenzaImbarco).ToString("dd/MM/yyyy")
-                        @*@Html.DisplayFor(modelItem => item.DataPartenzaImbarco)*@
-                    </td>
+            <td>
+                @Convert.ToDateTime(item.DataPartenzaImbarco).ToString("dd/MM/yyyy")
+                @*@Html.DisplayFor(modelItem => item.DataPartenzaImbarco)*@
+            </td>
 
-                    <td>
-                        @Html.DisplayFor(modelItem => item.IDTipoPerizia)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.NumPerizie)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Good)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Damaged)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.IsClosed)
-                    </td>
-                    <td>
-                        @Html.ActionLink("Chiudi", "ChiudiSpedizione", new { IDSpedizione = item.ID, IDTP = item.IDTipoPerizia }, new { @class = "btn btn-warning btn-xs" })
-                    </td>
-                    <td>
-                        @Html.ActionLink("Inserisci PDF", "ScattaPDFSpedizione", "Documenti", new { myIDSpedizione = item.ID }, new { @class = "pdfImg" })
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.NumPDF)
-                    </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IDTipoPerizia)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NumPerizie)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Good)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Damaged)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsClosed)
+            </td>
+            <td>
+                @Html.ActionLink("Chiudi", "ChiudiSpedizione", new { IDSpedizione = item.ID, IDTP = item.IDTipoPerizia }, new { @class = "btn btn-warning btn-xs" })
+            </td>
+            <td>
+                @Html.ActionLink("Inserisci PDF", "ScattaPDFSpedizione", "Documenti", new { myIDSpedizione = item.ID }, new { @class = "pdfImg" })
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NumPDF)
+            </td>
 
-                </tr>
+        </tr>
             }
         }
         else
@@ -163,6 +167,7 @@
             <th>Modifica</th>
             <th>Spedizione</th>
             <th>Viaggio</th>
+            <th>Casa</th>
             <th>Partenza</th>
             @*<th>Arrivo</th>*@
 

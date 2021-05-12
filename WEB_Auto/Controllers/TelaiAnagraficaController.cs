@@ -14,7 +14,7 @@ namespace WEB_Auto.Controllers
     {
         private wisedbEntities db = new wisedbEntities();
         // GET: TelaiAnagrafica
-        public ActionResult InputTelaio(string IDPerito, string IDSpedizione,string IDMeteo, string IDTP, string Chassis,string aIDModello, bool IsRTB = false)
+        public ActionResult InputTelaio(string IDPerito, string IDSpedizione,string IDMeteo, string IDTP, string Chassis,string aIDModello,string DataPerizia, bool IsRTB = false)
         {
             if(!String.IsNullOrEmpty(IDPerito))
                 EliminaTelaiSenzaModello(IDPerito);
@@ -38,6 +38,18 @@ namespace WEB_Auto.Controllers
             if (Session["RTB"].ToString().ToUpper() == "TRUE" && IsRTB)
                 IsRTB = true;
 
+            if(!String.IsNullOrEmpty(DataPerizia))
+                Session["DataRicorda"] = DataPerizia;
+           
+
+            if (!String.IsNullOrEmpty(Session["DataRicorda"].ToString()))
+            {
+                ViewBag.DataRipetuta = Session["DataRicorda"].ToString();
+            }
+            else
+            {
+                ViewBag.DataRipetuta = "";
+            }
 
 
             if (String.IsNullOrEmpty(Session["RTB"].ToString()))
@@ -82,7 +94,7 @@ namespace WEB_Auto.Controllers
                 if (cnt == 0)
                 {
 
-                   string myIDPerizia = CreaNuovaPerizia(IDPerito, IDSpedizione, IDMeteo, IDTP, myTelaio);
+                   string myIDPerizia = CreaNuovaPerizia(IDPerito, IDSpedizione, IDMeteo, IDTP, myTelaio,DataPerizia);
                    return RedirectToAction("Edit", "TelaiAnagrafica", new { IDPerito = IDPerito, IDSpedizione=  IDSpedizione, IDMeteo= IDMeteo,
                        IDTP = IDTP,  Chassis=Chassis, myIDPerizia= myIDPerizia,  aIDModelloCasa = aIDModello });
                     //return View("Edit");
@@ -134,7 +146,7 @@ namespace WEB_Auto.Controllers
                 if (cnt == 0)
                 {
 
-                    string myIDPerizia = CreaNuovaPerizia(IDPerito, IDSpedizione, IDMeteo, IDTP, myTelaio);
+                    string myIDPerizia = CreaNuovaPerizia(IDPerito, IDSpedizione, IDMeteo, IDTP, myTelaio,null);
                     return RedirectToAction("Edit", "TelaiAnagrafica", new
                     {
                         IDPerito = IDPerito,
@@ -202,7 +214,7 @@ namespace WEB_Auto.Controllers
         }
 
 
-        public string CreaNuovaPerizia(string IDPerito, string IDSpedizione, string IDMeteo, string IDTP, string Chassis)
+        public string CreaNuovaPerizia(string IDPerito, string IDSpedizione, string IDMeteo, string IDTP, string Chassis, string aDataPerizia)
         {
 
             var charsToRemove = new string[] { "@", ",", ";", "-", "_", "'" ,"?","^","|" ,"!",":",".","#","[", "]"};
@@ -210,8 +222,27 @@ namespace WEB_Auto.Controllers
             {
                 Chassis = Chassis.Replace(c, string.Empty);
             }
-
             DateTime DataPerizia = DateTime.Now;
+            DateTime myDate;
+            if (!String.IsNullOrEmpty(aDataPerizia))
+            {
+                //DateTime myDate = DateTime.ParseExact("2009-05-08 14:40:52,531", "yyyy-MM-dd HH:mm:ss,fff",
+                //                       System.Globalization.CultureInfo.InvariantCulture);
+                DateTime ora = DateTime.Now;
+                string ore = ora.Hour.ToString("00");
+                string minuti = ora.Minute.ToString("00"); ;
+                string secondi = ora.Second.ToString("00"); ;
+
+                string myISoDate = aDataPerizia.Right(4) + aDataPerizia.Substring(3, 2) + aDataPerizia.Left(2) + " " + ore + ":" + minuti + ":" + secondi;
+                myDate = DateTime.ParseExact(myISoDate, "yyyyMMdd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
+
+            }
+            else
+            {
+                myDate = DataPerizia;
+            }
+
+
             string myIDPerizia = GetNewCode_AUTO(IDPerito,IDSpedizione);
             string OS = Session["OS"].ToString();
             string myNote = "";
@@ -226,7 +257,7 @@ namespace WEB_Auto.Controllers
                                                                  new SqlParameter("@IDSpedizione", IDSpedizione),
                                                                  new SqlParameter("@IDPerito", IDPerito),
                                                                  new SqlParameter("@IDTipoPerizia", IDTP),
-                                                                 new SqlParameter("@DataPerizia", DataPerizia),
+                                                                 new SqlParameter("@DataPerizia", myDate),
                                                                  new SqlParameter("@IDNazione", "***"),
                                                                  new SqlParameter("@Telaio", Chassis),
                                                                  new SqlParameter("@NumFoto", "0"),
@@ -632,16 +663,26 @@ namespace WEB_Auto.Controllers
             if (isDamaged == true)
                 isRapid = false;
 
+            DateTime ora = DateTime.Now;
+            string ore = ora.Hour.ToString("00");
+            string minuti = ora.Minute.ToString("00"); ;
+            string secondi = ora.Second.ToString("00"); ;
+
+            string myISoDate = DataPerizia.Right(4) + DataPerizia.Substring(3, 2) + DataPerizia.Left(2) + " " + ore + ":" + minuti + ":" + secondi;
+
             // Verifico Sia tutto ok.. to do !!!!!
-            bool isOK = CheckAll(IDSpedizione, Chassis, IDModelloCasa, IDTrasportatoreGrim , IDTipoRotabile, Condizione , Annotazioni, out string myerrMess);
+            bool isOK = CheckAll(IDSpedizione, Chassis, IDModelloCasa, IDTrasportatoreGrim , IDTipoRotabile, Condizione , Annotazioni,DataPerizia, out string myerrMess);
             if (isOK)
             {
-
+                
 
                 // Aggiorno dati perizia
                 string sqlcmd = " UPDATE AGR_PERIZIE_Temp_MVC " +
-                                " SET IDSpedizione = @IDSpedizione , IDModello = @IDModello, Telaio = @Telaio, NumFoto = @NumFoto , FileNumber = 0 , Note = @Note " +
+                                " SET IDSpedizione = @IDSpedizione , IDModello = @IDModello, Telaio = @Telaio, NumFoto = @NumFoto , FileNumber = 0 , Note = @Note,DataPerizia = @DataPerizia " +
                                 " WHERE ID = @IDPerizia";
+                //string sqlcmd = " UPDATE AGR_PERIZIE_Temp_MVC " +
+                //                " SET IDSpedizione = @IDSpedizione , IDModello = @IDModello, Telaio = @Telaio, NumFoto = @NumFoto , FileNumber = 0 , Note = @Note " +
+                //                " WHERE ID = @IDPerizia";
 
 
                 int Inserted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@IDPerizia", myIDPerizia),
@@ -649,6 +690,7 @@ namespace WEB_Auto.Controllers
                                                                      new SqlParameter("@IDModello", IDModelloCasa),
                                                                      new SqlParameter("@Telaio", Chassis),
                                                                      new SqlParameter("@NumFoto", "0"),
+                                                                     new SqlParameter("@DataPerizia", myISoDate),
                                                                      new SqlParameter("@Note", Annotazioni));
                 if (Inserted > 0)
                 {
@@ -1046,7 +1088,8 @@ namespace WEB_Auto.Controllers
             return cnt;
         }
 
-        public bool CheckAll(string aIDSpedizione ,string aTelaio, string IDModelloCasa, string IDTrasportatoreGrim,  string IDTipoRotabile , string Condizione,string Annotazioni, out string errMEss)
+        public bool CheckAll(string aIDSpedizione ,string aTelaio, string IDModelloCasa, string IDTrasportatoreGrim,  string IDTipoRotabile , string Condizione,
+                             string Annotazioni,string DataPerizia, out string errMEss)
         {
             // Dati spedizione
             errMEss = "";
@@ -1082,6 +1125,24 @@ namespace WEB_Auto.Controllers
                 return false;
             }
 
+
+            if (Session["Classe"].ToString() == "0")
+            {
+                var DataxConfronto = (from m in db.AGR_Spedizioni
+                                      where m.ID == aIDSpedizione
+                                      select m.DataPartenzaImbarco).FirstOrDefault();
+
+
+                DateTime myDate = DateTime.ParseExact(DataPerizia, "dd/MM/yyyy",
+                                           System.Globalization.CultureInfo.InvariantCulture);
+
+                if (myDate > DataxConfronto)
+                {
+
+                    errMEss += "Data errata :  non deve superare data partenza !";
+                    return false;
+                }
+            }
             // Lunghezza telaio x rotabili
             //if(IDModelloCasa == "1240" || IDModelloCasa =="1241")
             //{
@@ -1100,7 +1161,7 @@ namespace WEB_Auto.Controllers
             //    }
             //}
 
-            if(IDTrasportatoreGrim == "0" && String.IsNullOrEmpty(Annotazioni))
+            if (IDTrasportatoreGrim == "0" && String.IsNullOrEmpty(Annotazioni))
             {
                 errMEss += "Note obbligatorie ";
                 return false;

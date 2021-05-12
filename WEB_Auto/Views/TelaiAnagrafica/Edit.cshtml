@@ -158,7 +158,17 @@ else
                     </td>
                     <td>
                         @*@Html.TextBox("DataPerizia", DateTime.Now.ToString("dd/MM/yyyy"))*@
-                        @Html.TextBox("DataPerizia", DateTime.Now.ToString("dd/MM/yyyy"), new { @readonly = "readonly", style = "background:lightgrey" })
+                        @if (Session["OS"].ToString() == "ANDROID")
+                        {
+                            @Html.TextBox("DataPerizia", DateTime.Now.ToString("dd/MM/yyyy"), new { @readonly = "readonly", style = "background:lightgrey" })
+                        }
+                        else
+                        {
+                            @Html.TextBox("DataPerizia", @Convert.ToDateTime(item4[0].DataPerizia).ToString("dd/MM/yyyy"), new { style = "background:lightgrey" })
+                            @*@Html.TextBox("DataPerizia", DateTime.Now.ToString("dd/MM/yyyy"), new { @readonly = "readonly", style = "background:lightgrey" })*@
+
+                        }
+
                     </td>
                 </tr>
                 @*<tr>
@@ -539,16 +549,16 @@ else
     }
 
 </script>
-@if (ViewBag.ToDoRefresh == true)
+@if (ViewBag.ToDoRefresh == true && Session["OS"].ToString()!="WINDOWS")
 {
-<script>
-    var auto_refresh = setInterval(
-        function () {
-            submitform2();
-        }, 100);   // mezzo secondo
+    <script>
+        var auto_refresh = setInterval(
+            function () {
+                submitform2();
+            }, 100);   // mezzo secondo
 
-    function submitform2() {
-        document.getElementById('miocmd').click();
-    }
-</script>
+        function submitform2() {
+            document.getElementById('miocmd').click();
+        }
+    </script>
 }

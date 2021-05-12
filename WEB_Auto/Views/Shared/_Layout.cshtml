@@ -27,6 +27,10 @@
                         <li>@Html.ActionLink("Cerca telaio", "CercaTelaio", "Storico")</li>
                         <li>@Html.ActionLink("Lista spedizioni", "ListaSpedizioni", "ListaPerizie")</li>
                         <li>@Html.ActionLink("Modifica viaggio", "ModificaViaggio", "ModificaViaggio")</li>
+                        if (Session["OS"].ToString() == "WINDOWS")
+                        {
+                            @*<li>@Html.ActionLink("Modifica data perizia", "ModificaDataPerizia", "ModificaViaggio")</li>*@
+                        }
                         <li>@Html.ActionLink("Dati preload", "VisualizzaPreload", "Storico")</li>
                         <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
                     }
@@ -34,9 +38,9 @@
                     else
                     {
                         <li>@Html.ActionLink("Home", "Index", "Home", new { usr = Session["User"].ToString() }, null)</li>
-                       
+
                         <li>@Html.ActionLink("Lista spedizioni", "ListaSpedizioni", "ListaPerizie")</li>
-                        
+
                         <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
                     }
 

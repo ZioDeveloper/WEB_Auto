@@ -504,6 +504,7 @@
     <Content Include="Views\Storico\CarouselFotoStoriche.cshtml" />
     <Content Include="Views\Documenti\ScattaPDFSpedizione.cshtml" />
     <Content Include="Views\Shared\SpedizioneChiusa.cshtml" />
+    <Content Include="Views\ModificaViaggio\ModificaDataPerizia.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

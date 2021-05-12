@@ -7,6 +7,7 @@
 <br /><br />
 <div style="text-align:left">
 <h4>Inserire Telaio </h4>
+    @{string aData = ViewBag.DataRipetuta;}
 @using (Html.BeginForm("InputTelaio", "TelaiAnagrafica", new
 {
     IDPerito = ViewBag.IDPerito,
@@ -22,11 +23,29 @@
         <td>
 
 
-            @Html.TextBox("Chassis", null, new { style = "width:180px;text-transform:uppercase" , @id = "Telaio", @maxlength = "17", @placeholder = "CLICK TO SCAN:", @autofocus = "autofocus", @autocomplete = "off" })
+            @Html.TextBox("Chassis", null, new { style = "width:180px;text-transform:uppercase", @id = "Telaio", @maxlength = "17", @placeholder = "CLICK TO SCAN:", @autofocus = "autofocus", @autocomplete = "off" })
             @Html.ValidationMessage("Telaio")
 
         </td>
     </tr>
+    <tr><td>&nbsp;</td></tr>
+    <tr>
+        @if (Session["OS"].ToString() == "WINDOWS" && Session["CLASSE"].ToString() == "0")
+        {
+        <td>
+
+            <div style="color:red">
+                Compilare solo per inserimenti retrodatati.<br />
+
+            </div>
+            <div style="color:black">
+                Formato data = gg/mm/aaaa
+            </div>
+                @Html.TextBox("DataPerizia", aData, new { style = "width:180px;text-transform:uppercase", @id = "Telaio", @maxlength = "17", @placeholder = "Data NON di sistema ", @autofocus = "autofocus", @autocomplete = "off" })
+</td>
+        }
+    </tr>
+    <tr><td>&nbsp;</td></tr>@*<tr><td>&nbsp;</td></tr>*@
     <tr>
         @if (ViewBag.Casa == "CAB")
         {
@@ -43,12 +62,7 @@
                 </td>
             }
         }
-        @*else
-        {
-            <td>
-                Perizia RTB  @Html.CheckBox("IsRTB", true, new { @onclick = "this.form.submit();" })
-            </td>
-        }*@
+
     </tr>
     <tr>
 
@@ -60,7 +74,7 @@
 
         </td>
     </tr>
- </table>
+</table>
 }
 
 </div>

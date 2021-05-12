@@ -20,13 +20,16 @@ namespace WEB_Auto.Controllers
             //a = Request.Browser.Version;
             string MachineName = "";
             string OS = "";
-            
+
+            Session["DataRicorda"] = "";
+
             OS = Request.UserAgent;
 
             if (OS.ToUpper().Contains("ANDROID"))
                 OS = "ANDROID";
             else if (OS.ToUpper().Contains("WINDOWS"))
                 OS = "WINDOWS";
+                
             else
                 OS = "UNKNOWN";
 
@@ -35,7 +38,7 @@ namespace WEB_Auto.Controllers
 
             if (String.IsNullOrEmpty(usr))
             {
-                //usr = "caminita"; // pierangeli
+               //usr = "caminita"; // pierangeli
                 //usr = "VGrimaldi";
                 //usr = "grimaldi"; // 
                 usr = "pierangeli"; // 
@@ -136,6 +139,7 @@ namespace WEB_Auto.Controllers
                 Session["IDOperatore"] = myIDOperatore;
                 Session["IDPeritoVero"] = myIDPeritoVero;
                 Session["RTB"] = "";
+               
                 ViewData["ElencoSpedizioni"] = ElencoSpedizioni;
                 ViewData["ElencoMeteo"] = ElencoMeteo;
                 ViewData["ElencoTP"] = ElencoTP;

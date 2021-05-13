@@ -47,7 +47,13 @@
         </div>
         @using (Html.BeginForm("ModificaViaggio", "ModificaViaggio", new { }, FormMethod.Get))
         {
-            @Html.Label("Viaggio da modificare")<br/>
+            <label>Solo Rotabili : @Html.RadioButton("TipoMezzo", "RTB", false, new { onclick = "this.form.submit()" })</label>
+            <label>&nbsp;&nbsp; &nbsp;&nbsp; Solo auto  @Html.RadioButton("TipoMezzo", "AUTO", false, new { onclick = "this.form.submit()" })</label>
+            <label>&nbsp;&nbsp; &nbsp;&nbsp; Tutte:  @Html.RadioButton("TipoMezzo", "TUTTE", true, new { onclick = "this.form.submit()" })</label>
+        }
+        @using (Html.BeginForm("ModificaViaggio", "ModificaViaggio", new { }, FormMethod.Get))
+        {
+            @Html.Label("Viaggio da modificare")<br />
             @Html.TextBox("aViaggio")
             <button type="submit" value="Cerca" class="btn btn-sm btn-dark rounded-0"><i class="fa fa-search fa-lg"></i> Ricerca  viaggio</button>
         }
@@ -55,7 +61,7 @@
         <div class="card-body">
             @using (Html.BeginForm("ModificaViaggio", "ModificaViaggio", new { VecchioViaggio = ViewBag.myViaggio }, FormMethod.Post))
             {
-                @Html.Label("Nuovo numero di viaggio ")<br /> 
+                @Html.Label("Nuovo numero di viaggio ")<br />
                 @Html.TextBox("NuovoViaggio")
 
                 <button type="submit" value="Confirm" class="btn btn-sm btn-danger rounded-0" onclick="return confirm('Procedere con modifica dati viaggio?')"><i class="fa fa-floppy-o fa-lg"></i>Modifica</button>

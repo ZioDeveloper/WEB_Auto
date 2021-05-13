@@ -12,9 +12,39 @@ namespace WEB_Auto.Controllers
     {
         private wisedbEntities db = new wisedbEntities();
         // GET: ModificaViaggio
-        public ActionResult ModificaViaggio(string aViaggio)
+        public ActionResult ModificaViaggio(string aViaggio,string TipoMezzo)
         {
             var model = new Models.HomeModel();
+            string aPerito = Session["IDPeritoVero"].ToString();
+            if (TipoMezzo == "TUTTE")
+            {
+                var list = (from m in db.WEB_Auto_ListaPerizieXSpedizione_vw
+                             where m.IDOriginale1 == aViaggio
+                            where m.IDPerito == aPerito
+                            select m).ToList();
+                model.WEB_Auto_ListaPerizieXSpedizione_vw = list;
+            }
+            else if (TipoMezzo == "RTB")
+            {
+                var list = (from m in db.WEB_Auto_ListaPerizieXSpedizione_vw
+                            where m.IDOriginale1 == aViaggio
+                            where m.IDPerito == aPerito
+                            where m.IDModello.ToString() == "1240" || m.IDModello.ToString() == "1241"
+                             select m).ToList();
+                model.WEB_Auto_ListaPerizieXSpedizione_vw = list;
+            }
+            if (TipoMezzo == "AUTO")
+            {
+                var list = (from m in db.WEB_Auto_ListaPerizieXSpedizione_vw
+                            where m.IDOriginale1 == aViaggio
+                            where m.IDPerito == aPerito
+                            where m.IDModello.ToString() != "1240" && m.IDModello.ToString() != "1241"
+                             select m).ToList();
+                model.WEB_Auto_ListaPerizieXSpedizione_vw = list;
+            }
+
+
+           // var model = new Models.HomeModel();
             var lista = (from m in db.WEB_Auto_ListaPerizieXSpedizione_vw
                          where m.IDOriginale1 == aViaggio
 
@@ -55,10 +85,10 @@ namespace WEB_Auto.Controllers
 
         public void ModificaSpedizione( string newViaggio,string IDPerizia)
         {
-
+            // Cerco la spedizione giusta per questa perizia
             var myPerizia = (from m in db.WEB_Auto_ListaPerizieXSpedizione_vw
                              where m.ID == IDPerizia
-                             select new { m.IDSpedizione, m.IDCasa }).FirstOrDefault();
+                             select new { m.IDSpedizione, m.IDCasa,m.Telaio }).FirstOrDefault();
 
             string myIDSpedizione = myPerizia.IDSpedizione;
             string myIDCasa = myPerizia.IDCasa;
@@ -68,21 +98,26 @@ namespace WEB_Auto.Controllers
                                where m.IDCasa == myIDCasa
                                select m.ID).FirstOrDefault();
 
+            // Verifico che nn ci sia già lo stesso telaio 
+            var cnt = (from m in db.AGR_PERIZIE_TEMP_MVC
+                            where m.IDSpedizione == myNewIDSped
+                            where m.Telaio == myPerizia.Telaio
+                            select m.ID).Count();
+            
 
-            //var myIDNew = (from m in db.AGR_Spedizioni
-            //                where m.IDOriginale1 == newViaggio
-            //                select m.ID).FirstOrDefault();
-
-            if (!String.IsNullOrEmpty(myNewIDSped))
+            if (!String.IsNullOrEmpty(myNewIDSped) && cnt==0)
             {
                 string sqlcmd = " UPDATE AGR_PERIZIE_Temp_MVC " +
                                         " SET  IDSpedizione = @IDSpedizione " +
                                         " WHERE ID = @IDPerizia";
                 int Inserted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@IDPerizia", IDPerizia),
-                                                                 new SqlParameter("@IDSpedizione", myNewIDSped));
+                                                                     new SqlParameter("@IDSpedizione", myNewIDSped));
             }
 
+
         }
+
+
         public ActionResult ModificaDataPerizia(string aViaggio, string errMess = "")
         {
             var model = new Models.HomeModel();

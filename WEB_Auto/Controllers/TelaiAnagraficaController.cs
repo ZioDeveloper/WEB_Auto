@@ -14,6 +14,27 @@ namespace WEB_Auto.Controllers
     {
         private wisedbEntities db = new wisedbEntities();
         // GET: TelaiAnagrafica
+
+        public bool EsisteStessoOggetto(string Telaio , string IDSpedizione , string DataPerizia)
+        {
+
+            var Attuale = (from m in db.AGR_Spedizioni
+                           where m.ID == IDSpedizione
+                           select new { m.DataPartenzaImbarco,m.IDPortoImbarco,m.IDPortoSbarco }).FirstOrDefault();
+            DateTime DataAttuale = (DateTime)Attuale.DataPartenzaImbarco;
+            string POL = Attuale.IDPortoImbarco.ToString();
+            string POD = Attuale.IDPortoSbarco.ToString();
+
+            var Precedente = (from m in db.AGR_Spedizioni
+                              where m.IDPortoImbarco == POL
+                              where m.IDPortoSbarco == POD
+                              where m.DataPartenzaImbarco < DataAttuale
+                              select new { m.DataInizioImbarco, m.IDPortoImbarco, m.IDPortoSbarco }).OrderByDescending(s=>s.DataInizioImbarco).FirstOrDefault();
+
+
+
+            return false;
+        }
         public ActionResult InputTelaio(string IDPerito, string IDSpedizione,string IDMeteo, string IDTP, string Chassis,string aIDModello,string DataPerizia, bool IsRTB = false)
         {
             if(!String.IsNullOrEmpty(IDPerito))
@@ -26,6 +47,9 @@ namespace WEB_Auto.Controllers
                        select m.ID).Count();
             if (chiuse > 0)
                 return View("SpedizioneChiusa");
+
+            if(EsisteStessoOggetto(Chassis, IDSpedizione, DataPerizia))
+            { return View("SpedizioneChiusa"); }
 
             if (String.IsNullOrEmpty(IDSpedizione))
             {
@@ -390,27 +414,7 @@ namespace WEB_Auto.Controllers
             }
             else
             {
-                //if (aCasa == "CAB" && Filtrati )
-                //{
-                //    var modello = from m in db.AGR_ModelliAuto_CAB_vw
-                //                  where m.IDCliente == "**"
-                //                  where m.IDCasa == aCasa
-                //                  where m.IDModelloCasa == "2055" || m.IDModelloCasa == "2006" || m.IDModelloCasa == "1922"
-                //                  select m;
-                //    model.AGR_ModelliAuto_CAB_vw = modello.ToList().OrderBy(m => m.Descr);
-                //    var ElencoModelli = new SelectList(model.AGR_ModelliAuto_CAB_vw.ToList(), "ID", "Descr");
-                //    ViewData["ElencoModelli"] = ElencoModelli;
-                //}
-                //else
-                //{
-                //    var modello = from m in db.AGR_ModelliAuto_CAB_vw
-                //                  where m.IDCliente == "**"
-                //                  where m.IDCasa == aCasa
-                //                  select m;
-                //    model.AGR_ModelliAuto_CAB_vw = modello.ToList().OrderBy(m => m.Descr);
-                //    var ElencoModelli = new SelectList(model.AGR_ModelliAuto_CAB_vw.ToList(), "ID", "Descr");
-                //    ViewData["ElencoModelli"] = ElencoModelli;
-                //}
+
                 
                 if (aCasa == "CAB" && Filtrati && Session["RTB"].ToString().ToUpper() != "TRUE" && String.IsNullOrEmpty(aIDModelloCasa))
                 {
@@ -430,13 +434,6 @@ namespace WEB_Auto.Controllers
                     var ElencoModelli = new SelectList(model.AGR_ModelliAuto_vw.ToList(), "ID", "Descr");
                     ViewData["ElencoModelli"] = ElencoModelli;
                     ViewBag.IsTrasportatore = false;
-                    //var modello = from m in db.AGR_ModelliAuto
-                    //              where m.IDCliente == "**"
-                    //              where m.IDCasa == aCasa
-                    //              select m;
-                    //model.AGR_ModelliAuto = modello.ToList().OrderBy(m => m.Descr);
-                    //var ElencoModelli = new SelectList(model.AGR_ModelliAuto.ToList(), "ID", "Descr");
-                    //ViewData["ElencoModelli"] = ElencoModelli;
                 }
                 else if (aCasa == "CAB" && Filtrati && Session["RTB"].ToString().ToUpper() == "TRUE" && String.IsNullOrEmpty(aIDModelloCasa))
                 {
@@ -450,24 +447,9 @@ namespace WEB_Auto.Controllers
                     ViewData["ElencoModelli"] = ElencoModelli;
                     ViewBag.IsTrasportatore = false;
 
-                    //var modello = from m in db.AGR_ModelliAuto
-                    //              where m.IDCliente == "**"
-                    //              where m.IDCasa == aCasa
-                    //              select m;
-                    //model.AGR_ModelliAuto = modello.ToList().OrderBy(m => m.Descr);
-                    //var ElencoModelli = new SelectList(model.AGR_ModelliAuto.ToList(), "ID", "Descr");
-                    //ViewData["ElencoModelli"] = ElencoModelli;
-                }
-                //else if (!String.IsNullOrEmpty(aIDModelloCasa))
-                //{
-                //    var modello = from m in db.AGR_ModelliAuto_vw
 
-                //                  where m.IDModelloCasa == aIDModelloCasa
-                //                  select m;
-                //    model.AGR_ModelliAuto_vw = modello.ToList().OrderBy(m => m.Descr);
-                //    var ElencoModelli = new SelectList(model.AGR_ModelliAuto_vw.ToList(), "ID", "Descr");
-                //    ViewData["ElencoModelli"] = ElencoModelli;
-                //}
+                }
+
                 else
                 {
                     var myTelaio = (from m in db.AGR_Perizie_MVC_Flat_vw
@@ -995,8 +977,11 @@ namespace WEB_Auto.Controllers
             sqlcmd = " DELETE FROM  AGR_PERIZIE_TEMP_MVC WHERE ID = @ID";
             deleted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@ID", IDPerizia));
 
-
-            return RedirectToAction("InputTelaio", "TelaiAnagrafica" ,new { IDPerito, IDSpedizione, IDMeteo, IDTP });
+            if(!IsUpdate)
+                return RedirectToAction("InputTelaio", "TelaiAnagrafica" ,new { IDPerito, IDSpedizione, IDMeteo, IDTP });
+            else
+                return RedirectToAction("EditSpedizione", "ListaPerizie", new { IDPerito, IDSpedizione, IDMeteo, IDTP });
+            
         }
 
         public void AggiornaFlagGoodDamaged(string aIDPerizia)
@@ -1126,23 +1111,23 @@ namespace WEB_Auto.Controllers
             }
 
 
-            if (Session["Classe"].ToString() == "0")
-            {
-                var DataxConfronto = (from m in db.AGR_Spedizioni
-                                      where m.ID == aIDSpedizione
-                                      select m.DataPartenzaImbarco).FirstOrDefault();
+            //if (Session["Classe"].ToString() == "0")
+            //{
+            //    var DataxConfronto = (from m in db.AGR_Spedizioni
+            //                          where m.ID == aIDSpedizione
+            //                          select m.DataPartenzaImbarco).FirstOrDefault();
 
 
-                DateTime myDate = DateTime.ParseExact(DataPerizia, "dd/MM/yyyy",
-                                           System.Globalization.CultureInfo.InvariantCulture);
+            //    DateTime myDate = DateTime.ParseExact(DataPerizia, "dd/MM/yyyy",
+            //                               System.Globalization.CultureInfo.InvariantCulture);
 
-                if (myDate > DataxConfronto)
-                {
+            //    if (myDate > DataxConfronto)
+            //    {
 
-                    errMEss += "Data errata :  non deve superare data partenza !";
-                    return false;
-                }
-            }
+            //        errMEss += "Data errata :  non deve superare data partenza !";
+            //        return false;
+            //    }
+            //}
             // Lunghezza telaio x rotabili
             //if(IDModelloCasa == "1240" || IDModelloCasa =="1241")
             //{
@@ -1268,12 +1253,13 @@ namespace WEB_Auto.Controllers
         }
         public void EliminaTelaiSenzaModello(string IDPerito, string aIDModello = null, string Chassis = null)
         {
+            
             if (String.IsNullOrEmpty(aIDModello))
                 {
-                string sqlcmd = " DELETE FROM AGR_PerizieExpGrim_Temp_MVC WHERE ID IN(SELECT ID FROM AGR_PERIZIE_TEMP_MVC WHERE IDPErito = @IDPErito  AND IDModello IS NULL)";
-                int deleted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@IDPErito", IDPerito));
-                sqlcmd = " DELETE FROM AGR_PERIZIE_TEMP_MVC WHERE IDPErito =  @IDPErito AND IDModello IS NULL";
-                deleted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@IDPErito", IDPerito));
+                string sqlcmd = " DELETE FROM AGR_PerizieExpGrim_Temp_MVC WHERE ID IN(SELECT ID FROM AGR_PERIZIE_TEMP_MVC WHERE IDPErito = @IDPErito AND IDOperatore = @IDOperatore AND IDModello IS NULL)";
+                int deleted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@IDPErito", IDPerito), new SqlParameter("@IDOperatore", (int)Session["IDOperatore"]));
+                sqlcmd = " DELETE FROM AGR_PERIZIE_TEMP_MVC WHERE IDPErito =  @IDPErito AND IDOperatore = @IDOperatore AND IDModello IS NULL";
+                deleted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@IDPErito", IDPerito), new SqlParameter("@IDOperatore", (int)Session["IDOperatore"]));
             }
             else
             {

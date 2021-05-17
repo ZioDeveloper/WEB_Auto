@@ -45,14 +45,14 @@
             <h5>Telai da modificare</h5>
 
         </div>
+
+
+
         @using (Html.BeginForm("ModificaViaggio", "ModificaViaggio", new { }, FormMethod.Get))
         {
-            <label>Solo Rotabili : @Html.RadioButton("TipoMezzo", "RTB", false, new { onclick = "this.form.submit()" })</label>
-            <label>&nbsp;&nbsp; &nbsp;&nbsp; Solo auto  @Html.RadioButton("TipoMezzo", "AUTO", false, new { onclick = "this.form.submit()" })</label>
-            <label>&nbsp;&nbsp; &nbsp;&nbsp; Tutte:  @Html.RadioButton("TipoMezzo", "TUTTE", true, new { onclick = "this.form.submit()" })</label>
-        }
-        @using (Html.BeginForm("ModificaViaggio", "ModificaViaggio", new { }, FormMethod.Get))
-        {
+            <label>Solo Rotabili : @Html.RadioButton("TipoMezzo", "RTB", false@*, new { onclick = "this.form.submit()" }*@)</label>
+            <label>&nbsp;&nbsp; &nbsp;&nbsp; Solo auto  @Html.RadioButton("TipoMezzo", "AUTO", false@*, new { onclick = "this.form.submit()" }*@)</label>
+            <label>&nbsp;&nbsp; &nbsp;&nbsp; Tutte:  @Html.RadioButton("TipoMezzo", "TUTTE", true@*, new { onclick = "this.form.submit()" }*@)</label>
             @Html.Label("Viaggio da modificare")<br />
             @Html.TextBox("aViaggio")
             <button type="submit" value="Cerca" class="btn btn-sm btn-dark rounded-0"><i class="fa fa-search fa-lg"></i> Ricerca  viaggio</button>

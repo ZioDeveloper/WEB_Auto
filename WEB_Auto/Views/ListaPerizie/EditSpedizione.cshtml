@@ -61,6 +61,7 @@
             <th>Status</th>
             <th>N° foto</th>
             <th>N° PDF</th>
+            <th>Cancella</th>
         </tr>
 
     </thead>
@@ -119,7 +120,7 @@
                 @Html.DisplayFor(modelItem => item.Modello)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ID_TrasportatoreGrimaldi)
+                @Html.DisplayFor(modelItem => item.Descr)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.IDOriginale1)
@@ -189,6 +190,20 @@
                        }, new { @class = "pdfImg" })
                 }
             </td>
+            <td>
+            
+                @Html.ActionLink("Cancella", "EliminaPerizia", "TelaiAnagrafica", new
+                {
+                   IDPerizia = item.ID,
+                   IDPerito = item.IDPerito,
+                   IDSpedizione = item.IDSpedizione,
+                   IDMeteo = item.IDMeteo,
+                   IDTP = item.IDTipoPerizia,
+                   IsUpdate = true
+               }, new { @class = "btn btn-danger btn-xs", onclick = "return confirm('Vuoi davvero cancellare la perizia ?');" })
+               
+
+            </td>
 
         </tr>
         }
@@ -207,6 +222,7 @@
             <th>Status</th>
             <th>N° foto</th>
             <th>N° PDF</th>
+            <th>Cancella</th>
         </tr>
     </tfoot>
 </table>

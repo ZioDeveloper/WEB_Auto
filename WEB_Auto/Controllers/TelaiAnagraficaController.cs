@@ -632,6 +632,11 @@ namespace WEB_Auto.Controllers
             ViewBag.NumPDF = ContaPDF(myIDPerizia);
             ViewBag.IsUpdate = IsUpdate;
 
+            var Dettagli = from m in db.AGR_PERIZIE_DETT_TEMP_MVC_vw
+                           where m.IDPerizia == myIDPerizia
+                           select m;
+            model.AGR_PERIZIE_DETT_TEMP_MVC_vw = Dettagli.ToList();
+
             return View(model);
         }
 
@@ -653,7 +658,7 @@ namespace WEB_Auto.Controllers
             string myISoDate = DataPerizia.Right(4) + DataPerizia.Substring(3, 2) + DataPerizia.Left(2) + " " + ore + ":" + minuti + ":" + secondi;
 
             // Verifico Sia tutto ok.. to do !!!!!
-            bool isOK = CheckAll(IDSpedizione, Chassis, IDModelloCasa, IDTrasportatoreGrim , IDTipoRotabile, Condizione , Annotazioni,DataPerizia, out string myerrMess);
+            bool isOK = CheckAll(IDSpedizione, Chassis, IDModelloCasa, IDTrasportatoreGrim , IDTipoRotabile, Condizione , Annotazioni,DataPerizia,  IDTP,  out string myerrMess);
             if (isOK)
             {
                 
@@ -1074,7 +1079,7 @@ namespace WEB_Auto.Controllers
         }
 
         public bool CheckAll(string aIDSpedizione ,string aTelaio, string IDModelloCasa, string IDTrasportatoreGrim,  string IDTipoRotabile , string Condizione,
-                             string Annotazioni,string DataPerizia, out string errMEss)
+                             string Annotazioni,string DataPerizia,string IDTP, out string errMEss)
         {
             // Dati spedizione
             errMEss = "";
@@ -1111,23 +1116,37 @@ namespace WEB_Auto.Controllers
             }
 
 
-            //if (Session["Classe"].ToString() == "0")
-            //{
-            //    var DataxConfronto = (from m in db.AGR_Spedizioni
-            //                          where m.ID == aIDSpedizione
-            //                          select m.DataPartenzaImbarco).FirstOrDefault();
+            if (Session["Classe"].ToString() == "0")
+            {
+                var DataxConfronto = (from m in db.AGR_Spedizioni
+                                      where m.ID == aIDSpedizione
+                                      select new { m.DataPartenzaImbarco , m.DataArrivoSbarco}).FirstOrDefault();
 
 
-            //    DateTime myDate = DateTime.ParseExact(DataPerizia, "dd/MM/yyyy",
-            //                               System.Globalization.CultureInfo.InvariantCulture);
+                DateTime myDate = DateTime.ParseExact(DataPerizia, "dd/MM/yyyy",
+                                           System.Globalization.CultureInfo.InvariantCulture);
 
-            //    if (myDate > DataxConfronto)
-            //    {
+                if (IDTP == "C")
+                {
+                    if (myDate > DataxConfronto.DataPartenzaImbarco)
+                    {
 
-            //        errMEss += "Data errata :  non deve superare data partenza !";
-            //        return false;
-            //    }
-            //}
+                        errMEss += "Data errata :  non deve superare data partenza !";
+                        return false;
+                    }
+                }
+                if (IDTP == "D")
+                {
+                    if (myDate < DataxConfronto.DataArrivoSbarco)
+                    {
+
+                        errMEss += "Data errata :  non deve essere minore della data partenza !";
+                        return false;
+                    }
+                }
+
+            }
+
             // Lunghezza telaio x rotabili
             //if(IDModelloCasa == "1240" || IDModelloCasa =="1241")
             //{

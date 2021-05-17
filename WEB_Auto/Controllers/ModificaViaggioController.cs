@@ -12,44 +12,45 @@ namespace WEB_Auto.Controllers
     {
         private wisedbEntities db = new wisedbEntities();
         // GET: ModificaViaggio
-        public ActionResult ModificaViaggio(string aViaggio,string TipoMezzo)
+        public ActionResult ModificaViaggio(string aViaggio,string TipoMezzo = "TUTTE")
         {
             var model = new Models.HomeModel();
             string aPerito = Session["IDPeritoVero"].ToString();
+            
             if (TipoMezzo == "TUTTE")
             {
-                var list = (from m in db.WEB_Auto_ListaPerizieXSpedizione_vw
+                var listaFlt = (from m in db.WEB_Auto_ListaPerizieXSpedizione_vw
                              where m.IDOriginale1 == aViaggio
                             where m.IDPerito == aPerito
-                            select m).ToList();
-                model.WEB_Auto_ListaPerizieXSpedizione_vw = list;
+                            select m).ToList().OrderBy(s => s.Telaio);
+                model.WEB_Auto_ListaPerizieXSpedizione_vw = listaFlt;
             }
             else if (TipoMezzo == "RTB")
             {
-                var list = (from m in db.WEB_Auto_ListaPerizieXSpedizione_vw
+                var listaFlt = (from m in db.WEB_Auto_ListaPerizieXSpedizione_vw
                             where m.IDOriginale1 == aViaggio
                             where m.IDPerito == aPerito
                             where m.IDModello.ToString() == "1240" || m.IDModello.ToString() == "1241"
-                             select m).ToList();
-                model.WEB_Auto_ListaPerizieXSpedizione_vw = list;
+                             select m).ToList().OrderBy(s => s.Telaio);
+                model.WEB_Auto_ListaPerizieXSpedizione_vw = listaFlt;
             }
             if (TipoMezzo == "AUTO")
             {
-                var list = (from m in db.WEB_Auto_ListaPerizieXSpedizione_vw
+                var listaFlt = (from m in db.WEB_Auto_ListaPerizieXSpedizione_vw
                             where m.IDOriginale1 == aViaggio
                             where m.IDPerito == aPerito
                             where m.IDModello.ToString() != "1240" && m.IDModello.ToString() != "1241"
-                             select m).ToList();
-                model.WEB_Auto_ListaPerizieXSpedizione_vw = list;
+                             select m).ToList().OrderBy(s => s.Telaio);
+                model.WEB_Auto_ListaPerizieXSpedizione_vw = listaFlt;
             }
 
 
-           // var model = new Models.HomeModel();
-            var lista = (from m in db.WEB_Auto_ListaPerizieXSpedizione_vw
-                         where m.IDOriginale1 == aViaggio
+            //// var model = new Models.HomeModel();
+            //var lista = (from m in db.WEB_Auto_ListaPerizieXSpedizione_vw
+            //             where m.IDOriginale1 == aViaggio
 
-                         select m).ToList().OrderBy(s=>s.Telaio);
-            model.WEB_Auto_ListaPerizieXSpedizione_vw = lista;
+            //             select m).ToList().OrderBy(s => s.Telaio);
+            //model.WEB_Auto_ListaPerizieXSpedizione_vw = lista;
             ViewBag.myViaggio = aViaggio;
             return View(model);
 

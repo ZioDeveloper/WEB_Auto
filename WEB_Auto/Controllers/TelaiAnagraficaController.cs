@@ -92,6 +92,11 @@ namespace WEB_Auto.Controllers
             if (! String.IsNullOrEmpty(Chassis))
                 Chassis = Regex.Replace(Chassis, @"\s+", "");
 
+            if (!String.IsNullOrEmpty(Chassis))
+            {
+                if (Chassis.Length > 8)
+                    Chassis = Chassis.Right(8);
+            }
 
             if (String.IsNullOrEmpty(IDMeteo))
             {
@@ -108,6 +113,46 @@ namespace WEB_Auto.Controllers
             if (!String.IsNullOrEmpty(Chassis) && Session["Classe"].ToString() == "0")
             {
                 string myTelaio = Chassis.ToUpper();
+
+                if (StessoTelaioDifferenteViaggio(Chassis, IDSpedizione, IDTP, DataPerizia))
+                {
+                    // Se esiste il telaio per un viaggio differente, deve fare UPDATE dei dati prima perizia ed assegnarli a seconda
+                    string ID_Trasportatore = "";
+                    string ID_TipoRotabile = "";
+                    string flagNU = "";
+                    string Annotazioni = "";
+                    var dati = (from m in db.AGR_Perizie_MVC_Flat_vw
+                                where m.Telaio == myTelaio
+                                where m.IDSpedizione != IDSpedizione
+                                
+                                select new { m.ID_TrasportatoreGrimaldi, m.ID_TipoRotabile, m.IDModello, m.ID, m.FlgNuovoUsato, m.Note }).FirstOrDefault();
+                    try
+                    {
+                        ID_Trasportatore = dati.ID_TrasportatoreGrimaldi.ToString();
+                    }
+                    catch { ID_Trasportatore = ""; }
+                    try { ID_TipoRotabile = dati.ID_TipoRotabile.ToString(); }
+                    catch { ID_TipoRotabile = ""; }
+                    string myIDPerizia = dati.ID.ToString();
+                    try { flagNU = dati.FlgNuovoUsato.ToString(); } catch { flagNU = ""; }
+                    try { Annotazioni = dati.Note.ToString(); } catch { Annotazioni = ""; }
+                    string IDModello = dati.IDModello.ToString();
+                    return RedirectToAction("Edit", "TelaiAnagrafica", new
+                    {
+                        IDPerito = IDPerito,
+                        IDSpedizione = IDSpedizione,
+                        IDMeteo = IDMeteo,
+                        IDTP = IDTP,
+                        aIDTrasportatore = ID_Trasportatore,
+                        aIDTipoRotabile = ID_TipoRotabile,
+                        aIDModelloCasa = IDModello,
+                        myIDPerizia = myIDPerizia,
+                        Annotazioni = Annotazioni,
+                        errMess = "In modifica"
+
+                    });
+
+                }
 
                 int cnt = (from m in db.AGR_PERIZIE_TEMP_MVC
                            where m.Telaio == Chassis
@@ -160,6 +205,8 @@ namespace WEB_Auto.Controllers
             else if (!String.IsNullOrEmpty(Chassis) && Session["Classe"].ToString() == "1")
             {
                 string myTelaio = Chassis.ToUpper();
+
+               
 
                 int cnt = (from m in db.AGR_PERIZIE_TEMP_MVC
                            where m.Telaio == Chassis
@@ -270,8 +317,10 @@ namespace WEB_Auto.Controllers
             string myIDPerizia = GetNewCode_AUTO(IDPerito,IDSpedizione);
             string OS = Session["OS"].ToString();
             string myNote = "";
-            if (IDMeteo == "3" || IDMeteo == "4")
-                myNote = "No foto causa pioggia ";
+            // togliere note automatiche meteo 19/05/2021
+            //if (IDMeteo == "3" || IDMeteo == "4")
+            //    myNote = "No foto causa pioggia ";
+
             //string myDataPerizia = DataPerizia.Substring(6, 4) + DataPerizia.Substring(3, 2) + DataPerizia.Substring(0, 2);
             string sqlcmd = " INSERT INTO AGR_PERIZIE_Temp_MVC (ID, IDSpedizione, IDPerito, IDTipoPerizia, DataPerizia, IDNazione, Telaio, NumFoto, " +
                             "  Flags, IRichiesta, IDefinizione, IContab, DataModPerito, FlagControllo, IDMeteo, NumPDF,Note,IDOperatore,MachineName) " +
@@ -529,8 +578,27 @@ namespace WEB_Auto.Controllers
             ViewBag.aIDTipoRotabile = aIDTipoRotabile;
 
 
+            // Aggiorna campo note x pioggia
+            if (HasDamages(myIDPerizia))
+            {
+                if (IDMeteo == "3" || IDMeteo == "4")
+                {
+                    string sqlcmd = " UPDATE AGR_PERIZIE_Temp_MVC " +
+                                    " SET  Note = @Note " +
+                                    " WHERE ID = @IDPerizia";
+
+                    int Inserted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@IDPerizia", myIDPerizia),
+                                                                         new SqlParameter("@Note", "No foto causa pioggia"));
+                }
+
+            }
+            // togliere note automatiche meteo 19/05/2021
+            //if (IDMeteo == "3" || IDMeteo == "4")
+            //    myNote = "No foto causa pioggia ";
+
+
             // Cerco Trasportatore Grimaldi e Tipo rotabile pregressi e li uso...
-            if((aIDModelloCasa == "1240" || aIDModelloCasa == "1241" )&& (String.IsNullOrEmpty(aIDTrasportatore)&& String.IsNullOrEmpty(aIDTipoRotabile)))
+            if ((aIDModelloCasa == "1240" || aIDModelloCasa == "1241" )&& (String.IsNullOrEmpty(aIDTrasportatore)&& String.IsNullOrEmpty(aIDTipoRotabile)))
             {
                 var myTelaio = (from m in db.AGR_Perizie_MVC_Flat_vw
                             where m.ID == myIDPerizia
@@ -545,9 +613,13 @@ namespace WEB_Auto.Controllers
                     string myIDTrasportatore = datiPregressi.ID_TrasportatoreGrimaldi;
                     ViewBag.aIDTipoRotabile = myIDTipoRotabile;
                     ViewBag.aIDTrasportatore = myIDTrasportatore;
+                    if (HasDamages(myIDPerizia))
+                    {
+
+                    }
 
                     // Aggiorno dati perizia
-                    string sqlcmd = " UPDATE AGR_PERIZIE_Temp_MVC " +
+                        string sqlcmd = " UPDATE AGR_PERIZIE_Temp_MVC " +
                                     " SET  IDModello = @IDModello " +
                                     " WHERE ID = @IDPerizia";
 
@@ -988,6 +1060,16 @@ namespace WEB_Auto.Controllers
                 return RedirectToAction("EditSpedizione", "ListaPerizie", new { IDPerito, IDSpedizione, IDMeteo, IDTP });
             
         }
+
+        public bool HasDamages(string aIDPerizia)
+        {
+            var cnt = (from m in db.AGR_PERIZIE_DETT_TEMP_MVC_vw
+                       where m.IDPerizia == aIDPerizia
+                       select m.ID).Count();
+
+            return cnt > 0;
+        }
+
 
         public void AggiornaFlagGoodDamaged(string aIDPerizia)
         {
@@ -1479,6 +1561,22 @@ namespace WEB_Auto.Controllers
             }
 
             //return View(model);
+        }
+
+        public bool StessoTelaioDifferenteViaggio(string Chassis, string IDSpedizione, string IDTP, string DataPerizia)
+        {
+            //DateTime myDate = DateTime.ParseExact(DataPerizia, "dd/MM/yyyy",
+            //                              System.Globalization.CultureInfo.InvariantCulture);
+             DateTime myDate = DateTime.Now;
+            int cnt = (from m in db.AGR_PERIZIE_TEMP_MVC
+                       where m.Telaio == Chassis
+                       where m.IDSpedizione != IDSpedizione
+                       where m.IDTipoPerizia == IDTP
+                       where m.DataPerizia < myDate
+                       where m.IsClosed == false
+                       select m.ID).Count();
+
+            return cnt > 0;
         }
     }
 }

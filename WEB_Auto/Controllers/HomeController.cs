@@ -12,7 +12,7 @@ namespace WEB_Auto.Controllers
 
         private wisedbEntities db  = new wisedbEntities();
 
-        public ActionResult Index(string usr, string Filtro = "OGGI", string errMess = "")
+        public ActionResult Index(string usr, string Filtro = "TRE", string errMess = "")
         {
             var model = new Models.HomeModel();
 

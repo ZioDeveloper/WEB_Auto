@@ -86,35 +86,100 @@ namespace WEB_Auto.Controllers
 
         public void ModificaSpedizione( string newViaggio,string IDPerizia)
         {
+            var myNewIDSped = "";
+
             // Cerco la spedizione giusta per questa perizia
             var myPerizia = (from m in db.WEB_Auto_ListaPerizieXSpedizione_vw
                              where m.ID == IDPerizia
-                             select new { m.IDSpedizione, m.IDCasa,m.Telaio }).FirstOrDefault();
+                             select new { m.IDSpedizione, m.IDCasa,m.Telaio,m.IDModello }).FirstOrDefault();
 
             string myIDSpedizione = myPerizia.IDSpedizione;
             string myIDCasa = myPerizia.IDCasa;
 
-            var myNewIDSped = (from m in db.AGR_Spedizioni
-                               where m.IDOriginale1 == newViaggio
-                               where m.IDCasa == myIDCasa
-                               select m.ID).FirstOrDefault();
+            if (myPerizia.IDModello.ToString() != "1240" && myPerizia.IDModello.ToString() != "1241")
+            {
+                 myNewIDSped = (from m in db.AGR_Spedizioni
+                                   where m.IDOriginale1 == newViaggio
+                                   where m.IDCasa == myIDCasa
+                                   select m.ID).FirstOrDefault();
+            }
+            else
+            {
+                myNewIDSped = (from m in db.AGR_Spedizioni
+                                   where m.IDOriginale1 == newViaggio
+                                   where m.IDCasa == "CAB" || m.IDCasa =="RTB"
+                                   select m.ID).FirstOrDefault();
+            }
 
             // Verifico che nn ci sia già lo stesso telaio 
             var cnt = (from m in db.AGR_PERIZIE_TEMP_MVC
                             where m.IDSpedizione == myNewIDSped
                             where m.Telaio == myPerizia.Telaio
                             select m.ID).Count();
-            
 
-            if (!String.IsNullOrEmpty(myNewIDSped) && cnt==0)
+            if (cnt == 0)
             {
-                string sqlcmd = " UPDATE AGR_PERIZIE_Temp_MVC " +
-                                        " SET  IDSpedizione = @IDSpedizione " +
-                                        " WHERE ID = @IDPerizia";
-                int Inserted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@IDPerizia", IDPerizia),
-                                                                     new SqlParameter("@IDSpedizione", myNewIDSped));
-            }
+                if (myPerizia.IDModello.ToString() != "1240" && myPerizia.IDModello.ToString() != "1241")
+                {
+                    if (!String.IsNullOrEmpty(myNewIDSped))
+                    {
+                        string sqlcmd = " UPDATE AGR_PERIZIE_Temp_MVC " +
+                                                " SET  IDSpedizione = @IDSpedizione " +
+                                                " WHERE ID = @IDPerizia";
+                        int Inserted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@IDPerizia", IDPerizia),
+                                                                             new SqlParameter("@IDSpedizione", myNewIDSped));
+                    }
+                }
+                else
+                {
+                    string myIDModello = "";
+                    var myCASA = (from m in db.AGR_Spedizioni
+                                  where m.ID == myNewIDSped
+                                  select m.IDCasa).FirstOrDefault();
+                    if (myCASA == "RTB")
+                        myIDModello = "1241";
+                    else
+                        myIDModello = "1240";
 
+                    if (!String.IsNullOrEmpty(myNewIDSped) )
+                    {
+                        string sqlcmd = " UPDATE AGR_PERIZIE_Temp_MVC " +
+                                                " SET  IDSpedizione = @IDSpedizione, " +
+                                                " IDModello = @IDModello " +
+                                                " WHERE ID = @IDPerizia";
+                        int Inserted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@IDPerizia", IDPerizia),
+                                                                             new SqlParameter("@IDSpedizione", myNewIDSped),
+                                                                             new SqlParameter("@IDModello", myIDModello));
+                    }
+                }
+            }
+            else
+            {
+
+                var IDPeriziaDaCancellare = (from m in db.AGR_PERIZIE_TEMP_MVC
+                                          where m.Telaio == myPerizia.Telaio
+                                          where m.IDSpedizione == myNewIDSped
+                                          select m.ID ).FirstOrDefault();
+
+                string sqlcmd = " DELETE FROM  AGR_PerizieExpGrim_Temp_MVC  WHERE ID = @ID";
+                int deleted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@ID", IDPeriziaDaCancellare));
+
+                sqlcmd = " DELETE FROM  AGR_PERIZIE_DETT_TEMP_MVC  WHERE IDPerizia = @IDPerizia";
+                deleted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@IDPerizia", IDPeriziaDaCancellare));
+
+                sqlcmd = " DELETE FROM  AGR_PERIZIE_TEMP_MVC WHERE ID = @ID";
+                deleted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@ID", IDPeriziaDaCancellare));
+
+
+                // Se esiste già un telaio nella nuova spedizione, lo cancello e inserisco i dati più vecchi
+               
+                sqlcmd = " UPDATE AGR_PERIZIE_Temp_MVC " +
+                         " SET  IDSpedizione = @IDSpedizione " +
+                         " WHERE ID = @IDPerizia";
+                int Updated = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@IDPerizia", IDPerizia),
+                                                                     new SqlParameter("@IDSpedizione", myNewIDSped));
+
+            }
 
         }
 

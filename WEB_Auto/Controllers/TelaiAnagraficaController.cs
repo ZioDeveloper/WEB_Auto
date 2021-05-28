@@ -117,42 +117,61 @@ namespace WEB_Auto.Controllers
                 if (StessoTelaioDifferenteViaggio(Chassis, IDSpedizione, IDTP, DataPerizia))
                 {
                     // Se esiste il telaio per un viaggio differente, deve fare UPDATE dei dati prima perizia ed assegnarli a seconda
-                    string ID_Trasportatore = "";
-                    string ID_TipoRotabile = "";
-                    string flagNU = "";
-                    string Annotazioni = "";
-                    var dati = (from m in db.AGR_Perizie_MVC_Flat_vw
-                                where m.Telaio == myTelaio
-                                where m.IDSpedizione != IDSpedizione
-                                
-                                select new { m.ID_TrasportatoreGrimaldi, m.ID_TipoRotabile, m.IDModello, m.ID, m.FlgNuovoUsato, m.Note }).FirstOrDefault();
-                    try
-                    {
-                        ID_Trasportatore = dati.ID_TrasportatoreGrimaldi.ToString();
-                    }
-                    catch { ID_Trasportatore = ""; }
-                    try { ID_TipoRotabile = dati.ID_TipoRotabile.ToString(); }
-                    catch { ID_TipoRotabile = ""; }
-                    string myIDPerizia = dati.ID.ToString();
-                    try { flagNU = dati.FlgNuovoUsato.ToString(); } catch { flagNU = ""; }
-                    try { Annotazioni = dati.Note.ToString(); } catch { Annotazioni = ""; }
-                    string IDModello = dati.IDModello.ToString();
-                    return RedirectToAction("Edit", "TelaiAnagrafica", new
-                    {
-                        IDPerito = IDPerito,
-                        IDSpedizione = IDSpedizione,
-                        IDMeteo = IDMeteo,
-                        IDTP = IDTP,
-                        aIDTrasportatore = ID_Trasportatore,
-                        aIDTipoRotabile = ID_TipoRotabile,
-                        aIDModelloCasa = IDModello,
-                        myIDPerizia = myIDPerizia,
-                        Annotazioni = Annotazioni,
-                        errMess = "In modifica"
+                    
+               
+                    DateTime myDate = DateTime.Now;
+                    var model = new Models.HomeModel();
 
-                    });
+                    var datixmodel = from m in db.WEB_ListaPerizieFlat_TMP_vw
+                                     where m.Telaio == Chassis
+                                              where m.IDSpedizione != IDSpedizione
+                                              where m.IDTipoPerizia == IDTP
+                                              where m.DataPerizia < myDate
+                                              //where m.IsClosed == false
+                                              select m;
+                    model.WEB_ListaPerizieFlat_TMP_vw = datixmodel.ToList();
+                    return View("TelaioEsistente",model);
 
                 }
+
+
+                //string ID_Trasportatore = "";
+                //string ID_TipoRotabile = "";
+                //string flagNU = "";
+                //string Annotazioni = "";
+                //var dati = (from m in db.AGR_Perizie_MVC_Flat_vw
+                //            where m.Telaio == myTelaio
+                //            where m.IDSpedizione != IDSpedizione
+
+                //            select new { m.ID_TrasportatoreGrimaldi, m.ID_TipoRotabile, m.IDModello, m.ID, m.FlgNuovoUsato, m.Note,m.IDSpedizione }).FirstOrDefault();
+                //try
+                //{
+                //    ID_Trasportatore = dati.ID_TrasportatoreGrimaldi.ToString();
+                //}
+                //catch { ID_Trasportatore = ""; }
+                //try { ID_TipoRotabile = dati.ID_TipoRotabile.ToString(); }
+                //catch { ID_TipoRotabile = ""; }
+                //string myIDPerizia = dati.ID.ToString();
+                //try { flagNU = dati.FlgNuovoUsato.ToString(); } catch { flagNU = ""; }
+                //try { Annotazioni = dati.Note.ToString(); } catch { Annotazioni = ""; }
+                //string IDModello = dati.IDModello.ToString();
+                //return RedirectToAction("Edit", "TelaiAnagrafica", new
+                //{
+                //    IDPerito = IDPerito,
+                //    IDSpedizione = dati.IDSpedizione,
+                //    IDMeteo = IDMeteo,
+                //    IDTP = IDTP,
+                //    aIDTrasportatore = ID_Trasportatore,
+                //    aIDTipoRotabile = ID_TipoRotabile,
+                //    aIDModelloCasa = IDModello,
+                //    myIDPerizia = myIDPerizia,
+                //    Annotazioni = Annotazioni,
+                //    errMess = "Sovrascrivo !",
+                //    OldIDSpedizione = IDSpedizione
+
+                //});
+
+
 
                 int cnt = (from m in db.AGR_PERIZIE_TEMP_MVC
                            where m.Telaio == Chassis
@@ -384,7 +403,7 @@ namespace WEB_Auto.Controllers
 
         public ActionResult Edit(string IDPerito, string IDSpedizione, string IDMeteo, string IDTP, string aIDTrasportatore,
                                          string aIDTipoRotabile, string aIDModelloCasa, string myIDPerizia,string flagNU, string Annotazioni, bool Filtrati = true ,
-                                         string errMess = " ", bool IsUpdate = false,bool ToDoRefresh = false) // errMess = " " per eludere primo controllo in View Edit
+                                         string errMess = " ", bool IsUpdate = false,bool ToDoRefresh = false, string OldIDSpedizione = "") // errMess = " " per eludere primo controllo in View Edit
         {
             // Default = modello, diventa trasportatore per CAB non rotabili
             ViewBag.IsTrasportatore = false;
@@ -709,6 +728,7 @@ namespace WEB_Auto.Controllers
                            select m;
             model.AGR_PERIZIE_DETT_TEMP_MVC_vw = Dettagli.ToList();
 
+            ViewBag.OldIDSpedizione = OldIDSpedizione;
             return View(model);
         }
 

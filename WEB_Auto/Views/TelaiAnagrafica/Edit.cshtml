@@ -432,19 +432,39 @@ else
 
         else
         {
+            //
             if ((ViewBag.ErrMess == "" || ViewBag.ErrMess == "Sbloccato" || ViewBag.ErrMess == "In modifica" || ViewBag.ErrMess == "TARGA CONOSCIUTA") && Session["Classe"].ToString() == "0")
             {
-                @Html.ActionLink("Finito", "InputTelaio", new
+
+                if (ViewBag.OldIDSpedizione == "")
                 {
-                    IDPerito = ViewBag.IDPerito,
-                    IDSpedizione = ViewBag.IDSpedizione,
-                    IDMeteo = ViewBag.IDMeteo,
-                    IDTP = ViewBag.IDTP,
-                    IsUpdate = ViewBag.IsUpdate,
-                    aIDModello = ViewBag.aIDModelloCasa,
-                    IsRTB = Session["RTB"]
-                }, new { @class = "btn btn-success custom" })
+                    @Html.ActionLink("Finito", "InputTelaio", new
+                    {
+                       IDPerito = ViewBag.IDPerito,
+                       IDSpedizione = ViewBag.IDSpedizione,
+                       IDMeteo = ViewBag.IDMeteo,
+                       IDTP = ViewBag.IDTP,
+                       IsUpdate = ViewBag.IsUpdate,
+                       aIDModello = ViewBag.aIDModelloCasa,
+                       IsRTB = Session["RTB"]
+                   }, new { @class = "btn btn-success custom" })
+                }
+                else
+                {
+                    @Html.ActionLink("Finito", "InputTelaio", new
+                   {
+                      IDPerito = ViewBag.IDPerito,
+                      IDSpedizione = ViewBag.OldIDSpedizione,
+                      IDMeteo = ViewBag.IDMeteo,
+                      IDTP = ViewBag.IDTP,
+                      IsUpdate = ViewBag.IsUpdate,
+                      aIDModello = ViewBag.aIDModelloCasa,
+                      IsRTB = Session["RTB"]
+                  }, new { @class = "btn btn-success custom" })
+                }
             }
+
+            //
             else if ((ViewBag.ErrMess == "" || ViewBag.ErrMess == "Sbloccato" || ViewBag.ErrMess == "In modifica" || ViewBag.ErrMess == "TARGA CONOSCIUTA") && Session["Classe"].ToString() == "1")
             {
                 @Html.ActionLink("Finito", "InputTelaio", new

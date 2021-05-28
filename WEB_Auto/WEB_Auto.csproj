@@ -505,6 +505,7 @@
     <Content Include="Views\Documenti\ScattaPDFSpedizione.cshtml" />
     <Content Include="Views\Shared\SpedizioneChiusa.cshtml" />
     <Content Include="Views\ModificaViaggio\ModificaDataPerizia.cshtml" />
+    <Content Include="Views\TelaiAnagrafica\TelaioEsistente.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

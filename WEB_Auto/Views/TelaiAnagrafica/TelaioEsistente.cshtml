@@ -1,0 +1,33 @@
+﻿@model WEB_Auto.Models.HomeModel
+@{
+    ViewBag.Title = "TelaioEsistente";
+}
+<style>
+    .center {
+        margin: auto;
+        width: 60%;
+        border: 3px solid red;
+        padding: 10px;
+    }
+</style>
+
+<br />
+<div class="center" @*style="color:red"*@>
+    <h4>Attenzione ! <br />il telaio è già stato periziato </h4>
+</div>
+
+@{var dati = Model.AGR_PERIZIE_TEMP_MVC.ToList();}
+<br />
+
+<table>
+    <tr
+        <td>
+            @Html.Label("ID Perizia") :  @Html.Label(dati[0].ID)
+        </td>
+        <td>
+            @Html.Label("Telaio") :  @Html.Label(dati[0].Telaio)
+        </td>
+        
+
+    </tr>
+</table>

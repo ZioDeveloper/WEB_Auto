@@ -122,14 +122,18 @@ namespace WEB_Auto.Controllers
                     DateTime myDate = DateTime.Now;
                     var model = new Models.HomeModel();
 
-                    var datixmodel = from m in db.WEB_ListaPerizieFlat_TMP_vw
+                    var datixmodel = from m in db.WEB_ListaPerizieFlat_MVC_vw
                                      where m.Telaio == Chassis
                                               where m.IDSpedizione != IDSpedizione
                                               where m.IDTipoPerizia == IDTP
                                               where m.DataPerizia < myDate
-                                              //where m.IsClosed == false
+                                              where m.IsClosed == false
                                               select m;
-                    model.WEB_ListaPerizieFlat_TMP_vw = datixmodel.ToList();
+                    model.WEB_ListaPerizieFlat_MVC_vw = datixmodel.ToList();
+                    ViewBag.IDPerito = IDPerito;
+                    ViewBag.IDSpedizione = IDSpedizione;
+                    ViewBag.IDMeteo = IDMeteo;
+                    ViewBag.IDTP = IDTP;
                     return View("TelaioEsistente",model);
 
                 }
@@ -224,8 +228,6 @@ namespace WEB_Auto.Controllers
             else if (!String.IsNullOrEmpty(Chassis) && Session["Classe"].ToString() == "1")
             {
                 string myTelaio = Chassis.ToUpper();
-
-               
 
                 int cnt = (from m in db.AGR_PERIZIE_TEMP_MVC
                            where m.Telaio == Chassis
@@ -1088,6 +1090,28 @@ namespace WEB_Auto.Controllers
                        select m.ID).Count();
 
             return cnt > 0;
+        }
+
+
+        public ActionResult AggiornaSpedizioneEDataPerizia(string IDSpedizione, string IDPerizia, string IDMeteo , string IDTP, string IDPerito, bool IsInspecting = false )
+        {
+           
+                string sqlcmd = " UPDATE AGR_PERIZIE_Temp_MVC " +
+                                " SET DataPerizia = @DataPerizia , " +
+                                "     IDSpedizione = @IDSpedizione " + 
+                                " WHERE ID = @IDPerizia";
+                DateTime aNewDataPerizia = DateTime.Now;
+
+                int Inserted = db.Database.ExecuteSqlCommand(sqlcmd, 
+                                                                new SqlParameter("@IDPerizia", IDPerizia),
+                                                                new SqlParameter("@DataPerizia", aNewDataPerizia),
+                                                                new SqlParameter("@IDSpedizione", IDSpedizione));
+                if(!IsInspecting)
+                    return RedirectToAction("InputTelaio", "TelaiAnagrafica", new { IDPerito, IDSpedizione, IDMeteo, IDTP });
+                else
+                    return RedirectToAction("InputTelaio", "TelaiAnagrafica", new { IDPerito, IDSpedizione, IDMeteo, IDTP ,Chassis = "TEST"});
+
+
         }
 
 

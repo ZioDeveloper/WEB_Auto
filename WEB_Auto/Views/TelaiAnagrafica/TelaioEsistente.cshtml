@@ -10,24 +10,104 @@
         padding: 10px;
     }
 </style>
+<style>
+    .blue {
+        color: blue;
+    }
+
+    .red {
+        color: red;
+    }
+</style>
 
 <br />
 <div class="center" @*style="color:red"*@>
-    <h4>Attenzione ! <br />il telaio è già stato periziato </h4>
+    <h4>Attenzione ! <br />il telaio è già stato periziato ed il viaggio è aperto </h4>
 </div>
 
-@{var dati = Model.AGR_PERIZIE_TEMP_MVC.ToList();}
+@{var dati = Model.WEB_ListaPerizieFlat_MVC_vw.ToList();}
 <br />
 
-<table>
-    <tr
+<h4><b>Dati perizia esistente :</b></h4>
+<table border="0">
+    <tr>
         <td>
-            @Html.Label("ID Perizia") :  @Html.Label(dati[0].ID)
+            @Html.Label("ID Spedizione") :  @Html.Label(dati[0].IDSpedizione, new { @class = "blue" }) &nbsp;&nbsp;
         </td>
-        <td>
-            @Html.Label("Telaio") :  @Html.Label(dati[0].Telaio)
-        </td>
-        
 
+        <td>
+            @Html.Label("Viaggio") :  @Html.Label(dati[0].Viaggio, new { @class = "blue" })
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            @Html.Label("Telaio") :  @Html.Label(dati[0].Telaio, new { @class = "blue" })
+        </td>
+        <td>
+            @Html.Label("Modello") :  @Html.Label(dati[0].Modello, new { @class = "blue" })
+        </td>
+    </tr>
+    <tr>
+        <td>
+            @Html.Label("POL") :  @Html.Label(dati[0].POL, new { @class = "blue" })
+        </td>
+        <td>
+            @Html.Label("POL") :  @Html.Label(dati[0].POD, new { @class = "blue" })
+        </td>
+    </tr>
+    <tr>
+        <td>
+            @Html.Label("Nave") :  @Html.Label(dati[0].Nave, new { @class = "blue" })
+        </td>
+    </tr>
+    <tr>
+        <td>
+            @Html.Label("Data perizia") :  @Html.Label(dati[0].DataPerizia.ToString().Left(10), new { @class = "blue" })
+        </td>
+    </tr>
+    <tr>
+        <td>
+            @Html.Label("Stato veicolo") :  @Html.Label(dati[0].Status, new { @class = "blue" })
+        </td>
     </tr>
 </table>
+
+<br /><br />
+
+@Html.ActionLink("Aggiorna viaggio / data perizia  e termina", "AggiornaSpedizioneEDataPerizia", new
+{
+    IDSpedizione = ViewBag.IDSpedizione,
+    IDPerizia = dati[0].IDPerizia,
+    IDMeteo = ViewBag.IDMeteo,
+    IDPerito = ViewBag.IDPerito,
+    IDTP = ViewBag.IDTP,
+
+}, new { @class = "btn btn-success custom" })
+<br /><br />
+
+
+@Html.ActionLink("Aggiorna viaggio / data perizia / condizione  e continua perizia", "AggiornaSpedizioneEDataPerizia", new
+{
+    IDPerito = ViewBag.IDPerito,
+    IDSpedizione = ViewBag.IDSpedizione,
+    IDPerizia = dati[0].IDPerizia,
+    IDMeteo = ViewBag.IDMeteo,
+    IDTP = ViewBag.IDTP,
+    IsUpdate = ViewBag.IsUpdate,
+    aIDModello = ViewBag.aIDModelloCasa,
+    IsRTB = Session["RTB"],
+    IsInspecting = true
+}, new { @class = "btn btn-warning custom" })
+<br /><br />
+
+@Html.ActionLink("Esci senza modificare nulla", "InputTelaio", new
+                    {
+                       IDPerito = ViewBag.IDPerito,
+                       IDSpedizione = ViewBag.IDSpedizione,
+                       IDMeteo = ViewBag.IDMeteo,
+                       IDTP = ViewBag.IDTP
+                       
+                   }, new { @class = "btn btn-danger custom" })
+
+

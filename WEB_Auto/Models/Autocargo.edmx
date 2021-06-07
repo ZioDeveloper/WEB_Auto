@@ -564,6 +564,7 @@ warning 6002: The table/view 'wisedb.dbo.WEB_AUTO_ListaSpedizioni_2_vw' does not
             <PropertyRef Name="ID" />
             <PropertyRef Name="IsClosed" />
             <PropertyRef Name="IDCasa" />
+            <PropertyRef Name="POD" />
           </Key>
           <Property Name="ID" Type="varchar" MaxLength="8" Nullable="false" />
           <Property Name="IDOriginale1" Type="varchar" MaxLength="30" />
@@ -577,6 +578,7 @@ warning 6002: The table/view 'wisedb.dbo.WEB_AUTO_ListaSpedizioni_2_vw' does not
           <Property Name="DataArrivoSbarco" Type="datetime" />
           <Property Name="NumPDF" Type="int" />
           <Property Name="IDCasa" Type="varchar" MaxLength="3" Nullable="false" />
+          <Property Name="POD" Type="varchar" MaxLength="29" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'wisedb.dbo.WEB_AUTO_ListaSpedizioni_CMN_vw' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -964,7 +966,8 @@ warning 6002: The table/view 'wisedb.dbo.WEB_ListaPerizieFlat_TMP_vw' does not h
     [WEB_AUTO_ListaSpedizioni_2_vw].[DataPartenzaImbarco] AS [DataPartenzaImbarco], 
     [WEB_AUTO_ListaSpedizioni_2_vw].[DataArrivoSbarco] AS [DataArrivoSbarco], 
     [WEB_AUTO_ListaSpedizioni_2_vw].[NumPDF] AS [NumPDF], 
-    [WEB_AUTO_ListaSpedizioni_2_vw].[IDCasa] AS [IDCasa]
+    [WEB_AUTO_ListaSpedizioni_2_vw].[IDCasa] AS [IDCasa], 
+    [WEB_AUTO_ListaSpedizioni_2_vw].[POD] AS [POD]
     FROM [dbo].[WEB_AUTO_ListaSpedizioni_2_vw] AS [WEB_AUTO_ListaSpedizioni_2_vw]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="WEB_AUTO_ListaSpedizioni_CMN_vw" EntityType="Self.WEB_AUTO_ListaSpedizioni_CMN_vw" store:Type="Views" store:Schema="dbo">
@@ -1677,6 +1680,7 @@ warning 6002: The table/view 'wisedb.dbo.WEB_ListaPerizieFlat_TMP_vw' does not h
             <PropertyRef Name="ID" />
             <PropertyRef Name="IsClosed" />
             <PropertyRef Name="IDCasa" />
+            <PropertyRef Name="POD" />
           </Key>
           <Property Name="ID" Type="String" Nullable="false" MaxLength="8" FixedLength="false" Unicode="false" />
           <Property Name="IDOriginale1" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
@@ -1690,6 +1694,7 @@ warning 6002: The table/view 'wisedb.dbo.WEB_ListaPerizieFlat_TMP_vw' does not h
           <Property Name="DataArrivoSbarco" Type="DateTime" Precision="3" />
           <Property Name="NumPDF" Type="Int32" />
           <Property Name="IDCasa" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="POD" Type="String" Nullable="false" MaxLength="29" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="AGR_ModelliAuto_CAB_vw">
           <Key>
@@ -2338,6 +2343,7 @@ warning 6002: The table/view 'wisedb.dbo.WEB_ListaPerizieFlat_TMP_vw' does not h
           <EntitySetMapping Name="WEB_AUTO_ListaSpedizioni_2_vw">
             <EntityTypeMapping TypeName="wisedbModel.WEB_AUTO_ListaSpedizioni_2_vw">
               <MappingFragment StoreEntitySet="WEB_AUTO_ListaSpedizioni_2_vw">
+                <ScalarProperty Name="POD" ColumnName="POD" />
                 <ScalarProperty Name="IDCasa" ColumnName="IDCasa" />
                 <ScalarProperty Name="NumPDF" ColumnName="NumPDF" />
                 <ScalarProperty Name="DataArrivoSbarco" ColumnName="DataArrivoSbarco" />

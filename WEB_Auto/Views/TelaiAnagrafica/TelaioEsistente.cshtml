@@ -74,40 +74,85 @@
 </table>
 
 <br /><br />
-
-@Html.ActionLink("Aggiorna viaggio / data perizia  e termina", "AggiornaSpedizioneEDataPerizia", new
+@if (ViewBag.IsModelActive == true)
 {
-    IDSpedizione = ViewBag.IDSpedizione,
-    IDPerizia = dati[0].IDPerizia,
-    IDMeteo = ViewBag.IDMeteo,
-    IDPerito = ViewBag.IDPerito,
-    IDTP = ViewBag.IDTP,
+    @*using (Html.BeginForm("AggiornaSpedizioneEDataPerizia", "TelaiAnagrafica", new
+        {
+            IDSpedizione = ViewBag.IDSpedizione,
+            IDPerizia = dati[0].IDPerizia,
+            IDMeteo = ViewBag.IDMeteo,
+            IDPerito = ViewBag.IDPerito,
+            IDTP = ViewBag.IDTP,
+            aIDModello = ViewBag.IDModelloCasa,
+            Chassis = dati[0].Telaio
+        }, FormMethod.Post))
+        {
 
-}, new { @class = "btn btn-success custom" })
-<br /><br />
+            @Html.DropDownList("IDModelloCasa", new SelectList((SelectList)ViewData["ElencoModelli"], "Value", "Text", null), "-- Seleziona trasportatore --", new { @class = "form-control" })
 
+            <button type="submit" class="btn btn-success">Aggiorna viaggio / data perizia  e termina</button>
+        }*@
 
-@Html.ActionLink("Aggiorna viaggio / data perizia / condizione  e continua perizia", "AggiornaSpedizioneEDataPerizia", new
+    using (Html.BeginForm("AggiornaSpedizioneEDataPerizia", "TelaiAnagrafica", new
+    {
+        IDPerito = ViewBag.IDPerito,
+        IDSpedizione = ViewBag.IDSpedizione,
+        IDPerizia = dati[0].IDPerizia,
+        IDMeteo = ViewBag.IDMeteo,
+        IDTP = ViewBag.IDTP,
+        IsUpdate = ViewBag.IsUpdate,
+        aIDModello = ViewBag.IDModelloCasa,
+        IsRTB = Session["RTB"],
+        IsInspecting = true,
+        Chassis = dati[0].Telaio
+    }, FormMethod.Post))
+    {
+
+        @Html.DropDownList("IDModelloCasa", new SelectList((SelectList)ViewData["ElencoModelli"], "Value", "Text", null), "-- Seleziona trasportatore --", new { @class = "form-control" })
+        <br />
+        <button type="submit" class="btn btn-warning">Aggiorna viaggio / data perizia / condizione  e continua perizia</button>
+        <br /> <br />
+    }
+}
+
+@if (ViewBag.IsModelActive == false)
 {
-    IDPerito = ViewBag.IDPerito,
-    IDSpedizione = ViewBag.IDSpedizione,
-    IDPerizia = dati[0].IDPerizia,
-    IDMeteo = ViewBag.IDMeteo,
-    IDTP = ViewBag.IDTP,
-    IsUpdate = ViewBag.IsUpdate,
-    aIDModello = ViewBag.aIDModelloCasa,
-    IsRTB = Session["RTB"],
-    IsInspecting = true
-}, new { @class = "btn btn-warning custom" })
-<br /><br />
+    @Html.ActionLink("Aggiorna viaggio / data perizia  e termina", "AggiornaSpedizioneEDataPerizia", new
+    {
+        IDSpedizione = ViewBag.IDSpedizione,
+        IDPerizia = dati[0].IDPerizia,
+        IDMeteo = ViewBag.IDMeteo,
+        IDPerito = ViewBag.IDPerito,
+        IDTP = ViewBag.IDTP,
+        aIDModello = ViewBag.IDModelloCasa,
+        Chassis = dati[0].Telaio
 
+    }, new { @class = "btn btn-success custom" })
+    <br /><br />
+
+
+    @Html.ActionLink("Aggiorna viaggio / data perizia / condizione  e continua perizia", "AggiornaSpedizioneEDataPerizia", new
+    {
+        IDPerito = ViewBag.IDPerito,
+        IDSpedizione = ViewBag.IDSpedizione,
+        IDPerizia = dati[0].IDPerizia,
+        IDMeteo = ViewBag.IDMeteo,
+        IDTP = ViewBag.IDTP,
+        IsUpdate = ViewBag.IsUpdate,
+        aIDModello = ViewBag.IDModelloCasa,
+        IsRTB = Session["RTB"],
+        IsInspecting = true,
+        Chassis = dati[0].Telaio
+    }, new { @class = "btn btn-warning custom" })
+    <br /><br />
+}
 @Html.ActionLink("Esci senza modificare nulla", "InputTelaio", new
-                    {
-                       IDPerito = ViewBag.IDPerito,
-                       IDSpedizione = ViewBag.IDSpedizione,
-                       IDMeteo = ViewBag.IDMeteo,
-                       IDTP = ViewBag.IDTP
-                       
-                   }, new { @class = "btn btn-danger custom" })
+    {
+        IDPerito = ViewBag.IDPerito,
+        IDSpedizione = ViewBag.IDSpedizione,
+        IDMeteo = ViewBag.IDMeteo,
+        IDTP = ViewBag.IDTP
+
+    }, new { @class = "btn btn-danger custom" })
 
 

@@ -134,6 +134,8 @@ namespace WEB_Auto.Controllers
                     ViewBag.IDSpedizione = IDSpedizione;
                     ViewBag.IDMeteo = IDMeteo;
                     ViewBag.IDTP = IDTP;
+                    ViewBag.IDModello = aIDModello;
+                    ViewBag.IsModelActive = false;
                     return View("TelaioEsistente",model);
 
                 }
@@ -1092,24 +1094,152 @@ namespace WEB_Auto.Controllers
             return cnt > 0;
         }
 
-
-        public ActionResult AggiornaSpedizioneEDataPerizia(string IDSpedizione, string IDPerizia, string IDMeteo , string IDTP, string IDPerito, bool IsInspecting = false )
+        
+        public ActionResult AggiornaSpedizioneEDataPerizia(string IDSpedizione, string IDPerizia, string IDMeteo , string IDTP, string IDPerito,string Chassis,string aIDModello, string IDModelloCasa,
+                            bool IsInspecting = false, bool IsModelActive = false)
         {
-           
-                string sqlcmd = " UPDATE AGR_PERIZIE_Temp_MVC " +
+            // Controlli
+            string a = "";
+            string myIDModello = "";
+            string aNewModel = "";
+            ViewBag.IsModelActive = IsModelActive;
+            var oldPerizia = (from m in db.AGR_PERIZIE_TEMP_MVC
+                       where m.ID == IDPerizia
+                       select new { m.IDSpedizione , m.IDModello}).FirstOrDefault();
+            myIDModello = oldPerizia.IDModello.ToString();
+
+            var oldgest = (from m in db.AGR_Spedizioni
+                           where m.ID == oldPerizia.IDSpedizione
+                           select new { m.IDCliente, m.IDCasa }).FirstOrDefault();
+
+            var newgest = (from m in db.AGR_Spedizioni
+                           where m.ID == IDSpedizione
+                           select new { m.IDCliente, m.IDCasa }).FirstOrDefault();
+
+            try
+            {
+                aNewModel = IDModelloCasa;
+                
+            }
+            catch { }
+
+            if (oldgest.IDCliente != newgest.IDCliente)
+            {
+                if (oldgest.IDCliente == "GN" && oldPerizia.IDModello.ToString() == "1240")
+                {
+                    myIDModello = "1241";
+                }
+                if (oldgest.IDCliente == "51" && oldPerizia.IDModello.ToString() == "1241")
+                {
+                    myIDModello = "1240";
+                }
+
+                if(oldgest.IDCasa != newgest.IDCasa)
+                {
+                    DateTime myDate = DateTime.Now;
+                    var model = new Models.HomeModel();
+
+                    var datixmodel = from m in db.WEB_ListaPerizieFlat_MVC_vw
+                                     where m.Telaio == Chassis
+                                     where m.IDSpedizione != IDSpedizione
+                                     where m.IDTipoPerizia == IDTP
+                                     where m.DataPerizia < myDate
+                                     where m.IsClosed == false
+                                     select m;
+                    model.WEB_ListaPerizieFlat_MVC_vw = datixmodel.ToList();
+                    ViewBag.IDPerito = IDPerito;
+                    ViewBag.IDSpedizione = IDSpedizione;
+                    ViewBag.IDMeteo = IDMeteo;
+                    ViewBag.IDTP = IDTP;
+                    ViewBag.IDModello = aIDModello;
+                    ViewBag.IsModelActive = true;
+                    var modello = from m in db.AGR_ModelliAuto_vw
+                                  where m.IDCliente == "**"
+                                  where m.IDCasa == newgest.IDCasa
+                                  
+                                  select m;
+                    model.AGR_ModelliAuto_vw = modello.ToList().OrderBy(m => m.Descr);
+                    var ElencoModelli = new SelectList(model.AGR_ModelliAuto_vw.ToList(), "ID", "Descr");
+                    ViewData["ElencoModelli"] = ElencoModelli;
+                    ViewBag.IsTrasportatore = false;
+                    
+                    return View("TelaioEsistente", model);
+                }
+            }
+            else
+            {
+                if (oldgest.IDCasa == "RTB" && (myIDModello != "1240" & myIDModello != "1241"))
+                     return View("ModificaNonGestita");
+                //string aa = "";
+
+            }
+
+            string sqlcmd = " UPDATE AGR_PERIZIE_Temp_MVC " +
                                 " SET DataPerizia = @DataPerizia , " +
-                                "     IDSpedizione = @IDSpedizione " + 
+                                "     IDSpedizione = @IDSpedizione, " + 
+                                "     IDModello = @IDModello " + 
                                 " WHERE ID = @IDPerizia";
                 DateTime aNewDataPerizia = DateTime.Now;
 
                 int Inserted = db.Database.ExecuteSqlCommand(sqlcmd, 
                                                                 new SqlParameter("@IDPerizia", IDPerizia),
                                                                 new SqlParameter("@DataPerizia", aNewDataPerizia),
-                                                                new SqlParameter("@IDSpedizione", IDSpedizione));
+                                                                new SqlParameter("@IDSpedizione", IDSpedizione),
+                                                                new SqlParameter("@IDModello", myIDModello));
                 if(!IsInspecting)
                     return RedirectToAction("InputTelaio", "TelaiAnagrafica", new { IDPerito, IDSpedizione, IDMeteo, IDTP });
                 else
-                    return RedirectToAction("InputTelaio", "TelaiAnagrafica", new { IDPerito, IDSpedizione, IDMeteo, IDTP ,Chassis = "TEST"});
+                    return RedirectToAction("InputTelaio", "TelaiAnagrafica", new { IDPerito, IDSpedizione, IDMeteo, IDTP ,Chassis });
+
+
+        }
+
+        [HttpPost]
+        public ActionResult AggiornaSpedizioneEDataPerizia(string IDSpedizione, string IDPerizia, string IDMeteo, string IDTP, string IDPerito, string Chassis, string aIDModello, string IDModelloCasa,
+                           bool IsInspecting = false, bool IsModelActive = false, string diff = "" )
+        {
+            // Controlli
+            string a = "";
+            string myIDModello = "";
+            string aNewModel = "";
+            ViewBag.IsModelActive = IsModelActive;
+
+            var oldPerizia = (from m in db.AGR_PERIZIE_TEMP_MVC
+                              where m.ID == IDPerizia
+                              select new { m.IDSpedizione, m.IDModello }).FirstOrDefault();
+            myIDModello = oldPerizia.IDModello.ToString();
+
+            var oldgest = (from m in db.AGR_Spedizioni
+                           where m.ID == oldPerizia.IDSpedizione
+                           select new { m.IDCliente, m.IDCasa }).FirstOrDefault();
+
+            var newgest = (from m in db.AGR_Spedizioni
+                           where m.ID == IDSpedizione
+                           select new { m.IDCliente, m.IDCasa }).FirstOrDefault();
+
+            var idVero = (from m in db.AGR_ModelliAuto
+                          where m.IDCasa == newgest.IDCasa
+                          where m.IDModelloCasa == IDModelloCasa
+                          select m.ID).FirstOrDefault();
+
+            myIDModello = idVero.ToString();
+
+            string sqlcmd = " UPDATE AGR_PERIZIE_Temp_MVC " +
+                                " SET DataPerizia = @DataPerizia , " +
+                                "     IDSpedizione = @IDSpedizione, " +
+                                "     IDModello = @IDModello " +
+                                " WHERE ID = @IDPerizia";
+            DateTime aNewDataPerizia = DateTime.Now;
+
+            int Inserted = db.Database.ExecuteSqlCommand(sqlcmd,
+                                                            new SqlParameter("@IDPerizia", IDPerizia),
+                                                            new SqlParameter("@DataPerizia", aNewDataPerizia),
+                                                            new SqlParameter("@IDSpedizione", IDSpedizione),
+                                                            new SqlParameter("@IDModello", myIDModello));
+            if (!IsInspecting)
+                return RedirectToAction("InputTelaio", "TelaiAnagrafica", new { IDPerito, IDSpedizione, IDMeteo, IDTP });
+            else
+                return RedirectToAction("InputTelaio", "TelaiAnagrafica", new { IDPerito, IDSpedizione, IDMeteo, IDTP, Chassis });
 
 
         }

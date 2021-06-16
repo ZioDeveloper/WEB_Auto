@@ -1,0 +1,18 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Errore</title>
+</head>
+<body>
+    <hgroup>
+        <h3>Errore</h3>
+        <h4>Il viaggio contiene almeno una perizia <br />
+            associata a trasportatore non codificato.</h4>
+    </hgroup>
+
+    <br />
+    @Html.ActionLink("Torna lista spedizioni", "ListaSpedizioni", "ListaPerizie", new { usr = Session["User"].ToString() }, new { @class = "btn btn-primary" })
+
+</body>
+</html>

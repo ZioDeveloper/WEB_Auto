@@ -178,6 +178,20 @@ namespace WEB_Auto.Controllers
 
         public ActionResult ChiudiSpedizione(string IDSpedizione, string IDTP)
         {
+            // Controllo non codificati
+            string aPerito = Session["IDPeritoVero"].ToString();
+            var cnt = (from m in db.WEB_Auto_ListaPerizieXSpedizione_vw
+                         where m.IDSpedizione == IDSpedizione
+                         where m.IDPerito == aPerito
+                         where m.IDTipoPerizia == IDTP
+                         where m.ID_TrasportatoreGrimaldi == "0"
+                         select m).Count();
+            
+            if (cnt != 0)
+                return View("CodificaNonInUso");
+
+
+
             string sqlcmd = " UPDATE AGR_PERIZIE_Temp_MVC " +
                             " SET ISClosed = 1  " +
                             " WHERE IDSpedizione = @IDSpedizione " +
@@ -202,6 +216,8 @@ namespace WEB_Auto.Controllers
                 aFile += "GNV_" + aIDOrig + "_" + datiFile.DataInizioImbarco.Value.ToString("dd-MM-yyyy") + "_" + IDSpedizione + ".XLSX";
                 Create(aFile, IDSpedizione);
             }
+
+
             return RedirectToAction("ListaSpedizioni");
         }
 

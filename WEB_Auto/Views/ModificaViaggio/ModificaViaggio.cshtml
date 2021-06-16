@@ -35,6 +35,7 @@
     });
 </script>
 <br />
+@{var item4 = Model.WEB_Auto_ListaPerizieXSpedizione_vw.ToList();}
 <div>
     @Html.ActionLink("Chiudi", "Index", "Home", new { usr = Session["User"].ToString() }, new { @class = "btn btn-primary" })
 </div>
@@ -62,36 +63,46 @@
         <div class="card-body">
             @using (Html.BeginForm("ModificaViaggio", "ModificaViaggio", new { VecchioViaggio = ViewBag.myViaggio }, FormMethod.Post))
             {
-                @Html.Label("Nuovo numero di viaggio ")<br />
-                @Html.TextBox("NuovoViaggio")
 
-                <button type="submit" value="Confirm" class="btn btn-sm btn-danger rounded-0" onclick="return confirm('Procedere con modifica dati viaggio?')"><i class="fa fa-floppy-o fa-lg"></i>Modifica</button>
-                <br /><br />
-                <table id="NODataTable" style="width:100%;" class="table table-bordered">
-                    <thead>
+                try
+                {
+
+                    if (item4[0].IsClosed == false)
+                    {
+                        @Html.Label("Nuovo numero di viaggio ")<br />
+                        @Html.TextBox("NuovoViaggio")
+                        <button type="submit" value="Confirm" class="btn btn-sm btn-danger rounded-0" onclick="return confirm('Procedere con modifica dati viaggio?')"><i class="fa fa-floppy-o fa-lg"></i>Modifica</button>
+                    }
+                    else
+                    { <div style="color:red">@Html.Label("Viaggio già chiuso, non modificabile!")</div>}
+                 }
+                catch { }
+            <br /><br />
+            <table id="NODataTable" style="width:100%;" class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th><input type="checkbox" id="checkBoxAll" class="custom-checkbox" /> Seleziona tutti</th>
+
+                        <th>Telaio</th>
+                        <th>Modello</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.WEB_Auto_ListaPerizieXSpedizione_vw)
+                    {
+
                         <tr>
-                            <th><input type="checkbox" id="checkBoxAll" class="custom-checkbox" /> Seleziona tutti</th>
 
-                            <th>Telaio</th>
-                            <th>Modello</th>
+                            <td>@Html.CheckBox("ID", new { value = item.ID, @class = "custom-checkbox chkCheckBoxId" })</td>
+
+                            <td>@Html.DisplayFor(modelItem => item.Telaio)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Modello)</td>
+
                         </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var item in Model.WEB_Auto_ListaPerizieXSpedizione_vw)
-                        {
-
-                            <tr>
-
-                                <td>@Html.CheckBox("ID", new { value = item.ID, @class = "custom-checkbox chkCheckBoxId" })</td>
-
-                                <td>@Html.DisplayFor(modelItem => item.Telaio)</td>
-                                <td>@Html.DisplayFor(modelItem => item.Modello)</td>
-
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-            }
+                    }
+                </tbody>
+            </table>
+        }
         </div>
     </div>
 </div>
@@ -103,7 +114,7 @@
             stateSave: true,
             "lengthMenu": [[10, 50, 100, -1], [10, 50, 100, "Tutti"]],
             "iDisplayLength": -1,
-            
+
 
 
             dom: 'frtip',

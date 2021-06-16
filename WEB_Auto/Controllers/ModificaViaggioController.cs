@@ -51,6 +51,7 @@ namespace WEB_Auto.Controllers
 
             //             select m).ToList().OrderBy(s => s.Telaio);
             //model.WEB_Auto_ListaPerizieXSpedizione_vw = lista;
+
             ViewBag.myViaggio = aViaggio;
             return View(model);
 

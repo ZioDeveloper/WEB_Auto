@@ -191,18 +191,31 @@
                 }
             </td>
             <td>
-            
-                @Html.ActionLink("Cancella", "EliminaPerizia", "TelaiAnagrafica", new
+                @if (!IsClosed)
                 {
+                    @Html.ActionLink("Cancella", "EliminaPerizia", "TelaiAnagrafica", new
+                       {
+                           IDPerizia = item.ID,
+                           IDPerito = item.IDPerito,
+                           IDSpedizione = item.IDSpedizione,
+                           IDMeteo = item.IDMeteo,
+                           IDTP = item.IDTipoPerizia,
+                           IsUpdate = true
+                       }, new { @class = "btn btn-danger btn-xs", onclick = "return confirm('Vuoi davvero cancellare la perizia ?');" })
+
+                }
+                else
+                {
+                    @Html.ActionLink("Cancella", "EliminaPerizia", "TelaiAnagrafica", new
+               {
                    IDPerizia = item.ID,
                    IDPerito = item.IDPerito,
                    IDSpedizione = item.IDSpedizione,
                    IDMeteo = item.IDMeteo,
                    IDTP = item.IDTipoPerizia,
                    IsUpdate = true
-               }, new { @class = "btn btn-danger btn-xs", onclick = "return confirm('Vuoi davvero cancellare la perizia ?');" })
-               
-
+               }, new { @class = "btn btn-danger btn-xs disabled " })
+                }
             </td>
 
         </tr>

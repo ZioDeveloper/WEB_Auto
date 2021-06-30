@@ -20,9 +20,10 @@ namespace WEB_Auto.Controllers
             if (TipoMezzo == "TUTTE")
             {
                 var listaFlt = (from m in db.WEB_Auto_ListaPerizieXSpedizione_vw
-                             where m.IDOriginale1 == aViaggio
-                            where m.IDPerito == aPerito
-                            select m).ToList().OrderBy(s => s.Telaio);
+                                where m.IDOriginale1 == aViaggio
+                                where m.IDPerito == aPerito
+                                where m.IsClosed == false
+                                select m).ToList().OrderBy(s => s.Telaio);
                 model.WEB_Auto_ListaPerizieXSpedizione_vw = listaFlt;
             }
             else if (TipoMezzo == "RTB")
@@ -30,7 +31,8 @@ namespace WEB_Auto.Controllers
                 var listaFlt = (from m in db.WEB_Auto_ListaPerizieXSpedizione_vw
                             where m.IDOriginale1 == aViaggio
                             where m.IDPerito == aPerito
-                            where m.IDModello.ToString() == "1240" || m.IDModello.ToString() == "1241"
+                                where m.IsClosed == false
+                                where m.IDModello.ToString() == "1240" || m.IDModello.ToString() == "1241"
                              select m).ToList().OrderBy(s => s.Telaio);
                 model.WEB_Auto_ListaPerizieXSpedizione_vw = listaFlt;
             }
@@ -39,7 +41,8 @@ namespace WEB_Auto.Controllers
                 var listaFlt = (from m in db.WEB_Auto_ListaPerizieXSpedizione_vw
                             where m.IDOriginale1 == aViaggio
                             where m.IDPerito == aPerito
-                            where m.IDModello.ToString() != "1240" && m.IDModello.ToString() != "1241"
+                                where m.IsClosed == false
+                                where m.IDModello.ToString() != "1240" && m.IDModello.ToString() != "1241"
                              select m).ToList().OrderBy(s => s.Telaio);
                 model.WEB_Auto_ListaPerizieXSpedizione_vw = listaFlt;
             }

@@ -438,29 +438,45 @@ else
 
                 if (ViewBag.OldIDSpedizione == "")
                 {
-                    @Html.ActionLink("Finito", "InputTelaio", new
+                    if (@ViewBag.HasDanni == "Perizia GOOD" && ViewBag.NumFoto.ToString() != "0")
                     {
-                       IDPerito = ViewBag.IDPerito,
-                       IDSpedizione = ViewBag.IDSpedizione,
-                       IDMeteo = ViewBag.IDMeteo,
-                       IDTP = ViewBag.IDTP,
-                       IsUpdate = ViewBag.IsUpdate,
-                       aIDModello = ViewBag.aIDModelloCasa,
-                       IsRTB = Session["RTB"]
-                   }, new { @class = "btn btn-success custom" })
+                        @Html.ActionLink("Finito", "InputTelaio", new
+                       {
+                           IDPerito = ViewBag.IDPerito,
+                           IDSpedizione = ViewBag.IDSpedizione,
+                           IDMeteo = ViewBag.IDMeteo,
+                           IDTP = ViewBag.IDTP,
+                           IsUpdate = ViewBag.IsUpdate,
+                           aIDModello = ViewBag.aIDModelloCasa,
+                           IsRTB = Session["RTB"]
+                       }, new { @class = "btn btn-success custom", onclick = "return confirm('La perizia è GOOD, ma contiene foto, sei sicuro di voler proseguire ?');" })
+                    }
+                    else
+                    {
+                        @Html.ActionLink("Finito", "InputTelaio", new
+                           {
+                               IDPerito = ViewBag.IDPerito,
+                               IDSpedizione = ViewBag.IDSpedizione,
+                               IDMeteo = ViewBag.IDMeteo,
+                               IDTP = ViewBag.IDTP,
+                               IsUpdate = ViewBag.IsUpdate,
+                               aIDModello = ViewBag.aIDModelloCasa,
+                               IsRTB = Session["RTB"]
+                           }, new { @class = "btn btn-success custom" })
+                    }
                 }
                 else
                 {
                     @Html.ActionLink("Finito", "InputTelaio", new
-                   {
-                      IDPerito = ViewBag.IDPerito,
-                      IDSpedizione = ViewBag.OldIDSpedizione,
-                      IDMeteo = ViewBag.IDMeteo,
-                      IDTP = ViewBag.IDTP,
-                      IsUpdate = ViewBag.IsUpdate,
-                      aIDModello = ViewBag.aIDModelloCasa,
-                      IsRTB = Session["RTB"]
-                  }, new { @class = "btn btn-success custom" })
+                       {
+                           IDPerito = ViewBag.IDPerito,
+                           IDSpedizione = ViewBag.OldIDSpedizione,
+                           IDMeteo = ViewBag.IDMeteo,
+                           IDTP = ViewBag.IDTP,
+                           IsUpdate = ViewBag.IsUpdate,
+                           aIDModello = ViewBag.aIDModelloCasa,
+                           IsRTB = Session["RTB"]
+                       }, new { @class = "btn btn-success custom" })
                 }
             }
 
@@ -488,11 +504,13 @@ else
                IDTP = ViewBag.IDTP,
                Chassis = item4[0].Telaio,
                aIDModello = ViewBag.aIDModelloCasa,
-               IsRTB =  Session["RTB"]
+               IsRTB = Session["RTB"]
            }, new { @class = "btn btn-success custom disabled " })
             }
             else
             {
+              
+
                 @Html.ActionLink("Finito", "InputTelaio", new
                 {
                     IDPerito = ViewBag.IDPerito,
@@ -502,6 +520,7 @@ else
                     aIDModello = ViewBag.aIDModelloCasa,
                     IsRTB = Session["RTB"]
                 }, new { @class = "btn btn-success custom disabled" })
+
             }
         }
         &nbsp;&nbsp;&nbsp;

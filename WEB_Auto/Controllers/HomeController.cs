@@ -42,7 +42,8 @@ namespace WEB_Auto.Controllers
                 //usr = "VGrimaldi";
                 //usr = "grimaldi"; // 
                 // usr = "pierangeli"; // 
-                usr = "maurizio"; // 
+                //usr = "maurizio"; // 
+                usr = "Test";
                 //usr = Session["User"].ToString();
             }
 

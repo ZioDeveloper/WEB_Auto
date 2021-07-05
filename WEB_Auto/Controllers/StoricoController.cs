@@ -53,6 +53,7 @@ namespace WEB_Auto.Controllers
 
             var Chassis1 = from m in db.WEB_ListaPerizieFlat_MVC_vw
                            where m.Telaio == myTelaio
+                           where m.IsClosed == false
                            select m;
             model.WEB_ListaPerizieFlat_MVC_vw = Chassis1.ToList();
             ViewBag.Chassis1 = myTelaio;
@@ -74,11 +75,26 @@ namespace WEB_Auto.Controllers
         {
             var model = new Models.HomeModel();
 
-            var ListaTelai = from m in db.WEB_ListaPerizieFlat_MVC_vw
+            var L1 = from m in db.WEB_ListaPerizieFlat_MVC_vw
                            where m.Viaggio == aViaggio
                            where m.IDTipoPerizia == "C"
                            select m;
-            model.WEB_ListaPerizieFlat_MVC_vw = ListaTelai.ToList().OrderBy(s=>s.Status);
+            model.WEB_ListaPerizieFlat_MVC_vw = L1.ToList().OrderBy(s=>s.Status);
+
+            var L2 = from m in db.WEB_ListaPerizieFlat_DEF_vw
+                     where m.Viaggio == aViaggio
+                     where m.IDTipoPerizia == "C"
+                     select m;
+            model.WEB_ListaPerizieFlat_DEF_vw = L2.ToList().OrderBy(s => s.Status);
+
+            var L3 = from m in db.WEB_ListaPerizieFlat_TMP_vw
+                     where m.Viaggio == aViaggio
+                     where m.IDTipoPerizia == "C"
+                     select m;
+            model.WEB_ListaPerizieFlat_TMP_vw = L3.ToList().OrderBy(s => s.Status);
+
+
+
             ViewBag.Viaggio = aViaggio;
             return View(model);
         }

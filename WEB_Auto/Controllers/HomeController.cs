@@ -4,6 +4,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 using WEB_Auto.Models;
 namespace WEB_Auto.Controllers
 {
@@ -16,6 +17,7 @@ namespace WEB_Auto.Controllers
         {
             var model = new Models.HomeModel();
 
+            
             //string a = Request.Browser.Platform;
             //a = Request.Browser.Version;
             string MachineName = "";
@@ -42,8 +44,8 @@ namespace WEB_Auto.Controllers
                 //usr = "VGrimaldi";
                 //usr = "grimaldi"; // 
                 // usr = "pierangeli"; // 
-                //usr = "maurizio"; // 
-                usr = "Test";
+                usr = "maurizio"; // 
+                //usr = "Test";
                 //usr = Session["User"].ToString();
             }
 
@@ -108,7 +110,7 @@ namespace WEB_Auto.Controllers
                 ini = DateTime.Today.AddDays(-21);
                 end = DateTime.Today.AddDays(+21);
             }
-
+             
 
             if (Session["Classe"].ToString() == "0")
             {

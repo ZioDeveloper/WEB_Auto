@@ -754,7 +754,7 @@ namespace WEB_Auto.Controllers
             string myISoDate = DataPerizia.Right(4) + DataPerizia.Substring(3, 2) + DataPerizia.Left(2) + " " + ore + ":" + minuti + ":" + secondi;
 
             // Verifico Sia tutto ok.. to do !!!!!
-            bool isOK = CheckAll(IDSpedizione, Chassis, IDModelloCasa, IDTrasportatoreGrim , IDTipoRotabile, Condizione , Annotazioni,DataPerizia,  IDTP,  out string myerrMess);
+            bool isOK = CheckAll(myIDPerizia, IDSpedizione, Chassis, IDModelloCasa, IDTrasportatoreGrim , IDTipoRotabile, Condizione , Annotazioni,DataPerizia,  IDTP,  out string myerrMess);
             if (isOK)
             {
                 
@@ -834,6 +834,33 @@ namespace WEB_Auto.Controllers
                         }
                         
                     }
+                    else if (Condizione == "N")
+                    {
+                        var hasdanni = (from m in db.AGR_PERIZIE_DETT_TEMP_MVC_vw
+                                        where m.IDPerizia == myIDPerizia
+                                        where m.IDParte == "045"
+                                        where m.IDDanno == "Y"
+                                        select m).Count();
+                        
+                            sqlcmd = " DELETE FROM AGR_PERIZIE_DETT_TEMP_MVC " +
+                                     "  WHERE IDPerizia = @IDPerizia " +
+                                     " AND IDParte = @IDParte " +
+                                     " AND IDDanno = @IDDanno";
+                        
+                        try
+                        {
+                            Inserted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@IDPerizia", myIDPerizia),
+                                                                         new SqlParameter("@IDParte", "045"),
+                                                                         new SqlParameter("@IDDanno", "Y")
+                                                                         );
+                        }
+                        catch (Exception exc)
+                        {
+                            string a = exc.Message;
+                        }
+
+                    }
+
                 }
 
 
@@ -1325,6 +1352,14 @@ namespace WEB_Auto.Controllers
             return cnt;
         }
 
+        public int ContaDanni(string aIdPerizia)
+        {
+            int cnt = 0;
+            cnt = (from m in db.AGR_PERIZIE_TEMP_MVC
+                   where m.ID == aIdPerizia
+                   select m.ID).Count();
+            return cnt;
+        }
         public int ContaPDF(string aIdPerizia)
         {
             int cnt = 0;
@@ -1334,7 +1369,7 @@ namespace WEB_Auto.Controllers
             return cnt;
         }
 
-        public bool CheckAll(string aIDSpedizione ,string aTelaio, string IDModelloCasa, string IDTrasportatoreGrim,  string IDTipoRotabile , string Condizione,
+        public bool CheckAll(string myIDPerizia ,string aIDSpedizione ,string aTelaio, string IDModelloCasa, string IDTrasportatoreGrim,  string IDTipoRotabile , string Condizione,
                              string Annotazioni,string DataPerizia,string IDTP, out string errMEss)
         {
             // Dati spedizione
@@ -1356,6 +1391,31 @@ namespace WEB_Auto.Controllers
                 { errMEss = "Nuovo / Usato info obbligatoria"; return false; }
 
             }
+
+            //if(ContaFoto(myIDPerizia)<2)
+            //{
+            //    if(ContaDanni(myIDPerizia) > 0)
+            //    {
+            //        errMEss += "Numero foto insufficiente ! ";
+            //        return false;
+            //    }
+
+                
+            //}
+
+            //if(Condizione == "U")
+            //{
+            //    var hasdanni = (from m in db.AGR_PERIZIE_DETT_TEMP_MVC_vw
+            //                    where m.IDPerizia == myIDPerizia
+            //                    where m.IDParte == "045"
+            //                    where m.IDDanno == "Y"
+            //                    select m).Count();
+            //    if(hasdanni==0)
+            //    {
+            //        errMEss += "Manca dettaglio 054 - Y ";
+            //        return false;
+            //    }
+            //}
             
             // Trasportatore
             if((IDModelloCasa == "1240" || IDModelloCasa == "1241") && String.IsNullOrEmpty(IDTrasportatoreGrim))

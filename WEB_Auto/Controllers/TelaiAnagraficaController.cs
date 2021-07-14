@@ -40,6 +40,25 @@ namespace WEB_Auto.Controllers
             if(!String.IsNullOrEmpty(IDPerito))
                 EliminaTelaiSenzaModello(IDPerito);
 
+            // verifica TP
+            var Spedizioni = (from m in db.AGR_SpedizioniWEB_vw
+                             where m.ID == IDSpedizione
+                             select m).FirstOrDefault();
+           if(Spedizioni.IDPortoImbarco == Session["IDPortoPerito"].ToString())
+            {
+                if(IDTP=="D")
+                {
+                    return RedirectToAction("TipoPeriziaErrato","TelaiAnagrafica", new { Message = "Non puoi effettuare Post Discharge su questa spedizione : " + IDSpedizione });
+                }
+            }
+           else
+            {
+                if (IDTP == "C")
+                {
+                    return RedirectToAction("TipoPeriziaErrato", "TelaiAnagrafica", new { Message = "Non puoi effettuare Pre Load su questa spedizione : " + IDSpedizione });
+                }
+            }
+
             int chiuse = (from m in db.AGR_PERIZIE_TEMP_MVC
                       
                        where m.IDSpedizione == IDSpedizione
@@ -1811,6 +1830,12 @@ namespace WEB_Auto.Controllers
                        select m.ID).Count();
 
             return cnt > 0;
+        }
+
+        public ActionResult TipoPeriziaErrato(string Message)
+        {
+            ViewBag.MEssage = Message;
+            return View();
         }
     }
 }

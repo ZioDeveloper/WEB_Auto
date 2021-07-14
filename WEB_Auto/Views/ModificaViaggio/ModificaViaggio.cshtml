@@ -75,8 +75,8 @@
                     }
                     else
                     { <div style="color:red">@Html.Label("Viaggio già chiuso, non modificabile!")</div>}
-                 }
-                catch { }
+            }
+            catch { }
             <br /><br />
             <table id="NODataTable" style="width:100%;" class="table table-bordered">
                 <thead>
@@ -85,6 +85,7 @@
 
                         <th>Telaio</th>
                         <th>Modello</th>
+                        <th>Data perizia</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -97,6 +98,7 @@
 
                             <td>@Html.DisplayFor(modelItem => item.Telaio)</td>
                             <td>@Html.DisplayFor(modelItem => item.Modello)</td>
+                            <td>@Html.DisplayFor(modelItem => item.DataPerizia)</td>
 
                         </tr>
                     }
@@ -106,7 +108,6 @@
         </div>
     </div>
 </div>
-
 <script>
     $(document).ready(function () {
         var table = $('#DataTable').DataTable({

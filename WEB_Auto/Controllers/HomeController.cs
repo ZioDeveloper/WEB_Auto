@@ -64,6 +64,7 @@ namespace WEB_Auto.Controllers
             var myIDPorto = (from s in db.AGR_Periti_WEB
                               where s.Name == usr
                               select s.IDPorto).FirstOrDefault();
+            Session["IDPortoPerito"] = myIDPorto;
             var myClasse = (from s in db.AGR_Periti_WEB
                              where s.Name == usr
                              select s.Classe).FirstOrDefault();

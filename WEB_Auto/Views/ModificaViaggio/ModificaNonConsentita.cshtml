@@ -1,0 +1,12 @@
+﻿
+@{
+    ViewBag.Title = "Modifica non consentita";
+}
+<br /><br />
+      <h3>Modifica non consentita</h3>
+<br />
+
+<h3> @Html.Raw(ViewBag.Message)</h3>
+<br /><br />
+@Html.ActionLink("Torna a inserimento telaio", "ModificaViaggio", "ModificaViaggio", new { @Telaio = ViewBag.Telaio }, new { @class = "btn btn-success" })
+

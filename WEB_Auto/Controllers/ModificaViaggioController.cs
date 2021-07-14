@@ -63,7 +63,8 @@ namespace WEB_Auto.Controllers
         [HttpPost]
         public ActionResult ModificaViaggio(FormCollection formCollection, string NuovoViaggio, string VecchioViaggio)
         {
-            if(String.IsNullOrEmpty(NuovoViaggio))
+            bool IsCorrect = false;
+            if (String.IsNullOrEmpty(NuovoViaggio))
             {
                 return RedirectToAction("ModificaViaggio", new { aViaggio = VecchioViaggio });
             }
@@ -80,15 +81,21 @@ namespace WEB_Auto.Controllers
                     if (aPerizia != "false")
                     {
                         aPerizia = aPerizia;
-                        ModificaSpedizione(NuovoViaggio, aPerizia);
+
+                        IsCorrect = ModificaSpedizione(NuovoViaggio, aPerizia);
+                        if (!IsCorrect)
+                            return RedirectToAction("ModificaNonConsentita", "ModificaViaggio", new { Message = "Modifica non ammessa, contattare Maurizio, perizia : " + aPerizia });
                     }
                 }
                 catch { }
             }
-            return RedirectToAction("ModificaViaggio");
+           
+                return RedirectToAction("ModificaViaggio");
+           
+
         }
 
-        public void ModificaSpedizione( string newViaggio,string IDPerizia)
+        public bool ModificaSpedizione( string newViaggio,string IDPerizia)
         {
             var myNewIDSped = "";
 
@@ -123,6 +130,7 @@ namespace WEB_Auto.Controllers
 
             if (cnt == 0)
             {
+                
                 if (myPerizia.IDModello.ToString() != "1240" && myPerizia.IDModello.ToString() != "1241")
                 {
                     if (!String.IsNullOrEmpty(myNewIDSped))
@@ -159,8 +167,10 @@ namespace WEB_Auto.Controllers
             }
             else
             {
+                return false;
 
-                var IDPeriziaDaCancellare = (from m in db.AGR_PERIZIE_TEMP_MVC
+                //RedirectToAction("ModificaNonConsentita", "ModificaViaggio", new { Message = "Modifica non ammessa, contattare Maurizio." });
+                /*var IDPeriziaDaCancellare = (from m in db.AGR_PERIZIE_TEMP_MVC
                                           where m.Telaio == myPerizia.Telaio
                                           where m.IDSpedizione == myNewIDSped
                                           select m.ID ).FirstOrDefault();
@@ -181,12 +191,16 @@ namespace WEB_Auto.Controllers
                          " SET  IDSpedizione = @IDSpedizione " +
                          " WHERE ID = @IDPerizia";
                 int Updated = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@IDPerizia", IDPerizia),
-                                                                     new SqlParameter("@IDSpedizione", myNewIDSped));
+                                                                    new SqlParameter("@IDSpedizione", myNewIDSped));*/
+
+
 
             }
+            return true;
 
         }
 
+        
 
         public ActionResult ModificaDataPerizia(string aViaggio, string errMess = "")
         {
@@ -261,6 +275,12 @@ namespace WEB_Auto.Controllers
                                                                  new SqlParameter("@DataPerizia", myISoDate));
             //}
 
+        }
+
+        public ActionResult ModificaNonConsentita(string Message)
+        {
+            ViewBag.MEssage = Message;
+            return View();
         }
     }
 }

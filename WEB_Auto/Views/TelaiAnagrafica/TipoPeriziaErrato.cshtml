@@ -1,0 +1,11 @@
+﻿
+@{
+    ViewBag.Title = "Tipo perizia errato";
+}
+<br /><br />
+<h3>Errore !</h3>
+<br />
+
+<h3> @Html.Raw(ViewBag.Message)</h3>
+<br /><br />
+@Html.ActionLink("Torna a Home", "Index", "Home", new { usr = Session["User"].ToString() }, new { @class = "btn btn-primary" })

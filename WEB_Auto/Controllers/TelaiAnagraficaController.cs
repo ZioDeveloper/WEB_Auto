@@ -818,6 +818,9 @@ namespace WEB_Auto.Controllers
                     if (Condizione == "")
                         Condizione = null;
 
+                    if (IDModelloCasa == "1240" || IDModelloCasa == "1241")
+                        Condizione = null;
+
                     Inserted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@ID", myIDPerizia),
                                                                      new SqlParameter("@ID_TrasportatoreGrimaldi", (object)IDTrasportatoreGrim ?? DBNull.Value),
                                                                      new SqlParameter("@ID_TipoRotabile", (object)IDTipoRotabile ?? DBNull.Value),
@@ -853,7 +856,7 @@ namespace WEB_Auto.Controllers
                         }
                         
                     }
-                    else if (Condizione == "N")
+                    else if (String.IsNullOrEmpty(Condizione) || Condizione == "N")
                     {
                         var hasdanni = (from m in db.AGR_PERIZIE_DETT_TEMP_MVC_vw
                                         where m.IDPerizia == myIDPerizia
@@ -939,7 +942,7 @@ namespace WEB_Auto.Controllers
             bool ISGEFCO_GN_51 = pISGEFCO_GN_51(myIDPerizia);
 
             // Dati per dropdown AGR_Parti
-            if (ISGEFCO_GN_51)
+            if (ISGEFCO_GN_51 && Session["Classe"].ToString() == "0")
             {
                 var parti = from m in db.WEB_AGR_Parti_vw
                             where m.IDCliente == "**"
@@ -949,7 +952,17 @@ namespace WEB_Auto.Controllers
                 var ElencoParti = new SelectList(model.WEB_AGR_Parti_vw.ToList().OrderBy(m => m.DescrITA), "ID", "DescrITA");
                 ViewData["ElencoParti"] = ElencoParti;
             }
-            else
+            else if (Session["Classe"].ToString() == "1")
+            {
+                var parti = from m in db.WEB_AGR_Parti_vw
+                            where m.IDCliente == "**"
+                            where m.IDCasa == "RTB"
+                            select m;
+                model.WEB_AGR_Parti_vw = parti.ToList();
+                var ElencoParti = new SelectList(model.WEB_AGR_Parti_vw.ToList().OrderBy(m => m.DescrITA), "ID", "DescrITA");
+                ViewData["ElencoParti"] = ElencoParti;
+            }
+            else 
             {
                 var parti = from m in db.WEB_AGR_Parti_vw
                             where m.IDCliente == "**"

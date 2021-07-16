@@ -40,11 +40,11 @@ namespace WEB_Auto.Controllers
 
             if (String.IsNullOrEmpty(usr))
             {
-                //usr = "caminita"; // pierangeli
+                usr = "caminita"; // pierangeli
                 //usr = "VGrimaldi";
                 //usr = "grimaldi"; // 
                 // usr = "pierangeli"; // 
-                usr = "maurizio"; // 
+                //usr = "maurizio"; // 
                 //usr = "Test";
                 //usr = Session["User"].ToString();
             }

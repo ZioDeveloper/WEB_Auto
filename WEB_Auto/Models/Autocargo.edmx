@@ -5,6 +5,16 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="wisedbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2005" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'wisedb.dbo.AGR_Danni_SDU' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="AGR_Danni_SDU">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="DescrITA" Type="varchar" MaxLength="50" />
+          <Property Name="DescrENG" Type="varchar" MaxLength="50" />
+        </EntityType>
         <EntityType Name="AGR_FilesTxt">
           <Key>
             <PropertyRef Name="ID" />
@@ -19,6 +29,14 @@
           <Property Name="POD" Type="varchar" MaxLength="50" />
           <Property Name="IDSpedizione" Type="varchar" MaxLength="8" />
           <Property Name="IDOriginale" Type="varchar" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="AGR_Gravita_SDU">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="DescrITA" Type="varchar" MaxLength="50" />
+          <Property Name="DescrENG" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="AGR_Meteo">
           <Key>
@@ -51,6 +69,14 @@
           <Property Name="DescrENG" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="IDClasse" Type="varchar" MaxLength="1" Nullable="false" />
           <Property Name="IDCliente" Type="varchar" MaxLength="2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AGR_Parti_SDU">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DescrITA" Type="varchar" MaxLength="50" />
+          <Property Name="DescrENG" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="AGR_Periti_WEB">
           <Key>
@@ -753,9 +779,11 @@ warning 6002: The table/view 'wisedb.dbo.WEB_ListaPerizieFlat_TMP_vw' does not h
         </Association>
         <EntityContainer Name="wisedbModelStoreContainer">
           <EntitySet Name="AGR_FilesTxt" EntityType="Self.AGR_FilesTxt" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AGR_Gravita_SDU" EntityType="Self.AGR_Gravita_SDU" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AGR_Meteo" EntityType="Self.AGR_Meteo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AGR_ModelliAuto" EntityType="Self.AGR_ModelliAuto" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AGR_Parti" EntityType="Self.AGR_Parti" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AGR_Parti_SDU" EntityType="Self.AGR_Parti_SDU" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AGR_Periti_WEB" EntityType="Self.AGR_Periti_WEB" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AGR_PERIZIE_DETT_TEMP_MVC" EntityType="Self.AGR_PERIZIE_DETT_TEMP_MVC" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AGR_PERIZIE_TEMP_MVC" EntityType="Self.AGR_PERIZIE_TEMP_MVC" Schema="dbo" store:Type="Tables" />
@@ -768,6 +796,13 @@ warning 6002: The table/view 'wisedb.dbo.WEB_ListaPerizieFlat_TMP_vw' does not h
           <EntitySet Name="Periti" EntityType="Self.Periti" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WEB_AUTO_FOTO" EntityType="Self.WEB_AUTO_FOTO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WEB_AUTO_PDF" EntityType="Self.WEB_AUTO_PDF" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AGR_Danni_SDU" EntityType="Self.AGR_Danni_SDU" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [AGR_Danni_SDU].[ID] AS [ID], 
+    [AGR_Danni_SDU].[DescrITA] AS [DescrITA], 
+    [AGR_Danni_SDU].[DescrENG] AS [DescrENG]
+    FROM [dbo].[AGR_Danni_SDU] AS [AGR_Danni_SDU]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="AAA_Prova" EntityType="Self.AAA_Prova" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [AAA_Prova].[ID] AS [ID], 
@@ -1147,6 +1182,9 @@ warning 6002: The table/view 'wisedb.dbo.WEB_ListaPerizieFlat_TMP_vw' does not h
           <EntitySet Name="AGR_ModelliAuto_vw" EntityType="wisedbModel.AGR_ModelliAuto_vw" />
           <EntitySet Name="AGR_FilesTxt" EntityType="wisedbModel.AGR_FilesTxt" />
           <EntitySet Name="WEB_AUTO_ListaSpedizioni_CMN_vw" EntityType="wisedbModel.WEB_AUTO_ListaSpedizioni_CMN_vw" />
+          <EntitySet Name="AGR_Parti_SDU" EntityType="wisedbModel.AGR_Parti_SDU" />
+          <EntitySet Name="AGR_Gravita_SDU" EntityType="wisedbModel.AGR_Gravita_SDU" />
+          <EntitySet Name="AGR_Danni_SDU" EntityType="wisedbModel.AGR_Danni_SDU" />
         </EntityContainer>
         <EntityType Name="AGR_Periti_WEB">
           <Key>
@@ -1860,6 +1898,30 @@ warning 6002: The table/view 'wisedb.dbo.WEB_ListaPerizieFlat_TMP_vw' does not h
           <Property Name="Prog" Type="Int32" Nullable="false" />
           <Property Name="IDTipoPerizia" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
         </EntityType>
+        <EntityType Name="AGR_Parti_SDU">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DescrITA" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DescrENG" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="AGR_Gravita_SDU">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="DescrITA" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DescrENG" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="AGR_Danni_SDU">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="DescrITA" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DescrENG" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2511,6 +2573,33 @@ warning 6002: The table/view 'wisedb.dbo.WEB_ListaPerizieFlat_TMP_vw' does not h
                 <ScalarProperty Name="Good" ColumnName="Good" />
                 <ScalarProperty Name="NumPerizie" ColumnName="NumPerizie" />
                 <ScalarProperty Name="IDOriginale1" ColumnName="IDOriginale1" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AGR_Parti_SDU">
+            <EntityTypeMapping TypeName="wisedbModel.AGR_Parti_SDU">
+              <MappingFragment StoreEntitySet="AGR_Parti_SDU">
+                <ScalarProperty Name="DescrENG" ColumnName="DescrENG" />
+                <ScalarProperty Name="DescrITA" ColumnName="DescrITA" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AGR_Gravita_SDU">
+            <EntityTypeMapping TypeName="wisedbModel.AGR_Gravita_SDU">
+              <MappingFragment StoreEntitySet="AGR_Gravita_SDU">
+                <ScalarProperty Name="DescrENG" ColumnName="DescrENG" />
+                <ScalarProperty Name="DescrITA" ColumnName="DescrITA" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AGR_Danni_SDU">
+            <EntityTypeMapping TypeName="wisedbModel.AGR_Danni_SDU">
+              <MappingFragment StoreEntitySet="AGR_Danni_SDU">
+                <ScalarProperty Name="DescrENG" ColumnName="DescrENG" />
+                <ScalarProperty Name="DescrITA" ColumnName="DescrITA" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

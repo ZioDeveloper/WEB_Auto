@@ -168,10 +168,16 @@
     <Compile Include="Models\AAA_Prova.cs">
       <DependentUpon>Autocargo.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\AGR_Danni_SDU.cs">
+      <DependentUpon>Autocargo.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\AGR_DatiRotabiliInUSo_vw.cs">
       <DependentUpon>Autocargo.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\AGR_FilesTxt.cs">
+      <DependentUpon>Autocargo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AGR_Gravita_SDU.cs">
       <DependentUpon>Autocargo.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\AGR_Meteo.cs">
@@ -187,6 +193,9 @@
       <DependentUpon>Autocargo.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\AGR_Parti.cs">
+      <DependentUpon>Autocargo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AGR_Parti_SDU.cs">
       <DependentUpon>Autocargo.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\AGR_Periti_WEB.cs">

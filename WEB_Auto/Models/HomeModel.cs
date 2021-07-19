@@ -44,6 +44,10 @@ namespace WEB_Auto.Models
         public IEnumerable<AGR_Perizie_MVC_Flat_vw> AGR_Perizie_MVC_Flat_vw { get; set; }
 
         public IEnumerable<AAA_Prova> AAA_Prova { get; set; }
+
+        public IEnumerable<AGR_Parti_SDU> AGR_Parti_SDU { get; set; }
+        public IEnumerable<AGR_Danni_SDU> AGR_Danni_SDU { get; set; }
+        public IEnumerable<AGR_Gravita_SDU> AGR_Gravita_SDU { get; set; }
         public IEnumerable<WEB_Auto_ListaPerizieXSpedizione_vw> WEB_Auto_ListaPerizieXSpedizione_vw { get; set; }
 
         public IEnumerable<WEB_ListaPerizieFlat_MVC_vw> WEB_ListaPerizieFlat_MVC_vw { get; set; }

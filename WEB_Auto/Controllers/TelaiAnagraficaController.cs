@@ -954,12 +954,11 @@ namespace WEB_Auto.Controllers
             }
             else if (Session["Classe"].ToString() == "1")
             {
-                var parti = from m in db.WEB_AGR_Parti_vw
-                            where m.IDCliente == "**"
-                            where m.IDCasa == "RTB"
+                var parti = from m in db.AGR_Parti_SDU
+                          
                             select m;
-                model.WEB_AGR_Parti_vw = parti.ToList();
-                var ElencoParti = new SelectList(model.WEB_AGR_Parti_vw.ToList().OrderBy(m => m.DescrITA), "ID", "DescrITA");
+                model.AGR_Parti_SDU = parti.ToList();
+                var ElencoParti = new SelectList(model.AGR_Parti_SDU.ToList().OrderBy(m => m.DescrITA), "ID", "DescrITA");
                 ViewData["ElencoParti"] = ElencoParti;
             }
             else 
@@ -973,29 +972,47 @@ namespace WEB_Auto.Controllers
                 ViewData["ElencoParti"] = ElencoParti;
             }
 
-           
-            
-
             // Dati per dropdown AGR_Danni
-            var danni = from m in db.WEB_AGR_Danni_vw
-                        where m.IDCliente == "**"
+            if (Session["Classe"].ToString() == "0")
+            {
 
-                        select m;
-            model.WEB_AGR_Danni_vw = danni.ToList();
-            var ElencoDanni = new SelectList(model.WEB_AGR_Danni_vw.ToList().OrderBy(m => m.DescrITA), "ID", "DescrITA");
-            ViewData["ElencoDanni"] = ElencoDanni;
+               
+                var danni = from m in db.WEB_AGR_Danni_vw
+                            where m.IDCliente == "**"
+
+                            select m;
+                model.WEB_AGR_Danni_vw = danni.ToList();
+                var ElencoDanni = new SelectList(model.WEB_AGR_Danni_vw.ToList().OrderBy(m => m.DescrITA), "ID", "DescrITA");
+                ViewData["ElencoDanni"] = ElencoDanni;
+            }
+            else if (Session["Classe"].ToString() == "1")
+            {
+                // Dati per dropdown AGR_Danni
+                var danni = from m in db.AGR_Danni_SDU
+                            select m;
+                model.AGR_Danni_SDU = danni.ToList();
+                var ElencoDanni = new SelectList(model.AGR_Danni_SDU.ToList().OrderBy(m => m.DescrITA), "ID", "DescrITA");
+                ViewData["ElencoDanni"] = ElencoDanni;
+            }
 
 
             // Dati per dropdown AGR_Gravita
             // *******************************
-            if (ISGEFCO_GN_51 || Session["Classe"].ToString() == "1")
+            if (ISGEFCO_GN_51 )
             {
                 var gravita = from m in db.WEB_AGR_Gravita_vw
                               where m.IDCliente == "FI"
-
                               select m;
                 model.WEB_AGR_Gravita_vw = gravita.ToList();
                 var ElencoGravita = new SelectList(model.WEB_AGR_Gravita_vw.ToList().OrderBy(m => m.DescrITA), "ID", "DescrITA");
+                ViewData["ElencoGravita"] = ElencoGravita;
+            }
+            else if ( Session["Classe"].ToString() == "1")
+            {
+                var gravita = from m in db.AGR_Gravita_SDU
+                              select m;
+                model.AGR_Gravita_SDU = gravita.ToList();
+                var ElencoGravita = new SelectList(model.AGR_Gravita_SDU.ToList().OrderBy(m => m.DescrITA), "ID", "DescrITA");
                 ViewData["ElencoGravita"] = ElencoGravita;
             }
             else

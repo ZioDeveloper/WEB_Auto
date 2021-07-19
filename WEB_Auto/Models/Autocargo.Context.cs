@@ -60,5 +60,8 @@ namespace WEB_Auto.Models
         public virtual DbSet<AGR_ModelliAuto_vw> AGR_ModelliAuto_vw { get; set; }
         public virtual DbSet<AGR_FilesTxt> AGR_FilesTxt { get; set; }
         public virtual DbSet<WEB_AUTO_ListaSpedizioni_CMN_vw> WEB_AUTO_ListaSpedizioni_CMN_vw { get; set; }
+        public virtual DbSet<AGR_Parti_SDU> AGR_Parti_SDU { get; set; }
+        public virtual DbSet<AGR_Gravita_SDU> AGR_Gravita_SDU { get; set; }
+        public virtual DbSet<AGR_Danni_SDU> AGR_Danni_SDU { get; set; }
     }
 }

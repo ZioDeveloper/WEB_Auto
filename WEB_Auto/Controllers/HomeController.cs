@@ -170,7 +170,8 @@ namespace WEB_Auto.Controllers
 
                 // Dati per dropdown TipoPErizia
                 var TP = from m in db.AGR_TipiPerizia 
-                         where m.ID == "I" || m.ID == "N" || m.ID == "Z" || m.ID == "-" || m.ID == "+"
+                         where m.ID == "Z" 
+                         //where m.ID == "I" || m.ID == "N" || m.ID == "Z" || m.ID == "-" || m.ID == "+"
                          select m;
                 model.AGR_TipiPerizia = TP.ToList().OrderBy(s=>s.Ordine);
                 var ElencoTP = new SelectList(model.AGR_TipiPerizia.ToList(), "ID", "DescrITA");

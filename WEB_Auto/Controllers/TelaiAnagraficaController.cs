@@ -425,8 +425,8 @@ namespace WEB_Auto.Controllers
         }
 
         public ActionResult Edit(string IDPerito, string IDSpedizione, string IDMeteo, string IDTP, string aIDTrasportatore,
-                                         string aIDTipoRotabile, string aIDModelloCasa, string myIDPerizia,string flagNU, string Annotazioni, bool Filtrati = true ,
-                                         string errMess = " ", bool IsUpdate = false,bool ToDoRefresh = false, string OldIDSpedizione = "") // errMess = " " per eludere primo controllo in View Edit
+                                         string aIDTipoRotabile, string aIDModelloCasa, string myIDPerizia, string flagNU, string Annotazioni, bool Filtrati = true,
+                                         string errMess = " ", bool IsUpdate = false, bool ToDoRefresh = false, string OldIDSpedizione = "") // errMess = " " per eludere primo controllo in View Edit
         {
             // Default = modello, diventa trasportatore per CAB non rotabili
             ViewBag.IsTrasportatore = false;
@@ -442,8 +442,8 @@ namespace WEB_Auto.Controllers
             }
 
             var dati = (from m in db.AGR_Perizie_MVC_Flat_vw
-                          where m.ID == myIDPerizia
-                          select m).FirstOrDefault();
+                        where m.ID == myIDPerizia
+                        select m).FirstOrDefault();
 
 
             AggiornaFlagGoodDamaged(myIDPerizia);
@@ -506,7 +506,7 @@ namespace WEB_Auto.Controllers
             else
             {
 
-                
+
                 if (aCasa == "CAB" && Filtrati && Session["RTB"].ToString().ToUpper() != "TRUE" && String.IsNullOrEmpty(aIDModelloCasa))
                 {
                     var modello = from m in db.AGR_ModelliAuto_vw
@@ -544,17 +544,17 @@ namespace WEB_Auto.Controllers
                 else
                 {
                     var myTelaio = (from m in db.AGR_Perizie_MVC_Flat_vw
-                                  where m.ID == myIDPerizia
-                                  select m.Telaio).FirstOrDefault();
+                                    where m.ID == myIDPerizia
+                                    select m.Telaio).FirstOrDefault();
 
                     var cnt = (from m in db.AGR_Perizie_MVC_Flat_vw
-                                    where m.Telaio == myTelaio
-                                    select m.Telaio).Count();
+                               where m.Telaio == myTelaio
+                               select m.Telaio).Count();
 
                     var myModello = (from m in db.AGR_Perizie_MVC_Flat_vw
                                      where m.Telaio == myTelaio
-                                     select  new { m.IDModello }).FirstOrDefault();
-                   
+                                     select new { m.IDModello }).FirstOrDefault();
+
 
 
                     if (cnt == 1)
@@ -594,7 +594,7 @@ namespace WEB_Auto.Controllers
                 if (String.IsNullOrEmpty(ViewBag.aIDModelloCasa))
                     ViewBag.aIDModelloCasa = aIDModelloCasa;
             }
-            if(aCasa == "RTB")
+            if (aCasa == "RTB")
             {
                 aIDModelloCasa = "1241";
                 ViewBag.aIDModelloCasa = "1241";
@@ -640,11 +640,11 @@ namespace WEB_Auto.Controllers
 
 
             // Cerco Trasportatore Grimaldi e Tipo rotabile pregressi e li uso...
-            if ((aIDModelloCasa == "1240" || aIDModelloCasa == "1241" )&& (String.IsNullOrEmpty(aIDTrasportatore)&& String.IsNullOrEmpty(aIDTipoRotabile)))
+            if ((aIDModelloCasa == "1240" || aIDModelloCasa == "1241") && (String.IsNullOrEmpty(aIDTrasportatore) && String.IsNullOrEmpty(aIDTipoRotabile)))
             {
                 var myTelaio = (from m in db.AGR_Perizie_MVC_Flat_vw
-                            where m.ID == myIDPerizia
-                            select m.Telaio).FirstOrDefault();
+                                where m.ID == myIDPerizia
+                                select m.Telaio).FirstOrDefault();
                 var datiPregressi = (from m in db.AGR_DatiRotabiliInUSo_vw
                                      where m.Telaio == myTelaio
                                      orderby m.DataPerizia descending
@@ -661,22 +661,22 @@ namespace WEB_Auto.Controllers
                     }
 
                     // Aggiorno dati perizia
-                        string sqlcmd = " UPDATE AGR_PERIZIE_Temp_MVC " +
-                                    " SET  IDModello = @IDModello " +
-                                    " WHERE ID = @IDPerizia";
+                    string sqlcmd = " UPDATE AGR_PERIZIE_Temp_MVC " +
+                                " SET  IDModello = @IDModello " +
+                                " WHERE ID = @IDPerizia";
 
 
                     int Inserted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@IDPerizia", myIDPerizia),
-                                                                         
+
                                                                          new SqlParameter("@IDModello", aIDModelloCasa));
 
                     sqlcmd = " UPDATE AGR_PerizieExpGrim_Temp_MVC   " +
                                                   "  SET ID_TrasportatoreGrimaldi = @ID_TrasportatoreGrimaldi, " +
-                                                  "  ID_TipoRotabile = @ID_TipoRotabile "  +
+                                                  "  ID_TipoRotabile = @ID_TipoRotabile " +
                                                   " WHERE ID = @ID ";
 
 
-                    
+
 
                     Inserted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@ID", myIDPerizia),
                                                                      new SqlParameter("@ID_TrasportatoreGrimaldi", myIDTrasportatore),
@@ -720,19 +720,32 @@ namespace WEB_Auto.Controllers
 
 
             ViewBag.IDPerito = IDPerito;
-            
+
             ViewBag.IDMeteo = IDMeteo;
             ViewBag.IDTP = IDTP;
 
-            var hasdanni = (from m in db.AGR_PERIZIE_DETT_TEMP_MVC_vw
-                            where m.IDPerizia == myIDPerizia
-                            select m).Count();
-            if (hasdanni > 0)
-                ViewBag.HasDanni = "Perizia con danni";
-            else
-                ViewBag.HasDanni = "Perizia GOOD";
+            if (Session["Classe"].ToString() == "0")
+            {
+                var hasdanni = (from m in db.AGR_PERIZIE_DETT_TEMP_MVC_vw
+                                where m.IDPerizia == myIDPerizia
+                                select m).Count();
+                if (hasdanni > 0)
+                    ViewBag.HasDanni = "Perizia con danni";
+                else
+                    ViewBag.HasDanni = "Perizia GOOD";
+            }
+            else if (Session["Classe"].ToString() == "1")
+            {
+                var hasdanni = (from m in db.AGR_PERIZIE_DETT_TEMP_MVC
+                                where m.IDPerizia == myIDPerizia
+                                select m).Count();
+                if (hasdanni > 0)
+                    ViewBag.HasDanni = "Perizia con danni";
+                else
+                    ViewBag.HasDanni = "Perizia GOOD";
+            }
 
-            var perizie = from m in db.AGR_Perizie_MVC_Flat_vw
+                var perizie = from m in db.AGR_Perizie_MVC_Flat_vw
                             where m.ID == myIDPerizia
                           select m;
             model.AGR_Perizie_MVC_Flat_vw = perizie.ToList();
@@ -746,10 +759,22 @@ namespace WEB_Auto.Controllers
             ViewBag.NumPDF = ContaPDF(myIDPerizia);
             ViewBag.IsUpdate = IsUpdate;
 
-            var Dettagli = from m in db.AGR_PERIZIE_DETT_TEMP_MVC_vw
-                           where m.IDPerizia == myIDPerizia
-                           select m;
-            model.AGR_PERIZIE_DETT_TEMP_MVC_vw = Dettagli.ToList();
+            try
+            {
+                var Dettagli = from m in db.AGR_PERIZIE_DETT_TEMP_MVC_vw
+                               where m.IDPerizia == myIDPerizia
+                               select m;
+                model.AGR_PERIZIE_DETT_TEMP_MVC_vw = Dettagli.ToList();
+            }
+            catch { }
+            try
+            {
+                var DettagliSDU = from m in db.AGR_PERIZIE_DETT_TEMP_MVC_SDU_vw
+                                  where m.IDPerizia == myIDPerizia
+                                  select m;
+                model.AGR_PERIZIE_DETT_TEMP_MVC_SDU_vw = DettagliSDU.ToList();
+            }
+            catch { }
 
             ViewBag.OldIDSpedizione = OldIDSpedizione;
             return View(model);
@@ -1028,11 +1053,23 @@ namespace WEB_Auto.Controllers
 
             }
 
-            var Dettagli = from m in db.AGR_PERIZIE_DETT_TEMP_MVC_vw
-                           where m.IDPerizia == myIDPerizia
-                           select m;
-            model.AGR_PERIZIE_DETT_TEMP_MVC_vw = Dettagli.ToList();
+            try
+            {
+                var Dettagli = from m in db.AGR_PERIZIE_DETT_TEMP_MVC_vw
+                               where m.IDPerizia == myIDPerizia
+                               select m;
+                model.AGR_PERIZIE_DETT_TEMP_MVC_vw = Dettagli.ToList();
+            }
+            catch { }
 
+            try
+            {
+                var DettagliSDU = from m in db.AGR_PERIZIE_DETT_TEMP_MVC_SDU_vw
+                                  where m.IDPerizia == myIDPerizia
+                                  select m;
+                model.AGR_PERIZIE_DETT_TEMP_MVC_SDU_vw = DettagliSDU.ToList();
+            }
+            catch { }
             // Ricerca dettagli altre tipi perizia dello stesso telaio
             //var DettagliAltri = from m in db.AGR_PERIZIE_DETT_TEMP_MVC_vw
             //                    where m.IDPerizia == myIDPerizia
@@ -1323,27 +1360,55 @@ namespace WEB_Auto.Controllers
 
         public void AggiornaFlagGoodDamaged(string aIDPerizia)
         {
-            var cnt = (from m in db.AGR_PERIZIE_DETT_TEMP_MVC_vw
-                       where m.IDPerizia == aIDPerizia
-                       select m.ID).Count();
-
-            if (cnt > 0)
+            if (Session["Classe"].ToString() == "0")
             {
-                string sqlcmd = " UPDATE AGR_PERIZIE_Temp_MVC " +
-                                " SET Flags = 32 " +
-                                " WHERE ID = @IDPerizia";
+                var cnt = (from m in db.AGR_PERIZIE_DETT_TEMP_MVC_vw
+                           where m.IDPerizia == aIDPerizia
+                           select m.ID).Count();
+
+                if (cnt > 0)
+                {
+                    string sqlcmd = " UPDATE AGR_PERIZIE_Temp_MVC " +
+                                    " SET Flags = 32 " +
+                                    " WHERE ID = @IDPerizia";
 
 
-                int Inserted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@IDPerizia", aIDPerizia));
+                    int Inserted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@IDPerizia", aIDPerizia));
+                }
+                else
+                {
+                    string sqlcmd = " UPDATE AGR_PERIZIE_Temp_MVC " +
+                                    " SET Flags = 16 " +
+                                    " WHERE ID = @IDPerizia";
+
+
+                    int Inserted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@IDPerizia", aIDPerizia));
+                }
             }
-            else
+            else if (Session["Classe"].ToString() == "1")
             {
-                string sqlcmd = " UPDATE AGR_PERIZIE_Temp_MVC " +
-                                " SET Flags = 16 " +
-                                " WHERE ID = @IDPerizia";
+                var cnt = (from m in db.AGR_PERIZIE_DETT_TEMP_MVC
+                           where m.IDPerizia == aIDPerizia
+                           select m.ID).Count();
+
+                if (cnt > 0)
+                {
+                    string sqlcmd = " UPDATE AGR_PERIZIE_Temp_MVC " +
+                                    " SET Flags = 32 " +
+                                    " WHERE ID = @IDPerizia";
 
 
-                int Inserted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@IDPerizia", aIDPerizia));
+                    int Inserted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@IDPerizia", aIDPerizia));
+                }
+                else
+                {
+                    string sqlcmd = " UPDATE AGR_PERIZIE_Temp_MVC " +
+                                    " SET Flags = 16 " +
+                                    " WHERE ID = @IDPerizia";
+
+
+                    int Inserted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@IDPerizia", aIDPerizia));
+                }
             }
 
         }

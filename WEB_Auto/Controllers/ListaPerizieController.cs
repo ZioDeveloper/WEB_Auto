@@ -130,7 +130,7 @@ namespace WEB_Auto.Controllers
 
         }
         
-        public ActionResult EditSpedizione(string IDSpedizione, string IDTP, string TipoMezzo = "TUTTE")
+        public ActionResult EditSpedizione(string IDSpedizione, string IDTP, string TipoMezzo = "TUTTE", string IDPerizia = "")
         {
             var model = new Models.HomeModel();
             string aPerito = Session["IDPeritoVero"].ToString();
@@ -167,6 +167,17 @@ namespace WEB_Auto.Controllers
                              where m.IDModello.ToString() != "1240" && m.IDModello.ToString() != "1241"
                              select m).ToList();
                 model.WEB_Auto_ListaPerizieXSpedizione_vw = lista;
+            }
+
+            if(!String.IsNullOrEmpty(IDPerizia))
+            {
+                string sqlcmd = " UPDATE AGR_PERIZIE_Temp_MVC " +
+                            " SET IDOperatore = @IDOperatore  " +
+                            " WHERE ID = @ID " ;
+
+
+                int Updated = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@IDOperatore", (int)Session["IDOperatore"]),
+                                                                     new SqlParameter("@ID", IDPerizia));
             }
             
             

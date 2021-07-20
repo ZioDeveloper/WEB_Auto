@@ -14,7 +14,7 @@ namespace WEB_Auto.Models
     
     public partial class AGR_Gravita_SDU
     {
-        public int ID { get; set; }
+        public string ID { get; set; }
         public string DescrITA { get; set; }
         public string DescrENG { get; set; }
     }

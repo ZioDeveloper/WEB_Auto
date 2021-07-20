@@ -12,8 +12,11 @@
 <br /><br />
 <h4>Dettagli danno</h4>
 @{string aIDPerizia = ViewBag.IDPerizia;
-    bool ISGravitaEnabled = ViewBag.ISGravitaEnabled;}
+    bool ISGravitaEnabled = ViewBag.ISGravitaEnabled;
+    string Test = Session["Classe"].ToString();}
 
+@if (Session["Classe"].ToString() == "0")
+{
 <table id="Report" class="display" style="width:100%;font-size:11px">
     <thead>
         <tr>
@@ -50,7 +53,7 @@
                 @Html.ActionLink("Edit", "EditDettaglio", new {  aIDDett = item.ID, aIDPerizia = item.IDPerizia }, new { @class = "btn btn-primary btn-xs disabled" })
             </td>*@
             <td>
-                @Html.ActionLink("Canc", "DeleteDettaglio", new { aIDDett = item.ID, aIDPerizia = item.IDPerizia }, new { @class = "btn btn-danger btn-xs" ,  onclick = "return confirm('Confermi cancellazione ?');" } )
+                @Html.ActionLink("Canc", "DeleteDettaglio", new { aIDDett = item.ID, aIDPerizia = item.IDPerizia }, new { @class = "btn btn-danger btn-xs", onclick = "return confirm('Confermi cancellazione ?');" })
             </td>
  
 
@@ -73,6 +76,69 @@
 
     <tbody>
 </table>
+}
+else
+{
+<table id="Report" class="display" style="width:100%;font-size:11px">
+    <thead>
+        <tr>
+            <th style="display:none;">ID</th>
+            <th>Parte</th>
+            <th>Danno</th>
+
+            <th>Gravità</th>
+            @*<th>Cancella</th>*@
+            @*<th>Responsabilità</th>
+                <th>Attribuzione</th>*@
+            @*<th>Qta</th>*@
+            @*<th>Note</th>*@
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.AGR_PERIZIE_DETT_TEMP_MVC_SDU_vw)
+        {
+            <tr>
+                <td style="display:none">
+                    @Html.DisplayFor(modelItem => item.ID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Parte)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Danno)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Gravita)
+                </td>
+                @*<td>
+                        @Html.ActionLink("Edit", "EditDettaglio", new {  aIDDett = item.ID, aIDPerizia = item.IDPerizia }, new { @class = "btn btn-primary btn-xs disabled" })
+                    </td>*@
+                <td>
+                    @Html.ActionLink("Canc", "DeleteDettaglio", new { aIDDett = item.ID, aIDPerizia = item.IDPerizia }, new { @class = "btn btn-danger btn-xs", onclick = "return confirm('Confermi cancellazione ?');" })
+                </td>
+
+
+                @*<td>
+
+                        @Html.DisplayFor(modelItem => item.Qta)
+                    </td>*@
+                @*<td>
+                        @Html.DisplayFor(modelItem => item.Note)
+                    </td>*@
+
+                @*<td>
+                        @Html.DisplayFor(modelItem => item.IDResponsabilita)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IDAttribuzione)
+                    </td>*@
+            </tr>
+        }
+
+    <tbody>
+</table>
+}
 <br />
 <br />
 <div>

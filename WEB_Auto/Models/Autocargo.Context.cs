@@ -63,5 +63,6 @@ namespace WEB_Auto.Models
         public virtual DbSet<AGR_Parti_SDU> AGR_Parti_SDU { get; set; }
         public virtual DbSet<AGR_Gravita_SDU> AGR_Gravita_SDU { get; set; }
         public virtual DbSet<AGR_Danni_SDU> AGR_Danni_SDU { get; set; }
+        public virtual DbSet<AGR_PERIZIE_DETT_TEMP_MVC_SDU_vw> AGR_PERIZIE_DETT_TEMP_MVC_SDU_vw { get; set; }
     }
 }

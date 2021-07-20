@@ -207,6 +207,9 @@
     <Compile Include="Models\AGR_PERIZIE_DETT_TEMP_MVC.cs">
       <DependentUpon>Autocargo.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\AGR_PERIZIE_DETT_TEMP_MVC_SDU_vw.cs">
+      <DependentUpon>Autocargo.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\AGR_PERIZIE_DETT_TEMP_MVC_vw.cs">
       <DependentUpon>Autocargo.tt</DependentUpon>
     </Compile>

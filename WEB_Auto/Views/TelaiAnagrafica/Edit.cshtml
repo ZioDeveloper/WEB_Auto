@@ -290,14 +290,14 @@ else
                     {
                         <td>
                             Nuovo:   @Html.RadioButton("Condizione", "N", new { @checked = true, @onchange = "submitform();" })
-                            Usato: @Html.RadioButton("Condizione", "U", new {  @onchange = "submitform();" }) @*Aggiunto*@ 
+                            Usato: @Html.RadioButton("Condizione", "U", new { @onchange = "submitform();" }) @*Aggiunto*@
                             @*@Html.RadioButtonFor(model => item4[0].FlagControllo, "Test", new { @checked = true })*@
                         </td>
                     }
                     else if (item4[0].FlgNuovoUsato == "U")
                     {
                         <td>
-                            Nuovo:   @Html.RadioButton("Condizione", "N", new {@onchange = "submitform();" }) @*Aggiunto*@
+                            Nuovo:   @Html.RadioButton("Condizione", "N", new { @onchange = "submitform();" }) @*Aggiunto*@
                             Usato: @Html.RadioButton("Condizione", "U", new { @checked = true, @onchange = "submitform();" })
                             @*@Html.RadioButtonFor(model => item4[0].FlagControllo, "Test", new { @checked = true })*@
                         </td>
@@ -427,20 +427,28 @@ else
 
         @if (ViewBag.IsUpdate == true)
         {
-            @Html.ActionLink("Finito", "EditSpedizione", "ListaPerizie", new { IDSpedizione = ViewBag.IDSpedizione, ViewBag.IDTP }, new { @class = "btn btn-success custom " })
+            if (Session["Classe"].ToString() == "0")
+            {
+                @Html.ActionLink("Finito", "EditSpedizione", "ListaPerizie", new { IDSpedizione = ViewBag.IDSpedizione, ViewBag.IDTP }, new { @class = "btn btn-success custom " })
+            }
+            else if (Session["Classe"].ToString() == "1")
+            {
+                @Html.ActionLink("Finito", "EditSpedizione", "ListaPerizie", new { IDSpedizione = ViewBag.IDSpedizione, ViewBag.IDTP , IDPerizia = item4[0].ID }, new { @class = "btn btn-success custom " })
+            }
+
         }
 
         else
         {
             //
             //if ((ViewBag.ErrMess == "" || ViewBag.ErrMess == "Sbloccato" || ViewBag.ErrMess == "In modifica" || ViewBag.ErrMess == "TARGA CONOSCIUTA") && Session["Classe"].ToString() == "0")
-            if ((ViewBag.ErrMess == "" || ViewBag.ErrMess == "Sbloccato"  || ViewBag.ErrMess == "TARGA CONOSCIUTA") && Session["Classe"].ToString() == "0")
-                {
+            if ((ViewBag.ErrMess == "" || ViewBag.ErrMess == "Sbloccato" || ViewBag.ErrMess == "TARGA CONOSCIUTA") && Session["Classe"].ToString() == "0")
+            {
 
-                    if (ViewBag.OldIDSpedizione == "")
+                if (ViewBag.OldIDSpedizione == "")
+                {
+                    if (@ViewBag.HasDanni == "Perizia GOOD" && ViewBag.NumFoto.ToString() != "0")
                     {
-                        if (@ViewBag.HasDanni == "Perizia GOOD" && ViewBag.NumFoto.ToString() != "0")
-                        {
                         @Html.ActionLink("Finito", "InputTelaio", new
                        {
                            IDPerito = ViewBag.IDPerito,
@@ -452,7 +460,7 @@ else
                            IsRTB = Session["RTB"]
                        }, new { @class = "btn btn-success custom", onclick = "return confirm('La perizia è GOOD, ma contiene foto, sei sicuro di voler proseguire ?');" })
                     }
-                     else if (@ViewBag.HasDanni == "Perizia con danni" && (ViewBag.NumFoto.ToString() == "0" || ViewBag.NumFoto.ToString() == "1"))
+                    else if (@ViewBag.HasDanni == "Perizia con danni" && (ViewBag.NumFoto.ToString() == "0" || ViewBag.NumFoto.ToString() == "1"))
                     {
                         @Html.ActionLink("Finito", "InputTelaio", new
                        {
@@ -495,7 +503,7 @@ else
             }
 
             //
-            else if ((ViewBag.ErrMess == "" || ViewBag.ErrMess == "Sbloccato"  || ViewBag.ErrMess == "TARGA CONOSCIUTA") && Session["Classe"].ToString() == "1")
+            else if ((ViewBag.ErrMess == "" || ViewBag.ErrMess == "Sbloccato" || ViewBag.ErrMess == "TARGA CONOSCIUTA") && Session["Classe"].ToString() == "1")
             {
                 @Html.ActionLink("Finito", "InputTelaio", new
            {
@@ -523,7 +531,7 @@ else
             }
             else
             {
-              
+
 
                 @Html.ActionLink("Finito", "InputTelaio", new
                 {
@@ -568,70 +576,140 @@ else
     <div style="background-color:lightgray">
         Lista danni
     </div>
-    <table id="Report" class="display" style="width:100%;font-size:11px">
-        <thead>
-            <tr>
-                <th style="display:none;">ID</th>
-                <th>Parte</th>
-                <th>Danno</th>
-
-                <th>Gravità</th>
-                @*<th>Cancella</th>*@
-                @*<th>Responsabilità</th>
-                    <th>Attribuzione</th>*@
-                @*<th>Qta</th>*@
-                @*<th>Note</th>*@
-
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model.AGR_PERIZIE_DETT_TEMP_MVC_vw)
-            {
+    if (Session["Classe"].ToString() == "0")
+    {
+        <table id="Report" class="display" style="width:100%;font-size:11px">
+            <thead>
                 <tr>
-                    <td style="display:none">
-                        @Html.DisplayFor(modelItem => item.ID)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Parte)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Danno)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Gravita)
-                    </td>
+                    <th style="display:none;">ID</th>
+                    <th>Parte</th>
+                    <th>Danno</th>
+
+                    <th>Gravità</th>
+                    @*<th>Cancella</th>*@
+                    @*<th>Responsabilità</th>
+                        <th>Attribuzione</th>*@
+                    @*<th>Qta</th>*@
+                    @*<th>Note</th>*@
+
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.AGR_PERIZIE_DETT_TEMP_MVC_vw)
+                {
+                    <tr>
+                        <td style="display:none">
+                            @Html.DisplayFor(modelItem => item.ID)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Parte)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Danno)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Gravita)
+                        </td>
+                        @*<td>
+                                @Html.ActionLink("Edit", "EditDettaglio", new {  aIDDett = item.ID, aIDPerizia = item.IDPerizia }, new { @class = "btn btn-primary btn-xs disabled" })
+                            </td>*@
+                        @*<td>
+                                @Html.ActionLink("Canc", "DeleteDettaglio", new { aIDDett = item.ID, myIDPerizia = item.IDPerizia, IsUpdate = ViewBag.IsUpdate }, new { @class = "btn btn-danger btn-xs", onclick = "return confirm('Confermi cancellazione ?');" })
+                            </td>*@
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Note)
+                        </td>
+                    </tr>
+
+
                     @*<td>
-                            @Html.ActionLink("Edit", "EditDettaglio", new {  aIDDett = item.ID, aIDPerizia = item.IDPerizia }, new { @class = "btn btn-primary btn-xs disabled" })
+
+                            @Html.DisplayFor(modelItem => item.Qta)
                         </td>*@
                     @*<td>
-                            @Html.ActionLink("Canc", "DeleteDettaglio", new { aIDDett = item.ID, myIDPerizia = item.IDPerizia, IsUpdate = ViewBag.IsUpdate }, new { @class = "btn btn-danger btn-xs", onclick = "return confirm('Confermi cancellazione ?');" })
+                            @Html.DisplayFor(modelItem => item.Note)
                         </td>*@
+
+                    @*<td>
+                            @Html.DisplayFor(modelItem => item.IDResponsabilita)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.IDAttribuzione)
+                        </td>*@
+                    </tr>
+                }
+
+            <tbody>
+        </table>
+    }
+    else if (Session["Classe"].ToString() == "1")
+    {
+        <table id="Report" class="display" style="width:100%;font-size:11px">
+            <thead>
                 <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Note)
-                    </td>
+                    <th style="display:none;">ID</th>
+                    <th>Parte</th>
+                    <th>Danno</th>
+
+                    <th>Gravità</th>
+                    @*<th>Cancella</th>*@
+                    @*<th>Responsabilità</th>
+                        <th>Attribuzione</th>*@
+                    @*<th>Qta</th>*@
+                    @*<th>Note</th>*@
+
                 </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.AGR_PERIZIE_DETT_TEMP_MVC_SDU_vw)
+                {
+                    <tr>
+                        <td style="display:none">
+                            @Html.DisplayFor(modelItem => item.ID)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Parte)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Danno)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Gravita)
+                        </td>
+                        @*<td>
+                                @Html.ActionLink("Edit", "EditDettaglio", new {  aIDDett = item.ID, aIDPerizia = item.IDPerizia }, new { @class = "btn btn-primary btn-xs disabled" })
+                            </td>*@
+                        @*<td>
+                                @Html.ActionLink("Canc", "DeleteDettaglio", new { aIDDett = item.ID, myIDPerizia = item.IDPerizia, IsUpdate = ViewBag.IsUpdate }, new { @class = "btn btn-danger btn-xs", onclick = "return confirm('Confermi cancellazione ?');" })
+                            </td>*@
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Note)
+                        </td>
+                    </tr>
 
 
-                @*<td>
+                    @*<td>
 
-                        @Html.DisplayFor(modelItem => item.Qta)
-                    </td>*@
-                @*<td>
-                        @Html.DisplayFor(modelItem => item.Note)
-                    </td>*@
+                            @Html.DisplayFor(modelItem => item.Qta)
+                        </td>*@
+                    @*<td>
+                            @Html.DisplayFor(modelItem => item.Note)
+                        </td>*@
 
-                @*<td>
-                        @Html.DisplayFor(modelItem => item.IDResponsabilita)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.IDAttribuzione)
-                    </td>*@
-                </tr>
-            }
+                    @*<td>
+                            @Html.DisplayFor(modelItem => item.IDResponsabilita)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.IDAttribuzione)
+                        </td>*@
+                    </tr>
+                }
 
-        <tbody>
-    </table>
+            <tbody>
+        </table>
+    }
 }
 
 <div>

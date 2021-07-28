@@ -38,5 +38,6 @@ namespace WEB_Auto.Models
         public Nullable<int> NumPDF { get; set; }
         public string IDCasa { get; set; }
         public string Descr { get; set; }
+        public Nullable<int> IDOperatore { get; set; }
     }
 }

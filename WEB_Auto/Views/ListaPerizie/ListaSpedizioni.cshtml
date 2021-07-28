@@ -27,11 +27,14 @@
 
 @Html.ActionLink("Torna a Home", "Index", "Home", new { usr = Session["User"].ToString() }, new { @class = "btn btn-primary" })
 <br /><br />
-@using (Html.BeginForm("ListaSpedizioni", "ListaPerizie"))
+@if (Session["Classe"].ToString() == "0")
 {
-    <label>Solo aperte : @Html.RadioButton("Status", "APERTE", true, new { onclick = "this.form.submit()" })</label>
-    <label>&nbsp;&nbsp; &nbsp;&nbsp; Solo chiuse  @Html.RadioButton("Status", "CHIUSE", false, new { onclick = "this.form.submit()" })</label>
-    <label>&nbsp;&nbsp; &nbsp;&nbsp; Tutte:  @Html.RadioButton("Status", "TUTTE", false, new { onclick = "this.form.submit()" })</label>
+    using (Html.BeginForm("ListaSpedizioni", "ListaPerizie"))
+    {
+        <label>Solo aperte : @Html.RadioButton("Status", "APERTE", true, new { onclick = "this.form.submit()" })</label>
+        <label>&nbsp;&nbsp; &nbsp;&nbsp; Solo chiuse  @Html.RadioButton("Status", "CHIUSE", false, new { onclick = "this.form.submit()" })</label>
+        <label>&nbsp;&nbsp; &nbsp;&nbsp; Tutte:  @Html.RadioButton("Status", "TUTTE", false, new { onclick = "this.form.submit()" })</label>
+    }
 }
 
 

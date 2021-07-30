@@ -64,8 +64,8 @@ namespace WEB_Auto.Controllers
                        where m.IDSpedizione == IDSpedizione
                        where m.IsClosed == true
                        select m.ID).Count();
-            if (chiuse > 0)
-                return View("SpedizioneChiusa");
+            //if (chiuse > 0)
+            //    return View("SpedizioneChiusa");
 
             if(EsisteStessoOggetto(Chassis, IDSpedizione, DataPerizia))
             { return View("SpedizioneChiusa"); }
@@ -1623,9 +1623,33 @@ namespace WEB_Auto.Controllers
                               where m.IDParte == IDParte
                               where m.IDDanno == IDDanno
                               select m.ID).Count();
+
+            int parti = (from m in db.WEB_AGR_Parti_vw
+                         where m.IDCliente == "**"
+                         where m.IDCasa == "RTB" || m.IDCasa == "CAB"
+                         where m.ID == IDParte
+                         select m.ID).Count();
+
+            int danni = (from m in db.WEB_AGR_Danni_vw
+                        where m.IDCliente == "**"
+                        where m.ID == IDDanno
+                        select m.ID).Count();
+
             if (contaitems > 0)
             {
                 errMEss = "Esiste già identico item /tipo danno !";
+                return false;
+            }
+
+            if (parti == 0)
+            {
+                errMEss = "Componente errato !";
+                return false;
+            }
+
+            if (danni == 0)
+            {
+                errMEss = "Tipo danno non conosciuto/errato !";
                 return false;
             }
 
@@ -1652,6 +1676,10 @@ namespace WEB_Auto.Controllers
 
             }
 
+            
+            
+
+            
            
             else
             {

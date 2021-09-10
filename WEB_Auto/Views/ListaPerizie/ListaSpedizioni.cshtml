@@ -56,6 +56,7 @@
             <th>Good</th>
             <th>Damaged</th>
             <th>Chiuse</th>
+            <th>Aperte</th>
             <th>Chiudi</th>
             <th>PDF</th>
             <th>n°</th>
@@ -68,6 +69,7 @@
         {
             foreach (var item in Model.WEB_AUTO_ListaSpedizioni_2_vw)
             {
+                bool TuttoChiuso = item.Aperte >0;
         <tr>
             <td>
                 @Html.ActionLink("Visualizza", "EditSpedizione", new { IDSpedizione = item.ID, IDTP = item.IDTipoPerizia }, new { @class = "btn btn-success btn-xs" })
@@ -103,10 +105,21 @@
                 @Html.DisplayFor(modelItem => item.Damaged)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.IsClosed)
+                @Html.DisplayFor(modelItem => item.Chiuse)
             </td>
             <td>
-                @Html.ActionLink("Chiudi", "ChiudiSpedizione", new { IDSpedizione = item.ID, IDTP = item.IDTipoPerizia }, new { @class = "btn btn-warning btn-xs" })
+                @Html.DisplayFor(modelItem => item.Aperte)
+            </td>
+            <td>
+                @if (TuttoChiuso==false)
+                {
+                    @Html.ActionLink("Chiudi", "ChiudiSpedizione", new { IDSpedizione = item.ID, IDTP = item.IDTipoPerizia }, new { @class = "btn btn-warning btn-xs disabled" })
+                }
+                else
+                {
+                    @Html.ActionLink("Chiudi", "ChiudiSpedizione", new { IDSpedizione = item.ID, IDTP = item.IDTipoPerizia }, new { @class = "btn btn-warning btn-xs" })
+                }
+
             </td>
             <td>
                 @Html.ActionLink("Inserisci PDF", "ScattaPDFSpedizione", "Documenti", new { myIDSpedizione = item.ID }, new { @class = "pdfImg" })
@@ -122,48 +135,57 @@
         {
             foreach (var item in Model.WEB_AUTO_ListaSpedizioni_CMN_vw)
             {
-                <tr>
-                    <td>
-                        @Html.ActionLink("Visualizza", "EditSpedizione", new { IDSpedizione = item.ID, IDTP = item.IDTipoPerizia }, new { @class = "btn btn-success btn-xs" })
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ID)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.IDOriginale1)
-                    </td>
+        <tr>
+            <td>
+                @Html.ActionLink("Visualizza", "EditSpedizione", new { IDSpedizione = item.ID, IDTP = item.IDTipoPerizia }, new { @class = "btn btn-success btn-xs" })
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IDOriginale1)
+            </td>
+            <td>
+                @Html.Label("")
+            </td>
+            <td>
+                @Html.Label("")
+            </td>
 
-                    <td>
-                        @Convert.ToDateTime(item.DataPartenzaImbarco).ToString("dd/MM/yyyy")
-                        @*@Html.DisplayFor(modelItem => item.DataPartenzaImbarco)*@
-                    </td>
+            <td>
+                @Convert.ToDateTime(item.DataPartenzaImbarco).ToString("dd/MM/yyyy")
+                @*@Html.DisplayFor(modelItem => item.DataPartenzaImbarco)*@
+            </td>
 
-                    <td>
-                        @Html.DisplayFor(modelItem => item.IDTipoPerizia)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.NumPerizie)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Good)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Damaged)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.IsClosed)
-                    </td>
-                    <td>
-                        @Html.ActionLink("Chiudi", "ChiudiSpedizione", new { IDSpedizione = item.ID, IDTP = item.IDTipoPerizia }, new { @class = "btn btn-warning btn-xs" })
-                    </td>
-                    <td>
-                        @Html.ActionLink("Inserisci PDF", "ScattaPDFSpedizione", "Documenti", new { myIDSpedizione = item.ID }, new { @class = "pdfImg" })
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.NumPDF)
-                    </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IDTipoPerizia)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NumPerizie)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Good)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Damaged)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsClosed)
+            </td>
+            <td>
+                @Html.Label("")
+            </td>
+            <td>
+                @Html.ActionLink("Chiudi", "ChiudiSpedizione", new { IDSpedizione = item.ID, IDTP = item.IDTipoPerizia }, new { @class = "btn btn-warning btn-xs" })
+            </td>
+            <td>
+                @Html.ActionLink("Inserisci PDF", "ScattaPDFSpedizione", "Documenti", new { myIDSpedizione = item.ID }, new { @class = "pdfImg" })
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NumPDF)
+            </td>
 
-                </tr>
+        </tr>
             }
         }
 
@@ -184,6 +206,7 @@
             <th>Good</th>
             <th>Damaged</th>
             <th>Chiuse</th>
+            <th>Aperte</th>
             <th>Chiudi</th>
             <th>PDF</th>
             <th>n°</th>

@@ -20,12 +20,13 @@ namespace WEB_Auto.Models
         public Nullable<int> NumPerizie { get; set; }
         public Nullable<int> Good { get; set; }
         public Nullable<int> Damaged { get; set; }
-        public bool IsClosed { get; set; }
         public string IDPerito { get; set; }
         public Nullable<System.DateTime> DataPartenzaImbarco { get; set; }
         public Nullable<System.DateTime> DataArrivoSbarco { get; set; }
         public Nullable<int> NumPDF { get; set; }
         public string IDCasa { get; set; }
         public string POD { get; set; }
+        public Nullable<int> Aperte { get; set; }
+        public Nullable<int> Chiuse { get; set; }
     }
 }

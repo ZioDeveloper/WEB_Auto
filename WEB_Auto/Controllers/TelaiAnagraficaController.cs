@@ -31,8 +31,6 @@ namespace WEB_Auto.Controllers
                               where m.DataPartenzaImbarco < DataAttuale
                               select new { m.DataInizioImbarco, m.IDPortoImbarco, m.IDPortoSbarco }).OrderByDescending(s=>s.DataInizioImbarco).FirstOrDefault();
 
-
-
             return false;
         }
         public ActionResult InputTelaio(string IDPerito, string IDSpedizione,string IDMeteo, string IDTP, string Chassis,string aIDModello,string DataPerizia, bool IsRTB = false)
@@ -1943,13 +1941,16 @@ namespace WEB_Auto.Controllers
         {
             //DateTime myDate = DateTime.ParseExact(DataPerizia, "dd/MM/yyyy",
             //                              System.Globalization.CultureInfo.InvariantCulture);
-             DateTime myDate = DateTime.Now;
+            DateTime myDate = DateTime.Now;
+            string aIDPeritoVero = Session["IDPeritoVero"].ToString();
+
             int cnt = (from m in db.AGR_PERIZIE_TEMP_MVC
                        where m.Telaio == Chassis
                        where m.IDSpedizione != IDSpedizione
                        where m.IDTipoPerizia == IDTP
-                       where m.DataPerizia < myDate
+                       where m.DataPerizia <= myDate
                        where m.IsClosed == false
+                       where m.IDPerito == aIDPeritoVero
                        select m.ID).Count();
 
             return cnt > 0;

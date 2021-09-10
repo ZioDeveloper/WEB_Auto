@@ -74,7 +74,7 @@ namespace WEB_Auto.Controllers
                 {
                     var lista = (from m in db.WEB_AUTO_ListaSpedizioni_2_vw
                                  where m.IDPerito == aPerito
-                                 where m.IsClosed == false
+                                 where m.Aperte != 0
                                  select m).ToList();
                     model.WEB_AUTO_ListaSpedizioni_2_vw = lista;
 
@@ -83,7 +83,7 @@ namespace WEB_Auto.Controllers
                 {
                     var lista = (from m in db.WEB_AUTO_ListaSpedizioni_2_vw
                                  where m.IDPerito == aPerito
-                                 where m.IsClosed == true
+                                 where m.Aperte == 0
                                  select m).ToList();
                     model.WEB_AUTO_ListaSpedizioni_2_vw = lista;
 

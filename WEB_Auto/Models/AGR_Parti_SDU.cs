@@ -17,5 +17,6 @@ namespace WEB_Auto.Models
         public int ID { get; set; }
         public string DescrITA { get; set; }
         public string DescrENG { get; set; }
+        public Nullable<int> Codice { get; set; }
     }
 }

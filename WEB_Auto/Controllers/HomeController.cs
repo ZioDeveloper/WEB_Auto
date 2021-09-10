@@ -46,6 +46,7 @@ namespace WEB_Auto.Controllers
                 //usr = "grimaldi"; // 
                  //usr = "pierangeli"; // 
                 usr = "maurizio"; // 
+                //usr = "Torresan"; // 
                 //usr = "Test";
                 //usr = Session["User"].ToString();
             }
@@ -109,8 +110,8 @@ namespace WEB_Auto.Controllers
             }
             else if (Filtro == "VENTUNO")
             {
-                ini = DateTime.Today.AddDays(-21);
-                end = DateTime.Today.AddDays(+21);
+                ini = DateTime.Today.AddDays(-40);
+                end = DateTime.Today.AddDays(+40);
             }
              
 

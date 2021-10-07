@@ -28,5 +28,6 @@ namespace WEB_Auto.Models
         public string POD { get; set; }
         public Nullable<int> Aperte { get; set; }
         public Nullable<int> Chiuse { get; set; }
+        public int Prog { get; set; }
     }
 }

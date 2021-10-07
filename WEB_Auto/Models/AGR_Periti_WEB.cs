@@ -21,5 +21,8 @@ namespace WEB_Auto.Models
         public string IDVero { get; set; }
         public int Classe { get; set; }
         public string Descr { get; set; }
+    
+        public virtual AGR_Periti_WEB AGR_Periti_WEB1 { get; set; }
+        public virtual AGR_Periti_WEB AGR_Periti_WEB2 { get; set; }
     }
 }

@@ -614,10 +614,12 @@ warning 6002: The table/view 'wisedb.dbo.WEB_Auto_ListaPerizieXSpedizione_vw' do
 warning 6002: The table/view 'wisedb.dbo.WEB_AUTO_ListaSpedizioni_2_vw' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="WEB_AUTO_ListaSpedizioni_2_vw">
           <Key>
+            <PropertyRef Name="Prog" />
             <PropertyRef Name="ID" />
             <PropertyRef Name="IDCasa" />
             <PropertyRef Name="POD" />
           </Key>
+          <Property Name="Prog" Type="int" Nullable="false" />
           <Property Name="ID" Type="varchar" MaxLength="8" Nullable="false" />
           <Property Name="IDOriginale1" Type="varchar" MaxLength="30" />
           <Property Name="IDTipoPerizia" Type="varchar" MaxLength="1" />
@@ -789,6 +791,18 @@ warning 6002: The table/view 'wisedb.dbo.WEB_ListaPerizieFlat_TMP_vw' does not h
             </Principal>
             <Dependent Role="AGR_Spedizioni">
               <PropertyRef Name="IDPortoSbarco" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AGR_Periti_WEB_AGR_Periti_WEB">
+          <End Role="AGR_Periti_WEB" Type="Self.AGR_Periti_WEB" Multiplicity="1" />
+          <End Role="AGR_Periti_WEB1" Type="Self.AGR_Periti_WEB" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="AGR_Periti_WEB">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="AGR_Periti_WEB1">
+              <PropertyRef Name="ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1039,6 +1053,7 @@ warning 6002: The table/view 'wisedb.dbo.WEB_ListaPerizieFlat_TMP_vw' does not h
           </EntitySet>
           <EntitySet Name="WEB_AUTO_ListaSpedizioni_2_vw" EntityType="Self.WEB_AUTO_ListaSpedizioni_2_vw" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
+    [WEB_AUTO_ListaSpedizioni_2_vw].[Prog] AS [Prog], 
     [WEB_AUTO_ListaSpedizioni_2_vw].[ID] AS [ID], 
     [WEB_AUTO_ListaSpedizioni_2_vw].[IDOriginale1] AS [IDOriginale1], 
     [WEB_AUTO_ListaSpedizioni_2_vw].[IDTipoPerizia] AS [IDTipoPerizia], 
@@ -1174,6 +1189,10 @@ warning 6002: The table/view 'wisedb.dbo.WEB_ListaPerizieFlat_TMP_vw' does not h
             <End Role="AGR_Porti" EntitySet="AGR_Porti" />
             <End Role="AGR_Spedizioni" EntitySet="AGR_Spedizioni" />
           </AssociationSet>
+          <AssociationSet Name="FK_AGR_Periti_WEB_AGR_Periti_WEB" Association="Self.FK_AGR_Periti_WEB_AGR_Periti_WEB">
+            <End Role="AGR_Periti_WEB" EntitySet="AGR_Periti_WEB" />
+            <End Role="AGR_Periti_WEB1" EntitySet="AGR_Periti_WEB" />
+          </AssociationSet>
           <AssociationSet Name="FK_AGR_PerizieExpGrim_Temp_AGR_PERIZIE_TEMP_MVC" Association="Self.FK_AGR_PerizieExpGrim_Temp_AGR_PERIZIE_TEMP_MVC">
             <End Role="AGR_PERIZIE_TEMP_MVC" EntitySet="AGR_PERIZIE_TEMP_MVC" />
             <End Role="AGR_PerizieExpGrim_Temp_MVC" EntitySet="AGR_PerizieExpGrim_Temp_MVC" />
@@ -1236,6 +1255,10 @@ warning 6002: The table/view 'wisedb.dbo.WEB_ListaPerizieFlat_TMP_vw' does not h
           <EntitySet Name="AGR_Gravita_SDU" EntityType="wisedbModel.AGR_Gravita_SDU" />
           <EntitySet Name="AGR_Danni_SDU" EntityType="wisedbModel.AGR_Danni_SDU" />
           <EntitySet Name="AGR_PERIZIE_DETT_TEMP_MVC_SDU_vw" EntityType="wisedbModel.AGR_PERIZIE_DETT_TEMP_MVC_SDU_vw" />
+          <AssociationSet Name="FK_AGR_Periti_WEB_AGR_Periti_WEB" Association="wisedbModel.FK_AGR_Periti_WEB_AGR_Periti_WEB">
+            <End Role="AGR_Periti_WEB" EntitySet="AGR_Periti_WEB" />
+            <End Role="AGR_Periti_WEB1" EntitySet="AGR_Periti_WEB" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="AGR_Periti_WEB">
           <Key>
@@ -1248,6 +1271,8 @@ warning 6002: The table/view 'wisedb.dbo.WEB_ListaPerizieFlat_TMP_vw' does not h
           <Property Name="IDVero" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
           <Property Name="Classe" Type="Int32" Nullable="false" />
           <Property Name="Descr" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="AGR_Periti_WEB1" Relationship="wisedbModel.FK_AGR_Periti_WEB_AGR_Periti_WEB" FromRole="AGR_Periti_WEB" ToRole="AGR_Periti_WEB1" />
+          <NavigationProperty Name="AGR_Periti_WEB2" Relationship="wisedbModel.FK_AGR_Periti_WEB_AGR_Periti_WEB" FromRole="AGR_Periti_WEB1" ToRole="AGR_Periti_WEB" />
         </EntityType>
         <EntityType Name="Periti">
           <Key>
@@ -1770,6 +1795,7 @@ warning 6002: The table/view 'wisedb.dbo.WEB_ListaPerizieFlat_TMP_vw' does not h
             <PropertyRef Name="ID" />
             <PropertyRef Name="IDCasa" />
             <PropertyRef Name="POD" />
+            <PropertyRef Name="Prog" />
           </Key>
           <Property Name="ID" Type="String" Nullable="false" MaxLength="8" FixedLength="false" Unicode="false" />
           <Property Name="IDOriginale1" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
@@ -1785,6 +1811,7 @@ warning 6002: The table/view 'wisedb.dbo.WEB_ListaPerizieFlat_TMP_vw' does not h
           <Property Name="POD" Type="String" Nullable="false" MaxLength="29" FixedLength="false" Unicode="false" />
           <Property Name="Aperte" Type="Int32" />
           <Property Name="Chiuse" Type="Int32" />
+          <Property Name="Prog" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="AGR_ModelliAuto_CAB_vw">
           <Key>
@@ -1998,6 +2025,18 @@ warning 6002: The table/view 'wisedb.dbo.WEB_ListaPerizieFlat_TMP_vw' does not h
           <Property Name="Danno" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Gravita" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
+        <Association Name="FK_AGR_Periti_WEB_AGR_Periti_WEB">
+          <End Type="wisedbModel.AGR_Periti_WEB" Role="AGR_Periti_WEB" Multiplicity="1" />
+          <End Type="wisedbModel.AGR_Periti_WEB" Role="AGR_Periti_WEB1" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="AGR_Periti_WEB">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="AGR_Periti_WEB1">
+              <PropertyRef Name="ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2482,6 +2521,7 @@ warning 6002: The table/view 'wisedb.dbo.WEB_ListaPerizieFlat_TMP_vw' does not h
           <EntitySetMapping Name="WEB_AUTO_ListaSpedizioni_2_vw">
             <EntityTypeMapping TypeName="wisedbModel.WEB_AUTO_ListaSpedizioni_2_vw">
               <MappingFragment StoreEntitySet="WEB_AUTO_ListaSpedizioni_2_vw">
+                <ScalarProperty Name="Prog" ColumnName="Prog" />
                 <ScalarProperty Name="Chiuse" ColumnName="Chiuse" />
                 <ScalarProperty Name="Aperte" ColumnName="Aperte" />
                 <ScalarProperty Name="POD" ColumnName="POD" />

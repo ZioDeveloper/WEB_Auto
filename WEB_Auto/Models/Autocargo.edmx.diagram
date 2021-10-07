@@ -47,6 +47,7 @@
         <EntityTypeShape EntityType="wisedbModel.AGR_Gravita_SDU" Width="2.25" PointX="19.375" PointY="0.75" />
         <EntityTypeShape EntityType="wisedbModel.AGR_Danni_SDU" Width="1.5" PointX="19.375" PointY="3.75" />
         <EntityTypeShape EntityType="wisedbModel.AGR_PERIZIE_DETT_TEMP_MVC_SDU_vw" Width="1.5" PointX="19.375" PointY="6.75" />
+        <AssociationConnector Association="wisedbModel.FK_AGR_Periti_WEB_AGR_Periti_WEB" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

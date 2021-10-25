@@ -6,7 +6,7 @@
       <h3>Modifica non consentita</h3>
 <br />
 
-<h3> @Html.Raw(ViewBag.Message)</h3>
+<h4> @Html.Raw(ViewBag.Message)</h4>
 <br /><br />
-@Html.ActionLink("Torna a inserimento telaio", "ModificaViaggio", "ModificaViaggio", new { @Telaio = ViewBag.Telaio }, new { @class = "btn btn-success" })
+@Html.ActionLink("Torna a modifica viaggio", "ModificaViaggio", "ModificaViaggio", new { aViaggio = ViewBag.aViaggio }, new { @class = "btn btn-success" })
 

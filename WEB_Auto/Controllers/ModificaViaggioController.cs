@@ -56,6 +56,9 @@ namespace WEB_Auto.Controllers
             //model.WEB_Auto_ListaPerizieXSpedizione_vw = lista;
 
             ViewBag.myViaggio = aViaggio;
+            ViewBag.IsOpen = true;
+            ViewBag.TipoMezzo = TipoMezzo;
+
             return View(model);
 
         }
@@ -80,29 +83,34 @@ namespace WEB_Auto.Controllers
                     string aPerizia = perizia.ToString();
                     if (aPerizia != "false")
                     {
-                        aPerizia = aPerizia;
+                        //aPerizia = aPerizia;
 
-                        IsCorrect = ModificaSpedizione(NuovoViaggio, aPerizia);
+                        //string aMsg = "Modifica non ammessa, contattare Maurizio, perizia : " + aPerizia;
+
+                        IsCorrect = ModificaSpedizione(NuovoViaggio, aPerizia, out string aMsg);
                         if (!IsCorrect)
-                            return RedirectToAction("ModificaNonConsentita", "ModificaViaggio", new { Message = "Modifica non ammessa, contattare Maurizio, perizia : " + aPerizia });
+                        {
+                            return RedirectToAction("ModificaNonConsentita", "ModificaViaggio", new { Message = aMsg , aViaggio = VecchioViaggio });
+                        }
                     }
                 }
-                catch { }
+                catch { return RedirectToAction("ModificaNonConsentita", "ModificaViaggio", new { Message = "Errore non riconoscituo contattare Astrea" , aViaggio = VecchioViaggio }); }
             }
            
-                return RedirectToAction("ModificaViaggio");
+            return RedirectToAction("ModificaViaggio" , new { aViaggio = VecchioViaggio });
            
 
         }
 
-        public bool ModificaSpedizione( string newViaggio,string IDPerizia)
+        public bool ModificaSpedizione( string newViaggio,string IDPerizia, out string aMsg)
         {
             var myNewIDSped = "";
 
+            aMsg = "";
             // Cerco la spedizione giusta per questa perizia
             var myPerizia = (from m in db.WEB_Auto_ListaPerizieXSpedizione_vw
                              where m.ID == IDPerizia
-                             select new { m.IDSpedizione, m.IDCasa,m.Telaio,m.IDModello }).FirstOrDefault();
+                             select new { m.IDSpedizione, m.IDCasa,m.Telaio,m.IDModello,m.DataPerizia }).FirstOrDefault();
 
             string myIDSpedizione = myPerizia.IDSpedizione;
             string myIDCasa = myPerizia.IDCasa;
@@ -122,11 +130,35 @@ namespace WEB_Auto.Controllers
                                    select m.ID).FirstOrDefault();
             }
 
+            if(String.IsNullOrEmpty(myNewIDSped))
+            {
+                aMsg = "Dati nuovo viaggio non compatibili con il precedente !";
+                return false;
+            }
+
             // Verifico che nn ci sia già lo stesso telaio 
             var cnt = (from m in db.AGR_PERIZIE_TEMP_MVC
                             where m.IDSpedizione == myNewIDSped
                             where m.Telaio == myPerizia.Telaio
                             select m.ID).Count();
+
+            if(cnt > 0)
+            {
+                aMsg = "Lo stesso telaio è già presente !";
+                return false;
+            }
+
+            var dataInizioImbarco =  (from m in db.AGR_Spedizioni
+                            where m.ID == myNewIDSped
+                            select new { m.DataInizioImbarco }).FirstOrDefault();
+
+            if(myPerizia.DataPerizia.Value.Date > Convert.ToDateTime(dataInizioImbarco.DataInizioImbarco.Value.Date))
+            {
+                cnt=1;
+                aMsg = "Data Errata : la data partenza non può essere inferiore alla data perizia!";
+                return false;
+
+            }
 
             if (cnt == 0)
             {
@@ -163,11 +195,19 @@ namespace WEB_Auto.Controllers
                                                                              new SqlParameter("@IDSpedizione", myNewIDSped),
                                                                              new SqlParameter("@IDModello", myIDModello));
                     }
+                    else
+                    {
+                        aMsg = "Spedizione non identificata !";
+                        return false;
+                        
+                    }
                 }
             }
             else
             {
+                //aMsg = "Errore in fase cambio spedizione, contattare EDP !";
                 return false;
+
 
                 //RedirectToAction("ModificaNonConsentita", "ModificaViaggio", new { Message = "Modifica non ammessa, contattare Maurizio." });
                 /*var IDPeriziaDaCancellare = (from m in db.AGR_PERIZIE_TEMP_MVC
@@ -196,11 +236,10 @@ namespace WEB_Auto.Controllers
 
 
             }
+           
             return true;
 
         }
-
-        
 
         public ActionResult ModificaDataPerizia(string aViaggio, string errMess = "")
         {
@@ -277,10 +316,16 @@ namespace WEB_Auto.Controllers
 
         }
 
-        public ActionResult ModificaNonConsentita(string Message)
+        public ActionResult ModificaNonConsentita(string Message , string aViaggio)
         {
             ViewBag.MEssage = Message;
+            ViewBag.aViaggio = aViaggio;
             return View();
+        }
+
+        public ActionResult Verifica(FormCollection formCollection, string NuovoViaggio, string VecchioViaggio)
+        {
+            return RedirectToAction("ModificaViaggio");
         }
     }
 }

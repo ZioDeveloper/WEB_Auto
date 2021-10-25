@@ -37,6 +37,7 @@
 </script>
 <br />
 @{var item4 = Model.WEB_Auto_ListaPerizieXSpedizione_vw.ToList();}
+@{ string Testo = "Mio testo"; bool IsOpen = ViewBag.ISOpen;}
 <div>
     @Html.ActionLink("Chiudi", "Index", "Home", new { usr = Session["User"].ToString() }, new { @class = "btn btn-primary" })
 </div>
@@ -47,8 +48,12 @@
             <h5>Telai da modificare</h5>
 
         </div>
+        @*@using (Html.BeginForm("Verifica", "ModificaViaggio", new { NuovoViaggio = "TEST" , VecchioViaggio = ViewBag.myViaggio }, FormMethod.Post))
+        {
+            <button type="submit" value="Cerca" class="btn btn-sm btn-dark rounded-0"><i class="fa fa-floppy-o fa-lg"></i>Controllo incongruenze</button>
+        }
 
-
+        <br />*@
 
         @using (Html.BeginForm("ModificaViaggio", "ModificaViaggio", new { }, FormMethod.Get))
         {
@@ -62,7 +67,7 @@
         }
         <br />
         <div class="card-body">
-            @using (Html.BeginForm("ModificaViaggio", "ModificaViaggio", new { VecchioViaggio = ViewBag.myViaggio }, FormMethod.Post))
+            @using (Html.BeginForm("ModificaViaggio", "ModificaViaggio", new { VecchioViaggio = ViewBag.myViaggio, TipoMezzo = ViewBag.TipoMezzo }, FormMethod.Post))
             {
 
                 try
@@ -71,8 +76,18 @@
                     if (item4[0].IsClosed == false)
                     {
                         @Html.Label("Nuovo numero di viaggio ")<br />
+                        @*@Html.TextBox("NuovoViaggio", null, new { @Value = Testo })*@
                         @Html.TextBox("NuovoViaggio")
-                        <button type="submit" value="Confirm" class="btn btn-sm btn-danger rounded-0" onclick="return confirm('Procedere con modifica dati viaggio?')"><i class="fa fa-floppy-o fa-lg"></i>Modifica</button>
+
+                        if (IsOpen == true)
+                        {
+                            <button type="submit" value="Confirm" class="btn btn-sm btn-danger rounded-0" onclick="return confirm('Procedere con modifica dati viaggio?')"><i class="fa fa-floppy-o fa-lg"></i>Modifica</button>
+                        }
+                        else
+                        {
+                            <button type="submit" disabled value="Confirm" class="btn btn-sm btn-danger rounded-0" onclick="return confirm('Procedere con modifica dati viaggio?')"><i class="fa fa-floppy-o fa-lg"></i>Modifica</button>
+                        }
+
                     }
                     else
                     { <div style="color:red">@Html.Label("Viaggio già chiuso, non modificabile!")</div>}

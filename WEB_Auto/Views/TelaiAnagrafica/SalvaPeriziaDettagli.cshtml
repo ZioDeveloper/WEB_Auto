@@ -12,12 +12,21 @@
 <br /><br />
 <h4>Dettagli danno</h4>
 @{string myIDPerizia = ViewBag.IDPerizia;
-    bool ISGravitaEnabled = ViewBag.ISGravitaEnabled;}
+    bool ISGravitaEnabled = ViewBag.ISGravitaEnabled;
+    string aMessage = "";}
 
-<div style="color:red;font-size:18px;text-align:center">
+@if (ViewBag.ErrMess != "Premi salva modifiche !")
+{
+    <div style="color:red;font-size:18px;text-align:center">
 
-    @ViewBag.ErrMess
-</div>
+        @ViewBag.ErrMess
+    </div>
+    aMessage = "Sbloccato";
+}
+else
+{
+    aMessage = ViewBag.ErrMess;
+}
 <br />
 
 <br />
@@ -173,7 +182,7 @@ else if (Session["Classe"].ToString() == "1")
                 </td>
                 <td>
 
-                    @Html.DropDownList("IDParte", new SelectList((SelectList)ViewData["ElencoParti"], "Value", "Text", null), "-- Seleziona parte --", new { @class = "form-control selectpicker dropupAuto = false data-live-search=true data-size=5" })
+                    @Html.DropDownList("IDParte", new SelectList((SelectList)ViewData["ElencoParti"], "Value", "Text", ViewBag.IDParte), "-- Seleziona parte --", new { @class = "form-control selectpicker dropupAuto = false data-live-search=true data-size=5" })
 
                 </td>
             </tr>
@@ -191,7 +200,7 @@ else if (Session["Classe"].ToString() == "1")
                 </td>
                 <td>
 
-                    @Html.DropDownList("IDDanno", new SelectList((SelectList)ViewData["ElencoDanni"], "Value", "Text", null), "-- Seleziona danno --", new { @class = "form-control selectpicker dropupAuto = false data-live-search=true data-size=5" })
+                    @Html.DropDownList("IDDanno", new SelectList((SelectList)ViewData["ElencoDanni"], "Value", "Text", ViewBag.IDDanno), "-- Seleziona danno --", new { @class = "form-control selectpicker dropupAuto = false data-live-search=true data-size=5" })
 
                 </td>
             </tr>
@@ -268,16 +277,17 @@ else if (Session["Classe"].ToString() == "1")
             <button type="submit" class="btn btn-primary custom">Salva item</button>
 
             @Html.ActionLink("Torna a perizia", "Edit","TelaiAnagrafica", new { myIDPerizia = ViewBag.IDPeriz,
-            IDPerito = ViewBag.IDPerito,
-            IDSpedizione = ViewBag.IDSpedizione,
-            IDMeteo = ViewBag.IDMeteo,
-            IDTP = ViewBag.IDTP,
-            aIDTrasportatore = ViewBag.aIDTrasportatore,
-            aIDTipoRotabile = ViewBag.aIDTipoRotabile,
-            aIDModelloCasa = ViewBag.aIDModelloCasa,
-            errMess = "Sbloccato",
-            IsUpdate = ViewBag.ISUpdate
-            }, new { @class = "btn btn-success custom" })
+           IDPerito = ViewBag.IDPerito,
+           IDSpedizione = ViewBag.IDSpedizione,
+           IDMeteo = ViewBag.IDMeteo,
+           IDTP = ViewBag.IDTP,
+           aIDTrasportatore = ViewBag.aIDTrasportatore,
+           aIDTipoRotabile = ViewBag.aIDTipoRotabile,
+           aIDModelloCasa = ViewBag.aIDModelloCasa,
+           //errMess = "Sbloccato",
+           errMess = aMessage,
+           IsUpdate = ViewBag.ISUpdate
+       }, new { @class = "btn btn-success custom" })
         </div>
     }
 </div>

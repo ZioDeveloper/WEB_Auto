@@ -209,8 +209,110 @@ namespace WEB_Auto.Controllers
             ViewBag.IDSpedizione = IDSpedizione;
             ViewBag.IDTP = IDTP;
             ViewBag.myViaggio = myViaggio;
+            ViewBag.TipoMezzo = TipoMezzo;
             return View(model);
         }
+
+        [HttpPost]
+        public ActionResult EditSpedizione(FormCollection formCollection, string IDSpedizione, string IDTP, string TipoMezzo = "TUTTE", string IDPerizia = "", string SDU_Viste = "TUTTE")
+        {
+            try
+            {
+                string[] ids = formCollection["ID"].Split(new char[] { ',' });
+                foreach (string id in ids)
+                {
+                    var perizia = id;
+                    string aPerizia = perizia.ToString();
+                    if (aPerizia != "false")
+                    {
+                        EliminaPerizia(aPerizia, IDSpedizione, IDTP);
+                    }
+
+                }
+            }
+            catch { }
+            var model = new Models.HomeModel();
+            string aPerito = Session["IDPeritoVero"].ToString();
+
+            string myViaggio = (from m in db.WEB_Auto_ListaPerizieXSpedizione_vw
+                                where m.IDSpedizione == IDSpedizione
+                                select m.IDOriginale1).FirstOrDefault();
+
+            if (TipoMezzo == "TUTTE" && SDU_Viste == "TUTTE")
+            {
+                var lista = (from m in db.WEB_Auto_ListaPerizieXSpedizione_vw
+                             where m.IDSpedizione == IDSpedizione
+                             where m.IDPerito == aPerito
+                             where m.IDTipoPerizia == IDTP
+                             select m).ToList();
+                model.WEB_Auto_ListaPerizieXSpedizione_vw = lista;
+            }
+            else if (TipoMezzo == "RTB")
+            {
+                var lista = (from m in db.WEB_Auto_ListaPerizieXSpedizione_vw
+                             where m.IDSpedizione == IDSpedizione
+                             where m.IDPerito == aPerito
+                             where m.IDTipoPerizia == IDTP
+                             where m.IDModello.ToString() == "1240" || m.IDModello.ToString() == "1241"
+                             select m).ToList();
+                model.WEB_Auto_ListaPerizieXSpedizione_vw = lista;
+            }
+            if (TipoMezzo == "AUTO")
+            {
+                var lista = (from m in db.WEB_Auto_ListaPerizieXSpedizione_vw
+                             where m.IDSpedizione == IDSpedizione
+                             where m.IDPerito == aPerito
+                             where m.IDTipoPerizia == IDTP
+                             where m.IDModello.ToString() != "1240" && m.IDModello.ToString() != "1241"
+                             select m).ToList();
+                model.WEB_Auto_ListaPerizieXSpedizione_vw = lista;
+            }
+
+            if (SDU_Viste == "DA VEDERE")
+            {
+                var lista = (from m in db.WEB_Auto_ListaPerizieXSpedizione_vw
+                             where m.IDSpedizione == IDSpedizione
+                             where m.IDPerito == aPerito
+                             where m.IDTipoPerizia == IDTP
+                             where m.IDOperatore == 12
+                             select m).ToList();
+                model.WEB_Auto_ListaPerizieXSpedizione_vw = lista;
+            }
+
+            if (SDU_Viste == "VISTE")
+            {
+                var lista = (from m in db.WEB_Auto_ListaPerizieXSpedizione_vw
+                             where m.IDSpedizione == IDSpedizione
+                             where m.IDPerito == aPerito
+                             where m.IDTipoPerizia == IDTP
+                             where m.IDOperatore != 12
+                             where m.IDModello.ToString() != "1240" && m.IDModello.ToString() != "1241"
+                             select m).ToList();
+                model.WEB_Auto_ListaPerizieXSpedizione_vw = lista;
+            }
+
+
+
+            if (!String.IsNullOrEmpty(IDPerizia))
+            {
+                string sqlcmd = " UPDATE AGR_PERIZIE_Temp_MVC " +
+                            " SET IDOperatore = @IDOperatore  " +
+                            " WHERE ID = @ID ";
+
+
+                int Updated = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@IDOperatore", (int)Session["IDOperatore"]),
+                                                                     new SqlParameter("@ID", IDPerizia));
+            }
+
+
+            ViewBag.IDSpedizione = IDSpedizione;
+            ViewBag.IDTP = IDTP;
+            ViewBag.myViaggio = myViaggio;
+            ViewBag.TipoMezzo = TipoMezzo;
+            return View(model);
+        }
+
+        
 
         public ActionResult ChiudiSpedizione(string IDSpedizione, string IDTP)
         {
@@ -498,6 +600,25 @@ namespace WEB_Auto.Controllers
                                                                new SqlParameter("@POD", aPOD),
                                                                new SqlParameter("@IDSpedizione", aIDSpedizione),
                                                                new SqlParameter("@IDOriginale", aIDOriginale));
+        }
+
+        public void EliminaPerizia(string IDPerizia, string IDSpedizione, string IDTP, bool IsUpdate = false, string TipoMezzo = "TUTTE")
+        {
+
+
+            string sqlcmd = " DELETE FROM  AGR_PerizieExpGrim_Temp_MVC  WHERE ID = @ID";
+            int deleted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@ID", IDPerizia));
+
+            sqlcmd = " DELETE FROM  AGR_PERIZIE_DETT_TEMP_MVC  WHERE IDPerizia = @IDPerizia";
+            deleted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@IDPerizia", IDPerizia));
+
+            sqlcmd = " DELETE FROM  AGR_PERIZIE_TEMP_MVC WHERE ID = @ID";
+            deleted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@ID", IDPerizia));
+
+            
+            //else
+            //    return RedirectToAction("EditSpedizione", "ListaPerizie", new { IDPerito, IDSpedizione, IDMeteo, IDTP, TipoMezzo });
+
         }
     }
 }

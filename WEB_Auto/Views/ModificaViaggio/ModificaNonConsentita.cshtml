@@ -8,5 +8,5 @@
 
 <h4> @Html.Raw(ViewBag.Message)</h4>
 <br /><br />
-@Html.ActionLink("Torna a modifica viaggio", "ModificaViaggio", "ModificaViaggio", new { aViaggio = ViewBag.aViaggio }, new { @class = "btn btn-success" })
+@Html.ActionLink("Torna a modifica viaggio", "ModificaViaggio", "ModificaViaggio", new { aViaggio = ViewBag.aViaggio,TipoMezzo = ViewBag.TipoMezzo }, new { @class = "btn btn-success" })
 

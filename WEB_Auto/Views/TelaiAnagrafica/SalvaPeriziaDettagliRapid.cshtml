@@ -14,7 +14,10 @@
 @*Stato : @ViewBag.ErrMess*@
 @*<br /><br />*@
 @{string myIDPerizia = ViewBag.IDPerizia;
-    bool ISGravitaEnabled = ViewBag.ISGravitaEnabled;}
+    bool ISGravitaEnabled = ViewBag.ISGravitaEnabled;
+    string aIDParte = ViewBag.IDParte;
+    string aIDDanno = ViewBag.IDDanno;
+    }
 
 <div style="color:red">
 
@@ -53,7 +56,7 @@
                       <td>
 
                           @*@Html.DropDownList("IDParte", new SelectList((SelectList)ViewData["ElencoParti"], "Value", "Text", null), "-- Seleziona parte --", new { @class = "form-control selectpicker dropupAuto = false data-live-search=true data-size=5" })*@
-                          @Html.TextBox("IDParte", null, new { style = "width:180px;text-transform:uppercase", @id = "IDParte", @maxlength = "17", @placeholder = "", @autofocus = "autofocus", @autocomplete = "off" })
+                          @Html.TextBox("IDParte",aIDParte, new { style = "width:180px;text-transform:uppercase", @id = "IDParte", @maxlength = "17", @placeholder = "", @autofocus = "autofocus", @autocomplete = "off" })
                       </td>
                   </tr>
                   <tr>
@@ -69,7 +72,7 @@
                           &nbsp;&nbsp;
                       </td>
                       <td>
-                          @Html.TextBox("IDDanno", null, new { style = "width:180px;text-transform:uppercase", @id = "IDDanno", @maxlength = "17", @placeholder = "", @autofocus = "autofocus", @autocomplete = "off" })
+                          @Html.TextBox("IDDanno", aIDDanno, new { style = "width:180px;text-transform:uppercase", @id = "IDDanno", @maxlength = "17", @placeholder = "", @autofocus = "autofocus", @autocomplete = "off" })
                           @*@Html.DropDownList("IDDanno", new SelectList((SelectList)ViewData["ElencoDanni"], "Value", "Text", null), "-- Seleziona danno --", new { @class = "form-control selectpicker dropupAuto = false data-live-search=true data-size=5" })*@
 
                       </td>

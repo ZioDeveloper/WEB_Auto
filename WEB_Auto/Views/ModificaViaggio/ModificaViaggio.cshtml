@@ -2,7 +2,7 @@
 @{
     ViewBag.Title = "ModificaViaggio";
 }
-
+<h4>Modifica del viaggio</h4>
 <meta name="viewport" content="width=device-width" />
 <title>Index</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -57,9 +57,9 @@
 
         @using (Html.BeginForm("ModificaViaggio", "ModificaViaggio", new { }, FormMethod.Get))
         {
-            <label>Solo Rotabili : @Html.RadioButton("TipoMezzo", "RTB", false@*, new { onclick = "this.form.submit()" }*@)</label>
-            <label>&nbsp;&nbsp; &nbsp;&nbsp; Solo auto  @Html.RadioButton("TipoMezzo", "AUTO", false@*, new { onclick = "this.form.submit()" }*@)</label>
-            <label>&nbsp;&nbsp; &nbsp;&nbsp; Tutte:  @Html.RadioButton("TipoMezzo", "TUTTE", true@*, new { onclick = "this.form.submit()" }*@)</label>
+            <label>Solo Rotabili : @Html.RadioButton("TipoMezzo", "RTB", false, new { onclick = "this.form.submit()" })</label>
+            <label>&nbsp;&nbsp; &nbsp;&nbsp; Solo auto  @Html.RadioButton("TipoMezzo", "AUTO", false, new { onclick = "this.form.submit()" })</label>
+            <label>&nbsp;&nbsp; &nbsp;&nbsp; Tutte:  @Html.RadioButton("TipoMezzo", "TUTTE", true, new { onclick = "this.form.submit()" })</label>
             <br />
             @Html.Label("Viaggio da modificare")<br />
             @Html.TextBox("aViaggio")
@@ -67,6 +67,7 @@
         }
         <br />
         <div class="card-body">
+            
             @using (Html.BeginForm("ModificaViaggio", "ModificaViaggio", new { VecchioViaggio = ViewBag.myViaggio, TipoMezzo = ViewBag.TipoMezzo }, FormMethod.Post))
             {
 

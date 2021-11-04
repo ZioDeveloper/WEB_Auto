@@ -523,6 +523,7 @@
     <Content Include="Views\ModificaViaggio\ModificaNonConsentita.cshtml" />
     <Content Include="Views\Shared\ErratoTipoPerizia.cshtml" />
     <Content Include="Views\TelaiAnagrafica\TipoPeriziaErrato.cshtml" />
+    <Content Include="Views\Shared\_Layout_NO_ACTION.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

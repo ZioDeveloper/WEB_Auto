@@ -64,7 +64,7 @@ namespace WEB_Auto.Controllers
         }
 
         [HttpPost]
-        public ActionResult ModificaViaggio(FormCollection formCollection, string NuovoViaggio, string VecchioViaggio)
+        public ActionResult ModificaViaggio(FormCollection formCollection, string NuovoViaggio, string VecchioViaggio, string TipoMezzo = "TUTTE")
         {
             bool IsCorrect = false;
             if (String.IsNullOrEmpty(NuovoViaggio))
@@ -90,11 +90,11 @@ namespace WEB_Auto.Controllers
                         IsCorrect = ModificaSpedizione(NuovoViaggio, aPerizia, out string aMsg);
                         if (!IsCorrect)
                         {
-                            return RedirectToAction("ModificaNonConsentita", "ModificaViaggio", new { Message = aMsg , aViaggio = VecchioViaggio });
+                            return RedirectToAction("ModificaNonConsentita", "ModificaViaggio", new { Message = aMsg , aViaggio = VecchioViaggio, TipoMezzo });
                         }
                     }
                 }
-                catch { return RedirectToAction("ModificaNonConsentita", "ModificaViaggio", new { Message = "Errore non riconoscituo contattare Astrea" , aViaggio = VecchioViaggio }); }
+                catch { return RedirectToAction("ModificaNonConsentita", "ModificaViaggio", new { Message = "Errore non riconoscituo contattare Astrea" , aViaggio = VecchioViaggio, TipoMezzo }); }
             }
            
             return RedirectToAction("ModificaViaggio" , new { aViaggio = VecchioViaggio });
@@ -316,10 +316,11 @@ namespace WEB_Auto.Controllers
 
         }
 
-        public ActionResult ModificaNonConsentita(string Message , string aViaggio)
+        public ActionResult ModificaNonConsentita(string Message , string aViaggio , string TipoMezzo = "TUTTE")
         {
             ViewBag.MEssage = Message;
             ViewBag.aViaggio = aViaggio;
+            ViewBag.TipoMezzo = TipoMezzo;
             return View();
         }
 

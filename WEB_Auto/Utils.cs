@@ -1,12 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Web;
+using System.Web.Mvc;
+using System.Web.Mvc.Html;
 
 namespace WEB_Auto
 {
     public static class Utils
     {
+        public static IHtmlString AssemblyVersion(this HtmlHelper helper)
+        {
+            var version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
+            return MvcHtmlString.Create(version);
+        }
         public static string Right(this string str, int length)
         {
             str = (str ?? string.Empty);
@@ -39,6 +47,27 @@ namespace WEB_Auto
                 ip = System.Web.HttpContext.Current.Request.ServerVariables["REMOTE_ADDR"];
             }
             return ip;
+        }
+
+        public static MvcHtmlString LiActionLink(this HtmlHelper html, string text, string action, string controller, string usr )
+        {
+            var context = html.ViewContext;
+            if (context.Controller.ControllerContext.IsChildAction)
+                context = html.ViewContext.ParentActionViewContext;
+            var routeValues = context.RouteData.Values;
+            var currentAction = routeValues["action"].ToString();
+            var currentController = routeValues["controller"].ToString();
+
+            var str = String.Format("<li role=\"presentation\"{0}>{1}</li>",
+                currentAction.Equals(action, StringComparison.InvariantCulture) &&
+                currentController.Equals(controller, StringComparison.InvariantCulture) ?
+                " class=\"active\"" :
+                String.Empty, html.ActionLink(text, action, controller).ToHtmlString()
+            
+            );
+            if (usr != "")
+                usr += usr;
+            return new MvcHtmlString(str);
         }
     }
 }

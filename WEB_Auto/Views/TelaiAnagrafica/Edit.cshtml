@@ -1,13 +1,13 @@
 ﻿@model WEB_Auto.Models.HomeModel
 @{
     ViewBag.Title = "Dati Perizia";
+    Layout = "~/Views/Shared/_Layout_NO_ACTION.cshtml";
 }
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
 
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
-
 <style>
     table, td, th {
         border: 0;
@@ -121,8 +121,8 @@
 <br />
 @if (ViewBag.ErrMess == "Sbloccato")
 {
-    <div style="color:green">
-        Controllo OK !
+    <div style="color:green;font-size:18px;text-align:center"><b>
+        Controllo OK !</b>
     </div>
 }
 else if (ViewBag.ErrMess == "TARGA CONOSCIUTA")
@@ -286,7 +286,7 @@ else
                 }
                 else if (item1[0].IDCasa.ToUpper() != "RTB" && (item4[0].IDModello.ToString() != "1240") || (item4[0].IDModello.ToString() == "1240" && ViewBag.aIDModelloCasa != "1240"))
                 {
-                    if (item4[0].FlgNuovoUsato == "N")
+                    if (item4[0].FlgNuovoUsato == "N" || ViewBag.flagNU == "N")
                     {
                         <td>
                             Nuovo:   @Html.RadioButton("Condizione", "N", new { @checked = true, @onchange = "submitform();" })
@@ -294,7 +294,7 @@ else
                             @*@Html.RadioButtonFor(model => item4[0].FlagControllo, "Test", new { @checked = true })*@
                         </td>
                     }
-                    else if (item4[0].FlgNuovoUsato == "U")
+                    else if (item4[0].FlgNuovoUsato == "U" || ViewBag.flagNU == "U")
                     {
                         <td>
                             Nuovo:   @Html.RadioButton("Condizione", "N", new { @onchange = "submitform();" }) @*Aggiunto*@
@@ -329,35 +329,36 @@ else
                 <td>
 
                     @Html.Label("DMG") &nbsp
-                    @if (ViewBag.ErrMess == "" || ViewBag.ErrMess == "Sbloccato" || ViewBag.ErrMess == "In fase modifica" || ViewBag.ErrMess == "In modifica")
+                    @if (ViewBag.ErrMess == "" || ViewBag.ErrMess == "Sbloccato" || ViewBag.ErrMess == "In fase modifica" || ViewBag.ErrMess == "In modifica" || ViewBag.ErrMess == "TARGA CONOSCIUTA")
                     {
                         @Html.CheckBox("isDamaged", false, new { @onchange = "submitform();" })
 
                         if (Session["RTB"].ToString().ToUpper() == "TRUE" || ViewBag.aIDModelloCasa == "1240" || ViewBag.aIDModelloCasa == "1241")
                         {
 
-                        <td>
-                            @Html.Label("DMG Rapido")
-                            @Html.CheckBox("isRapid", false, new { @onchange = "submitform();" })
-                        </td>
+                            <td>
+                                @Html.Label("DMG Rapido")
+                                @Html.CheckBox("isRapid", false, new { @onchange = "submitform();" })
+                            </td>
+                        }
+
+
                     }
-
-
-                }
-                else
-                {
-                    @Html.CheckBox("isDamaged", false, new { disabled = "disabled" })
-                    if (Session["RTB"].ToString().ToUpper() == "TRUE")
+                    else
                     {
-                        <td>
-                            @Html.Label("Rapido")
-                            @Html.CheckBox("isRapid", false, new { @onchange = "submitform();" })
-                        </td>
-                    }
+                        @*@Html.CheckBox("isDamaged", false, new { disabled = "disabled" })*@
+                        @Html.CheckBox("isDamaged", false, new { @onchange = "submitform();" })
+                        if (Session["RTB"].ToString().ToUpper() == "TRUE")
+                        {
+                            <td>
+                                @Html.Label("Rapido")
+                                @Html.CheckBox("isRapid", false, new { @onchange = "submitform();" })
+                            </td>
+                        }
 
-                }
-                    </td>
-                <tr>
+                    }
+                    
+            <tr>
 
 
                     @if (@ViewBag.HasDanni == "Perizia GOOD")
@@ -423,17 +424,17 @@ else
         <br />
     </div>
     <div>
-        <button type="submit" class="btn btn-primary custom" id="miocmd">Salva dati</button> &nbsp;&nbsp;&nbsp;
+        <button type="submit" class="btn btn-primary custom" id="miocmd">Salva modifiche</button> &nbsp;&nbsp;&nbsp;
 
         @if (ViewBag.IsUpdate == true)
         {
             if (Session["Classe"].ToString() == "0")
             {
-                @Html.ActionLink("Finito", "EditSpedizione", "ListaPerizie", new { IDSpedizione = ViewBag.IDSpedizione, ViewBag.IDTP }, new { @class = "btn btn-success custom " })
+                @Html.ActionLink("Chiudi perizia", "EditSpedizione", "ListaPerizie", new { IDSpedizione = ViewBag.IDSpedizione, ViewBag.IDTP, ViewBag.TipoMezzo }, new { @class = "btn btn-success custom " })
             }
             else if (Session["Classe"].ToString() == "1")
             {
-                @Html.ActionLink("Finito", "EditSpedizione", "ListaPerizie", new { IDSpedizione = ViewBag.IDSpedizione, ViewBag.IDTP , IDPerizia = item4[0].ID }, new { @class = "btn btn-success custom " })
+                @Html.ActionLink("Chiudi perizia", "EditSpedizione", "ListaPerizie", new { IDSpedizione = ViewBag.IDSpedizione, ViewBag.IDTP, IDPerizia = item4[0].ID }, new { @class = "btn btn-success custom " })
             }
 
         }
@@ -449,7 +450,7 @@ else
                 {
                     if (@ViewBag.HasDanni == "Perizia GOOD" && ViewBag.NumFoto.ToString() != "0")
                     {
-                        @Html.ActionLink("Finito", "InputTelaio", new
+                        @Html.ActionLink("Chiudi perizia", "InputTelaio", new
                        {
                            IDPerito = ViewBag.IDPerito,
                            IDSpedizione = ViewBag.IDSpedizione,
@@ -460,9 +461,22 @@ else
                            IsRTB = Session["RTB"]
                        }, new { @class = "btn btn-success custom", onclick = "return confirm('La perizia è GOOD, ma contiene foto, sei sicuro di voler proseguire ?');" })
                     }
+                    if (@ViewBag.HasDanni == "Perizia GOOD" && item4[0].IDTipoPerizia == "D")
+                    {
+                        @Html.ActionLink("Chiudi perizia", "SalvaPeriziaTesta", "TelaiAnagrafica", new
+                   {
+                       IDPerito = item4[0].IDPerito,
+                       IDSpedizione = item4[0].IDSpedizione,
+                       IDMeteo = @item3[0].ID,
+                       IDTP = item2[0].ID,
+                       myIDPerizia = item4[0].ID,
+                       IsUpdate = ViewBag.IsUpdate,
+                       DataPerizia = item4[0].DataPerizia
+                   }, new { @class = "btn btn-success custom", onclick = "alert('La perizia è Post discharge e non contiene ITEM danno , operazione annullata');" })
+                    }
                     else if (@ViewBag.HasDanni == "Perizia con danni" && (ViewBag.NumFoto.ToString() == "0" || ViewBag.NumFoto.ToString() == "1"))
                     {
-                        @Html.ActionLink("Finito", "InputTelaio", new
+                        @Html.ActionLink("Chiudi perizia", "InputTelaio", new
                        {
                            IDPerito = ViewBag.IDPerito,
                            IDSpedizione = ViewBag.IDSpedizione,
@@ -475,7 +489,7 @@ else
                     }
                     else
                     {
-                        @Html.ActionLink("Finito", "InputTelaio", new
+                        @Html.ActionLink("Chiudi perizia", "InputTelaio", new
                            {
                                IDPerito = ViewBag.IDPerito,
                                IDSpedizione = ViewBag.IDSpedizione,
@@ -489,7 +503,7 @@ else
                 }
                 else
                 {
-                    @Html.ActionLink("Finito", "InputTelaio", new
+                    @Html.ActionLink("Chiudi perizia", "InputTelaio", new
                        {
                            IDPerito = ViewBag.IDPerito,
                            IDSpedizione = ViewBag.OldIDSpedizione,
@@ -505,7 +519,7 @@ else
             //
             else if ((ViewBag.ErrMess == "" || ViewBag.ErrMess == "Sbloccato" || ViewBag.ErrMess == "TARGA CONOSCIUTA") && Session["Classe"].ToString() == "1")
             {
-                @Html.ActionLink("Finito", "InputTelaio", new
+                @Html.ActionLink("Chiudi perizia", "InputTelaio", new
            {
                IDPerito = ViewBag.IDPerito,
                IDSpedizione = ViewBag.IDSpedizione,
@@ -518,7 +532,7 @@ else
             }
             else if (Session["Classe"].ToString() == "1")
             {
-                @Html.ActionLink("Finito", "InputTelaio", new
+                @Html.ActionLink("Chiudi perizia", "InputTelaio", new
            {
                IDPerito = ViewBag.IDPerito,
                IDSpedizione = ViewBag.IDSpedizione,
@@ -533,7 +547,7 @@ else
             {
 
 
-                @Html.ActionLink("Finito", "InputTelaio", new
+                @Html.ActionLink("Chiudi perizia", "InputTelaio", new
                 {
                     IDPerito = ViewBag.IDPerito,
                     IDSpedizione = ViewBag.IDSpedizione,
@@ -546,15 +560,17 @@ else
             }
         }
         &nbsp;&nbsp;&nbsp;
+        <br /><br />
         @Html.ActionLink("Elimina", "EliminaPerizia", "TelaiAnagrafica", new
-           {
-               IDPerizia = item4[0].ID,
-               IDPerito = ViewBag.IDPerito,
-               IDSpedizione = ViewBag.IDSpedizione,
-               IDMeteo = ViewBag.IDMeteo,
-               IDTP = ViewBag.IDTP,
-               IsUpdate = ViewBag.IsUpdate
-           }, new { @class = "btn btn-danger custom" , onclick = "return confirm('Vuoi davvero cancellare la perizia ?');" })
+   {
+       IDPerizia = item4[0].ID,
+       IDPerito = ViewBag.IDPerito,
+       IDSpedizione = ViewBag.IDSpedizione,
+       IDMeteo = ViewBag.IDMeteo,
+       IDTP = ViewBag.IDTP,
+       IsUpdate = ViewBag.IsUpdate,
+       ViewBag.TipoMezzo
+   }, new { @class = "btn btn-danger custom" , onclick = "return confirm('Vuoi davvero cancellare la perizia ?');" })
 
 
     </div>
@@ -568,7 +584,7 @@ else
 }
 </div>
 
-<br />
+
 
 
 @if (@ViewBag.HasDanni != "Perizia GOOD")
@@ -760,6 +776,7 @@ else
     }
 
 </script>
+
 @*@if (ViewBag.ToDoRefresh == true && Session["OS"].ToString()!="WINDOWS")
     {
         <script>

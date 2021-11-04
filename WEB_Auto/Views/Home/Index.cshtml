@@ -21,16 +21,17 @@
         @{var item4 = Model.Periti.ToList();}
         Benvenuto <b>@item1[0].Descr </b>
         <br />
-        Sei associato al gruppo periti  : @item2[0].IDModem  - @item2[0].Descr
+        @*Sei associato al gruppo periti  :*@ @item2[0].IDModem  - @item2[0].Descr
         <br />
-        Sei associato al porto : @item3[0].ID  - @item3[0].Descr
-        <br />
+        @*Sei associato al porto :*@ @item3[0].ID  - @item3[0].Descr
+        @*<br />*@
     </div>
     <br />
     @if (Session["Classe"].ToString() == "0")
     {
         using (Html.BeginForm("Index", "Home", new { usr = Session["User"].ToString() }))
         {
+            <label>Filtro periodo ricerca viaggi ( +/- giorni)</label><br />
             <label>Oggi: @Html.RadioButton("Filtro", "OGGI", false, new { onclick = "this.form.submit()" })</label>
             <label>&nbsp;&nbsp; &nbsp;&nbsp;3 gg:@Html.RadioButton("Filtro", "TRE", true, new { onclick = "this.form.submit()"  })</label>
             <label>&nbsp;&nbsp; &nbsp;&nbsp;7 gg:@Html.RadioButton("Filtro", "SETTE", false, new { onclick = "this.form.submit()" })</label>
@@ -49,10 +50,10 @@
         @using (Html.BeginForm("InputTelaio", "TelaiAnagrafica", new { IDPerito = @item2[0].ID, IDSpedizione = @item1[0].ID }, FormMethod.Post))
         {
 
-            @Html.Label("Seleziona spedizione")
+            @Html.Label("Seleziona viaggio")
             if (Session["Classe"].ToString() == "0")
             {
-                @Html.DropDownList("IDSpedizione", (SelectList)ViewData["ElencoSpedizioni"], "-- Seleziona spedizione --", new { @style = "font-size: 13px;",  @class = "form-control selectpicker dropupAuto = false data-live-search=true data-size=5" }) @*onfocus = "blur();",*@
+                @Html.DropDownList("IDSpedizione", (SelectList)ViewData["ElencoSpedizioni"], "-- Seleziona viaggio --", new { @style = "font-size: 13px;",  @class = "form-control selectpicker dropupAuto = false data-live-search=true data-size=5" }) @*onfocus = "blur();",*@
             }
             else
             {

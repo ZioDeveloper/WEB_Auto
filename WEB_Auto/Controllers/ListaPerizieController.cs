@@ -90,7 +90,7 @@ namespace WEB_Auto.Controllers
                 }
 
 
-
+                ViewBag.Status = Status;
                 return View(model);
             }
             else
@@ -124,13 +124,13 @@ namespace WEB_Auto.Controllers
                 }
 
 
-
+                ViewBag.Status = Status;
                 return View(model);
             }
 
         }
         
-        public ActionResult EditSpedizione(string IDSpedizione, string IDTP, string TipoMezzo = "TUTTE", string IDPerizia = "",string SDU_Viste = "TUTTE")
+        public ActionResult EditSpedizione(string IDSpedizione, string IDTP, string TipoMezzo = "TUTTE", string IDPerizia = "",string SDU_Viste = "TUTTE", string Status = "APERTE")
         {
             var model = new Models.HomeModel();
             string aPerito = Session["IDPeritoVero"].ToString();
@@ -210,6 +210,7 @@ namespace WEB_Auto.Controllers
             ViewBag.IDTP = IDTP;
             ViewBag.myViaggio = myViaggio;
             ViewBag.TipoMezzo = TipoMezzo;
+            ViewBag.Status = Status;
             return View(model);
         }
 
@@ -333,10 +334,12 @@ namespace WEB_Auto.Controllers
             string sqlcmd = " UPDATE AGR_PERIZIE_Temp_MVC " +
                             " SET ISClosed = 1  " +
                             " WHERE IDSpedizione = @IDSpedizione " +
+                            " AND IDPerito = @IDPerito " +
                             " AND IDTipoPerizia = @IDTipoPerizia" ;
 
 
             int Inserted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@IDSpedizione", IDSpedizione),
+                                                                 new SqlParameter("@IDPerito", aPerito),
                                                                  new SqlParameter("@IDTipoPerizia", IDTP));
             
             ViewBag.IDSpedizione = IDSpedizione;

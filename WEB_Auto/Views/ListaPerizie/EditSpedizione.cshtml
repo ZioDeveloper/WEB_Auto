@@ -30,7 +30,7 @@
 
 }
 <td>
-    @Html.ActionLink("Torna a lista viaggi", "ListaSpedizioni", null, new { @class = "btn btn-primary btn-xs" })
+    @Html.ActionLink("Torna a lista viaggi", "ListaSpedizioni", new { Status = ViewBag.Status }, new { @class = "btn btn-primary btn-xs" })
     @Html.ActionLink("Inserisci nuova perizia", "InputTelaio", "TelaiAnagrafica", new { IDPerito = aIDPerito, IDSpedizione = ViewBag.IDSpedizione, IDMeteo = aIDMeteo, IDTP = aIDTP }, new { @class = "btn btn-primary btn-xs" })
 
 </td>

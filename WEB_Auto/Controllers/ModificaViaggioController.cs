@@ -11,6 +11,7 @@ namespace WEB_Auto.Controllers
     public class ModificaViaggioController : Controller
     {
         private wisedbEntities db = new wisedbEntities();
+       
         // GET: ModificaViaggio
         public ActionResult ModificaViaggio(string aViaggio,string TipoMezzo = "TUTTE")
         {
@@ -105,7 +106,7 @@ namespace WEB_Auto.Controllers
         public bool ModificaSpedizione( string newViaggio,string IDPerizia, out string aMsg)
         {
             var myNewIDSped = "";
-
+            
             aMsg = "";
             // Cerco la spedizione giusta per questa perizia
             var myPerizia = (from m in db.WEB_Auto_ListaPerizieXSpedizione_vw

@@ -14,7 +14,7 @@ namespace WEB_Auto.Controllers
 
         private wisedbEntities db  = new wisedbEntities();
 
-        public ActionResult Index(string usr, string Filtro = "TRE", string errMess = "")
+        public ActionResult Index(string usr, string Filtro = "TRE", string errMess = "", string IDPorto = "")
         {
             var model = new Models.HomeModel();
 
@@ -45,9 +45,11 @@ namespace WEB_Auto.Controllers
                 // usr = "Astrea"; // pierangeli
                 //usr = "VGrimaldi";
                 //usr = "grimaldi"; // 
-                //usr = "pierangeli"; // 
-               // usr = "maurizio"; // 
-                usr = "DiGennaro";
+               // usr = "pierangeli"; // 
+                //usr = "maurizio"; // 
+                //usr = "DiGennaro";
+               //usr = "DiSalvo";
+                usr = "patrizia";
                 //usr = "Torresan"; // 
                 //usr = "Test";
                 //usr = Session["User"].ToString();
@@ -65,19 +67,61 @@ namespace WEB_Auto.Controllers
                               where s.Name == usr
                               select s.IDVero).FirstOrDefault();
 
-            var myIDPorto = (from s in db.AGR_Periti_WEB
-                              where s.Name == usr
-                              select s.IDPorto).FirstOrDefault();
-            Session["IDPortoPerito"] = myIDPorto;
+            //var myIDPorto = (from s in db.AGR_Periti_WEB
+            //                  where s.Name == usr
+            //                  select s.IDPorto).FirstOrDefault();
+            //Session["IDPortoPerito"] = myIDPorto;
+            var myIDPorto = "";
+            try
+            {
+                String test = Session["IDPortoPerito"].ToString();
+                myIDPorto = Session["IDPortoPerito"].ToString();
+            }
+            catch
+            {
+                myIDPorto = (from s in db.AGR_Periti_WEB
+                                 where s.Name == usr
+                                 select s.IDPorto).FirstOrDefault();
+                Session["IDPortoPerito"] = myIDPorto;
+            }
+
+            if (IDPorto != "")
+            {
+                Session["IDPortoPerito"] = IDPorto;
+                myIDPorto = IDPorto;
+            }
+
+            if(myIDPorto == "TRI")
+            {
+                myIDPerito = "TR1 ";
+                myIDPeritoVero = "PB";
+            }
+            
             var myClasse = (from s in db.AGR_Periti_WEB
                              where s.Name == usr
                              select s.Classe).FirstOrDefault();
             Session["Classe"] = myClasse;
 
+            var myIDRuolo = (from s in db.AGR_Periti_WEB
+                            where s.Name == usr
+                            select s.IDRuolo).FirstOrDefault();
+            Session["IDRuolo"] = myIDRuolo;
+
             var datiperito = from m in db.Periti
                     where m.IDModem == myIDPerito.ToString()
                     select m;
             model.Periti = datiperito.ToList();
+
+            // Porti - TEST TEST TEST
+           
+                var Porti = from m in db.AGR_Porti
+                            where m.ID == "PMO" || m.ID == "TRI"
+                            select m;
+                model.AGR_Porti = Porti.ToList();
+                var ElencoPorti = new SelectList(model.AGR_Porti.ToList(), "ID", "Descr");
+
+
+            // END TEST
 
             var datiporto = from m in db.AGR_Porti
                              where m.ID == myIDPorto.ToString()
@@ -129,6 +173,18 @@ namespace WEB_Auto.Controllers
 
                 var ElencoSpedizioni = new SelectList(model.AGR_SpedizioniWEB_vw.ToList(), "ID", "DescrAlt");
 
+                // Porti - TEST TEST TEST
+                //if (myIDPorto == "PMO" || myIDPorto == "TRI")
+                //{
+                //    var Porti = from m in db.AGR_Porti
+                //                where m.ID == "PMO" || m.ID == "TRI"
+                //                select m;
+                //    model.AGR_Porti = Porti.ToList();
+                //    var ElencoPorti = new SelectList(model.AGR_Porti.ToList(), "ID", "Descr");
+                //}
+
+                // END TEST
+
                 // Dati per dropdown Meteo
                 var Meteo = from m in db.AGR_Meteo
                             select m;
@@ -152,6 +208,8 @@ namespace WEB_Auto.Controllers
                 ViewData["ElencoSpedizioni"] = ElencoSpedizioni;
                 ViewData["ElencoMeteo"] = ElencoMeteo;
                 ViewData["ElencoTP"] = ElencoTP;
+                ViewData["ElencoPorti"] = ElencoPorti;
+                ViewBag.IDPorto = myIDPorto;
                 ViewBag.errMess = errMess;
                 return View(model);
             }

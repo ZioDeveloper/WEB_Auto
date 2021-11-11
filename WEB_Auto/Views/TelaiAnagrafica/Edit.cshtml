@@ -448,44 +448,45 @@ else
 
                 if (ViewBag.OldIDSpedizione == "")
                 {
-                    if (@ViewBag.HasDanni == "Perizia GOOD" && ViewBag.NumFoto.ToString() != "0")
-                    {
-                        @Html.ActionLink("Chiudi perizia", "InputTelaio", new
-                       {
-                           IDPerito = ViewBag.IDPerito,
-                           IDSpedizione = ViewBag.IDSpedizione,
-                           IDMeteo = ViewBag.IDMeteo,
-                           IDTP = ViewBag.IDTP,
-                           IsUpdate = ViewBag.IsUpdate,
-                           aIDModello = ViewBag.aIDModelloCasa,
-                           IsRTB = Session["RTB"]
-                       }, new { @class = "btn btn-success custom", onclick = "return confirm('La perizia è GOOD, ma contiene foto, sei sicuro di voler proseguire ?');" })
-                    }
                     if (@ViewBag.HasDanni == "Perizia GOOD" && item4[0].IDTipoPerizia == "D")
                     {
                         @Html.ActionLink("Chiudi perizia", "SalvaPeriziaTesta", "TelaiAnagrafica", new
-                   {
-                       IDPerito = item4[0].IDPerito,
-                       IDSpedizione = item4[0].IDSpedizione,
-                       IDMeteo = @item3[0].ID,
-                       IDTP = item2[0].ID,
-                       myIDPerizia = item4[0].ID,
-                       IsUpdate = ViewBag.IsUpdate,
-                       DataPerizia = item4[0].DataPerizia
-                   }, new { @class = "btn btn-success custom", onclick = "alert('La perizia è Post discharge e non contiene ITEM danno , operazione annullata');" })
+                        {
+                            IDPerito = item4[0].IDPerito,
+                            IDSpedizione = item4[0].IDSpedizione,
+                            IDMeteo = @item3[0].ID,
+                            IDTP = item2[0].ID,
+                            myIDPerizia = item4[0].ID,
+                            IsUpdate = ViewBag.IsUpdate,
+                            DataPerizia = item4[0].DataPerizia
+                        }, new { @class = "btn btn-success custom", onclick = "alert('La perizia è Post discharge e non contiene ITEM danno , operazione annullata');" })
+                    }
+
+                    else if (@ViewBag.HasDanni == "Perizia GOOD" && ViewBag.NumFoto.ToString() != "0")
+                    {
+                        @Html.ActionLink("Chiudi perizia", "InputTelaio", new
+                           {
+                               IDPerito = ViewBag.IDPerito,
+                               IDSpedizione = ViewBag.IDSpedizione,
+                               IDMeteo = ViewBag.IDMeteo,
+                               IDTP = ViewBag.IDTP,
+                               IsUpdate = ViewBag.IsUpdate,
+                               aIDModello = ViewBag.aIDModelloCasa,
+                               IsRTB = Session["RTB"]
+                            }, new { @class = "btn btn-success custom", onclick = "return confirm('La perizia è GOOD, ma contiene foto, sei sicuro di voler proseguire ?');" })
                     }
                     else if (@ViewBag.HasDanni == "Perizia con danni" && (ViewBag.NumFoto.ToString() == "0" || ViewBag.NumFoto.ToString() == "1"))
                     {
                         @Html.ActionLink("Chiudi perizia", "InputTelaio", new
-                       {
-                           IDPerito = ViewBag.IDPerito,
-                           IDSpedizione = ViewBag.IDSpedizione,
-                           IDMeteo = ViewBag.IDMeteo,
-                           IDTP = ViewBag.IDTP,
-                           IsUpdate = ViewBag.IsUpdate,
-                           aIDModello = ViewBag.aIDModelloCasa,
-                           IsRTB = Session["RTB"]
-                       }, new { @class = "btn btn-success custom", onclick = "return confirm('La perizia è DMG, ma contiene meno di 2 foto, sei sicuro di voler proseguire ?');" })
+                           {
+                               IDPerito = ViewBag.IDPerito,
+                               IDSpedizione = ViewBag.IDSpedizione,
+                               IDMeteo = ViewBag.IDMeteo,
+                               IDTP = ViewBag.IDTP,
+                               IsUpdate = ViewBag.IsUpdate,
+                               aIDModello = ViewBag.aIDModelloCasa,
+                               IsRTB = Session["RTB"]
+                           }, new { @class = "btn btn-success custom", onclick = "return confirm('La perizia è DMG, ma contiene meno di 2 foto, sei sicuro di voler proseguire ?');" })
                     }
                     else
                     {

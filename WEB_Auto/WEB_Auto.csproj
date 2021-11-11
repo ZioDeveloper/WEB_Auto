@@ -159,6 +159,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ListaPerizieController.cs" />
     <Compile Include="Controllers\ModificaViaggioController.cs" />
+    <Compile Include="Controllers\RecuperaDatiCancellatiController.cs" />
     <Compile Include="Controllers\StoricoController.cs" />
     <Compile Include="Controllers\TelaiAnagraficaController.cs" />
     <Compile Include="Controllers\Test.cs" />
@@ -257,6 +258,18 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Autocargo.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\BKP_AGR_PerizieExpGrim_Temp_MVC.cs">
+      <DependentUpon>Autocargo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\BKP_AGR_PERIZIE_DETT_TEMP_MVC.cs">
+      <DependentUpon>Autocargo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\BKP_AGR_PERIZIE_TEMP_MVC.cs">
+      <DependentUpon>Autocargo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\BKP_AGR_Perizie_TEMP_MVC_ELIMINATE_vw.cs">
+      <DependentUpon>Autocargo.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\HomeModel.cs" />
     <Compile Include="Models\Periti.cs">
@@ -524,6 +537,7 @@
     <Content Include="Views\Shared\ErratoTipoPerizia.cshtml" />
     <Content Include="Views\TelaiAnagrafica\TipoPeriziaErrato.cshtml" />
     <Content Include="Views\Shared\_Layout_NO_ACTION.cshtml" />
+    <Content Include="Views\RecuperaDatiCancellati\ListaPerizieCancellate.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

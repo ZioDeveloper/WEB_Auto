@@ -64,5 +64,9 @@ namespace WEB_Auto.Models
         public virtual DbSet<AGR_Gravita_SDU> AGR_Gravita_SDU { get; set; }
         public virtual DbSet<AGR_Danni_SDU> AGR_Danni_SDU { get; set; }
         public virtual DbSet<AGR_PERIZIE_DETT_TEMP_MVC_SDU_vw> AGR_PERIZIE_DETT_TEMP_MVC_SDU_vw { get; set; }
+        public virtual DbSet<BKP_AGR_PERIZIE_TEMP_MVC> BKP_AGR_PERIZIE_TEMP_MVC { get; set; }
+        public virtual DbSet<BKP_AGR_PERIZIE_DETT_TEMP_MVC> BKP_AGR_PERIZIE_DETT_TEMP_MVC { get; set; }
+        public virtual DbSet<BKP_AGR_PerizieExpGrim_Temp_MVC> BKP_AGR_PerizieExpGrim_Temp_MVC { get; set; }
+        public virtual DbSet<BKP_AGR_Perizie_TEMP_MVC_ELIMINATE_vw> BKP_AGR_Perizie_TEMP_MVC_ELIMINATE_vw { get; set; }
     }
 }

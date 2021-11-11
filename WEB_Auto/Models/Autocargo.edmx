@@ -90,6 +90,7 @@ warning 6002: The table/view 'wisedb.dbo.AGR_Danni_SDU' does not have a primary 
           <Property Name="IDVero" Type="varchar" MaxLength="2" />
           <Property Name="Classe" Type="int" Nullable="false" />
           <Property Name="Descr" Type="varchar" MaxLength="50" />
+          <Property Name="IDRuolo" Type="int" />
         </EntityType>
         <EntityType Name="AGR_PERIZIE_DETT_TEMP_MVC">
           <Key>
@@ -250,6 +251,105 @@ warning 6002: The table/view 'wisedb.dbo.AGR_Danni_SDU' does not have a primary 
           <Property Name="ID" Type="varchar" MaxLength="3" Nullable="false" />
           <Property Name="Descr" Type="varchar" MaxLength="50" />
           <Property Name="DescrB" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="BKP_AGR_PERIZIE_DETT_TEMP_MVC">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="IDPerizia" Type="varchar" MaxLength="18" Nullable="false" />
+          <Property Name="IDParte" Type="varchar" MaxLength="3" />
+          <Property Name="IDDanno" Type="varchar" MaxLength="3" />
+          <Property Name="Qta" Type="smallint" />
+          <Property Name="Note" Type="varchar" MaxLength="255" />
+          <Property Name="Flags" Type="int" />
+          <Property Name="IDGravita" Type="varchar" MaxLength="3" />
+          <Property Name="IDResponsabilita" Type="varchar" MaxLength="3" />
+          <Property Name="IDAttribuzione" Type="varchar" MaxLength="3" />
+          <Property Name="IDValuta" Type="varchar" MaxLength="2" />
+          <Property Name="OreIntervento" Type="float" />
+          <Property Name="CostoOrarioIntervento" Type="float" />
+          <Property Name="CostoComponenti" Type="float" />
+          <Property Name="CostoIntervento" Type="float" />
+          <Property Name="CostoVerniciatura" Type="float" />
+          <Property Name="TotaleItem" Type="float" />
+          <Property Name="NoteValoreItem" Type="varchar" MaxLength="255" />
+          <Property Name="PosLetter" Type="varchar" MaxLength="1" />
+          <Property Name="PosNumber" Type="int" />
+          <Property Name="PosSide" Type="varchar" MaxLength="1" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'wisedb.dbo.BKP_AGR_PERIZIE_TEMP_MVC' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="BKP_AGR_PERIZIE_TEMP_MVC">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="NumPDF" />
+            <PropertyRef Name="IsClosed" />
+            <PropertyRef Name="IsTransferred" />
+          </Key>
+          <Property Name="ID" Type="varchar" MaxLength="18" Nullable="false" />
+          <Property Name="BARCODE" Type="varchar" MaxLength="10" />
+          <Property Name="IDSpedizione" Type="varchar" MaxLength="8" />
+          <Property Name="IDPerito" Type="varchar" MaxLength="2" />
+          <Property Name="IDTipoPerizia" Type="varchar" MaxLength="1" />
+          <Property Name="DataPerizia" Type="datetime" />
+          <Property Name="IDNazione" Type="varchar" MaxLength="3" />
+          <Property Name="IDModello" Type="int" />
+          <Property Name="Telaio" Type="varchar" MaxLength="30" />
+          <Property Name="NumFoto" Type="smallint" />
+          <Property Name="IDScheda" Type="varchar" MaxLength="15" />
+          <Property Name="Note" Type="varchar" MaxLength="255" />
+          <Property Name="NoteConc" Type="varchar" MaxLength="255" />
+          <Property Name="Flags" Type="int" />
+          <Property Name="DRichiesta" Type="datetime" />
+          <Property Name="VRichiesta" Type="varchar" MaxLength="2" />
+          <Property Name="DDefinizione" Type="datetime" />
+          <Property Name="VDefinizione" Type="varchar" MaxLength="2" />
+          <Property Name="DContab" Type="datetime" />
+          <Property Name="VContab" Type="varchar" MaxLength="2" />
+          <Property Name="Stato" Type="varchar" MaxLength="1" />
+          <Property Name="FileNumber" Type="int" />
+          <Property Name="IDUtente" Type="varchar" MaxLength="5" />
+          <Property Name="DataModUtente" Type="datetime" />
+          <Property Name="DataModPerito" Type="datetime" />
+          <Property Name="DataSpedizione" Type="datetime" />
+          <Property Name="DataArrivo" Type="datetime" />
+          <Property Name="FlagControllo" Type="smallint" />
+          <Property Name="IRichiesta" Type="float" />
+          <Property Name="IDefinizione" Type="float" />
+          <Property Name="IContab" Type="float" />
+          <Property Name="IDMeteo" Type="varchar" MaxLength="1" />
+          <Property Name="IDShip" Type="varchar" MaxLength="3" />
+          <Property Name="IDPortL" Type="varchar" MaxLength="3" />
+          <Property Name="IDPortD" Type="varchar" MaxLength="3" />
+          <Property Name="DataImbarco" Type="datetime" />
+          <Property Name="DataSbarco" Type="datetime" />
+          <Property Name="IDLocalitaPerizia" Type="varchar" MaxLength="3" />
+          <Property Name="TotaleItems" Type="float" />
+          <Property Name="NumPDF" Type="int" Nullable="false" />
+          <Property Name="IsClosed" Type="bit" Nullable="false" />
+          <Property Name="IDOperatore" Type="int" />
+          <Property Name="IsTransferred" Type="bit" Nullable="false" />
+          <Property Name="MachineName" Type="varchar" MaxLength="250" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'wisedb.dbo.BKP_AGR_PerizieExpGrim_Temp_MVC' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="BKP_AGR_PerizieExpGrim_Temp_MVC">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="IDR_NonFirmato" />
+          </Key>
+          <Property Name="ID" Type="varchar" MaxLength="18" Nullable="false" />
+          <Property Name="Bisarca" Type="varchar" MaxLength="10" />
+          <Property Name="Bolla" Type="varchar" MaxLength="15" />
+          <Property Name="VIAGGIO" Type="varchar" MaxLength="7" />
+          <Property Name="ID_CARICATORE" Type="varchar" MaxLength="3" />
+          <Property Name="ID_Trasportatore" Type="int" />
+          <Property Name="ID_TrasportatoreGrimaldi" Type="varchar" MaxLength="3" />
+          <Property Name="ID_TipoRotabile" Type="varchar" MaxLength="2" />
+          <Property Name="ID_POT" Type="varchar" MaxLength="3" />
+          <Property Name="IDR_NonFirmato" Type="bit" Nullable="false" />
+          <Property Name="FlgNuovoUsato" Type="varchar" MaxLength="1" />
         </EntityType>
         <EntityType Name="Periti">
           <Key>
@@ -529,6 +629,19 @@ warning 6002: The table/view 'wisedb.dbo.AGR_TrasportatoriGrimaldi_vw' does not 
           </Key>
           <Property Name="ID" Type="varchar" MaxLength="3" Nullable="false" />
           <Property Name="Descr" Type="varchar" MaxLength="56" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'wisedb.dbo.BKP_AGR_Perizie_TEMP_MVC_ELIMINATE_vw' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="BKP_AGR_Perizie_TEMP_MVC_ELIMINATE_vw">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="varchar" MaxLength="18" Nullable="false" />
+          <Property Name="IDPerito" Type="varchar" MaxLength="2" />
+          <Property Name="IDTipoPerizia" Type="varchar" MaxLength="1" />
+          <Property Name="DataPerizia" Type="datetime" />
+          <Property Name="Telaio" Type="varchar" MaxLength="30" />
+          <Property Name="IDModello" Type="int" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'wisedb.dbo.WEB_AGR_Danni_vw' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -834,6 +947,7 @@ warning 6002: The table/view 'wisedb.dbo.WEB_ListaPerizieFlat_TMP_vw' does not h
           <EntitySet Name="AGR_TipiPerizia" EntityType="Self.AGR_TipiPerizia" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AGR_TipoRotabile" EntityType="Self.AGR_TipoRotabile" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AGR_TrasportatoriGrimaldi" EntityType="Self.AGR_TrasportatoriGrimaldi" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BKP_AGR_PERIZIE_DETT_TEMP_MVC" EntityType="Self.BKP_AGR_PERIZIE_DETT_TEMP_MVC" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Periti" EntityType="Self.Periti" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WEB_AUTO_FOTO" EntityType="Self.WEB_AUTO_FOTO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WEB_AUTO_PDF" EntityType="Self.WEB_AUTO_PDF" Schema="dbo" store:Type="Tables" />
@@ -843,6 +957,69 @@ warning 6002: The table/view 'wisedb.dbo.WEB_ListaPerizieFlat_TMP_vw' does not h
     [AGR_Danni_SDU].[DescrITA] AS [DescrITA], 
     [AGR_Danni_SDU].[DescrENG] AS [DescrENG]
     FROM [dbo].[AGR_Danni_SDU] AS [AGR_Danni_SDU]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="BKP_AGR_PERIZIE_TEMP_MVC" EntityType="Self.BKP_AGR_PERIZIE_TEMP_MVC" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [BKP_AGR_PERIZIE_TEMP_MVC].[ID] AS [ID], 
+    [BKP_AGR_PERIZIE_TEMP_MVC].[BARCODE] AS [BARCODE], 
+    [BKP_AGR_PERIZIE_TEMP_MVC].[IDSpedizione] AS [IDSpedizione], 
+    [BKP_AGR_PERIZIE_TEMP_MVC].[IDPerito] AS [IDPerito], 
+    [BKP_AGR_PERIZIE_TEMP_MVC].[IDTipoPerizia] AS [IDTipoPerizia], 
+    [BKP_AGR_PERIZIE_TEMP_MVC].[DataPerizia] AS [DataPerizia], 
+    [BKP_AGR_PERIZIE_TEMP_MVC].[IDNazione] AS [IDNazione], 
+    [BKP_AGR_PERIZIE_TEMP_MVC].[IDModello] AS [IDModello], 
+    [BKP_AGR_PERIZIE_TEMP_MVC].[Telaio] AS [Telaio], 
+    [BKP_AGR_PERIZIE_TEMP_MVC].[NumFoto] AS [NumFoto], 
+    [BKP_AGR_PERIZIE_TEMP_MVC].[IDScheda] AS [IDScheda], 
+    [BKP_AGR_PERIZIE_TEMP_MVC].[Note] AS [Note], 
+    [BKP_AGR_PERIZIE_TEMP_MVC].[NoteConc] AS [NoteConc], 
+    [BKP_AGR_PERIZIE_TEMP_MVC].[Flags] AS [Flags], 
+    [BKP_AGR_PERIZIE_TEMP_MVC].[DRichiesta] AS [DRichiesta], 
+    [BKP_AGR_PERIZIE_TEMP_MVC].[VRichiesta] AS [VRichiesta], 
+    [BKP_AGR_PERIZIE_TEMP_MVC].[DDefinizione] AS [DDefinizione], 
+    [BKP_AGR_PERIZIE_TEMP_MVC].[VDefinizione] AS [VDefinizione], 
+    [BKP_AGR_PERIZIE_TEMP_MVC].[DContab] AS [DContab], 
+    [BKP_AGR_PERIZIE_TEMP_MVC].[VContab] AS [VContab], 
+    [BKP_AGR_PERIZIE_TEMP_MVC].[Stato] AS [Stato], 
+    [BKP_AGR_PERIZIE_TEMP_MVC].[FileNumber] AS [FileNumber], 
+    [BKP_AGR_PERIZIE_TEMP_MVC].[IDUtente] AS [IDUtente], 
+    [BKP_AGR_PERIZIE_TEMP_MVC].[DataModUtente] AS [DataModUtente], 
+    [BKP_AGR_PERIZIE_TEMP_MVC].[DataModPerito] AS [DataModPerito], 
+    [BKP_AGR_PERIZIE_TEMP_MVC].[DataSpedizione] AS [DataSpedizione], 
+    [BKP_AGR_PERIZIE_TEMP_MVC].[DataArrivo] AS [DataArrivo], 
+    [BKP_AGR_PERIZIE_TEMP_MVC].[FlagControllo] AS [FlagControllo], 
+    [BKP_AGR_PERIZIE_TEMP_MVC].[IRichiesta] AS [IRichiesta], 
+    [BKP_AGR_PERIZIE_TEMP_MVC].[IDefinizione] AS [IDefinizione], 
+    [BKP_AGR_PERIZIE_TEMP_MVC].[IContab] AS [IContab], 
+    [BKP_AGR_PERIZIE_TEMP_MVC].[IDMeteo] AS [IDMeteo], 
+    [BKP_AGR_PERIZIE_TEMP_MVC].[IDShip] AS [IDShip], 
+    [BKP_AGR_PERIZIE_TEMP_MVC].[IDPortL] AS [IDPortL], 
+    [BKP_AGR_PERIZIE_TEMP_MVC].[IDPortD] AS [IDPortD], 
+    [BKP_AGR_PERIZIE_TEMP_MVC].[DataImbarco] AS [DataImbarco], 
+    [BKP_AGR_PERIZIE_TEMP_MVC].[DataSbarco] AS [DataSbarco], 
+    [BKP_AGR_PERIZIE_TEMP_MVC].[IDLocalitaPerizia] AS [IDLocalitaPerizia], 
+    [BKP_AGR_PERIZIE_TEMP_MVC].[TotaleItems] AS [TotaleItems], 
+    [BKP_AGR_PERIZIE_TEMP_MVC].[NumPDF] AS [NumPDF], 
+    [BKP_AGR_PERIZIE_TEMP_MVC].[IsClosed] AS [IsClosed], 
+    [BKP_AGR_PERIZIE_TEMP_MVC].[IDOperatore] AS [IDOperatore], 
+    [BKP_AGR_PERIZIE_TEMP_MVC].[IsTransferred] AS [IsTransferred], 
+    [BKP_AGR_PERIZIE_TEMP_MVC].[MachineName] AS [MachineName]
+    FROM [dbo].[BKP_AGR_PERIZIE_TEMP_MVC] AS [BKP_AGR_PERIZIE_TEMP_MVC]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="BKP_AGR_PerizieExpGrim_Temp_MVC" EntityType="Self.BKP_AGR_PerizieExpGrim_Temp_MVC" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [BKP_AGR_PerizieExpGrim_Temp_MVC].[ID] AS [ID], 
+    [BKP_AGR_PerizieExpGrim_Temp_MVC].[Bisarca] AS [Bisarca], 
+    [BKP_AGR_PerizieExpGrim_Temp_MVC].[Bolla] AS [Bolla], 
+    [BKP_AGR_PerizieExpGrim_Temp_MVC].[VIAGGIO] AS [VIAGGIO], 
+    [BKP_AGR_PerizieExpGrim_Temp_MVC].[ID_CARICATORE] AS [ID_CARICATORE], 
+    [BKP_AGR_PerizieExpGrim_Temp_MVC].[ID_Trasportatore] AS [ID_Trasportatore], 
+    [BKP_AGR_PerizieExpGrim_Temp_MVC].[ID_TrasportatoreGrimaldi] AS [ID_TrasportatoreGrimaldi], 
+    [BKP_AGR_PerizieExpGrim_Temp_MVC].[ID_TipoRotabile] AS [ID_TipoRotabile], 
+    [BKP_AGR_PerizieExpGrim_Temp_MVC].[ID_POT] AS [ID_POT], 
+    [BKP_AGR_PerizieExpGrim_Temp_MVC].[IDR_NonFirmato] AS [IDR_NonFirmato], 
+    [BKP_AGR_PerizieExpGrim_Temp_MVC].[FlgNuovoUsato] AS [FlgNuovoUsato]
+    FROM [dbo].[BKP_AGR_PerizieExpGrim_Temp_MVC] AS [BKP_AGR_PerizieExpGrim_Temp_MVC]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="AAA_Prova" EntityType="Self.AAA_Prova" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
@@ -997,6 +1174,16 @@ warning 6002: The table/view 'wisedb.dbo.WEB_ListaPerizieFlat_TMP_vw' does not h
     [AGR_TrasportatoriGrimaldi_vw].[ID] AS [ID], 
     [AGR_TrasportatoriGrimaldi_vw].[Descr] AS [Descr]
     FROM [dbo].[AGR_TrasportatoriGrimaldi_vw] AS [AGR_TrasportatoriGrimaldi_vw]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="BKP_AGR_Perizie_TEMP_MVC_ELIMINATE_vw" EntityType="Self.BKP_AGR_Perizie_TEMP_MVC_ELIMINATE_vw" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [BKP_AGR_Perizie_TEMP_MVC_ELIMINATE_vw].[ID] AS [ID], 
+    [BKP_AGR_Perizie_TEMP_MVC_ELIMINATE_vw].[IDPerito] AS [IDPerito], 
+    [BKP_AGR_Perizie_TEMP_MVC_ELIMINATE_vw].[IDTipoPerizia] AS [IDTipoPerizia], 
+    [BKP_AGR_Perizie_TEMP_MVC_ELIMINATE_vw].[DataPerizia] AS [DataPerizia], 
+    [BKP_AGR_Perizie_TEMP_MVC_ELIMINATE_vw].[Telaio] AS [Telaio], 
+    [BKP_AGR_Perizie_TEMP_MVC_ELIMINATE_vw].[IDModello] AS [IDModello]
+    FROM [dbo].[BKP_AGR_Perizie_TEMP_MVC_ELIMINATE_vw] AS [BKP_AGR_Perizie_TEMP_MVC_ELIMINATE_vw]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="WEB_AGR_Danni_vw" EntityType="Self.WEB_AGR_Danni_vw" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
@@ -1259,6 +1446,10 @@ warning 6002: The table/view 'wisedb.dbo.WEB_ListaPerizieFlat_TMP_vw' does not h
             <End Role="AGR_Periti_WEB" EntitySet="AGR_Periti_WEB" />
             <End Role="AGR_Periti_WEB1" EntitySet="AGR_Periti_WEB" />
           </AssociationSet>
+          <EntitySet Name="BKP_AGR_PERIZIE_TEMP_MVC" EntityType="wisedbModel.BKP_AGR_PERIZIE_TEMP_MVC" />
+          <EntitySet Name="BKP_AGR_PERIZIE_DETT_TEMP_MVC" EntityType="wisedbModel.BKP_AGR_PERIZIE_DETT_TEMP_MVC" />
+          <EntitySet Name="BKP_AGR_PerizieExpGrim_Temp_MVC" EntityType="wisedbModel.BKP_AGR_PerizieExpGrim_Temp_MVC" />
+          <EntitySet Name="BKP_AGR_Perizie_TEMP_MVC_ELIMINATE_vw" EntityType="wisedbModel.BKP_AGR_Perizie_TEMP_MVC_ELIMINATE_vw" />
         </EntityContainer>
         <EntityType Name="AGR_Periti_WEB">
           <Key>
@@ -1273,6 +1464,7 @@ warning 6002: The table/view 'wisedb.dbo.WEB_ListaPerizieFlat_TMP_vw' does not h
           <Property Name="Descr" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="AGR_Periti_WEB1" Relationship="wisedbModel.FK_AGR_Periti_WEB_AGR_Periti_WEB" FromRole="AGR_Periti_WEB" ToRole="AGR_Periti_WEB1" />
           <NavigationProperty Name="AGR_Periti_WEB2" Relationship="wisedbModel.FK_AGR_Periti_WEB_AGR_Periti_WEB" FromRole="AGR_Periti_WEB1" ToRole="AGR_Periti_WEB" />
+          <Property Name="IDRuolo" Type="Int32" />
         </EntityType>
         <EntityType Name="Periti">
           <Key>
@@ -2037,6 +2229,112 @@ warning 6002: The table/view 'wisedb.dbo.WEB_ListaPerizieFlat_TMP_vw' does not h
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="BKP_AGR_PERIZIE_TEMP_MVC">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="NumPDF" />
+            <PropertyRef Name="IsClosed" />
+            <PropertyRef Name="IsTransferred" />
+          </Key>
+          <Property Name="ID" Type="String" Nullable="false" MaxLength="18" FixedLength="false" Unicode="false" />
+          <Property Name="BARCODE" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="IDSpedizione" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Name="IDPerito" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="IDTipoPerizia" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="DataPerizia" Type="DateTime" Precision="3" />
+          <Property Name="IDNazione" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="IDModello" Type="Int32" />
+          <Property Name="Telaio" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="NumFoto" Type="Int16" />
+          <Property Name="IDScheda" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="Note" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="NoteConc" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Flags" Type="Int32" />
+          <Property Name="DRichiesta" Type="DateTime" Precision="3" />
+          <Property Name="VRichiesta" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="DDefinizione" Type="DateTime" Precision="3" />
+          <Property Name="VDefinizione" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="DContab" Type="DateTime" Precision="3" />
+          <Property Name="VContab" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="Stato" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="FileNumber" Type="Int32" />
+          <Property Name="IDUtente" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="DataModUtente" Type="DateTime" Precision="3" />
+          <Property Name="DataModPerito" Type="DateTime" Precision="3" />
+          <Property Name="DataSpedizione" Type="DateTime" Precision="3" />
+          <Property Name="DataArrivo" Type="DateTime" Precision="3" />
+          <Property Name="FlagControllo" Type="Int16" />
+          <Property Name="IRichiesta" Type="Double" />
+          <Property Name="IDefinizione" Type="Double" />
+          <Property Name="IContab" Type="Double" />
+          <Property Name="IDMeteo" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="IDShip" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="IDPortL" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="IDPortD" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="DataImbarco" Type="DateTime" Precision="3" />
+          <Property Name="DataSbarco" Type="DateTime" Precision="3" />
+          <Property Name="IDLocalitaPerizia" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="TotaleItems" Type="Double" />
+          <Property Name="NumPDF" Type="Int32" Nullable="false" />
+          <Property Name="IsClosed" Type="Boolean" Nullable="false" />
+          <Property Name="IDOperatore" Type="Int32" />
+          <Property Name="IsTransferred" Type="Boolean" Nullable="false" />
+          <Property Name="MachineName" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="BKP_AGR_PERIZIE_DETT_TEMP_MVC">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="IDPerizia" Type="String" Nullable="false" MaxLength="18" FixedLength="false" Unicode="false" />
+          <Property Name="IDParte" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="IDDanno" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="Qta" Type="Int16" />
+          <Property Name="Note" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Flags" Type="Int32" />
+          <Property Name="IDGravita" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="IDResponsabilita" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="IDAttribuzione" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="IDValuta" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="OreIntervento" Type="Double" />
+          <Property Name="CostoOrarioIntervento" Type="Double" />
+          <Property Name="CostoComponenti" Type="Double" />
+          <Property Name="CostoIntervento" Type="Double" />
+          <Property Name="CostoVerniciatura" Type="Double" />
+          <Property Name="TotaleItem" Type="Double" />
+          <Property Name="NoteValoreItem" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="PosLetter" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="PosNumber" Type="Int32" />
+          <Property Name="PosSide" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="BKP_AGR_PerizieExpGrim_Temp_MVC">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="IDR_NonFirmato" />
+          </Key>
+          <Property Name="ID" Type="String" Nullable="false" MaxLength="18" FixedLength="false" Unicode="false" />
+          <Property Name="Bisarca" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Bolla" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="VIAGGIO" Type="String" MaxLength="7" FixedLength="false" Unicode="false" />
+          <Property Name="ID_CARICATORE" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="ID_Trasportatore" Type="Int32" />
+          <Property Name="ID_TrasportatoreGrimaldi" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="ID_TipoRotabile" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="ID_POT" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="IDR_NonFirmato" Type="Boolean" Nullable="false" />
+          <Property Name="FlgNuovoUsato" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="BKP_AGR_Perizie_TEMP_MVC_ELIMINATE_vw">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="String" Nullable="false" MaxLength="18" FixedLength="false" Unicode="false" />
+          <Property Name="IDPerito" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="IDTipoPerizia" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="DataPerizia" Type="DateTime" Precision="3" />
+          <Property Name="Telaio" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="IDModello" Type="Int32" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2046,6 +2344,7 @@ warning 6002: The table/view 'wisedb.dbo.WEB_ListaPerizieFlat_TMP_vw' does not h
           <EntitySetMapping Name="AGR_Periti_WEB">
             <EntityTypeMapping TypeName="wisedbModel.AGR_Periti_WEB">
               <MappingFragment StoreEntitySet="AGR_Periti_WEB">
+                <ScalarProperty Name="IDRuolo" ColumnName="IDRuolo" />
                 <ScalarProperty Name="Descr" ColumnName="Descr" />
                 <ScalarProperty Name="Classe" ColumnName="Classe" />
                 <ScalarProperty Name="IDVero" ColumnName="IDVero" />
@@ -2742,6 +3041,112 @@ warning 6002: The table/view 'wisedb.dbo.WEB_ListaPerizieFlat_TMP_vw' does not h
                 <ScalarProperty Name="IDDanno" ColumnName="IDDanno" />
                 <ScalarProperty Name="IDParte" ColumnName="IDParte" />
                 <ScalarProperty Name="IDPerizia" ColumnName="IDPerizia" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BKP_AGR_PERIZIE_TEMP_MVC">
+            <EntityTypeMapping TypeName="wisedbModel.BKP_AGR_PERIZIE_TEMP_MVC">
+              <MappingFragment StoreEntitySet="BKP_AGR_PERIZIE_TEMP_MVC">
+                <ScalarProperty Name="MachineName" ColumnName="MachineName" />
+                <ScalarProperty Name="IsTransferred" ColumnName="IsTransferred" />
+                <ScalarProperty Name="IDOperatore" ColumnName="IDOperatore" />
+                <ScalarProperty Name="IsClosed" ColumnName="IsClosed" />
+                <ScalarProperty Name="NumPDF" ColumnName="NumPDF" />
+                <ScalarProperty Name="TotaleItems" ColumnName="TotaleItems" />
+                <ScalarProperty Name="IDLocalitaPerizia" ColumnName="IDLocalitaPerizia" />
+                <ScalarProperty Name="DataSbarco" ColumnName="DataSbarco" />
+                <ScalarProperty Name="DataImbarco" ColumnName="DataImbarco" />
+                <ScalarProperty Name="IDPortD" ColumnName="IDPortD" />
+                <ScalarProperty Name="IDPortL" ColumnName="IDPortL" />
+                <ScalarProperty Name="IDShip" ColumnName="IDShip" />
+                <ScalarProperty Name="IDMeteo" ColumnName="IDMeteo" />
+                <ScalarProperty Name="IContab" ColumnName="IContab" />
+                <ScalarProperty Name="IDefinizione" ColumnName="IDefinizione" />
+                <ScalarProperty Name="IRichiesta" ColumnName="IRichiesta" />
+                <ScalarProperty Name="FlagControllo" ColumnName="FlagControllo" />
+                <ScalarProperty Name="DataArrivo" ColumnName="DataArrivo" />
+                <ScalarProperty Name="DataSpedizione" ColumnName="DataSpedizione" />
+                <ScalarProperty Name="DataModPerito" ColumnName="DataModPerito" />
+                <ScalarProperty Name="DataModUtente" ColumnName="DataModUtente" />
+                <ScalarProperty Name="IDUtente" ColumnName="IDUtente" />
+                <ScalarProperty Name="FileNumber" ColumnName="FileNumber" />
+                <ScalarProperty Name="Stato" ColumnName="Stato" />
+                <ScalarProperty Name="VContab" ColumnName="VContab" />
+                <ScalarProperty Name="DContab" ColumnName="DContab" />
+                <ScalarProperty Name="VDefinizione" ColumnName="VDefinizione" />
+                <ScalarProperty Name="DDefinizione" ColumnName="DDefinizione" />
+                <ScalarProperty Name="VRichiesta" ColumnName="VRichiesta" />
+                <ScalarProperty Name="DRichiesta" ColumnName="DRichiesta" />
+                <ScalarProperty Name="Flags" ColumnName="Flags" />
+                <ScalarProperty Name="NoteConc" ColumnName="NoteConc" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="IDScheda" ColumnName="IDScheda" />
+                <ScalarProperty Name="NumFoto" ColumnName="NumFoto" />
+                <ScalarProperty Name="Telaio" ColumnName="Telaio" />
+                <ScalarProperty Name="IDModello" ColumnName="IDModello" />
+                <ScalarProperty Name="IDNazione" ColumnName="IDNazione" />
+                <ScalarProperty Name="DataPerizia" ColumnName="DataPerizia" />
+                <ScalarProperty Name="IDTipoPerizia" ColumnName="IDTipoPerizia" />
+                <ScalarProperty Name="IDPerito" ColumnName="IDPerito" />
+                <ScalarProperty Name="IDSpedizione" ColumnName="IDSpedizione" />
+                <ScalarProperty Name="BARCODE" ColumnName="BARCODE" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BKP_AGR_PERIZIE_DETT_TEMP_MVC">
+            <EntityTypeMapping TypeName="wisedbModel.BKP_AGR_PERIZIE_DETT_TEMP_MVC">
+              <MappingFragment StoreEntitySet="BKP_AGR_PERIZIE_DETT_TEMP_MVC">
+                <ScalarProperty Name="PosSide" ColumnName="PosSide" />
+                <ScalarProperty Name="PosNumber" ColumnName="PosNumber" />
+                <ScalarProperty Name="PosLetter" ColumnName="PosLetter" />
+                <ScalarProperty Name="NoteValoreItem" ColumnName="NoteValoreItem" />
+                <ScalarProperty Name="TotaleItem" ColumnName="TotaleItem" />
+                <ScalarProperty Name="CostoVerniciatura" ColumnName="CostoVerniciatura" />
+                <ScalarProperty Name="CostoIntervento" ColumnName="CostoIntervento" />
+                <ScalarProperty Name="CostoComponenti" ColumnName="CostoComponenti" />
+                <ScalarProperty Name="CostoOrarioIntervento" ColumnName="CostoOrarioIntervento" />
+                <ScalarProperty Name="OreIntervento" ColumnName="OreIntervento" />
+                <ScalarProperty Name="IDValuta" ColumnName="IDValuta" />
+                <ScalarProperty Name="IDAttribuzione" ColumnName="IDAttribuzione" />
+                <ScalarProperty Name="IDResponsabilita" ColumnName="IDResponsabilita" />
+                <ScalarProperty Name="IDGravita" ColumnName="IDGravita" />
+                <ScalarProperty Name="Flags" ColumnName="Flags" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="Qta" ColumnName="Qta" />
+                <ScalarProperty Name="IDDanno" ColumnName="IDDanno" />
+                <ScalarProperty Name="IDParte" ColumnName="IDParte" />
+                <ScalarProperty Name="IDPerizia" ColumnName="IDPerizia" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BKP_AGR_PerizieExpGrim_Temp_MVC">
+            <EntityTypeMapping TypeName="wisedbModel.BKP_AGR_PerizieExpGrim_Temp_MVC">
+              <MappingFragment StoreEntitySet="BKP_AGR_PerizieExpGrim_Temp_MVC">
+                <ScalarProperty Name="FlgNuovoUsato" ColumnName="FlgNuovoUsato" />
+                <ScalarProperty Name="IDR_NonFirmato" ColumnName="IDR_NonFirmato" />
+                <ScalarProperty Name="ID_POT" ColumnName="ID_POT" />
+                <ScalarProperty Name="ID_TipoRotabile" ColumnName="ID_TipoRotabile" />
+                <ScalarProperty Name="ID_TrasportatoreGrimaldi" ColumnName="ID_TrasportatoreGrimaldi" />
+                <ScalarProperty Name="ID_Trasportatore" ColumnName="ID_Trasportatore" />
+                <ScalarProperty Name="ID_CARICATORE" ColumnName="ID_CARICATORE" />
+                <ScalarProperty Name="VIAGGIO" ColumnName="VIAGGIO" />
+                <ScalarProperty Name="Bolla" ColumnName="Bolla" />
+                <ScalarProperty Name="Bisarca" ColumnName="Bisarca" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BKP_AGR_Perizie_TEMP_MVC_ELIMINATE_vw">
+            <EntityTypeMapping TypeName="wisedbModel.BKP_AGR_Perizie_TEMP_MVC_ELIMINATE_vw">
+              <MappingFragment StoreEntitySet="BKP_AGR_Perizie_TEMP_MVC_ELIMINATE_vw">
+                <ScalarProperty Name="IDModello" ColumnName="IDModello" />
+                <ScalarProperty Name="Telaio" ColumnName="Telaio" />
+                <ScalarProperty Name="DataPerizia" ColumnName="DataPerizia" />
+                <ScalarProperty Name="IDTipoPerizia" ColumnName="IDTipoPerizia" />
+                <ScalarProperty Name="IDPerito" ColumnName="IDPerito" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

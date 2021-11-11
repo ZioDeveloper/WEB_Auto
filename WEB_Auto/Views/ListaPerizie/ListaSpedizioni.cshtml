@@ -29,7 +29,7 @@
 <br /><br />
 @if (Session["Classe"].ToString() == "0")
 {
-    using (Html.BeginForm("ListaSpedizioni", "ListaPerizie"))
+    using (Html.BeginForm("ListaSpedizioni", "ListaPerizie",new { Status = ViewBag.Status }))
     {
         <label>Solo aperti : @Html.RadioButton("Status", "APERTE", true, new { onclick = "this.form.submit()" })</label>
         <label>&nbsp;&nbsp; &nbsp;&nbsp; Solo chiusi  @Html.RadioButton("Status", "CHIUSE", false, new { onclick = "this.form.submit()" })</label>
@@ -73,7 +73,7 @@
                 bool TuttoChiuso = item.Aperte >0;
         <tr>
             <td>
-                @Html.ActionLink("Visualizza", "EditSpedizione", new { IDSpedizione = item.ID, IDTP = item.IDTipoPerizia }, new { @class = "btn btn-success btn-xs" })
+                @Html.ActionLink("Visualizza", "EditSpedizione", new { IDSpedizione = item.ID, IDTP = item.IDTipoPerizia,Status = ViewBag.Status }, new { @class = "btn btn-success btn-xs" })
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.IDOriginale1)
@@ -139,7 +139,7 @@
             {
         <tr>
             <td>
-                @Html.ActionLink("Visualizza", "EditSpedizione", new { IDSpedizione = item.ID, IDTP = item.IDTipoPerizia }, new { @class = "btn btn-success btn-xs" })
+                @Html.ActionLink("Visualizza", "EditSpedizione", new { IDSpedizione = item.ID, IDTP = item.IDTipoPerizia , TipoMezzo = ViewBag.TipoMezzo}, new { @class = "btn btn-success btn-xs" })
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.ID)

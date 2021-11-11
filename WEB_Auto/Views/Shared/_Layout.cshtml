@@ -26,30 +26,27 @@
                 <ul class="nav navbar-nav">
                     @if (Session["Classe"].ToString() == "0")
                     {
-                        @*@Html.LiActionLink("About", "About", "Home")
-                            @Html.LiActionLink("Contact", "Contact", "Home")*@
+
 
                         <li>@Html.ActionLink("Home", "Index", "Home", new { usr = Session["User"].ToString() }, null)</li>
                         @*@Html.LiActionLink("Home", "Index", "Home", Session["User"].ToString());*@
                         @Html.LiActionLink("Cerca telaio", "CercaTelaio", "Storico", "")
                         @Html.LiActionLink("Lista viaggi", "ListaSpedizioni", "ListaPerizie", "")
                         @Html.LiActionLink("Modifica viaggio", "ModificaViaggio", "ModificaViaggio", "")
-                        if (Session["OS"].ToString() == "WINDOWS")
-                        {
-                            @*@Html.LiActionLink("Modifica data perizia", "ModificaDataPerizia", "ModificaViaggio")</li>*@
-                        }
                         @Html.LiActionLink("Dati preload", "VisualizzaPreload", "Storico", "")
+                        if (Session["IDRuolo"].ToString() == "2")
+                            {@Html.LiActionLink("Lista perizie cancellate", "ListaPerizieCancellate", "RecuperaDatiCancellati", "") }
                         @Html.LiActionLink("Contact", "Contact", "Home", "")
-                    }
+                }
 
-                    else
-                    {
-                        @Html.LiActionLink("Home", "Index", "Home", "")
+                else
+                {
+                    @Html.LiActionLink("Home", "Index", "Home", "")
 
-                        @Html.LiActionLink("Lista viaggi", "ListaSpedizioni", "ListaPerizie", "")
+                    @Html.LiActionLink("Lista viaggi", "ListaSpedizioni", "ListaPerizie", "")
 
-                        @Html.LiActionLink("Contact", "Contact", "Home", "")
-                    }
+                    @Html.LiActionLink("Contact", "Contact", "Home", "")
+                }
 
 
                     @*@Html.LiActionLink("TEST NON USARE", "Index", "AreaTest")</li>*@

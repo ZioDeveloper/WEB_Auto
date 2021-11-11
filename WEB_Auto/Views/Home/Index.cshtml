@@ -33,9 +33,18 @@
         {
             <label>Filtro periodo ricerca viaggi ( +/- giorni)</label><br />
             <label>Oggi: @Html.RadioButton("Filtro", "OGGI", false, new { onclick = "this.form.submit()" })</label>
-            <label>&nbsp;&nbsp; &nbsp;&nbsp;3 gg:@Html.RadioButton("Filtro", "TRE", true, new { onclick = "this.form.submit()"  })</label>
+            <label>&nbsp;&nbsp; &nbsp;&nbsp;3 gg:@Html.RadioButton("Filtro", "TRE", true, new { onclick = "this.form.submit()" })</label>
             <label>&nbsp;&nbsp; &nbsp;&nbsp;7 gg:@Html.RadioButton("Filtro", "SETTE", false, new { onclick = "this.form.submit()" })</label>
             <label>&nbsp;&nbsp; &nbsp;&nbsp;40 gg:@Html.RadioButton("Filtro", "VENTUNO", false, new { onclick = "this.form.submit()" })</label>
+
+            if (item3[0].ID == "PMO" || item3[0].ID == "TRI")
+            {
+                <br /> <br />
+                @Html.Label("Seleziona porto ",new { @style="color:red"});
+                @Html.DropDownList("IDPorto", new SelectList((SelectList)ViewData["ElencoPorti"], "Value", "Text", ViewBag.IDPorto), "-- Seleziona porto --", new { @style = "font-size: 13px;", @class = "form-control selectpicker dropupAuto = false data-live-search=true data-size=5", @onchange = "this.form.submit();" }) @*onfocus = "blur();",*@
+
+
+            }
 
 
         }
@@ -53,7 +62,7 @@
             @Html.Label("Seleziona viaggio")
             if (Session["Classe"].ToString() == "0")
             {
-                @Html.DropDownList("IDSpedizione", (SelectList)ViewData["ElencoSpedizioni"], "-- Seleziona viaggio --", new { @style = "font-size: 13px;",  @class = "form-control selectpicker dropupAuto = false data-live-search=true data-size=5" }) @*onfocus = "blur();",*@
+                @Html.DropDownList("IDSpedizione", (SelectList)ViewData["ElencoSpedizioni"], "-- Seleziona viaggio --", new { @style = "font-size: 13px;", @class = "form-control selectpicker dropupAuto = false data-live-search=true data-size=5" }) @*onfocus = "blur();",*@
             }
             else
             {
@@ -73,11 +82,11 @@
 
             @*<div>
 
-                @Html.Label("Chassis")
+                    @Html.Label("Chassis")
 
-                @Html.TextBox("Chassis", "", new { onkeyup = "InputToUpper(this);" })
+                    @Html.TextBox("Chassis", "", new { onkeyup = "InputToUpper(this);" })
 
-            </div>*@
+                </div>*@
             <br /><br />
             <div>
                 <button type="submit" class="btn btn-primary custom">Inserisci perizie</button>

@@ -622,19 +622,19 @@ namespace WEB_Auto.Controllers
 
 
             // Aggiorna campo note x pioggia
-            if (HasDamages(myIDPerizia))
-            {
-                if (IDMeteo == "3" || IDMeteo == "4")
-                {
-                    string sqlcmd = " UPDATE AGR_PERIZIE_Temp_MVC " +
-                                    " SET  Note = @Note " +
-                                    " WHERE ID = @IDPerizia";
+            //if (HasDamages(myIDPerizia))
+            //{
+            //    if (IDMeteo == "3" || IDMeteo == "4")
+            //    {
+            //        string sqlcmd = " UPDATE AGR_PERIZIE_Temp_MVC " +
+            //                        " SET  Note = @Note " +
+            //                        " WHERE ID = @IDPerizia";
+            //
+            //        int Inserted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@IDPerizia", myIDPerizia),
+            //                                                             new SqlParameter("@Note", "No foto causa pioggia"));
+            //    }
 
-                    int Inserted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@IDPerizia", myIDPerizia),
-                                                                         new SqlParameter("@Note", "No foto causa pioggia"));
-                }
-
-            }
+            //}
             // togliere note automatiche meteo 19/05/2021
             //if (IDMeteo == "3" || IDMeteo == "4")
             //    myNote = "No foto causa pioggia ";

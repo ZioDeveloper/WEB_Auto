@@ -381,6 +381,32 @@ namespace WEB_Auto.Controllers
             return View(model);
         }
 
+        public ActionResult CarouselFotoStoricizzate(string aIDPerizia, string aTelaio, string aViaggio, string CntrProvenienza = "")
+        {
+            var model = new Models.HomeModel();
+            //var foto = (from m in db.WEB_AUTO_FOTO
+            //            where m.IDPerizia == aIDPerizia
+            //            select m).ToList();
+            //model.WEB_AUTO_FOTO = foto;
+            var foto = (from m in db.WEB_ListaPerizieFlat_DEF_vw
+                        where m.IDPerizia == aIDPerizia
+                        select m).ToList();
+            model.WEB_ListaPerizieFlat_DEF_vw = foto;
+
+            var myIDSpedizione = (from m in db.AGR_PERIZIE_TEMP_MVC
+                                  where m.ID == aIDPerizia
+                                  select new { m.IDSpedizione, m.IDTipoPerizia }).FirstOrDefault();
+
+            ViewBag.IDSpedizione = myIDSpedizione.IDSpedizione;
+            ViewBag.IDTP = myIDSpedizione.IDTipoPerizia;
+            ViewBag.Telaio = aTelaio;
+            ViewBag.NumFoto = foto[0].NumFoto;
+            ViewBag.IDPErizia = foto[0].IDPerizia;
+            ViewBag.CntrProvenienza = CntrProvenienza;
+            ViewBag.myViaggio = aViaggio;
+            return View(model);
+        }
+
         public ActionResult MostraPDF(string aIDPerizia, string IDSpedizione, string IDTP)
         {
             var model = new Models.HomeModel();

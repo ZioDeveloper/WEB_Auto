@@ -145,7 +145,7 @@
         <br />
         <div class="card-body">
             <br /><br />
-            <table id="qw" style="width:100%;" class="table table-bordered">
+            <table id="DataTable1" style="width:100%;" class="table table-bordered">
                 <thead>
                     <tr>
 
@@ -313,7 +313,7 @@
         <br />
         <div class="card-body">
             <br /><br />
-            <table id="qw" style="width:100%;" class="table table-bordered">
+            <table id="DataTable2" style="width:100%;" class="table table-bordered">
                 <thead>
                     <tr>
 
@@ -372,20 +372,22 @@
                             {
                                 <td>
                                     @Html.DisplayFor(modelItem => item.NumFoto)
-                                    @Html.ActionLink("Mostra foto", "CarouselFoto", "ListaPerizie", new
-                               {
-                                   aIDPerizia = item.IDPerizia,
-                                   IDPerito = ViewBag.IDPerito,
-                                   IDSpedizione = ViewBag.IDSpedizione,
-                                   IDMeteo = ViewBag.IDMeteo,
-                                   IDTP = ViewBag.IDTP,
-                                   aIDTrasportatore = ViewBag.aIDTrasportatore,
-                                   aIDTipoRotabile = ViewBag.aIDTipoRotabile,
-                                   aIDModelloCasa = ViewBag.aIDModelloCasa,
-                                   ErrMess = ViewBag.ErrMess,
-                                   IsUpdate = ViewBag.IsUpdate,
-                                   CntrProvenienza = "PRELOAD"
-                               }, new { @class = "photoImg" })
+                                    @Html.ActionLink("Mostra foto", "CarouselFotoStoricizzate", "ListaPerizie", new
+                                       {
+                                           aIDPerizia = item.IDPerizia,
+                                           IDPerito = ViewBag.IDPerito,
+                                           IDSpedizione = ViewBag.IDSpedizione,
+                                           IDMeteo = ViewBag.IDMeteo,
+                                           IDTP = ViewBag.IDTP,
+                                           aIDTrasportatore = ViewBag.aIDTrasportatore,
+                                           aIDTipoRotabile = ViewBag.aIDTipoRotabile,
+                                           aIDModelloCasa = ViewBag.aIDModelloCasa,
+                                           ErrMess = ViewBag.ErrMess,
+                                           IsUpdate = ViewBag.IsUpdate,
+                                           aTelaio = item.Telaio,
+                                           aViaggio = myViaggio,
+                                           CntrProvenienza = "VERIFICATE"
+                                       }, new { @class = "photoImg" })
                                 </td>
                             }
                             else
@@ -420,7 +422,7 @@
 
         }
         catch { }
-        <table>
+        <table id="DataTable3" style="width:100%;" class="table table-bordered">
             <tr>
                 <td>
                     @Html.Label("Spedizione : ")
@@ -442,13 +444,13 @@
                 @*<td>&nbsp;&nbsp;</td>*@
             </tr>
             @*<tr>
-                    <td>
-                        @Html.Label("Del : ")
-                    </td>
-                    <td>
-                        @Html.Label(item1[0].DataInizioImbarco.ToString().Substring(0, 10))
-                    </td>
-                </tr>*@
+            <td>
+                @Html.Label("Del : ")
+            </td>
+            <td>
+                @Html.Label(item1[0].DataInizioImbarco.ToString().Substring(0, 10))
+            </td>
+        </tr>*@
             <tr>
                 <td>
                     @Html.Label("POL : ")
@@ -481,7 +483,8 @@
         <br />
         <div class="card-body">
             <br /><br />
-            <table id="qw" style="width:100%;" class="table table-bordered">
+
+            <table id="DataTable3" style="width:100%;" class="table table-bordered">
                 <thead>
                     <tr>
 
@@ -537,23 +540,25 @@
                             @{OldVin = item.Telaio;}
                             @if (OldVin != NewVin)
                             {
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.NumFoto)
-                                    @Html.ActionLink("Mostra foto", "CarouselFoto", "ListaPerizie", new
-                               {
-                                   aIDPerizia = item.IDPerizia,
-                                   IDPerito = ViewBag.IDPerito,
-                                   IDSpedizione = ViewBag.IDSpedizione,
-                                   IDMeteo = ViewBag.IDMeteo,
-                                   IDTP = ViewBag.IDTP,
-                                   aIDTrasportatore = ViewBag.aIDTrasportatore,
-                                   aIDTipoRotabile = ViewBag.aIDTipoRotabile,
-                                   aIDModelloCasa = ViewBag.aIDModelloCasa,
-                                   ErrMess = ViewBag.ErrMess,
-                                   IsUpdate = ViewBag.IsUpdate,
-                                   CntrProvenienza = "PRELOAD"
-                               }, new { @class = "photoImg" })
-                                </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.NumFoto)
+                                @Html.ActionLink("Mostra foto", "CarouselFotoStoricizzate", "ListaPerizie", new
+                                    {
+                                        aIDPerizia = item.IDPerizia,
+                                        IDPerito = ViewBag.IDPerito,
+                                        IDSpedizione = ViewBag.IDSpedizione,
+                                        IDMeteo = ViewBag.IDMeteo,
+                                        IDTP = ViewBag.IDTP,
+                                        aIDTrasportatore = ViewBag.aIDTrasportatore,
+                                        aIDTipoRotabile = ViewBag.aIDTipoRotabile,
+                                        aIDModelloCasa = ViewBag.aIDModelloCasa,
+                                        ErrMess = ViewBag.ErrMess,
+                                        IsUpdate = ViewBag.IsUpdate,
+                                        aTelaio = item.Telaio,
+                                        aViaggio = myViaggio,
+                                        CntrProvenienza = "NONVERIFICATE"
+                                    }, new { @class = "photoImg" })
+                            </td>
                             }
                             else
                             {

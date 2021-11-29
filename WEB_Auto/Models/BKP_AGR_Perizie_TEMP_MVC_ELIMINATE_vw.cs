@@ -15,10 +15,17 @@ namespace WEB_Auto.Models
     public partial class BKP_AGR_Perizie_TEMP_MVC_ELIMINATE_vw
     {
         public string ID { get; set; }
-        public string IDPerito { get; set; }
-        public string IDTipoPerizia { get; set; }
         public Nullable<System.DateTime> DataPerizia { get; set; }
         public string Telaio { get; set; }
         public Nullable<int> IDModello { get; set; }
+        public string Perito { get; set; }
+        public string TP { get; set; }
+        public string Modello { get; set; }
+        public Nullable<int> IDOperatore { get; set; }
+        public string MachineName { get; set; }
+        public Nullable<short> NumFoto { get; set; }
+        public int NumPDF { get; set; }
+        public string Name { get; set; }
+        public string Condition { get; set; }
     }
 }

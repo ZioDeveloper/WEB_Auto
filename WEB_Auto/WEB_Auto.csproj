@@ -538,6 +538,7 @@
     <Content Include="Views\TelaiAnagrafica\TipoPeriziaErrato.cshtml" />
     <Content Include="Views\Shared\_Layout_NO_ACTION.cshtml" />
     <Content Include="Views\RecuperaDatiCancellati\ListaPerizieCancellate.cshtml" />
+    <Content Include="Views\ListaPerizie\CarouselFotoStoricizzate.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

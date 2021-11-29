@@ -82,19 +82,19 @@ namespace WEB_Auto.Controllers
                          where m.IDTipoPerizia == "C"
                          where m.IsClosed == false
                          select m;
-                model.WEB_ListaPerizieFlat_MVC_vw = L1.ToList().OrderBy(s => s.Status);
+                model.WEB_ListaPerizieFlat_MVC_vw = L1.ToList().OrderBy(s => s.Telaio);
 
                 var L2 = from m in db.WEB_ListaPerizieFlat_DEF_vw
                          where m.Viaggio == aViaggio
                          where m.IDTipoPerizia == "C"
                          select m;
-                model.WEB_ListaPerizieFlat_DEF_vw = L2.ToList().OrderBy(s => s.Status);
+                model.WEB_ListaPerizieFlat_DEF_vw = L2.ToList().OrderBy(s => s.Telaio);
 
                 var L3 = from m in db.WEB_ListaPerizieFlat_TMP_vw
                          where m.Viaggio == aViaggio
                          where m.IDTipoPerizia == "C"
                          select m;
-                model.WEB_ListaPerizieFlat_TMP_vw = L3.ToList().OrderBy(s => s.Status);
+                model.WEB_ListaPerizieFlat_TMP_vw = L3.ToList().OrderBy(s => s.Telaio);
             }
             else
             {

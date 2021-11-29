@@ -635,13 +635,24 @@ warning 6002: The table/view 'wisedb.dbo.BKP_AGR_Perizie_TEMP_MVC_ELIMINATE_vw' 
         <EntityType Name="BKP_AGR_Perizie_TEMP_MVC_ELIMINATE_vw">
           <Key>
             <PropertyRef Name="ID" />
+            <PropertyRef Name="Modello" />
+            <PropertyRef Name="NumPDF" />
+            <PropertyRef Name="Name" />
+            <PropertyRef Name="Condition" />
           </Key>
           <Property Name="ID" Type="varchar" MaxLength="18" Nullable="false" />
-          <Property Name="IDPerito" Type="varchar" MaxLength="2" />
-          <Property Name="IDTipoPerizia" Type="varchar" MaxLength="1" />
+          <Property Name="Perito" Type="varchar" MaxLength="37" />
+          <Property Name="TP" Type="varchar" MaxLength="27" />
           <Property Name="DataPerizia" Type="datetime" />
           <Property Name="Telaio" Type="varchar" MaxLength="30" />
           <Property Name="IDModello" Type="int" />
+          <Property Name="Modello" Type="varchar" MaxLength="276" Nullable="false" />
+          <Property Name="IDOperatore" Type="int" />
+          <Property Name="MachineName" Type="varchar" MaxLength="250" />
+          <Property Name="NumFoto" Type="smallint" />
+          <Property Name="NumPDF" Type="int" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Condition" Type="varchar" MaxLength="7" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'wisedb.dbo.WEB_AGR_Danni_vw' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -1178,11 +1189,18 @@ warning 6002: The table/view 'wisedb.dbo.WEB_ListaPerizieFlat_TMP_vw' does not h
           <EntitySet Name="BKP_AGR_Perizie_TEMP_MVC_ELIMINATE_vw" EntityType="Self.BKP_AGR_Perizie_TEMP_MVC_ELIMINATE_vw" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [BKP_AGR_Perizie_TEMP_MVC_ELIMINATE_vw].[ID] AS [ID], 
-    [BKP_AGR_Perizie_TEMP_MVC_ELIMINATE_vw].[IDPerito] AS [IDPerito], 
-    [BKP_AGR_Perizie_TEMP_MVC_ELIMINATE_vw].[IDTipoPerizia] AS [IDTipoPerizia], 
+    [BKP_AGR_Perizie_TEMP_MVC_ELIMINATE_vw].[Perito] AS [Perito], 
+    [BKP_AGR_Perizie_TEMP_MVC_ELIMINATE_vw].[TP] AS [TP], 
     [BKP_AGR_Perizie_TEMP_MVC_ELIMINATE_vw].[DataPerizia] AS [DataPerizia], 
     [BKP_AGR_Perizie_TEMP_MVC_ELIMINATE_vw].[Telaio] AS [Telaio], 
-    [BKP_AGR_Perizie_TEMP_MVC_ELIMINATE_vw].[IDModello] AS [IDModello]
+    [BKP_AGR_Perizie_TEMP_MVC_ELIMINATE_vw].[IDModello] AS [IDModello], 
+    [BKP_AGR_Perizie_TEMP_MVC_ELIMINATE_vw].[Modello] AS [Modello], 
+    [BKP_AGR_Perizie_TEMP_MVC_ELIMINATE_vw].[IDOperatore] AS [IDOperatore], 
+    [BKP_AGR_Perizie_TEMP_MVC_ELIMINATE_vw].[MachineName] AS [MachineName], 
+    [BKP_AGR_Perizie_TEMP_MVC_ELIMINATE_vw].[NumFoto] AS [NumFoto], 
+    [BKP_AGR_Perizie_TEMP_MVC_ELIMINATE_vw].[NumPDF] AS [NumPDF], 
+    [BKP_AGR_Perizie_TEMP_MVC_ELIMINATE_vw].[Name] AS [Name], 
+    [BKP_AGR_Perizie_TEMP_MVC_ELIMINATE_vw].[Condition] AS [Condition]
     FROM [dbo].[BKP_AGR_Perizie_TEMP_MVC_ELIMINATE_vw] AS [BKP_AGR_Perizie_TEMP_MVC_ELIMINATE_vw]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="WEB_AGR_Danni_vw" EntityType="Self.WEB_AGR_Danni_vw" store:Type="Views" store:Schema="dbo">
@@ -2327,13 +2345,24 @@ warning 6002: The table/view 'wisedb.dbo.WEB_ListaPerizieFlat_TMP_vw' does not h
         <EntityType Name="BKP_AGR_Perizie_TEMP_MVC_ELIMINATE_vw">
           <Key>
             <PropertyRef Name="ID" />
+            <PropertyRef Name="Modello" />
+            <PropertyRef Name="NumPDF" />
+            <PropertyRef Name="Name" />
+            <PropertyRef Name="Condition" />
           </Key>
           <Property Name="ID" Type="String" Nullable="false" MaxLength="18" FixedLength="false" Unicode="false" />
-          <Property Name="IDPerito" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
-          <Property Name="IDTipoPerizia" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
           <Property Name="DataPerizia" Type="DateTime" Precision="3" />
           <Property Name="Telaio" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="IDModello" Type="Int32" />
+          <Property Name="Perito" Type="String" MaxLength="37" FixedLength="false" Unicode="false" />
+          <Property Name="TP" Type="String" MaxLength="27" FixedLength="false" Unicode="false" />
+          <Property Name="Modello" Type="String" Nullable="false" MaxLength="276" FixedLength="false" Unicode="false" />
+          <Property Name="IDOperatore" Type="Int32" />
+          <Property Name="MachineName" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="NumFoto" Type="Int16" />
+          <Property Name="NumPDF" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Condition" Type="String" Nullable="false" MaxLength="7" FixedLength="false" Unicode="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -3142,11 +3171,18 @@ warning 6002: The table/view 'wisedb.dbo.WEB_ListaPerizieFlat_TMP_vw' does not h
           <EntitySetMapping Name="BKP_AGR_Perizie_TEMP_MVC_ELIMINATE_vw">
             <EntityTypeMapping TypeName="wisedbModel.BKP_AGR_Perizie_TEMP_MVC_ELIMINATE_vw">
               <MappingFragment StoreEntitySet="BKP_AGR_Perizie_TEMP_MVC_ELIMINATE_vw">
+                <ScalarProperty Name="Condition" ColumnName="Condition" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="NumPDF" ColumnName="NumPDF" />
+                <ScalarProperty Name="NumFoto" ColumnName="NumFoto" />
+                <ScalarProperty Name="MachineName" ColumnName="MachineName" />
+                <ScalarProperty Name="IDOperatore" ColumnName="IDOperatore" />
+                <ScalarProperty Name="Modello" ColumnName="Modello" />
+                <ScalarProperty Name="TP" ColumnName="TP" />
+                <ScalarProperty Name="Perito" ColumnName="Perito" />
                 <ScalarProperty Name="IDModello" ColumnName="IDModello" />
                 <ScalarProperty Name="Telaio" ColumnName="Telaio" />
                 <ScalarProperty Name="DataPerizia" ColumnName="DataPerizia" />
-                <ScalarProperty Name="IDTipoPerizia" ColumnName="IDTipoPerizia" />
-                <ScalarProperty Name="IDPerito" ColumnName="IDPerito" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

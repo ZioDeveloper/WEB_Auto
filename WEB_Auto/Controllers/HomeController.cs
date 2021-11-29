@@ -46,10 +46,10 @@ namespace WEB_Auto.Controllers
                 //usr = "VGrimaldi";
                 //usr = "grimaldi"; // 
                // usr = "pierangeli"; // 
-                //usr = "maurizio"; // 
-                //usr = "DiGennaro";
+                usr = "maurizio"; // 
+               // usr = "DiGennaro";
                //usr = "DiSalvo";
-                usr = "patrizia";
+               // usr = "patrizia";
                 //usr = "Torresan"; // 
                 //usr = "Test";
                 //usr = Session["User"].ToString();

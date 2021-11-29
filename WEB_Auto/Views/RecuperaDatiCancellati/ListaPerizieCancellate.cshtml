@@ -19,78 +19,106 @@
 </head>
 <h4>Lista Perizie Cancellate</h4>
 <br /><br />
-<table id="ElencoPerizieCancellate" class="display" style="width:100%">
+      <table id="ElencoPerizieCancellate" class="display" style="width:100%">
 
-    <thead>
-        <tr>
-            <th>ID Perizia</th>
-        </tr>
-             
-    </thead>
+          <thead>
+              <tr>
+                  <th>ID Perizia</th>
+                  <thPerito></thPerito>
+                  <th>TP</th>
+                  <th>DataPerizia</th>
+                  <th>Telaio</th>
+                  <th>IDModello</th>
+                  <th>Modello</th>
+                  <th>OS</th>
+                  <th>NumFoto</th>
+                  <th>NumPDF</th>
+                  <th>Name</th>
+                  <th>Condition</th>
+                  <th>Reinserisci</th>
+              </tr>
 
-    <tbody>
-        @foreach (var item in Model.BKP_AGR_Perizie_TEMP_MVC_ELIMINATE_vw)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ID)
-                </td>
-            </tr>
-        }
-    </tbody>
-    <tfoot>
-        <tr>
-            <th>ID Perizia</th>
-        </tr>
-    </tfoot>
-</table>
+          </thead>
+         
+
+
+          <tbody>
+              @foreach (var item in Model.BKP_AGR_Perizie_TEMP_MVC_ELIMINATE_vw)
+              {
+              <tr>
+
+                  <td>
+                      @Html.DisplayFor(modelItem => item.ID)
+                  </td>
+                  <td>
+                      @Html.DisplayFor(modelItem => item.Perito)
+                  </td>
+                  <td>
+                      @Html.DisplayFor(modelItem => item.DataPerizia)
+                  </td>
+                  <td>
+                      @Html.DisplayFor(modelItem => item.Telaio)
+                  </td>
+                  <td>
+                      @Html.DisplayFor(modelItem => item.IDModello)
+                  </td>
+                  <td>
+                      @Html.DisplayFor(modelItem => item.Modello)
+                  </td>
+
+                  <td>
+                      @Html.DisplayFor(modelItem => item.MachineName)
+                  </td>
+                  <td>
+                      @Html.DisplayFor(modelItem => item.NumFoto)
+                  </td>
+                  <td>
+                      @Html.DisplayFor(modelItem => item.NumPDF)
+                  </td>
+                  <td>
+                      @Html.DisplayFor(modelItem => item.Name)
+                  </td>
+                  <td>
+                      @Html.DisplayFor(modelItem => item.Condition)
+                  </td>
+                  <td>
+                      @Html.ActionLink("Reinserisci perizia", "www", "aaa", new { IDSpedizione = ViewBag.IDSpedizione, ViewBag.IDTP, ViewBag.TipoMezzo }, new { @class = "btn btn-success btn-xs " })
+
+                  </td>
+              </tr>
+              }
+          </tbody>
+          <tfoot>
+              <tr>
+                  <th>ID Perizia</th>
+                  <th>ID Perizia</th>
+                  <thPerito></thPerito>
+                  <th>TP</th>
+                  <th>DataPerizia</th>
+                  <th>Telaio</th>
+                  <th>IDModello</th>
+                  <th>Modello</th>
+                  <th>OS</th>
+                  <th>NumFoto</th>
+                  <th>NumPDF</th>
+                  <th>Name</th>
+                  <th>Condition</th>
+                  <th>Reinserisci</th>
+              </tr>
+          </tfoot>
+      </table>
 
 <script>
     $(document).ready(function () {
         var table = $('#ElencoPerizieCancellate').DataTable({
             "autoWidth": false,
-            stateSave: true,
-            "lengthMenu": [[-1, 50, 100], ["Tutti", 50, 100]],
-            "iDisplayLength": -1,
-            buttons: [
-                //{
-                //    extend: 'searchPanes',
-                //    config: {
-                //        cascadePanes: true
-                //    }
-                //},
-                {
-                    extend: 'excelHtml5',
-                    text: 'Crea excel ',
-                    exportOptions: {
-                        modifier: {
-                            search: 'none'
-                        }
-                    }
-                },
-                {
-                    extend: 'print',
-                    text: 'Stampa griglia',
-                    exportOptions: {
-                        modifier: {
-                            search: 'none'
-                        }
-                    }
-                },
-                {
-                    extend: 'pdf',
-                    text: 'Crea PDF',
-                    exportOptions: {
-                        modifier: {
-                            page: 'current'
-                        }
-                    }
-                }
-
-            ],
+            stateSave: false,
+            "lengthMenu": [[50, 100, -1], [50, 100, "Tutti"]],
+            "pageLength": 50,
+            "iDisplayLength": 50,
 
 
-            dom: 'Blfrtip',
+           // dom: 'Blfrtip',
             //buttons: [
             //    'copy', 'csv', 'excel',  'print'
             //],

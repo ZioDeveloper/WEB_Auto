@@ -521,28 +521,41 @@ else
             else if ((ViewBag.ErrMess == "" || ViewBag.ErrMess == "Sbloccato" || ViewBag.ErrMess == "TARGA CONOSCIUTA") && Session["Classe"].ToString() == "1")
             {
                 @Html.ActionLink("Chiudi perizia", "InputTelaio", new
-           {
-               IDPerito = ViewBag.IDPerito,
-               IDSpedizione = ViewBag.IDSpedizione,
-               IDMeteo = ViewBag.IDMeteo,
-               IDTP = ViewBag.IDTP,
-               IsUpdate = ViewBag.IsUpdate,
-               aIDModello = ViewBag.aIDModelloCasa,
-               IsRTB = Session["RTB"]
-           }, new { @class = "btn btn-success custom" })
+               {
+                   IDPerito = ViewBag.IDPerito,
+                   IDSpedizione = ViewBag.IDSpedizione,
+                   IDMeteo = ViewBag.IDMeteo,
+                   IDTP = ViewBag.IDTP,
+                   IsUpdate = ViewBag.IsUpdate,
+                   aIDModello = ViewBag.aIDModelloCasa,
+                   IsRTB = Session["RTB"]
+               }, new { @class = "btn btn-success custom" })
             }
             else if (Session["Classe"].ToString() == "1")
             {
                 @Html.ActionLink("Chiudi perizia", "InputTelaio", new
-           {
-               IDPerito = ViewBag.IDPerito,
-               IDSpedizione = ViewBag.IDSpedizione,
-               IDMeteo = ViewBag.IDMeteo,
-               IDTP = ViewBag.IDTP,
-               Chassis = item4[0].Telaio,
-               aIDModello = ViewBag.aIDModelloCasa,
-               IsRTB = Session["RTB"]
-           }, new { @class = "btn btn-success custom disabled " })
+               {
+                   IDPerito = ViewBag.IDPerito,
+                   IDSpedizione = ViewBag.IDSpedizione,
+                   IDMeteo = ViewBag.IDMeteo,
+                   IDTP = ViewBag.IDTP,
+                   Chassis = item4[0].Telaio,
+                   aIDModello = ViewBag.aIDModelloCasa,
+                   IsRTB = Session["RTB"]
+               }, new { @class = "btn btn-success custom disabled " })
+            }
+
+            else if (ViewBag.ErrMess == "In modifica" )
+            {
+                @Html.ActionLink("Chiudi perizia", "InputTelaio", new
+                {
+                    IDPerito = ViewBag.IDPerito,
+                    IDSpedizione = ViewBag.IDSpedizione,
+                    IDMeteo = ViewBag.IDMeteo,
+                    IDTP = ViewBag.IDTP,
+                    aIDModello = ViewBag.aIDModelloCasa,
+                    IsRTB = Session["RTB"]
+                }, new { @class = "btn btn-success custom" })
             }
             else
             {

@@ -16,11 +16,11 @@ namespace WEB_Auto.Controllers
         private wisedbEntities db = new wisedbEntities();
 
         // GET: RecuperaDatiCancellati
-        public ActionResult ListaPerizieCancellate()
+        public ActionResult ListaPerizieCancellate(bool CaricaDati = false)
         {
             var model = new Models.HomeModel();
             var ListaCancellate = (from m in db.BKP_AGR_Perizie_TEMP_MVC_ELIMINATE_vw
-                                   select m).ToList();
+                                   select m).ToList().OrderByDescending(s=>s.DataPerizia).Where(s=>s.DataPerizia >= DateTime.Now.AddDays(-5));
 
             model.BKP_AGR_Perizie_TEMP_MVC_ELIMINATE_vw = ListaCancellate;
             return View(model);

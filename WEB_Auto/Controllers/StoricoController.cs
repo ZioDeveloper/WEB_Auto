@@ -84,11 +84,11 @@ namespace WEB_Auto.Controllers
                          select m;
                 model.WEB_ListaPerizieFlat_MVC_vw = L1.ToList().OrderBy(s => s.Telaio);
 
-                var L2 = from m in db.WEB_ListaPerizieFlat_DEF_vw
+                var L2 = from m in db.WEB_ListaPerizieFlat_DEF_ALL_vw
                          where m.Viaggio == aViaggio
                          where m.IDTipoPerizia == "C"
                          select m;
-                model.WEB_ListaPerizieFlat_DEF_vw = L2.ToList().OrderBy(s => s.Telaio);
+                model.WEB_ListaPerizieFlat_DEF_ALL_vw = L2.ToList().OrderBy(s => s.Telaio);
 
                 var L3 = from m in db.WEB_ListaPerizieFlat_TMP_vw
                          where m.Viaggio == aViaggio
@@ -105,12 +105,12 @@ namespace WEB_Auto.Controllers
                          select m;
                 model.WEB_ListaPerizieFlat_MVC_vw = L1.ToList().OrderBy(s => s.Status);
 
-                var L2 = from m in db.WEB_ListaPerizieFlat_DEF_vw
+                var L2 = from m in db.WEB_ListaPerizieFlat_DEF_ALL_vw
                          where 0 == 1
                          where m.Viaggio == aViaggio
                          where m.IDTipoPerizia == "C"
                          select m;
-                model.WEB_ListaPerizieFlat_DEF_vw = L2.ToList().OrderBy(s => s.Status);
+                model.WEB_ListaPerizieFlat_DEF_ALL_vw = L2.ToList().OrderBy(s => s.Status);
 
                 var L3 = from m in db.WEB_ListaPerizieFlat_TMP_vw
                          where 0==1

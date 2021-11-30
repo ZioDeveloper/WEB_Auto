@@ -243,7 +243,7 @@
         </div>
         @try
         {
-            var item1 = Model.WEB_ListaPerizieFlat_DEF_vw.ToList();
+            var item1 = Model.WEB_ListaPerizieFlat_DEF_ALL_vw.ToList();
             myViaggio = item1[0].Viaggio.ToString();
             mySpediz = item1[0].IDSpedizione.ToString();
             myPOL = item1[0].POL.ToString();
@@ -330,7 +330,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var item in Model.WEB_ListaPerizieFlat_DEF_vw)
+                    @foreach (var item in Model.WEB_ListaPerizieFlat_DEF_ALL_vw)
                     {
 
                         <tr>

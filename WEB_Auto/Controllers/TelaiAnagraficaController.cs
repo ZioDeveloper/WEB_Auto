@@ -153,6 +153,7 @@ namespace WEB_Auto.Controllers
                     ViewBag.IDTP = IDTP;
                     ViewBag.IDModello = aIDModello;
                     ViewBag.IsModelActive = false;
+                    ViewBag.ISRTB = IsRTB;
                     return View("TelaioEsistente",model);
 
                 }
@@ -1450,9 +1451,9 @@ namespace WEB_Auto.Controllers
                                                                 new SqlParameter("@IDSpedizione", IDSpedizione),
                                                                 new SqlParameter("@IDModello", myIDModello));
                 if(!IsInspecting)
-                    return RedirectToAction("InputTelaio", "TelaiAnagrafica", new { IDPerito, IDSpedizione, IDMeteo, IDTP });
+                    return RedirectToAction("InputTelaio", "TelaiAnagrafica", new { IDPerito, IDSpedizione, IDMeteo, IDTP, IsRTB = Session["RTB"] });
                 else
-                    return RedirectToAction("InputTelaio", "TelaiAnagrafica", new { IDPerito, IDSpedizione, IDMeteo, IDTP ,Chassis });
+                    return RedirectToAction("InputTelaio", "TelaiAnagrafica", new { IDPerito, IDSpedizione, IDMeteo, IDTP ,Chassis, IsRTB = Session["RTB"] });
 
 
         }

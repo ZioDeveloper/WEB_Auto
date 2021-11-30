@@ -118,16 +118,17 @@
 @if (ViewBag.IsModelActive == false)
 {
     @Html.ActionLink("Aggiorna viaggio / data perizia  e termina", "AggiornaSpedizioneEDataPerizia", new
-    {
-        IDSpedizione = ViewBag.IDSpedizione,
-        IDPerizia = dati[0].IDPerizia,
-        IDMeteo = ViewBag.IDMeteo,
-        IDPerito = ViewBag.IDPerito,
-        IDTP = ViewBag.IDTP,
-        aIDModello = ViewBag.IDModelloCasa,
-        Chassis = dati[0].Telaio
+{
+    IDSpedizione = ViewBag.IDSpedizione,
+    IDPerizia = dati[0].IDPerizia,
+    IDMeteo = ViewBag.IDMeteo,
+    IDPerito = ViewBag.IDPerito,
+    IDTP = ViewBag.IDTP,
+    aIDModello = ViewBag.IDModelloCasa,
+    IsRTB = Session["RTB"],
+    Chassis = dati[0].Telaio
 
-    }, new { @class = "btn btn-success custom" })
+}, new { @class = "btn btn-success custom" })
     <br /><br />
 
 
@@ -147,12 +148,13 @@
     <br /><br />
 }
 @Html.ActionLink("Esci senza modificare nulla", "InputTelaio", new
-    {
-        IDPerito = ViewBag.IDPerito,
-        IDSpedizione = ViewBag.IDSpedizione,
-        IDMeteo = ViewBag.IDMeteo,
-        IDTP = ViewBag.IDTP
+{
+    IDPerito = ViewBag.IDPerito,
+    IDSpedizione = ViewBag.IDSpedizione,
+    IDMeteo = ViewBag.IDMeteo,
+    IDTP = ViewBag.IDTP,
+    IsRTB = Session["RTB"]
 
-    }, new { @class = "btn btn-danger custom" })
+}, new { @class = "btn btn-danger custom" })
 
 

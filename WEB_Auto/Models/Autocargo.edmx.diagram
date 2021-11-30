@@ -52,6 +52,7 @@
         <EntityTypeShape EntityType="wisedbModel.BKP_AGR_PERIZIE_DETT_TEMP_MVC" Width="1.5" PointX="19.375" PointY="12.75" />
         <EntityTypeShape EntityType="wisedbModel.BKP_AGR_PerizieExpGrim_Temp_MVC" Width="1.5" PointX="19.375" PointY="18.75" />
         <EntityTypeShape EntityType="wisedbModel.BKP_AGR_Perizie_TEMP_MVC_ELIMINATE_vw" Width="2.875" PointX="16.375" PointY="20.75" />
+        <EntityTypeShape EntityType="wisedbModel.WEB_ListaPerizieFlat_DEF_ALL_vw" Width="1.5" PointX="21.375" PointY="3.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

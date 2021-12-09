@@ -139,11 +139,13 @@ namespace WEB_Auto.Controllers
                     DateTime myDate = DateTime.Now;
                     var model = new Models.HomeModel();
 
+                   
+
                     var datixmodel = from m in db.WEB_ListaPerizieFlat_MVC_vw
                                      where m.Telaio == Chassis
                                               where m.IDSpedizione != IDSpedizione
                                               where m.IDTipoPerizia == IDTP
-                                              where m.DataPerizia < myDate
+                                              where m.DataPerizia <= myDate
                                               where m.IsClosed == false
                                               select m;
                     model.WEB_ListaPerizieFlat_MVC_vw = datixmodel.ToList();

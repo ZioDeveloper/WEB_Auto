@@ -625,19 +625,19 @@ namespace WEB_Auto.Controllers
 
 
             // Aggiorna campo note x pioggia
-            //if (HasDamages(myIDPerizia))
-            //{
-            //    if (IDMeteo == "3" || IDMeteo == "4")
-            //    {
-            //        string sqlcmd = " UPDATE AGR_PERIZIE_Temp_MVC " +
-            //                        " SET  Note = @Note " +
-            //                        " WHERE ID = @IDPerizia";
-            //
-            //        int Inserted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@IDPerizia", myIDPerizia),
-            //                                                             new SqlParameter("@Note", "No foto causa pioggia"));
-            //    }
+            if (HasDamages(myIDPerizia))
+            {
+                if (IDMeteo == "3" || IDMeteo == "4")
+                {
+                    string sqlcmd = " UPDATE AGR_PERIZIE_Temp_MVC " +
+                                    " SET  Note = @Note " +
+                                    " WHERE ID = @IDPerizia";
 
-            //}
+                    int Inserted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@IDPerizia", myIDPerizia),
+                                                                         new SqlParameter("@Note", "No foto causa pioggia"));
+                }
+
+            }
             // togliere note automatiche meteo 19/05/2021
             //if (IDMeteo == "3" || IDMeteo == "4")
             //    myNote = "No foto causa pioggia ";
@@ -695,8 +695,8 @@ namespace WEB_Auto.Controllers
             // Dati per dropdown Spedizione
             if (Session["Classe"].ToString() == "0")
             {
-                DateTime ini = DateTime.Today.AddDays(-30);
-                DateTime end = DateTime.Today.AddDays(+30);
+                DateTime ini = DateTime.Today.AddDays(-45);
+                DateTime end = DateTime.Today.AddDays(+45);
                 var Spedizione = from m in db.AGR_SpedizioniWEB_vw
                                  where m.DataInizioImbarco >= ini
                                  where m.DataInizioImbarco <= end

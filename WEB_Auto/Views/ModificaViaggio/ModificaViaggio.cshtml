@@ -28,16 +28,28 @@
         $('#checkBoxAll').click(function () {
             if ($(this).is(":checked")) {
                 $(".chkCheckBoxId").prop("checked", true)
+                window.updateCount = function () {
+                    var x = $(".custom-checkbox:checked").length;
+                    document.getElementById("myCounter").innerHTML = "Telai selezionati : " + x.toString();
+
+                };
+
             }
             else {
                 $(".chkCheckBoxId").prop("checked", false)
+                window.updateCount = function () {
+                    var x = $(".custom-checkbox:checked").length;
+                    document.getElementById("myCounter").innerHTML = "Telai selezionati : " + x.toString();
+
+                };
+
             }
         });
     });
 </script>
 <br />
 @{var item4 = Model.WEB_Auto_ListaPerizieXSpedizione_vw.ToList();}
-@{ string Testo = "Mio testo"; bool IsOpen = ViewBag.ISOpen;}
+@{string Testo = "Mio testo"; bool IsOpen = ViewBag.ISOpen;}
 <div>
     @Html.ActionLink("Chiudi", "Index", "Home", new { usr = Session["User"].ToString() }, new { @class = "btn btn-primary" })
 </div>
@@ -49,11 +61,11 @@
 
         </div>
         @*@using (Html.BeginForm("Verifica", "ModificaViaggio", new { NuovoViaggio = "TEST" , VecchioViaggio = ViewBag.myViaggio }, FormMethod.Post))
-        {
-            <button type="submit" value="Cerca" class="btn btn-sm btn-dark rounded-0"><i class="fa fa-floppy-o fa-lg"></i>Controllo incongruenze</button>
-        }
+            {
+                <button type="submit" value="Cerca" class="btn btn-sm btn-dark rounded-0"><i class="fa fa-floppy-o fa-lg"></i>Controllo incongruenze</button>
+            }
 
-        <br />*@
+            <br />*@
 
         @using (Html.BeginForm("ModificaViaggio", "ModificaViaggio", new { }, FormMethod.Get))
         {
@@ -61,13 +73,15 @@
             <label>&nbsp;&nbsp; &nbsp;&nbsp; Solo auto  @Html.RadioButton("TipoMezzo", "AUTO", false, new { onclick = "this.form.submit()" })</label>
             <label>&nbsp;&nbsp; &nbsp;&nbsp; Tutte:  @Html.RadioButton("TipoMezzo", "TUTTE", true, new { onclick = "this.form.submit()" })</label>
             <br />
+            <div id="myCounter" style="color:red"></div>
+            <br />
             @Html.Label("Viaggio da modificare")<br />
             @Html.TextBox("aViaggio")
             <button type="submit" value="Cerca" class="btn btn-sm btn-dark rounded-0"><i class="fa fa-search fa-lg"></i> Ricerca  viaggio</button>
         }
         <br />
         <div class="card-body">
-            
+
             @using (Html.BeginForm("ModificaViaggio", "ModificaViaggio", new { VecchioViaggio = ViewBag.myViaggio, TipoMezzo = ViewBag.TipoMezzo }, FormMethod.Post))
             {
 
@@ -98,7 +112,7 @@
             <table id="NODataTable" style="width:100%;" class="table table-bordered">
                 <thead>
                     <tr>
-                        <th><input type="checkbox" id="checkBoxAll" class="custom-checkbox" /> Seleziona tutti</th>
+                        <th><input type="checkbox" id="checkBoxAll" class="custom-checkbox chkCheckBoxId" onchange="updateCount()" /> Seleziona tutti</th>
 
                         <th>Telaio</th>
                         <th>Modello</th>
@@ -111,7 +125,7 @@
 
                         <tr>
 
-                            <td>@Html.CheckBox("ID", new { value = item.ID, @class = "custom-checkbox chkCheckBoxId" })</td>
+                            <td>@Html.CheckBox("ID", new { value = item.ID, @class = "custom-checkbox chkCheckBoxId", @onchange = "updateCount()" })</td>
 
                             <td>@Html.DisplayFor(modelItem => item.Telaio)</td>
                             <td>@Html.DisplayFor(modelItem => item.Modello)</td>
@@ -125,7 +139,7 @@
         </div>
     </div>
 </div>
-
+@*<div id="myCounter" style="color:red"></div>*@
 
 <script>
     $(document).ready(function () {
@@ -180,5 +194,11 @@
 
 </script>
 
+@*<script>
+        window.updateCount = function () {
+            var x = $(".custom-checkbox:checked").length;
+            document.getElementById("y").innerHTML = "Telai selezionati : " + x.toString();
+        };
 
+    </script>*@
 

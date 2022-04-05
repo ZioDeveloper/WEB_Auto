@@ -397,9 +397,9 @@ namespace WEB_Auto.Controllers
                                   where m.ID == aIDPerizia
                                   select new { m.IDSpedizione, m.IDTipoPerizia }).FirstOrDefault();
 
-            ViewBag.IDSpedizione = myIDSpedizione.IDSpedizione;
-            ViewBag.IDTP = myIDSpedizione.IDTipoPerizia;
-            ViewBag.Telaio = aTelaio;
+            //ViewBag.IDSpedizione = myIDSpedizione.IDSpedizione;
+           // ViewBag.IDTP = myIDSpedizione.IDTipoPerizia;
+            //ViewBag.Telaio = aTelaio;
             ViewBag.NumFoto = foto[0].NumFoto;
             ViewBag.IDPErizia = foto[0].IDPerizia;
             ViewBag.CntrProvenienza = CntrProvenienza;

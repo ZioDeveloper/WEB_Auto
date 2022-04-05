@@ -21,9 +21,9 @@
         @{var item4 = Model.Periti.ToList();}
         Benvenuto <b>@item1[0].Descr </b>
         <br />
-        @*Sei associato al gruppo periti  :*@ @item2[0].IDModem  - @item2[0].Descr
+        @*Sei associato al gruppo periti  :*@ @*@item2[0].IDModem  - @item2[0].Descr*@
         <br />
-        @*Sei associato al porto :*@ @item3[0].ID  - @item3[0].Descr
+        @*Sei associato al porto :*@ @*@item3[0].ID  - @item3[0].Descr*@
         @*<br />*@
     </div>
     <br />
@@ -37,15 +37,20 @@
             <label>&nbsp;&nbsp; &nbsp;&nbsp;7 gg:@Html.RadioButton("Filtro", "SETTE", false, new { onclick = "this.form.submit()" })</label>
             <label>&nbsp;&nbsp; &nbsp;&nbsp;40 gg:@Html.RadioButton("Filtro", "VENTUNO", false, new { onclick = "this.form.submit()" })</label>
 
-            if (item3[0].ID == "PMO" || item3[0].ID == "TRI")
+            if ((item3[0].ID == "PMO" || item3[0].ID == "TRI" )&& Session["IDRuolo"].ToString() == "1")
             {
                 <br /> <br />
-                @Html.Label("Seleziona porto ",new { @style="color:red"});
+                @Html.Label("Seleziona porto ", new { @style = "color:red" });
                 @Html.DropDownList("IDPorto", new SelectList((SelectList)ViewData["ElencoPorti"], "Value", "Text", ViewBag.IDPorto), "-- Seleziona porto --", new { @style = "font-size: 13px;", @class = "form-control selectpicker dropupAuto = false data-live-search=true data-size=5", @onchange = "this.form.submit();" }) @*onfocus = "blur();",*@
 
 
             }
-
+            if (Session["IDRuolo"].ToString() == "2")
+            {
+                <br /> <br />
+                @Html.Label("Seleziona porto ", new { @style = "color:red" });
+                @Html.DropDownList("IDPorto", new SelectList((SelectList)ViewData["ElencoPortiAdmin"], "Value", "Text", ViewBag.IDPorto), "-- Seleziona porto --", new { @style = "font-size: 13px;", @class = "form-control selectpicker dropupAuto = false data-live-search=true data-size=5", @onchange = "this.form.submit();" }) @*onfocus = "blur();",*@
+            }
 
         }
     }

@@ -1315,6 +1315,7 @@ namespace WEB_Auto.Controllers
             //return View(model);
         }
 
+
         public ActionResult DeleteDettaglio(string aIDDett, string myIDPerizia, bool IsUpdate = false)
         {
             string sqlcmd = " DELETE FROM  AGR_PERIZIE_DETT_TEMP_MVC WHERE ID = @ID";

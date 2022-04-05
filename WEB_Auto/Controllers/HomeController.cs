@@ -46,12 +46,13 @@ namespace WEB_Auto.Controllers
                 //usr = "VGrimaldi";
                 //usr = "grimaldi"; // 
                // usr = "pierangeli"; // 
-                usr = "maurizio"; // 
+                //usr = "patrizia"; // 
                // usr = "DiGennaro";
                //usr = "DiSalvo";
                // usr = "patrizia";
                 //usr = "Torresan"; // 
-                //usr = "Test";
+                usr = "DiNinno";
+                //usr = "Maurizio";
                 //usr = Session["User"].ToString();
             }
 
@@ -96,7 +97,19 @@ namespace WEB_Auto.Controllers
                 myIDPerito = "TR1 ";
                 myIDPeritoVero = "PB";
             }
-            
+
+            if (myIDPorto == "GOA")
+            {
+                myIDPerito = "IWP";
+                myIDPeritoVero = "IW";
+            }
+
+            if (myIDPorto == "CVV")
+            {
+                myIDPerito = "MDG";
+                myIDPeritoVero = "MG";
+            }
+
             var myClasse = (from s in db.AGR_Periti_WEB
                              where s.Name == usr
                              select s.Classe).FirstOrDefault();
@@ -119,6 +132,12 @@ namespace WEB_Auto.Controllers
                             select m;
                 model.AGR_Porti = Porti.ToList();
                 var ElencoPorti = new SelectList(model.AGR_Porti.ToList(), "ID", "Descr");
+
+            var PortiAdmin = from m in db.AGR_Porti
+                        where m.ID == "PMO" || m.ID == "TRI" || m.ID == "GOA" || m.ID == "CVV"
+                        select m;
+            model.AGR_Porti = PortiAdmin.ToList();
+            var ElencoPortiAdmin = new SelectList(model.AGR_Porti.ToList(), "ID", "Descr");
 
 
             // END TEST
@@ -209,6 +228,7 @@ namespace WEB_Auto.Controllers
                 ViewData["ElencoMeteo"] = ElencoMeteo;
                 ViewData["ElencoTP"] = ElencoTP;
                 ViewData["ElencoPorti"] = ElencoPorti;
+                ViewData["ElencoPortiAdmin"] = ElencoPortiAdmin;
                 ViewBag.IDPorto = myIDPorto;
                 ViewBag.errMess = errMess;
                 return View(model);

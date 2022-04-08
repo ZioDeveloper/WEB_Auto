@@ -139,6 +139,24 @@ namespace WEB_Auto.Controllers
                             where m.IDSpedizione == IDSpedizione
                             select m.IDOriginale1).FirstOrDefault();
 
+            // START Ricalcolo numero foto...
+            var listaFoto = (from m in db.WEB_Auto_ListaPerizieXSpedizione_vw
+                         where m.IDSpedizione == IDSpedizione
+                         where m.IDPerito == aPerito
+                         where m.IDTipoPerizia == IDTP
+                         select m).ToList();
+            for (int i = 0; i < listaFoto.Count; i++)
+            {
+                string myIDPerizia = listaFoto[i].ID;
+                string myCondition = listaFoto[i].Status;
+                short myNumFoto = (short)listaFoto[i].NumFoto;
+                if(myCondition == "Damaged" && myNumFoto == 0)
+                    AggiornaContatoreFoto(myIDPerizia);
+
+            }
+            // END  Ricalcolo numero foto...
+
+
             if (TipoMezzo == "TUTTE" && SDU_Viste == "TUTTE")
             {
                 var lista = (from m in db.WEB_Auto_ListaPerizieXSpedizione_vw
@@ -648,6 +666,25 @@ namespace WEB_Auto.Controllers
             //else
             //    return RedirectToAction("EditSpedizione", "ListaPerizie", new { IDPerito, IDSpedizione, IDMeteo, IDTP, TipoMezzo });
 
+        }
+
+
+        public void AggiornaContatoreFoto(string aIDPerizia)
+        {
+            var myFoto = (from f in db.WEB_AUTO_FOTO
+                          where f.IDPerizia == aIDPerizia
+                          select f).Count();
+            var myPDF = (from f in db.WEB_AUTO_PDF
+                         where f.IDPerizia == aIDPerizia
+                         select f).Count();
+
+            string sqlcmd = " UPDATE AGR_PERIZIE_Temp_MVC " +
+                                " SET NumFoto = @NumFoto, " +
+                                "     NumPDF = @NumPDF " +
+                                " WHERE ID = @IDPerizia";
+
+
+            int Inserted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@NumFoto", myFoto), new SqlParameter("@NumPDF", myPDF), new SqlParameter("@IDPerizia", aIDPerizia));
         }
     }
 }

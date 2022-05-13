@@ -23,7 +23,7 @@
 @*<hr />
     Filtri :*@
 <br />
-
+@{ string chiuso = "Chiuso";}
 
 @Html.ActionLink("Torna a Home", "Index", "Home", new { usr = Session["User"].ToString() }, new { @class = "btn btn-primary" })
 <br /><br />
@@ -58,7 +58,7 @@
             <th>Damaged</th>
             <th>Chiuse</th>
             <th>Aperte</th>
-            <th>Chiudi</th>
+            <th>Stato chiusura</th>
             <th>PDF</th>
             <th>n°</th>
         </tr>
@@ -115,11 +115,14 @@
             <td>
                 @if (TuttoChiuso == false)
                 {
-                    @Html.ActionLink("Chiudi", "ChiudiSpedizione", new { IDSpedizione = item.ID, IDTP = item.IDTipoPerizia }, new { @class = "btn btn-warning btn-xs disabled" })
+                    @*@Html.ActionLink("Chiudi", "ChiudiSpedizione", new { IDSpedizione = item.ID, IDTP = item.IDTipoPerizia }, new { @class = "btn btn-warning btn-xs disabled" })*@
+                    @chiuso;
                 }
                 else
                 {
-                    @Html.ActionLink("Chiudi", "ChiudiSpedizione", new { IDSpedizione = item.ID, IDTP = item.IDTipoPerizia }, new { @class = "btn btn-warning btn-xs" })
+                    @Html.ActionLink("Chiudi", "ChiudiSpedizione", new { IDSpedizione = item.ID, IDTP = item.IDTipoPerizia }, new { @class = "btn btn-primary btn-xs " })
+                    @*@Html.ActionLink("Chiudi", "ChiudiSpedizione", new { IDSpedizione = item.ID, IDTP = item.IDTipoPerizia }, new { @class = "btn btn-warning btn-xs" })*@
+
                 }
 
             </td>
@@ -210,7 +213,7 @@
             <th>Damaged</th>
             <th>Chiuse</th>
             <th>Aperte</th>
-            <th>Chiudi</th>
+            <th>Stato chisura</th>
             <th>PDF</th>
             <th>n°</th>
 

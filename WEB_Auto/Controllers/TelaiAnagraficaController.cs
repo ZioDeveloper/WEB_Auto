@@ -665,6 +665,7 @@ namespace WEB_Auto.Controllers
                     }
 
                     // Aggiorno dati perizia
+                    // VERIFICATA
                     string sqlcmd = " UPDATE AGR_PERIZIE_Temp_MVC " +
                                 " SET  IDModello = @IDModello " +
                                 " WHERE ID = @IDPerizia";

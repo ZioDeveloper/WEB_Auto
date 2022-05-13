@@ -35,8 +35,10 @@
                         @Html.LiActionLink("Modifica viaggio", "ModificaViaggio", "ModificaViaggio", "")
                         @Html.LiActionLink("Dati preload", "VisualizzaPreload", "Storico", "")
                         if (Session["IDRuolo"].ToString() == "2")
-                            {@Html.LiActionLink("Lista perizie cancellate", "ListaPerizieCancellate", "RecuperaDatiCancellati", "") }
-                        @Html.LiActionLink("Contact", "Contact", "Home", "")
+                        {@Html.LiActionLink("Lista perizie cancellate", "ListaPerizieCancellate", "RecuperaDatiCancellati", "") }
+                    @Html.LiActionLink("Contact", "Contact", "Home", "")
+                    
+
                 }
 
                 else
@@ -49,6 +51,8 @@
                 }
 
 
+
+
                     @*@Html.LiActionLink("TEST NON USARE", "Index", "AreaTest")</li>*@
 
                     @*<li>@Html.ActionLink("About", "About", "Home")</li>*@
@@ -57,6 +61,8 @@
                 </ul>
             </div>
         </div>
+
+
     </div>
     <div class="container body-content">
         @*<div style="color:red">TEST !!!!</div>*@

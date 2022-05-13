@@ -110,8 +110,9 @@ namespace WEB_Auto.Controllers
             aMsg = "";
             // Cerco la spedizione giusta per questa perizia
             var myPerizia = (from m in db.WEB_Auto_ListaPerizieXSpedizione_vw
+
                              where m.ID == IDPerizia
-                             select new { m.IDSpedizione, m.IDCasa,m.Telaio,m.IDModello,m.DataPerizia }).FirstOrDefault();
+                             select new { m.IDSpedizione, m.IDCasa,m.Telaio,m.IDModello,m.DataPerizia,m.IDTipoPerizia }).FirstOrDefault();
 
             string myIDSpedizione = myPerizia.IDSpedizione;
             string myIDCasa = myPerizia.IDCasa;
@@ -160,6 +161,10 @@ namespace WEB_Auto.Controllers
                 return false;
 
             }
+
+            // TP
+            // TODO !
+
 
             if (cnt == 0)
             {

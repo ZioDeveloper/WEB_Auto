@@ -1,0 +1,116 @@
+﻿@model IEnumerable<WEB_Auto.Models.WEB_AUTO_FOTO_X_EMAIL>
+
+@{
+    /**/
+
+    ViewBag.Title = "Gestione fotografie";
+}
+
+<div style="text-align:center">
+    <h4>Gestione fotografie</h4>
+    <br />
+
+
+</div>
+<br />
+<br />
+@using (Html.BeginForm("UploadFoto", "InvioFotoViaEmail", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+
+    <table border="0">
+        <tr>
+
+            <td>
+
+
+
+                <label class="btn btn-primary">
+                    Apri fotocamera<input type="file" id="story_avatar" onchange="form.submit()" style="display:contents;" name="files" multiple id="files_0" accept="image/*" capture="camera">
+                </label>
+
+            </td>
+            <td>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </td>
+            <td>
+                <label class="btn btn-warning">
+                    Carica foto da archivio<input type="file" onchange="form.submit()" style="display:contents;" name="files" multiple id="files_0" accept="image/*">
+                </label>
+            </td>
+
+
+        </tr>
+    </table>
+
+    <br />
+
+
+}
+<br />
+@using (Html.BeginForm("InviaMail", "InvioFotoViaEmail", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+
+    <table border="0">
+        <tr>
+
+            <td>
+
+
+
+                @*<label class="btn btn-success">*@
+                    <button type="submit" id="btnConfirm" class="btn btn-success">Invia Email</button>
+                @*</label>*@
+
+            </td>
+        </tr>
+    </table>
+
+    <br />
+
+
+}
+
+
+
+@if (Model != null)
+{
+    foreach (var item in Model)
+    {
+        <table border="0">
+            <tr>
+                <td></td>
+                <td>
+                    <img src="@Url.Content("~/DocumentiXTelai/Email/Foto/" + item.FileName)" title="@Url.Content(item.FileName)" alt="Image" style='height: 240px; width: 320; object-fit: contain'>
+
+                </td>
+                <td>
+
+                    @Html.ActionLink("Elimina", "CancellaDocumento", new { IDDocumento = item.ID, nomefile = item.FileName }, new { @class = "btn btn-danger btn-xs", onclick = "return confirm('Vuoi davvero cancellare la foto ?');" })
+                </td>
+
+
+            </tr>
+            <br />
+
+        </table>
+
+    }
+}
+
+
+<script>
+    $('#story_avatar').change(function () { // this is the file input
+        readURL(this);
+    })
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $('#image-item').attr('src', e.target.result); //img element
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+</script>
+
+

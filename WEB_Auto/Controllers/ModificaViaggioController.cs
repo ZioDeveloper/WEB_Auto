@@ -5,6 +5,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using WEB_Auto.Models;
+using System.Transactions;
+using System.Data.Entity;
 
 namespace WEB_Auto.Controllers
 {
@@ -48,17 +50,29 @@ namespace WEB_Auto.Controllers
                 model.WEB_Auto_ListaPerizieXSpedizione_vw = listaFlt;
             }
 
+            DateTime ini = DateTime.Today;
+            DateTime end = DateTime.Today;
+            
+            ini = DateTime.Today.AddDays(-5);
+            end = DateTime.Today.AddDays(+5);
+            string myIDPorto = Session["IDPortoPerito"].ToString();
 
-            //// var model = new Models.HomeModel();
-            //var lista = (from m in db.WEB_Auto_ListaPerizieXSpedizione_vw
-            //             where m.IDOriginale1 == aViaggio
+            var Spedizioni = from m in db.AGR_SpedizioniWEB_vw
+                             where m.DataInizioImbarco >= ini
+                             where m.DataInizioImbarco <= end
+                             where (m.IDPortoImbarco == myIDPorto || m.IDPortoSbarco == myIDPorto)
+                             where m.IDCliente == "51" || m.IDCliente == "GN"
+                             select m;
+            model.AGR_SpedizioniWEB_vw = Spedizioni.ToList().OrderBy(s => s.DataInizioImbarco).OrderBy(s => s.IDPortoImbarco).OrderBy(s => s.IDPortoSbarco).OrderBy(s => s.IDOriginale1);
 
-            //             select m).ToList().OrderBy(s => s.Telaio);
-            //model.WEB_Auto_ListaPerizieXSpedizione_vw = lista;
+            var ElencoSpedizioni = new SelectList(model.AGR_SpedizioniWEB_vw.ToList(), "IDOriginale1", "DescrAlt");
+
+
 
             ViewBag.myViaggio = aViaggio;
             ViewBag.IsOpen = true;
             ViewBag.TipoMezzo = TipoMezzo;
+            ViewData["ElencoSpedizioni"] = ElencoSpedizioni;
 
             return View(model);
 

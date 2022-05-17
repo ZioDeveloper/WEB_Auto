@@ -75,6 +75,7 @@
     </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -157,6 +158,7 @@
     <Compile Include="Controllers\AreaTestController.cs" />
     <Compile Include="Controllers\DocumentiController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\InvioFotoViaEmailController.cs" />
     <Compile Include="Controllers\ListaPerizieController.cs" />
     <Compile Include="Controllers\ModificaViaggioController.cs" />
     <Compile Include="Controllers\RecuperaDatiCancellatiController.cs" />
@@ -285,6 +287,9 @@
       <DependentUpon>Autocargo.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\WEB_AUTO_FOTO.cs">
+      <DependentUpon>Autocargo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\WEB_AUTO_FOTO_X_EMAIL.cs">
       <DependentUpon>Autocargo.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\WEB_Auto_ListaPerizieXSpedizione_vw.cs">
@@ -542,9 +547,11 @@
     <Content Include="Views\Shared\_Layout_NO_ACTION.cshtml" />
     <Content Include="Views\RecuperaDatiCancellati\ListaPerizieCancellate.cshtml" />
     <Content Include="Views\ListaPerizie\CarouselFotoStoricizzate.cshtml" />
+    <Content Include="Views\InvioFotoViaEmail\AllegaFoto.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="DocumentiXTelai\Email\Foto\" />
     <Folder Include="DocumentiXTelai\Foto\" />
     <Folder Include="DocumentiXTelai\PDF\" />
     <Folder Include="DocumentiXTelai\TXT\" />

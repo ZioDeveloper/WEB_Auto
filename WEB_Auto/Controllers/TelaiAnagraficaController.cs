@@ -7,6 +7,8 @@ using System.Net;
 using System.Web.Mvc;
 using WEB_Auto.Models;
 using System.Text.RegularExpressions;
+using System.Transactions;
+using System.Data.Entity;
 
 namespace WEB_Auto.Controllers
 {
@@ -633,8 +635,9 @@ namespace WEB_Auto.Controllers
                                     " SET  Note = @Note " +
                                     " WHERE ID = @IDPerizia";
 
-                    int Inserted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@IDPerizia", myIDPerizia),
-                                                                         new SqlParameter("@Note", "No foto causa pioggia"));
+                    // ABOLITO con mail multi richiesta del 12/05/2022
+                    //int Inserted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@IDPerizia", myIDPerizia),
+                    //                                                     new SqlParameter("@Note", "No foto causa pioggia"));
                 }
 
             }
@@ -1337,16 +1340,40 @@ namespace WEB_Auto.Controllers
         {
 
 
-            string sqlcmd =  " DELETE FROM  AGR_PerizieExpGrim_Temp_MVC  WHERE ID = @ID";
-            int deleted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@ID", IDPerizia));
+            //string sqlcmd =  " DELETE FROM  AGR_PerizieExpGrim_Temp_MVC  WHERE ID = @ID";
+            //int deleted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@ID", IDPerizia));
 
-            sqlcmd = " DELETE FROM  AGR_PERIZIE_DETT_TEMP_MVC  WHERE IDPerizia = @IDPerizia";
-            deleted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@IDPerizia", IDPerizia));
+            //sqlcmd = " DELETE FROM  AGR_PERIZIE_DETT_TEMP_MVC  WHERE IDPerizia = @IDPerizia";
+            //deleted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@IDPerizia", IDPerizia));
 
-            sqlcmd = " DELETE FROM  AGR_PERIZIE_TEMP_MVC WHERE ID = @ID";
-            deleted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@ID", IDPerizia));
+            //sqlcmd = " DELETE FROM  AGR_PERIZIE_TEMP_MVC WHERE ID = @ID";
+            //deleted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@ID", IDPerizia));
+            using (wisedbEntities db = new wisedbEntities())
+            {
+                using (DbContextTransaction transaction = db.Database.BeginTransaction())
+                {
 
-            if(!IsUpdate)
+                    try
+                    {
+                        string sqlcmd = " DELETE FROM  AGR_PerizieExpGrim_Temp_MVC  WHERE ID = @ID";
+                        int deleted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@ID", IDPerizia));
+
+                        sqlcmd = " DELETE FROM  AGR_PERIZIE_DETT_TEMP_MVC  WHERE IDPerizia = @IDPerizia";
+                        deleted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@IDPerizia", IDPerizia));
+
+                        sqlcmd = " DELETE FROM  AGR_PERIZIE_TEMP_MVC WHERE ID = @ID";
+                        deleted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@ID", IDPerizia));
+
+                        transaction.Commit();
+                    }
+                    catch
+                    {
+                        transaction.Rollback();
+                    }
+                }
+            }
+
+            if (!IsUpdate)
                 return RedirectToAction("InputTelaio", "TelaiAnagrafica" ,new { IDPerito, IDSpedizione, IDMeteo, IDTP });
             else
                 return RedirectToAction("EditSpedizione", "ListaPerizie", new { IDPerito, IDSpedizione, IDMeteo, IDTP, TipoMezzo });

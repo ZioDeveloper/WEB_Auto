@@ -402,6 +402,14 @@ warning 6002: The table/view 'wisedb.dbo.BKP_AGR_PerizieExpGrim_Temp_MVC' does n
           <Property Name="Prog" Type="int" />
           <Property Name="InsertTime" Type="datetime" StoreGeneratedPattern="Computed" />
         </EntityType>
+        <EntityType Name="WEB_AUTO_FOTO_X_EMAIL">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FileName" Type="varchar" MaxLength="50" />
+          <Property Name="InsertTime" Type="datetime" />
+        </EntityType>
         <EntityType Name="WEB_AUTO_PDF">
           <Key>
             <PropertyRef Name="ID" />
@@ -995,6 +1003,7 @@ warning 6002: The table/view 'wisedb.dbo.WEB_ListaPerizieFlat_TMP_vw' does not h
           <EntitySet Name="BKP_AGR_PERIZIE_DETT_TEMP_MVC" EntityType="Self.BKP_AGR_PERIZIE_DETT_TEMP_MVC" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Periti" EntityType="Self.Periti" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WEB_AUTO_FOTO" EntityType="Self.WEB_AUTO_FOTO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WEB_AUTO_FOTO_X_EMAIL" EntityType="Self.WEB_AUTO_FOTO_X_EMAIL" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WEB_AUTO_PDF" EntityType="Self.WEB_AUTO_PDF" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AGR_Danni_SDU" EntityType="Self.AGR_Danni_SDU" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
@@ -1530,6 +1539,7 @@ warning 6002: The table/view 'wisedb.dbo.WEB_ListaPerizieFlat_TMP_vw' does not h
           <EntitySet Name="BKP_AGR_PerizieExpGrim_Temp_MVC" EntityType="wisedbModel.BKP_AGR_PerizieExpGrim_Temp_MVC" />
           <EntitySet Name="BKP_AGR_Perizie_TEMP_MVC_ELIMINATE_vw" EntityType="wisedbModel.BKP_AGR_Perizie_TEMP_MVC_ELIMINATE_vw" />
           <EntitySet Name="WEB_ListaPerizieFlat_DEF_ALL_vw" EntityType="wisedbModel.WEB_ListaPerizieFlat_DEF_ALL_vw" />
+          <EntitySet Name="WEB_AUTO_FOTO_X_EMAIL" EntityType="wisedbModel.WEB_AUTO_FOTO_X_EMAIL" />
         </EntityContainer>
         <EntityType Name="AGR_Periti_WEB">
           <Key>
@@ -2458,6 +2468,14 @@ warning 6002: The table/view 'wisedb.dbo.WEB_ListaPerizieFlat_TMP_vw' does not h
           <Property Name="Status" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
           <Property Name="NumFoto" Type="Int16" />
         </EntityType>
+        <EntityType Name="WEB_AUTO_FOTO_X_EMAIL">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FileName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="InsertTime" Type="DateTime" Precision="3" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3306,6 +3324,15 @@ warning 6002: The table/view 'wisedb.dbo.WEB_ListaPerizieFlat_TMP_vw' does not h
                 <ScalarProperty Name="Viaggio" ColumnName="Viaggio" />
                 <ScalarProperty Name="IDSpedizione" ColumnName="IDSpedizione" />
                 <ScalarProperty Name="IDPerizia" ColumnName="IDPerizia" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WEB_AUTO_FOTO_X_EMAIL">
+            <EntityTypeMapping TypeName="wisedbModel.WEB_AUTO_FOTO_X_EMAIL">
+              <MappingFragment StoreEntitySet="WEB_AUTO_FOTO_X_EMAIL">
+                <ScalarProperty Name="InsertTime" ColumnName="InsertTime" />
+                <ScalarProperty Name="FileName" ColumnName="FileName" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

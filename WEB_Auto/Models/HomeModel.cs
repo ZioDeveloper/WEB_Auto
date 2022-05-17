@@ -43,6 +43,8 @@ namespace WEB_Auto.Models
 
         public IEnumerable<WEB_AUTO_FOTO> WEB_AUTO_FOTO { get; set; }
         public IEnumerable<WEB_AUTO_PDF> WEB_AUTO_PDF { get; set; }
+
+        public IEnumerable<WEB_AUTO_FOTO_X_EMAIL> WEB_AUTO_FOTO_X_EMAIL { get; set; }
         public IEnumerable<AGR_Perizie_MVC_Flat_vw> AGR_Perizie_MVC_Flat_vw { get; set; }
 
         public IEnumerable<AAA_Prova> AAA_Prova { get; set; }

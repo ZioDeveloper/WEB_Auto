@@ -7,6 +7,8 @@ using System.Web.Mvc;
 using WEB_Auto.Models;
 using ClosedXML.Excel;
 using System.IO;
+using System.Transactions;
+using System.Data.Entity;
 
 namespace WEB_Auto.Controllers
 {
@@ -652,17 +654,30 @@ namespace WEB_Auto.Controllers
         public void EliminaPerizia(string IDPerizia, string IDSpedizione, string IDTP, bool IsUpdate = false, string TipoMezzo = "TUTTE")
         {
 
+            using ( wisedbEntities db = new wisedbEntities())
+            {
+                using (DbContextTransaction transaction = db.Database.BeginTransaction())
+                {
 
-            string sqlcmd = " DELETE FROM  AGR_PerizieExpGrim_Temp_MVC  WHERE ID = @ID";
-            int deleted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@ID", IDPerizia));
+                    try
+                    {
+                        string sqlcmd = " DELETE FROM  AGR_PerizieExpGrim_Temp_MVC  WHERE ID = @ID";
+                        int deleted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@ID", IDPerizia));
 
-            sqlcmd = " DELETE FROM  AGR_PERIZIE_DETT_TEMP_MVC  WHERE IDPerizia = @IDPerizia";
-            deleted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@IDPerizia", IDPerizia));
+                        sqlcmd = " DELETE FROM  AGR_PERIZIE_DETT_TEMP_MVC  WHERE IDPerizia = @IDPerizia";
+                        deleted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@IDPerizia", IDPerizia));
 
-            sqlcmd = " DELETE FROM  AGR_PERIZIE_TEMP_MVC WHERE ID = @ID";
-            deleted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@ID", IDPerizia));
+                        sqlcmd = " DELETE FROM  AGR_PERIZIE_TEMP_MVC WHERE ID = @ID";
+                        deleted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@ID", IDPerizia));
 
-            
+                        transaction.Commit();
+                    }
+                    catch
+                    {
+                        transaction.Rollback();
+                    }
+                }
+            }
             //else
             //    return RedirectToAction("EditSpedizione", "ListaPerizie", new { IDPerito, IDSpedizione, IDMeteo, IDTP, TipoMezzo });
 

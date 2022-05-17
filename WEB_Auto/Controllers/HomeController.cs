@@ -188,7 +188,7 @@ namespace WEB_Auto.Controllers
                                  where (m.IDPortoImbarco == myIDPorto || m.IDPortoSbarco == myIDPorto)
                                  where m.IDCliente == "51" || m.IDCliente == "GN"
                                  select m;
-                model.AGR_SpedizioniWEB_vw = Spedizioni.ToList().OrderBy(s => s.DataInizioImbarco);
+                model.AGR_SpedizioniWEB_vw = Spedizioni.ToList().OrderBy(s => s.DataInizioImbarco).OrderBy(s => s.IDPortoImbarco).OrderBy(s => s.IDPortoSbarco).OrderBy(s => s.IDOriginale1);
 
                 var ElencoSpedizioni = new SelectList(model.AGR_SpedizioniWEB_vw.ToList(), "ID", "DescrAlt");
 

@@ -69,5 +69,6 @@ namespace WEB_Auto.Models
         public virtual DbSet<BKP_AGR_PerizieExpGrim_Temp_MVC> BKP_AGR_PerizieExpGrim_Temp_MVC { get; set; }
         public virtual DbSet<BKP_AGR_Perizie_TEMP_MVC_ELIMINATE_vw> BKP_AGR_Perizie_TEMP_MVC_ELIMINATE_vw { get; set; }
         public virtual DbSet<WEB_ListaPerizieFlat_DEF_ALL_vw> WEB_ListaPerizieFlat_DEF_ALL_vw { get; set; }
+        public virtual DbSet<WEB_AUTO_FOTO_X_EMAIL> WEB_AUTO_FOTO_X_EMAIL { get; set; }
     }
 }

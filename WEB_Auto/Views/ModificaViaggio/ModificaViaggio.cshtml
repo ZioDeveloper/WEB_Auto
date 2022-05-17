@@ -21,6 +21,8 @@
 @*<link rel="stylesheet" type="text/css" href="https://nightly.datatables.net/searchpanes/css/searchPanes.dataTables.min.css" />
     <script type="text/javascript" src="https://nightly.datatables.net/searchpanes/js/dataTables.searchPanes.min.js"</script>*@
 
+
+
 <script type="text/javascript">
 
     $(document).ready(function () {
@@ -29,7 +31,7 @@
             if ($(this).is(":checked")) {
                 $(".chkCheckBoxId").prop("checked", true)
                 window.updateCount = function () {
-                    var x = $(".custom-checkbox:checked").length;
+                    var x = $(".custom-checkbox:checked").length-1;
                     document.getElementById("myCounter").innerHTML = "Telai selezionati : " + x.toString();
 
                 };
@@ -61,11 +63,11 @@
 
         </div>
         @*@using (Html.BeginForm("Verifica", "ModificaViaggio", new { NuovoViaggio = "TEST" , VecchioViaggio = ViewBag.myViaggio }, FormMethod.Post))
-            {
-                <button type="submit" value="Cerca" class="btn btn-sm btn-dark rounded-0"><i class="fa fa-floppy-o fa-lg"></i>Controllo incongruenze</button>
-            }
+        {
+            <button type="submit" value="Cerca" class="btn btn-sm btn-dark rounded-0"><i class="fa fa-floppy-o fa-lg"></i>Controllo incongruenze</button>
+        }
 
-            <br />*@
+        <br />*@
 
         @using (Html.BeginForm("ModificaViaggio", "ModificaViaggio", new { }, FormMethod.Get))
         {
@@ -78,6 +80,7 @@
             @Html.Label("Viaggio da modificare")<br />
             @Html.TextBox("aViaggio")
             <button type="submit" value="Cerca" class="btn btn-sm btn-dark rounded-0"><i class="fa fa-search fa-lg"></i> Ricerca  viaggio</button>
+            
         }
         <br />
         <div class="card-body">
@@ -92,8 +95,9 @@
                     {
                         @Html.Label("Nuovo numero di viaggio ")<br />
                         @*@Html.TextBox("NuovoViaggio", null, new { @Value = Testo })*@
-                        @Html.TextBox("NuovoViaggio")
-
+                        @*@Html.TextBox("NuovoViaggio1")*@
+                        @Html.DropDownList("NuovoViaggio", (SelectList)ViewData["ElencoSpedizioni"], "-- Seleziona viaggio --", new { @style = "font-size: 13px;", @class = "form-control selectpicker dropupAuto = false data-live-search=true data-size=5" }) @*onfocus = "blur();",*@
+                        <br />
                         if (IsOpen == true)
                         {
                             <button type="submit" value="Confirm" class="btn btn-sm btn-danger rounded-0" onclick="return confirm('Procedere con modifica dati viaggio?')"><i class="fa fa-floppy-o fa-lg"></i>Modifica</button>
@@ -117,6 +121,7 @@
                         <th>Telaio</th>
                         <th>Modello</th>
                         <th>Data perizia</th>
+                        <th>Note</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -130,6 +135,7 @@
                             <td>@Html.DisplayFor(modelItem => item.Telaio)</td>
                             <td>@Html.DisplayFor(modelItem => item.Modello)</td>
                             <td>@Html.DisplayFor(modelItem => item.DataPerizia)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Note)</td>
 
                         </tr>
                     }

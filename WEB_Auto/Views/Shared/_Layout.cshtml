@@ -35,9 +35,12 @@
                         @Html.LiActionLink("Modifica viaggio", "ModificaViaggio", "ModificaViaggio", "")
                         @Html.LiActionLink("Dati preload", "VisualizzaPreload", "Storico", "")
                         if (Session["IDRuolo"].ToString() == "2")
-                        {@Html.LiActionLink("Lista perizie cancellate", "ListaPerizieCancellate", "RecuperaDatiCancellati", "") }
-                    @Html.LiActionLink("Contact", "Contact", "Home", "")
-                    
+                        {
+                            @Html.LiActionLink("Lista perizie cancellate", "ListaPerizieCancellate", "RecuperaDatiCancellati", "") 
+                        }
+                        @Html.LiActionLink("Invio mail", "AllegaFoto", "InvioFotoViaEmail", "")
+                        @Html.LiActionLink("Contact", "Contact", "Home", "")
+
 
                 }
 

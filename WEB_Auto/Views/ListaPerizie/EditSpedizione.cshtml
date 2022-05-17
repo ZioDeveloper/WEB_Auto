@@ -70,7 +70,7 @@ else if (Session["Classe"].ToString() == "1")
         <button type="submit" value="Confirm" class="btn btn-sm btn-danger rounded-0" onclick="return confirm('Procedere con eliminazione dei telai selezionati ?')"><i class="fa fa-floppy-o fa-lg"></i>Cancellazione multipla dei telai selezionati...</button>
 
         <br /><br />
-        <table id="ElencoPerizie" class="display" style="width:100%">
+        <table id="ElencoPerizie" class="display" style="width:100%;text-align:center">
             <thead>
                 <tr>
 
@@ -83,12 +83,13 @@ else if (Session["Classe"].ToString() == "1")
                     <th>TP</th>
 
                     @*<th>ETD</th>
-                        <th>ETA</th>*@
+        <th>ETA</th>*@
                     <th>Status</th>
                     <th>N° foto</th>
                     <th>N° PDF</th>
                     <th>Cancella</th>
                     <th>Select</th>
+                    <th>Note</th>
                 </tr>
 
             </thead>
@@ -101,166 +102,169 @@ else if (Session["Classe"].ToString() == "1")
                     bool IsClosed = item.IsClosed;
 
 
-                    <tr>
+                <tr>
 
-                        <td>
-                            @if (!IsClosed)
-                            {
-                                @Html.ActionLink("Modifica", "Edit", "TelaiAnagrafica", new
-                           {
-                               IDPerito = item.IDPerito,
-                               IDSpedizione = item.IDSpedizione,
-                               IDMeteo = item.IDMeteo,
-                               IDTP = item.IDTipoPerizia,
-                               aIDTrasportatore = item.ID_TrasportatoreGrimaldi,
-                               aIDTipoRotabile = item.ID_TipoRotabile,
-                               aIDModelloCasa = item.IDModello,
-                               myIDPerizia = item.ID,
-                               flagNU = item.FlgNuovoUsato,
-                               Annotazioni = item.Note,
-                               errMess = "In fase modifica",
-                               IsUpdate = true,
-                               TipoMezzo = ViewBag.TipoMezzo
-                           }, new { @class = "btn btn-success btn-xs" })
-                            }
-                            else
-                            {
-                                @Html.ActionLink("Modifica", "Edit", "TelaiAnagrafica", new
-                           {
-                               IDPerito = item.IDPerito,
-                               IDSpedizione = item.IDSpedizione,
-                               IDMeteo = item.IDMeteo,
-                               IDTP = item.IDTipoPerizia,
-                               aIDTrasportatore = item.ID_TrasportatoreGrimaldi,
-                               aIDTipoRotabile = item.ID_TipoRotabile,
-                               aIDModelloCasa = item.IDModello,
-                               myIDPerizia = item.ID,
-                               flagNU = item.FlgNuovoUsato,
-                               Annotazioni = item.Note,
-                               errMess = "In fase modifica",
-                               IsUpdate = true,
-                               TipoMezzo = ViewBag.TipoMezzo
-                           }, new { @class = "btn btn-success btn-xs  disabled" })}
-
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Telaio)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Modello)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Descr)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.IDOriginale1)
-                        </td>
-                        <td>
-                            @*@Html.DisplayFor(modelItem => item.DataPerizia)*@
-                            @Convert.ToDateTime(item.DataPerizia).ToString("dd/MM/yyyy")
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.IDTipoPerizia)
-                        </td>
-                        @*<td>
-                                @Html.DisplayFor(modelItem => ETD)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => ETA)
-                            </td>*@
-                        @if (aStatus.ToUpper() == "GOOD")
+                    <td>
+                        @if (!IsClosed)
                         {
-                            <td style="color:forestgreen">
-
-                                @Html.DisplayFor(modelItem => item.Status)
-                            </td>
+                            @Html.ActionLink("Modifica", "Edit", "TelaiAnagrafica", new
+                       {
+                           IDPerito = item.IDPerito,
+                           IDSpedizione = item.IDSpedizione,
+                           IDMeteo = item.IDMeteo,
+                           IDTP = item.IDTipoPerizia,
+                           aIDTrasportatore = item.ID_TrasportatoreGrimaldi,
+                           aIDTipoRotabile = item.ID_TipoRotabile,
+                           aIDModelloCasa = item.IDModello,
+                           myIDPerizia = item.ID,
+                           flagNU = item.FlgNuovoUsato,
+                           Annotazioni = item.Note,
+                           errMess = "In fase modifica",
+                           IsUpdate = true,
+                           TipoMezzo = ViewBag.TipoMezzo
+                       }, new { @class = "btn btn-success btn-xs" })
                         }
                         else
                         {
-                            <td style="color:red">
+                            @Html.ActionLink("Modifica", "Edit", "TelaiAnagrafica", new
+                       {
+                           IDPerito = item.IDPerito,
+                           IDSpedizione = item.IDSpedizione,
+                           IDMeteo = item.IDMeteo,
+                           IDTP = item.IDTipoPerizia,
+                           aIDTrasportatore = item.ID_TrasportatoreGrimaldi,
+                           aIDTipoRotabile = item.ID_TipoRotabile,
+                           aIDModelloCasa = item.IDModello,
+                           myIDPerizia = item.ID,
+                           flagNU = item.FlgNuovoUsato,
+                           Annotazioni = item.Note,
+                           errMess = "In fase modifica",
+                           IsUpdate = true,
+                           TipoMezzo = ViewBag.TipoMezzo
+                       }, new { @class = "btn btn-success btn-xs  disabled" })}
 
-                                @Html.DisplayFor(modelItem => item.Status)
-                            </td>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Telaio)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Modello)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Descr)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IDOriginale1)
+                    </td>
+                    <td>
+                        @*@Html.DisplayFor(modelItem => item.DataPerizia)*@
+                        @Convert.ToDateTime(item.DataPerizia).ToString("dd/MM/yyyy")
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IDTipoPerizia)
+                    </td>
+                    @*<td>
+            @Html.DisplayFor(modelItem => ETD)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => ETA)
+        </td>*@
+                    @if (aStatus.ToUpper() == "GOOD")
+                    {
+                        <td style="color:forestgreen">
+
+                            @Html.DisplayFor(modelItem => item.Status)
+                        </td>
+                    }
+                    else
+                    {
+                        <td style="color:red">
+
+                            @Html.DisplayFor(modelItem => item.Status)
+                        </td>
+                    }
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NumFoto)
+                        @if (item.NumFoto > 0)
+                        {
+                            @Html.ActionLink("Mostra foto", "CarouselFoto", "ListaPerizie", new
+                       {
+                           aIDPerizia = item.ID,
+                           IDPerito = ViewBag.IDPerito,
+                           IDSpedizione = ViewBag.IDSpedizione,
+                           IDMeteo = ViewBag.IDMeteo,
+                           IDTP = ViewBag.IDTP,
+                           aIDTrasportatore = ViewBag.aIDTrasportatore,
+                           aIDTipoRotabile = ViewBag.aIDTipoRotabile,
+                           aIDModelloCasa = ViewBag.aIDModelloCasa,
+                           ErrMess = ViewBag.ErrMess,
+                           IsUpdate = ViewBag.IsUpdate
+                       }, new { @class = "photoImg" })
                         }
-                        <td>
-                            @Html.DisplayFor(modelItem => item.NumFoto)
-                            @if (item.NumFoto > 0)
-                            {
-                                @Html.ActionLink("Mostra foto", "CarouselFoto", "ListaPerizie", new
-                           {
-                               aIDPerizia = item.ID,
-                               IDPerito = ViewBag.IDPerito,
-                               IDSpedizione = ViewBag.IDSpedizione,
-                               IDMeteo = ViewBag.IDMeteo,
-                               IDTP = ViewBag.IDTP,
-                               aIDTrasportatore = ViewBag.aIDTrasportatore,
-                               aIDTipoRotabile = ViewBag.aIDTipoRotabile,
-                               aIDModelloCasa = ViewBag.aIDModelloCasa,
-                               ErrMess = ViewBag.ErrMess,
-                               IsUpdate = ViewBag.IsUpdate
-                           }, new { @class = "photoImg" })
-                            }
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.NumPDF)
-                            @if (item.NumPDF > 0)
-                            {
-                                @Html.ActionLink("Mostra PDF", "MostraPDF", "ListaPerizie", new
-                           {
-                               aIDPerizia = item.ID,
-                               IDPerito = ViewBag.IDPerito,
-                               IDSpedizione = ViewBag.IDSpedizione,
-                               IDMeteo = ViewBag.IDMeteo,
-                               IDTP = ViewBag.IDTP,
-                               aIDTrasportatore = ViewBag.aIDTrasportatore,
-                               aIDTipoRotabile = ViewBag.aIDTipoRotabile,
-                               aIDModelloCasa = ViewBag.aIDModelloCasa,
-                               ErrMess = ViewBag.ErrMess,
-                               IsUpdate = ViewBag.IsUpdate
-                           }, new { @class = "pdfImg" })
-                            }
-                        </td>
-                        <td>
-                            @if (!IsClosed)
-                            {
-                                @Html.ActionLink("Cancella", "EliminaPerizia", "TelaiAnagrafica", new
-                           {
-                               IDPerizia = item.ID,
-                               IDPerito = item.IDPerito,
-                               IDSpedizione = item.IDSpedizione,
-                               IDMeteo = item.IDMeteo,
-                               IDTP = item.IDTipoPerizia,
-                               IsUpdate = true,
-                               ViewBag.TipoMezzo
-                           }, new { @class = "btn btn-danger btn-xs", onclick = "return confirm('Vuoi davvero cancellare la perizia ?');" })
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NumPDF)
+                        @if (item.NumPDF > 0)
+                        {
+                            @Html.ActionLink("Mostra PDF", "MostraPDF", "ListaPerizie", new
+                       {
+                           aIDPerizia = item.ID,
+                           IDPerito = ViewBag.IDPerito,
+                           IDSpedizione = ViewBag.IDSpedizione,
+                           IDMeteo = ViewBag.IDMeteo,
+                           IDTP = ViewBag.IDTP,
+                           aIDTrasportatore = ViewBag.aIDTrasportatore,
+                           aIDTipoRotabile = ViewBag.aIDTipoRotabile,
+                           aIDModelloCasa = ViewBag.aIDModelloCasa,
+                           ErrMess = ViewBag.ErrMess,
+                           IsUpdate = ViewBag.IsUpdate
+                       }, new { @class = "pdfImg" })
+                        }
+                    </td>
+                    <td>
+                        @if (!IsClosed)
+                        {
+                            @Html.ActionLink("Cancella", "EliminaPerizia", "TelaiAnagrafica", new
+                       {
+                           IDPerizia = item.ID,
+                           IDPerito = item.IDPerito,
+                           IDSpedizione = item.IDSpedizione,
+                           IDMeteo = item.IDMeteo,
+                           IDTP = item.IDTipoPerizia,
+                           IsUpdate = true,
+                           ViewBag.TipoMezzo
+                       }, new { @class = "btn btn-danger btn-xs", onclick = "return confirm('Vuoi davvero cancellare la perizia ?');" })
 
-                            }
-                            else
-                            {
-                                @Html.ActionLink("Cancella", "EliminaPerizia", "TelaiAnagrafica", new
-                           {
-                               IDPerizia = item.ID,
-                               IDPerito = item.IDPerito,
-                               IDSpedizione = item.IDSpedizione,
-                               IDMeteo = item.IDMeteo,
-                               IDTP = item.IDTipoPerizia,
-                               IsUpdate = true,
-                               ViewBag.TipoMezzo
-                           }, new { @class = "btn btn-danger btn-xs disabled " })
-                            }
-                        </td>
-                        <td>
-                            @if (!IsClosed)
-                            {
-                                @Html.CheckBox("ID", new { value = item.ID, @class = "custom-checkbox chkCheckBoxId" })
-                            }
-                            else
-                            {
-                                @*@Html.CheckBox("ID", new { value = item.ID, @class = "custom-checkbox chkCheckBoxId" })*@
-                            }
-                        </td>
+                        }
+                        else
+                        {
+                            @Html.ActionLink("Cancella", "EliminaPerizia", "TelaiAnagrafica", new
+                       {
+                           IDPerizia = item.ID,
+                           IDPerito = item.IDPerito,
+                           IDSpedizione = item.IDSpedizione,
+                           IDMeteo = item.IDMeteo,
+                           IDTP = item.IDTipoPerizia,
+                           IsUpdate = true,
+                           ViewBag.TipoMezzo
+                       }, new { @class = "btn btn-danger btn-xs disabled " })
+                        }
+                    </td>
+                    <td>
+                        @if (!IsClosed)
+                        {
+                            @Html.CheckBox("ID", new { value = item.ID, @class = "custom-checkbox chkCheckBoxId" })
+                        }
+                        else
+                        {
+                            @*@Html.CheckBox("ID", new { value = item.ID, @class = "custom-checkbox chkCheckBoxId" })*@
+                        }
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Note)
+                    </td>
 
-                    </tr>
+                </tr>
                 }
             </tbody>
             <tfoot>
@@ -274,12 +278,13 @@ else if (Session["Classe"].ToString() == "1")
                     <th>Data perizia</th>
                     <th>TP</th>
                     @*<th>ETD</th>
-                        <th>ETA</th>*@
+                    <th>ETA</th>*@
                     <th>Status</th>
                     <th>N° foto</th>
                     <th>N° PDF</th>
                     <th>Cancella</th>
                     <th>Select</th>
+                    <th>Note</th>
                 </tr>
             </tfoot>
         </table>

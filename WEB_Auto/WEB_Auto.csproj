@@ -222,6 +222,9 @@
     <Compile Include="Models\AGR_PERIZIE_TEMP_MVC.cs">
       <DependentUpon>Autocargo.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\AGR_Perizie_TEMP_MVC_STANDBY.cs">
+      <DependentUpon>Autocargo.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\AGR_Porti.cs">
       <DependentUpon>Autocargo.tt</DependentUpon>
     </Compile>

@@ -31,7 +31,7 @@
         <EntityTypeShape EntityType="wisedbModel.WEB_AUTO_FOTO" Width="1.5" PointX="13.375" PointY="8.75" />
         <EntityTypeShape EntityType="wisedbModel.AGR_Perizie_MVC_Flat_vw" Width="3.25" PointX="13.375" PointY="11.75" />
         <EntityTypeShape EntityType="wisedbModel.AAA_Prova" Width="1.5" PointX="13.375" PointY="4.75" />
-        <EntityTypeShape EntityType="wisedbModel.WEB_Auto_ListaPerizieXSpedizione_vw" Width="1.5" PointX="15.375" PointY="0.5" />
+        <EntityTypeShape EntityType="wisedbModel.WEB_Auto_ListaPerizieXSpedizione_vw" Width="2.875" PointX="15.375" PointY="0.5" />
         <EntityTypeShape EntityType="wisedbModel.AGR_DatiRotabiliInUSo_vw" Width="1.5" PointX="0.75" PointY="15.75" />
         <EntityTypeShape EntityType="wisedbModel.WEB_AUTO_PDF" Width="1.5" PointX="3.375" PointY="15.75" />
         <EntityTypeShape EntityType="wisedbModel.WEB_AUTO_ListaSpedizioni_2_vw" Width="2.375" PointX="13.125" PointY="3.875" />
@@ -54,6 +54,7 @@
         <EntityTypeShape EntityType="wisedbModel.BKP_AGR_Perizie_TEMP_MVC_ELIMINATE_vw" Width="2.875" PointX="16.375" PointY="20.75" />
         <EntityTypeShape EntityType="wisedbModel.WEB_ListaPerizieFlat_DEF_ALL_vw" Width="1.5" PointX="21.375" PointY="3.75" />
         <EntityTypeShape EntityType="wisedbModel.WEB_AUTO_FOTO_X_EMAIL" Width="1.5" PointX="3.375" PointY="21.75" />
+        <EntityTypeShape EntityType="wisedbModel.AGR_Perizie_TEMP_MVC_STANDBY" Width="3.625" PointX="21.375" PointY="10.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

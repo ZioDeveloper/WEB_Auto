@@ -237,21 +237,47 @@ namespace WEB_Auto.Controllers
         [HttpPost]
         public ActionResult EditSpedizione(FormCollection formCollection, string IDSpedizione, string IDTP, string TipoMezzo = "TUTTE", string IDPerizia = "", string SDU_Viste = "TUTTE")
         {
+            bool canDelete = false;
             try
             {
-                string[] ids = formCollection["ID"].Split(new char[] { ',' });
+                string[] idsStandby = formCollection["IDStandby"].Split(new char[] { ',' });
+                if (idsStandby.Count() == 1)
+                    canDelete = true;
+
+                if (canDelete)///idsStandby.Count. == 1)
+                {
+                    string[] ids = formCollection["ID"].Split(new char[] { ',' });
+                    foreach (string id in ids)
+                    {
+                        var perizia = id;
+                        string aPerizia = perizia.ToString();
+                        if (aPerizia != "false")
+                        {
+                            EliminaPerizia(aPerizia, IDSpedizione, IDTP);
+                        }
+
+                    }
+                }
+            }
+            catch { }
+
+            try
+            {
+                string[] ids = formCollection["IDStandby"].Split(new char[] { ',' });
                 foreach (string id in ids)
                 {
                     var perizia = id;
                     string aPerizia = perizia.ToString();
                     if (aPerizia != "false")
                     {
-                        EliminaPerizia(aPerizia, IDSpedizione, IDTP);
+                        //SetStandbyPerizia(aPerizia);
                     }
 
                 }
             }
             catch { }
+
+
             var model = new Models.HomeModel();
             string aPerito = Session["IDPeritoVero"].ToString();
 
@@ -350,11 +376,12 @@ namespace WEB_Auto.Controllers
                 return View("CodificaNonInUso");
 
 
-
+            // NON chiude le perizsie in standby
             string sqlcmd = " UPDATE AGR_PERIZIE_Temp_MVC " +
                             " SET ISClosed = 1  " +
                             " WHERE IDSpedizione = @IDSpedizione " +
                             " AND IDPerito = @IDPerito " +
+                            " AND Stato IS NULL OR Stato <> 'S' " +
                             " AND IDTipoPerizia = @IDTipoPerizia" ;
 
 
@@ -683,6 +710,63 @@ namespace WEB_Auto.Controllers
 
         }
 
+        public ActionResult SetStandbyPerizia(string IDPerizia, string IDPerito, string IDSpedizione, string IDMeteo, string IDTP)
+        {
+
+            var myStatus = (from m in db.AGR_PERIZIE_TEMP_MVC
+                        where m.ID == IDPerizia
+                        where m.Stato == null
+                        select m).Count();
+            if (myStatus == 1)
+            {
+                using (wisedbEntities db = new wisedbEntities())
+                {
+                    using (DbContextTransaction transaction = db.Database.BeginTransaction())
+                    {
+
+                        try
+                        {
+                            string sqlcmd = " UPDATE  AGR_PERIZIE_TEMP_MVC SET Stato = 'S' WHERE  ID = @IDPerizia ";
+                            int deleted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@IDPerizia", IDPerizia));
+
+
+
+                            transaction.Commit();
+                        }
+                        catch (SqlException exc)
+                        {
+                            string a = exc.Message;
+                            transaction.Rollback();
+                        }
+                    }
+                }
+            }
+            else
+            {
+                using (wisedbEntities db = new wisedbEntities())
+                {
+                    using (DbContextTransaction transaction = db.Database.BeginTransaction())
+                    {
+
+                        try
+                        {
+                            string sqlcmd = " UPDATE  AGR_PERIZIE_TEMP_MVC SET Stato = NULL WHERE ID = @IDPerizia";
+                            int deleted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@IDPerizia", IDPerizia));
+
+
+
+                            transaction.Commit();
+                        }
+                        catch (SqlException exc)
+                        {
+                            string a = exc.Message;
+                            transaction.Rollback();
+                        }
+                    }
+                }
+            }
+            return RedirectToAction("EditSpedizione", "ListaPerizie", new { IDPerito, IDSpedizione, IDMeteo, IDTP});
+        }
 
         public void AggiornaContatoreFoto(string aIDPerizia)
         {

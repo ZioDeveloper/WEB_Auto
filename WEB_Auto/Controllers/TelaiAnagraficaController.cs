@@ -816,19 +816,20 @@ namespace WEB_Auto.Controllers
                 
 
                 // Aggiorno dati perizia
-                string sqlcmd = " UPDATE AGR_PERIZIE_Temp_MVC " +
-                                " SET IDSpedizione = @IDSpedizione , IDModello = @IDModello, Telaio = @Telaio, NumFoto = @NumFoto , FileNumber = 0 , Note = @Note,DataPerizia = @DataPerizia " +
-                                " WHERE ID = @IDPerizia";
+                // Vecchio update che metteva foto a 0....
                 //string sqlcmd = " UPDATE AGR_PERIZIE_Temp_MVC " +
-                //                " SET IDSpedizione = @IDSpedizione , IDModello = @IDModello, Telaio = @Telaio, NumFoto = @NumFoto , FileNumber = 0 , Note = @Note " +
+                //                " SET IDSpedizione = @IDSpedizione , IDModello = @IDModello, Telaio = @Telaio, NumFoto = @NumFoto , FileNumber = 0 , Note = @Note,DataPerizia = @DataPerizia " +
                 //                " WHERE ID = @IDPerizia";
+                string sqlcmd = " UPDATE AGR_PERIZIE_Temp_MVC " +
+                                " SET IDSpedizione = @IDSpedizione , IDModello = @IDModello, Telaio = @Telaio,  FileNumber = 0 , Note = @Note,DataPerizia = @DataPerizia " +
+                                " WHERE ID = @IDPerizia";
+
 
 
                 int Inserted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@IDPerizia", myIDPerizia),
                                                                      new SqlParameter("@IDSpedizione", IDSpedizione),
                                                                      new SqlParameter("@IDModello", IDModelloCasa),
                                                                      new SqlParameter("@Telaio", Chassis),
-                                                                     new SqlParameter("@NumFoto", "0"),
                                                                      new SqlParameter("@DataPerizia", myISoDate),
                                                                      new SqlParameter("@Note", Annotazioni));
                 if (Inserted > 0)
@@ -953,19 +954,18 @@ namespace WEB_Auto.Controllers
             else if (isOK && !isOkHasDetails)
             {
                 // Aggiorno dati perizia
-                string sqlcmd = " UPDATE AGR_PERIZIE_Temp_MVC " +
-                                " SET IDSpedizione = @IDSpedizione , IDModello = @IDModello, Telaio = @Telaio, NumFoto = @NumFoto , FileNumber = 0 , Note = @Note,DataPerizia = @DataPerizia " +
-                                " WHERE ID = @IDPerizia";
                 //string sqlcmd = " UPDATE AGR_PERIZIE_Temp_MVC " +
-                //                " SET IDSpedizione = @IDSpedizione , IDModello = @IDModello, Telaio = @Telaio, NumFoto = @NumFoto , FileNumber = 0 , Note = @Note " +
+                //                " SET IDSpedizione = @IDSpedizione , IDModello = @IDModello, Telaio = @Telaio, NumFoto = @NumFoto , FileNumber = 0 , Note = @Note,DataPerizia = @DataPerizia " +
                 //                " WHERE ID = @IDPerizia";
+                string sqlcmd = " UPDATE AGR_PERIZIE_Temp_MVC " +
+                               " SET IDSpedizione = @IDSpedizione , IDModello = @IDModello, Telaio = @Telaio,  FileNumber = 0 , Note = @Note,DataPerizia = @DataPerizia " +
+                               " WHERE ID = @IDPerizia";
 
 
                 int Inserted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@IDPerizia", myIDPerizia),
                                                                      new SqlParameter("@IDSpedizione", IDSpedizione),
                                                                      new SqlParameter("@IDModello", IDModelloCasa),
                                                                      new SqlParameter("@Telaio", Chassis),
-                                                                     new SqlParameter("@NumFoto", "0"),
                                                                      new SqlParameter("@DataPerizia", myISoDate),
                                                                      new SqlParameter("@Note", Annotazioni));
                 if (Inserted > 0)

@@ -39,5 +39,6 @@ namespace WEB_Auto.Models
         public string IDCasa { get; set; }
         public string Descr { get; set; }
         public Nullable<int> IDOperatore { get; set; }
+        public string Stato { get; set; }
     }
 }

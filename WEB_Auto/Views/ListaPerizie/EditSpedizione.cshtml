@@ -90,6 +90,8 @@ else if (Session["Classe"].ToString() == "1")
                     <th>Cancella</th>
                     <th>Select</th>
                     <th>Note</th>
+                    @*<th>Stato StandBy</th>*@
+                    <th>StandBy</th>
                 </tr>
 
             </thead>
@@ -263,7 +265,40 @@ else if (Session["Classe"].ToString() == "1")
                     <td>
                         @Html.DisplayFor(modelItem => item.Note)
                     </td>
+                    @*<td>
+                        @if (!IsClosed)
+                        {
+                            bool isChecked = item.Stato == "S";
+                            @Html.CheckBox("IDStandby", isChecked, new { value = item.ID, @class = "custom-checkbox chkCheckBoxId disabled "})
+                        }
+                       
+                    </td>*@
+                    <td>
+                        @if (item.Stato == "S")
+                        {
+                            @Html.ActionLink("Standby", "SetStandbyPerizia", "ListaPerizie", new
+                               {
+                                   IDPerizia = item.ID,
+                                   IDPerito = item.IDPerito,
+                                   IDSpedizione = item.IDSpedizione,
+                                   IDMeteo = item.IDMeteo,
+                                   IDTP = item.IDTipoPerizia
 
+                               }, new { @class = "btn btn-danger btn-xs  " })
+                        }
+                        else
+                        {
+                            @Html.ActionLink("Standby", "SetStandbyPerizia", "ListaPerizie", new
+                           {
+                               IDPerizia = item.ID,
+                               IDPerito = item.IDPerito,
+                               IDSpedizione = item.IDSpedizione,
+                               IDMeteo = item.IDMeteo,
+                               IDTP = item.IDTipoPerizia
+
+                           }, new { @class = "btn btn-success btn-xs  " })
+                        }
+                    </td>
                 </tr>
                 }
             </tbody>
@@ -278,13 +313,15 @@ else if (Session["Classe"].ToString() == "1")
                     <th>Data perizia</th>
                     <th>TP</th>
                     @*<th>ETD</th>
-                    <th>ETA</th>*@
+        <th>ETA</th>*@
                     <th>Status</th>
                     <th>N° foto</th>
                     <th>N° PDF</th>
                     <th>Cancella</th>
                     <th>Select</th>
                     <th>Note</th>
+                    @*<th>Stato StandBy</th>*@
+                    <th>StandBy</th>
                 </tr>
             </tfoot>
         </table>
@@ -488,6 +525,8 @@ else if (Session["Classe"].ToString() == "1")
         </tfoot>
     </table>
 }
+
+
 
 <script type="text/javascript">
 

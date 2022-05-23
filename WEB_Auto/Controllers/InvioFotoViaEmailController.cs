@@ -190,7 +190,16 @@ namespace WEB_Auto.Controllers
             try
             {
                 mail.From = new System.Net.Mail.MailAddress("system_actor@interconsult.it");
-                mail.To.Add("maurizio.vigna@interconsult.it");
+                mail.To.Add("maurizio.vigna@astreaclaim.eu");
+
+                string myIDPerito = Session["IDPeritoVero"].ToString();
+
+                var myemail = (from f in db.AGR_Periti_WEB
+                               where f.IDVero == myIDPerito
+                               select f.EmailAddress).FirstOrDefault();
+
+                if (!String.IsNullOrEmpty(myemail))
+                    mail.To.Add("maurizio.vigna@astreaclaim.eu");
 
                 mail.Subject = "Invio email MVC BOT";
                 mail.Body = "TEST ! ";

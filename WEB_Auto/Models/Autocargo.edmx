@@ -91,6 +91,7 @@ warning 6002: The table/view 'wisedb.dbo.AGR_Danni_SDU' does not have a primary 
           <Property Name="Classe" Type="int" Nullable="false" />
           <Property Name="Descr" Type="varchar" MaxLength="50" />
           <Property Name="IDRuolo" Type="int" />
+          <Property Name="EmailAddress" Type="varchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="AGR_PERIZIE_DETT_TEMP_MVC">
           <Key>
@@ -166,6 +167,14 @@ warning 6002: The table/view 'wisedb.dbo.AGR_Danni_SDU' does not have a primary 
           <Property Name="IDOperatore" Type="int" />
           <Property Name="IsTransferred" Type="bit" Nullable="false" />
           <Property Name="MachineName" Type="varchar" MaxLength="250" />
+        </EntityType>
+        <EntityType Name="AGR_Perizie_TEMP_MVC_STANDBY">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IDPerizia" Type="varchar" MaxLength="18" Nullable="false" />
+          <Property Name="InsertDate" Type="datetime" Nullable="false" StoreGeneratedPattern="Computed" />
         </EntityType>
         <EntityType Name="AGR_PerizieExpGrim_Temp_MVC">
           <Key>
@@ -741,6 +750,7 @@ warning 6002: The table/view 'wisedb.dbo.WEB_Auto_ListaPerizieXSpedizione_vw' do
           <Property Name="IDCasa" Type="varchar" MaxLength="3" Nullable="false" />
           <Property Name="Descr" Type="varchar" MaxLength="50" />
           <Property Name="IDOperatore" Type="int" />
+          <Property Name="Stato" Type="varchar" MaxLength="1" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'wisedb.dbo.WEB_AUTO_ListaSpedizioni_2_vw' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -994,6 +1004,7 @@ warning 6002: The table/view 'wisedb.dbo.WEB_ListaPerizieFlat_TMP_vw' does not h
           <EntitySet Name="AGR_Periti_WEB" EntityType="Self.AGR_Periti_WEB" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AGR_PERIZIE_DETT_TEMP_MVC" EntityType="Self.AGR_PERIZIE_DETT_TEMP_MVC" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AGR_PERIZIE_TEMP_MVC" EntityType="Self.AGR_PERIZIE_TEMP_MVC" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AGR_Perizie_TEMP_MVC_STANDBY" EntityType="Self.AGR_Perizie_TEMP_MVC_STANDBY" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AGR_PerizieExpGrim_Temp_MVC" EntityType="Self.AGR_PerizieExpGrim_Temp_MVC" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AGR_Porti" EntityType="Self.AGR_Porti" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AGR_Spedizioni" EntityType="Self.AGR_Spedizioni" Schema="dbo" store:Type="Tables" />
@@ -1296,7 +1307,8 @@ warning 6002: The table/view 'wisedb.dbo.WEB_ListaPerizieFlat_TMP_vw' does not h
     [WEB_Auto_ListaPerizieXSpedizione_vw].[NumPDF] AS [NumPDF], 
     [WEB_Auto_ListaPerizieXSpedizione_vw].[IDCasa] AS [IDCasa], 
     [WEB_Auto_ListaPerizieXSpedizione_vw].[Descr] AS [Descr], 
-    [WEB_Auto_ListaPerizieXSpedizione_vw].[IDOperatore] AS [IDOperatore]
+    [WEB_Auto_ListaPerizieXSpedizione_vw].[IDOperatore] AS [IDOperatore], 
+    [WEB_Auto_ListaPerizieXSpedizione_vw].[Stato] AS [Stato]
     FROM [dbo].[WEB_Auto_ListaPerizieXSpedizione_vw] AS [WEB_Auto_ListaPerizieXSpedizione_vw]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="WEB_AUTO_ListaSpedizioni_2_vw" EntityType="Self.WEB_AUTO_ListaSpedizioni_2_vw" store:Type="Views" store:Schema="dbo">
@@ -1540,6 +1552,7 @@ warning 6002: The table/view 'wisedb.dbo.WEB_ListaPerizieFlat_TMP_vw' does not h
           <EntitySet Name="BKP_AGR_Perizie_TEMP_MVC_ELIMINATE_vw" EntityType="wisedbModel.BKP_AGR_Perizie_TEMP_MVC_ELIMINATE_vw" />
           <EntitySet Name="WEB_ListaPerizieFlat_DEF_ALL_vw" EntityType="wisedbModel.WEB_ListaPerizieFlat_DEF_ALL_vw" />
           <EntitySet Name="WEB_AUTO_FOTO_X_EMAIL" EntityType="wisedbModel.WEB_AUTO_FOTO_X_EMAIL" />
+          <EntitySet Name="AGR_Perizie_TEMP_MVC_STANDBY" EntityType="wisedbModel.AGR_Perizie_TEMP_MVC_STANDBY" />
         </EntityContainer>
         <EntityType Name="AGR_Periti_WEB">
           <Key>
@@ -1555,6 +1568,7 @@ warning 6002: The table/view 'wisedb.dbo.WEB_ListaPerizieFlat_TMP_vw' does not h
           <NavigationProperty Name="AGR_Periti_WEB1" Relationship="wisedbModel.FK_AGR_Periti_WEB_AGR_Periti_WEB" FromRole="AGR_Periti_WEB" ToRole="AGR_Periti_WEB1" />
           <NavigationProperty Name="AGR_Periti_WEB2" Relationship="wisedbModel.FK_AGR_Periti_WEB_AGR_Periti_WEB" FromRole="AGR_Periti_WEB1" ToRole="AGR_Periti_WEB" />
           <Property Name="IDRuolo" Type="Int32" />
+          <Property Name="EmailAddress" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Periti">
           <Key>
@@ -2049,6 +2063,7 @@ warning 6002: The table/view 'wisedb.dbo.WEB_ListaPerizieFlat_TMP_vw' does not h
           <Property Name="IDCasa" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
           <Property Name="Descr" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="IDOperatore" Type="Int32" />
+          <Property Name="Stato" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="AGR_DatiRotabiliInUSo_vw">
           <Key>
@@ -2476,6 +2491,14 @@ warning 6002: The table/view 'wisedb.dbo.WEB_ListaPerizieFlat_TMP_vw' does not h
           <Property Name="FileName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="InsertTime" Type="DateTime" Precision="3" />
         </EntityType>
+        <EntityType Name="AGR_Perizie_TEMP_MVC_STANDBY">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IDPerizia" Type="String" Nullable="false" MaxLength="18" FixedLength="false" Unicode="false" />
+          <Property Name="InsertDate" Type="DateTime" Nullable="false" Precision="3" annotation:StoreGeneratedPattern="Computed" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2485,6 +2508,7 @@ warning 6002: The table/view 'wisedb.dbo.WEB_ListaPerizieFlat_TMP_vw' does not h
           <EntitySetMapping Name="AGR_Periti_WEB">
             <EntityTypeMapping TypeName="wisedbModel.AGR_Periti_WEB">
               <MappingFragment StoreEntitySet="AGR_Periti_WEB">
+                <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
                 <ScalarProperty Name="IDRuolo" ColumnName="IDRuolo" />
                 <ScalarProperty Name="Descr" ColumnName="Descr" />
                 <ScalarProperty Name="Classe" ColumnName="Classe" />
@@ -2908,6 +2932,7 @@ warning 6002: The table/view 'wisedb.dbo.WEB_ListaPerizieFlat_TMP_vw' does not h
           <EntitySetMapping Name="WEB_Auto_ListaPerizieXSpedizione_vw">
             <EntityTypeMapping TypeName="wisedbModel.WEB_Auto_ListaPerizieXSpedizione_vw">
               <MappingFragment StoreEntitySet="WEB_Auto_ListaPerizieXSpedizione_vw">
+                <ScalarProperty Name="Stato" ColumnName="Stato" />
                 <ScalarProperty Name="IDOperatore" ColumnName="IDOperatore" />
                 <ScalarProperty Name="Descr" ColumnName="Descr" />
                 <ScalarProperty Name="IDCasa" ColumnName="IDCasa" />
@@ -3333,6 +3358,15 @@ warning 6002: The table/view 'wisedb.dbo.WEB_ListaPerizieFlat_TMP_vw' does not h
               <MappingFragment StoreEntitySet="WEB_AUTO_FOTO_X_EMAIL">
                 <ScalarProperty Name="InsertTime" ColumnName="InsertTime" />
                 <ScalarProperty Name="FileName" ColumnName="FileName" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AGR_Perizie_TEMP_MVC_STANDBY">
+            <EntityTypeMapping TypeName="wisedbModel.AGR_Perizie_TEMP_MVC_STANDBY">
+              <MappingFragment StoreEntitySet="AGR_Perizie_TEMP_MVC_STANDBY">
+                <ScalarProperty Name="InsertDate" ColumnName="InsertDate" />
+                <ScalarProperty Name="IDPerizia" ColumnName="IDPerizia" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

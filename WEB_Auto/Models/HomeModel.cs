@@ -37,6 +37,8 @@ namespace WEB_Auto.Models
        
         public IEnumerable<WEB_AUTO_ListaSpedizioni_vw> WEB_AUTO_ListaSpedizioni_vw { get; set; }
         public IEnumerable<WEB_AUTO_ListaSpedizioni_2_vw> WEB_AUTO_ListaSpedizioni_2_vw { get; set; }
+
+        public IEnumerable<WEB_AUTO_ListaSpedizioni_3_vw> WEB_AUTO_ListaSpedizioni_3_vw { get; set; }
         public IEnumerable<WEB_AUTO_ListaSpedizioni_CMN_vw> WEB_AUTO_ListaSpedizioni_CMN_vw { get; set; }
 
         public IEnumerable<AGR_PERIZIE_TEMP_MVC> AGR_PERIZIE_TEMP_MVC { get; set; }

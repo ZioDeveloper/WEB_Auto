@@ -22,7 +22,7 @@ namespace WEB_Auto.Controllers
             return View();
         }
 
-        public ActionResult CercaTelaioSingolo(string aTelaio)
+        public ActionResult CercaTelaioSingolo(string aTelaio,string FiltroData,string FiltroStato)
         {
             string myTelaio = aTelaio.ToUpper();
             var model = new Models.HomeModel();
@@ -46,7 +46,7 @@ namespace WEB_Auto.Controllers
             return View(model);
         }
 
-        public ActionResult CercaStoriaTelaio(string aTelaio)
+        public ActionResult CercaStoriaTelaio(string aTelaio,  string FiltroData, string FiltroStato)
         {
             string myTelaio = aTelaio.ToUpper();
             var model = new Models.HomeModel();
@@ -54,6 +54,7 @@ namespace WEB_Auto.Controllers
             var Chassis1 = from m in db.WEB_ListaPerizieFlat_MVC_vw
                            where m.Telaio == myTelaio
                            where m.IsClosed == false
+                           where m.IDTipoPerizia == "C"
                            select m;
             model.WEB_ListaPerizieFlat_MVC_vw = Chassis1.ToList();
             ViewBag.Chassis1 = myTelaio;

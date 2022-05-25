@@ -301,6 +301,9 @@
     <Compile Include="Models\WEB_AUTO_ListaSpedizioni_2_vw.cs">
       <DependentUpon>Autocargo.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\WEB_AUTO_ListaSpedizioni_3_vw.cs">
+      <DependentUpon>Autocargo.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\WEB_AUTO_ListaSpedizioni_CMN_vw.cs">
       <DependentUpon>Autocargo.tt</DependentUpon>
     </Compile>

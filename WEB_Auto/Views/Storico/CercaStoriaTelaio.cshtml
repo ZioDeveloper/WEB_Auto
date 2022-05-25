@@ -47,12 +47,14 @@
     </div>*@
 
 <h4>Cerca dati pregressi </h4>
-<h5>Periodo di ricerca = Entro 60 gg data odierna</h5>
+@*<h5>Periodo di ricerca = Entro 60 gg data odierna</h5>*@
 <br />
+@Html.ActionLink("Nuova ricerca", "CercaTelaio", "Storico", new { @class = "btn btn-primary btn-xs" })
+<br /><br />
 <div class="container py-4">
     <div class="card">
         <div class="card-header bg-primary text-white">
-            <h5>Lista telai PRE LOAD</h5>
+            <h5>Dati di PRE LOAD</h5>
 
         </div>
         @try

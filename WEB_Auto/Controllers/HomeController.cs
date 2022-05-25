@@ -45,14 +45,14 @@ namespace WEB_Auto.Controllers
                 // usr = "Astrea"; // pierangeli
                 //usr = "VGrimaldi";
                 //usr = "grimaldi"; // 
-               // usr = "pierangeli"; // 
+                usr = "pierangeli"; // 
                 //usr = "patrizia"; // 
                // usr = "DiGennaro";
                //usr = "DiSalvo";
                // usr = "patrizia";
                 //usr = "Torresan"; // 
                // usr = "DiNinno";
-               usr = "Maurizio";
+               //usr = "Maurizio";
                 //usr = Session["User"].ToString();
             }
 
@@ -188,7 +188,8 @@ namespace WEB_Auto.Controllers
                                  where (m.IDPortoImbarco == myIDPorto || m.IDPortoSbarco == myIDPorto)
                                  where m.IDCliente == "51" || m.IDCliente == "GN"
                                  select m;
-                model.AGR_SpedizioniWEB_vw = Spedizioni.ToList().OrderBy(s => s.DataInizioImbarco).OrderBy(s => s.IDPortoImbarco).OrderBy(s => s.IDPortoSbarco).OrderBy(s => s.IDOriginale1);
+               // model.AGR_SpedizioniWEB_vw = Spedizioni.ToList().OrderBy(s => s.DataInizioImbarco).OrderBy(s => s.IDPortoImbarco).OrderBy(s => s.IDPortoSbarco).OrderBy(s => s.IDOriginale1);
+                model.AGR_SpedizioniWEB_vw = Spedizioni.ToList().OrderBy(s => s.DataInizioImbarco).OrderBy(s => s.DataInizioImbarco);
 
                 var ElencoSpedizioni = new SelectList(model.AGR_SpedizioniWEB_vw.ToList(), "ID", "DescrAlt");
 

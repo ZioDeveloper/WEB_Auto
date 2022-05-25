@@ -4,41 +4,66 @@
 }
 
 <h4>Cerca dati pregressi </h4>
-<h5>Periodo di ricerca = Entro 60 gg data odierna</h5>
+@*<h5>Periodo di ricerca = Entro 60 gg data odierna</h5>*@
 <br />
 
-<div style="text-align:left">
-    <h5>Telaio da analizzare </h5>
-    @*@using (Html.BeginForm("CercaTelaioSingolo", "Storico"))*@
-    @using (Html.BeginForm("CercaStoriaTelaio", "Storico"))
-    {
-        <table>
-            <tr>
-                <td>
+    <div style="text-align:left">
+        <h5>Telaio da analizzare </h5>
+        @*@using (Html.BeginForm("CercaTelaioSingolo", "Storico"))*@
+        @using (Html.BeginForm("CercaStoriaTelaio", "Storico"))
+        {
+            <label>Filtro periodo ricerca viaggi</label><br />
+            @*<label>15 gg: @Html.RadioButton("FiltroData", "15", false, new { onclick = "this.form.submit()" })</label>
+            <label>&nbsp;&nbsp; &nbsp;&nbsp;30 gg:@Html.RadioButton("FiltroData", "30", true, new { onclick = "this.form.submit()" })</label>
+            <label>&nbsp;&nbsp; &nbsp;&nbsp;60 gg gg:@Html.RadioButton("FiltroData", "60", false, new { onclick = "this.form.submit()" })</label>
+            <label>&nbsp;&nbsp; &nbsp;&nbsp;90 gg:@Html.RadioButton("FiltroData", "90", false, new { onclick = "this.form.submit()" })</label>
 
 
-                    @Html.TextBox("aTelaio", null, new { style = "width:180px;text-transform:uppercase", @id = "Telaio", @maxlength = "17", @placeholder = "CLICK TO SCAN:", @autofocus = "autofocus", @autocomplete = "off" })
-                    @Html.ValidationMessage("Telaio")
+            <label>Filtro stato dannosità telaio</label><br />
+            <label>15 gg: @Html.RadioButton("FiltroStato", "15", false, new { onclick = "this.form.submit()" })</label>
+            <label>&nbsp;&nbsp; &nbsp;&nbsp;30 gg:@Html.RadioButton("FiltroStato", "30", true, new { onclick = "this.form.submit()" })</label>
+            <label>&nbsp;&nbsp; &nbsp;&nbsp;60 gg gg:@Html.RadioButton("FiltroStato", "60", false, new { onclick = "this.form.submit()" })</label>
+            <label>&nbsp;&nbsp; &nbsp;&nbsp;90 gg:@Html.RadioButton("FiltroStato", "90", false, new { onclick = "this.form.submit()" })</label>*@
 
-                </td>
-            </tr>
+            <label>15 gg: @Html.RadioButton("FiltroData", "15", false)</label>
+            <label>&nbsp;&nbsp; &nbsp;&nbsp;30 gg:@Html.RadioButton("FiltroData", "30", true)</label>
+            <label>&nbsp;&nbsp; &nbsp;&nbsp;60 gg gg:@Html.RadioButton("FiltroData", "60", false)</label>
+            <label>&nbsp;&nbsp; &nbsp;&nbsp;90 gg:@Html.RadioButton("FiltroData", "90", false)</label>
 
-            <tr>
+            <br /> <br />
+            <label>Filtro stato dannosità telaio</label><br />
 
-                <td>
-                    <br />
-                    <button type="submit" id="btnConfirm" class="btn btn-success">Cerca</button>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    @*<button onclick="document.getElementById('Telaio').value = ''" class="btn btn-primary">Chiudi</button>*@
-                    @Html.ActionLink("Chiudi", "Index", "Home", new { usr = Session["User"].ToString() }, new { @class = "btn btn-primary" })
+            <label>&nbsp;&nbsp; &nbsp;&nbsp;Tutte:@Html.RadioButton("FiltroStato", "All", true)</label>
+            <label>&nbsp;&nbsp; &nbsp;&nbsp;Solo good:@Html.RadioButton("FiltroStato", "Good", false)</label>
+            <label>&nbsp;&nbsp; &nbsp;&nbsp;Solo dmg:@Html.RadioButton("FiltroStato", "Damaged", false)</label>
+            <br /><br />
+            <table>
+                <tr>
+                    <td>
 
 
-                </td>
-            </tr>
-        </table>
-    }
+                        @Html.TextBox("aTelaio", null, new { style = "width:180px;text-transform:uppercase", @id = "Telaio", @maxlength = "17", @placeholder = "CLICK TO SCAN:", @autofocus = "autofocus", @autocomplete = "off" })
+                        @Html.ValidationMessage("Telaio")
 
-</div>
+                    </td>
+                </tr>
+
+                <tr>
+
+                    <td>
+                        <br />
+                        <button type="submit" id="btnConfirm" class="btn btn-success">Cerca</button>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        @*<button onclick="document.getElementById('Telaio').value = ''" class="btn btn-primary">Chiudi</button>*@
+                        @Html.ActionLink("Chiudi", "Index", "Home", new { usr = Session["User"].ToString() }, new { @class = "btn btn-primary" })
+
+
+                    </td>
+                </tr>
+            </table>
+        }
+
+    </div>
 
 <script>
     $(function () {

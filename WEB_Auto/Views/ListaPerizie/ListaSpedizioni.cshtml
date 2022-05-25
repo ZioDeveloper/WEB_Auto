@@ -58,8 +58,9 @@
             <th>Damaged</th>
             <th>Chiuse</th>
             <th>Aperte</th>
+            <th>Standby</th>
             <th>Stato chiusura</th>
-            <th style="color:red;font-size:10px">PDF relativo al Viaggio</th>
+            <th>PDF Viaggio</th>
             <th>n°</th>
         </tr>
 
@@ -68,12 +69,12 @@
 
         @if (Session["Classe"].ToString() == "0")
         {
-            foreach (var item in Model.WEB_AUTO_ListaSpedizioni_2_vw)
+            foreach (var item in Model.WEB_AUTO_ListaSpedizioni_3_vw)
             {
                 bool TuttoChiuso = item.Aperte >0;
         <tr>
             <td>
-                @Html.ActionLink("Visualizza", "EditSpedizione", new { IDSpedizione = item.ID, IDTP = item.IDTipoPerizia,Status = ViewBag.Status }, new { @class = "btn btn-success btn-xs" })
+                @Html.ActionLink("Visualizza", "EditSpedizione", new { IDSpedizione = item.ID, IDTP = item.IDTipoPerizia, Status = ViewBag.Status }, new { @class = "btn btn-success btn-xs" })
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.IDOriginale1)
@@ -111,6 +112,9 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Aperte)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StandBy)
             </td>
             <td>
                 @if (TuttoChiuso == false)
@@ -213,8 +217,9 @@
             <th>Damaged</th>
             <th>Chiuse</th>
             <th>Aperte</th>
+            <th>Standby</th>
             <th>Stato chisura</th>
-            <th style="color:red;font-size:10px">PDF relativo al Viaggio</th>
+            <th>PDF relativo al Viaggio</th>
             <th>n°</th>
 
         </tr>

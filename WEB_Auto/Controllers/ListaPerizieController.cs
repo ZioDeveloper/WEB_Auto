@@ -66,28 +66,28 @@ namespace WEB_Auto.Controllers
             {
                 if (Status == "TUTTE")
                 {
-                    var lista = (from m in db.WEB_AUTO_ListaSpedizioni_2_vw
+                    var lista = (from m in db.WEB_AUTO_ListaSpedizioni_3_vw
                                  where m.IDPerito == aPerito
                                  select m).ToList();
-                    model.WEB_AUTO_ListaSpedizioni_2_vw = lista;
+                    model.WEB_AUTO_ListaSpedizioni_3_vw = lista;
 
                 }
                 else if (Status == "APERTE")
                 {
-                    var lista = (from m in db.WEB_AUTO_ListaSpedizioni_2_vw
+                    var lista = (from m in db.WEB_AUTO_ListaSpedizioni_3_vw
                                  where m.IDPerito == aPerito
                                  where m.Aperte != 0
                                  select m).ToList();
-                    model.WEB_AUTO_ListaSpedizioni_2_vw = lista;
+                    model.WEB_AUTO_ListaSpedizioni_3_vw = lista;
 
                 }
                 else if (Status == "CHIUSE")
                 {
-                    var lista = (from m in db.WEB_AUTO_ListaSpedizioni_2_vw
+                    var lista = (from m in db.WEB_AUTO_ListaSpedizioni_3_vw
                                  where m.IDPerito == aPerito
                                  where m.Aperte == 0
                                  select m).ToList();
-                    model.WEB_AUTO_ListaSpedizioni_2_vw = lista;
+                    model.WEB_AUTO_ListaSpedizioni_3_vw = lista;
 
                 }
 
@@ -237,12 +237,10 @@ namespace WEB_Auto.Controllers
         [HttpPost]
         public ActionResult EditSpedizione(FormCollection formCollection, string IDSpedizione, string IDTP, string TipoMezzo = "TUTTE", string IDPerizia = "", string SDU_Viste = "TUTTE")
         {
-            bool canDelete = false;
+            bool canDelete = true;
             try
             {
-                string[] idsStandby = formCollection["IDStandby"].Split(new char[] { ',' });
-                if (idsStandby.Count() == 1)
-                    canDelete = true;
+                
 
                 if (canDelete)///idsStandby.Count. == 1)
                 {
@@ -261,21 +259,21 @@ namespace WEB_Auto.Controllers
             }
             catch { }
 
-            try
-            {
-                string[] ids = formCollection["IDStandby"].Split(new char[] { ',' });
-                foreach (string id in ids)
-                {
-                    var perizia = id;
-                    string aPerizia = perizia.ToString();
-                    if (aPerizia != "false")
-                    {
-                        //SetStandbyPerizia(aPerizia);
-                    }
+            //try
+            //{
+            //    string[] ids = formCollection["IDStandby"].Split(new char[] { ',' });
+            //    foreach (string id in ids)
+            //    {
+            //        var perizia = id;
+            //        string aPerizia = perizia.ToString();
+            //        if (aPerizia != "false")
+            //        {
+            //            //SetStandbyPerizia(aPerizia);
+            //        }
 
-                }
-            }
-            catch { }
+            //    }
+            //}
+            //catch { }
 
 
             var model = new Models.HomeModel();

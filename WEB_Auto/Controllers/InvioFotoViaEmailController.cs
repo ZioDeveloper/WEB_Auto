@@ -17,7 +17,7 @@ namespace WEB_Auto.Controllers
         // GET: InvioFotoViaEmail
         public ActionResult AllegaFoto()
         {
-            string filename = "";
+            //string filename = "";
             string path = System.IO.Path.Combine(Server.MapPath("~/DocumentiXTelai/Email/Foto"));
 
 
@@ -177,7 +177,7 @@ namespace WEB_Auto.Controllers
         public ActionResult InviaMail()
         {
             // INVIO MAIL !
-            string filename = "";
+            //string filename = "";
             string path = System.IO.Path.Combine(Server.MapPath("~/DocumentiXTelai/Email/Foto"));
             bool isSent = false;
 

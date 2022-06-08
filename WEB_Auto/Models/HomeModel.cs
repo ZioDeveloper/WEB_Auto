@@ -61,6 +61,14 @@ namespace WEB_Auto.Models
         public IEnumerable<WEB_ListaPerizieFlat_DEF_ALL_vw> WEB_ListaPerizieFlat_DEF_ALL_vw { get; set; }
         public IEnumerable<WEB_ListaPerizieFlat_TMP_vw> WEB_ListaPerizieFlat_TMP_vw { get; set; }
         public IEnumerable<WEB_ListaPerizieFlat_DEF_vw> WEB_ListaPerizieFlat_DEF_vw { get; set; }
+        public IEnumerable<WEB_ListaPerizieFlat_DEF_C_ALL_15_vw> WEB_ListaPerizieFlat_DEF_C_ALL_15_vw { get; set; }
+        public IEnumerable<WEB_ListaPerizieFlat_DEF_C_ALL_30_vw> WEB_ListaPerizieFlat_DEF_C_ALL_30_vw { get; set; }
+        public IEnumerable<WEB_ListaPerizieFlat_DEF_C_ALL_60_vw> WEB_ListaPerizieFlat_DEF_C_ALL_60_vw { get; set; }
+        public IEnumerable<WEB_ListaPerizieFlat_DEF_C_ALL_90_vw> WEB_ListaPerizieFlat_DEF_C_ALL_90_vw { get; set; }
+        public IEnumerable<WEB_ListaPerizieFlat_DEF_C_DMG_15_vw> WEB_ListaPerizieFlat_DEF_C_DMG_15_vw { get; set; }
+        public IEnumerable<WEB_ListaPerizieFlat_DEF_C_DMG_30_vw> WEB_ListaPerizieFlat_DEF_C_DMG_30_vw { get; set; }
+        public IEnumerable<WEB_ListaPerizieFlat_DEF_C_DMG_60_vw> WEB_ListaPerizieFlat_DEF_C_DMG_60_vw { get; set; }
+        public IEnumerable<WEB_ListaPerizieFlat_DEF_C_DMG_90_vw> WEB_ListaPerizieFlat_DEF_C_DMG_90_vw { get; set; }
         public IEnumerable<BKP_AGR_Perizie_TEMP_MVC_ELIMINATE_vw> BKP_AGR_Perizie_TEMP_MVC_ELIMINATE_vw { get; set; }
 
 

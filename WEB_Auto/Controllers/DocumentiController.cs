@@ -42,6 +42,7 @@ namespace WEB_Auto.Controllers
             ViewBag.myIDPerizia = myIDPerizia;
             ViewBag.ErrMess = ErrMess;
             ViewBag.IsUpdate = IsUpdate;
+            ViewBag.NumFoto = myFoto.Count();
             return View("ScattaFoto", myFoto);
 
             //ViewBag.myIDPerizia = myIDPerizia;
@@ -107,6 +108,7 @@ namespace WEB_Auto.Controllers
             ViewBag.aIDModelloCasa = aIDModelloCasa;
             ViewBag.ErrMess = ErrMess;
             ViewBag.IsUpdate = IsUpdate;
+            ViewBag.NumFoto = myFoto.Count();
             return View("ScattaFoto", myFoto);
         }
 

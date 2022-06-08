@@ -33,6 +33,11 @@
         });
     });
 </script>
+@{var datiMVC = Model.WEB_ListaPerizieFlat_MVC_vw;}
+@{var datiDEF = Model.WEB_ListaPerizieFlat_DEF_ALL_vw;}
+@{var datiTMP = Model.WEB_ListaPerizieFlat_TMP_vw;}
+
+
 
 @{
     string myViaggio = "";
@@ -44,9 +49,8 @@
     string NewVin = "";
 }
 <br />
-<h4 class="card-title">Dati preload</h4>
-<h5>Periodo di ricerca = Entro 60 gg data odierna</h5>
-<br />
+@*<h4 class="card-title">Dati preload</h4>*@
+@*<h5>Periodo di ricerca = Entro 60 gg data odierna</h5>*@
 <div>
     @Html.ActionLink("Chiudi", "Index", "Home", new { usr = Session["User"].ToString() }, new { @class = "btn btn-primary" })
 </div>
@@ -54,116 +58,127 @@
 <div class="container py-4">
     <div class="card">
         <div class="card-header">
-
+            @using (Html.BeginForm("VisualizzaPreload", "Storico", new { }, FormMethod.Get))
+            {
+                <button type="submit" value="Cerca" class="btn btn-sm btn-dark rounded-0"><i class="fa fa-search fa-lg"></i>Azzera filtri</button>
+            }
 
         </div>
         @using (Html.BeginForm("VisualizzaPreload", "Storico", new { }, FormMethod.Get))
         {
-            @Html.TextBox("aViaggio")
-            <button type="submit" value="Cerca" class="btn btn-sm btn-dark rounded-0"><i class="fa fa-search fa-lg"></i> Ricerca  viaggio</button>
+            <label>Filtro periodo ricerca viaggi</label><br />
+
+
+            <label>15 gg: @Html.RadioButton("FiltroData", 15, false)</label>
+            <label>&nbsp;&nbsp; &nbsp;&nbsp;30 gg:@Html.RadioButton("FiltroData", 30, false)</label>
+            <label>&nbsp;&nbsp; &nbsp;&nbsp;60 gg gg:@Html.RadioButton("FiltroData", 60, false)</label>
+            <label>&nbsp;&nbsp; &nbsp;&nbsp;90 gg:@Html.RadioButton("FiltroData", 90, true)</label>
+
+            <br /> <br />
+            <label>Filtro stato dannosità telaio</label><br />
+
+            <label>&nbsp;&nbsp; &nbsp;&nbsp;Tutte:@Html.RadioButton("FiltroStato", "ALL", true)</label>
+            <label>&nbsp;&nbsp; &nbsp;&nbsp;Solo Damaged:@Html.RadioButton("FiltroStato", "DAMAGED", false)</label>
+            <label>&nbsp;&nbsp; &nbsp;&nbsp;Solo Good:@Html.RadioButton("FiltroStato", "GOOD", false)</label>
+            <br /><br />
+            <label>Viaggio @Html.TextBox("aViaggio")</label>
+            <label>Telaio @Html.TextBox("FiltroTelaio")</label>
+
+            <button type="submit" value="Cerca" class="btn btn-sm btn-dark rounded-0"><i class="fa fa-search fa-lg"></i> Ricerca  viaggio - telaio</button>
         }
         <br />
+       
 
     </div>
 </div>
+@if (datiMVC.Count() > 0)
+{
+    <div class="container py-4">
+        <div class="card">
+            <div class="card-header bg-success text-black">
+                <h5>Lista telai Viaggio NON ANCORA CHIUSO</h5>
 
-<div class="container py-4">
-    <div class="card">
-        <div class="card-header bg-primary text-white">
-            <h5>Lista telai Viaggio NON ANCORA CHIUSO</h5>
+            </div>
+            @try
+            {
+                var item1 = Model.WEB_ListaPerizieFlat_MVC_vw.ToList();
+                myViaggio = item1[0].Viaggio.ToString();
+                mySpediz = item1[0].IDSpedizione.ToString();
+                myPOL = item1[0].POL.ToString();
+                myPOD = item1[0].POD.ToString();
+                myNave = item1[0].Nave.ToString();
 
-        </div>
-        @try
-        {
-            var item1 = Model.WEB_ListaPerizieFlat_MVC_vw.ToList();
-            myViaggio = item1[0].Viaggio.ToString();
-            mySpediz = item1[0].IDSpedizione.ToString();
-            myPOL = item1[0].POL.ToString();
-            myPOD = item1[0].POD.ToString();
-            myNave = item1[0].Nave.ToString();
-
-        }
-        catch { }
-        <table>
-            <tr>
-                <td>
-                    @Html.Label("Spedizione : ")
-                </td>
-                <td>
-                    @Html.Label(mySpediz)
-                </td>
-                <td>&nbsp;&nbsp;</td>
-
-
-            </tr>
-            <tr>
-                <td>
-                    @Html.Label("Viaggio : ")
-                </td>
-                <td>
-                    @Html.Label(myViaggio)
-                </td>
-                @*<td>&nbsp;&nbsp;</td>*@
-            </tr>
-            @*<tr>
+            }
+            catch { }
+            <table>
+                <tr>
                     <td>
-                        @Html.Label("Del : ")
+                        @Html.Label("Spedizione : ")
                     </td>
                     <td>
-                        @Html.Label(item1[0].DataInizioImbarco.ToString().Substring(0, 10))
+                        @Html.Label(mySpediz)
                     </td>
-                </tr>*@
-            <tr>
-                <td>
-                    @Html.Label("POL : ")
-                </td>
-                <td>
-                    @Html.Label(myPOL)
-                </td>
-            </tr>
-            <tr>
+                    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
 
-                <td>
-                    @Html.Label("POD : ")
-                </td>
-                <td>
-                    @Html.Label(myPOD)
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    @Html.Label("Nave : ")
-                </td>
-                <td>
-                    @Html.Label(myNave)
-                </td>
-                @*<td>&nbsp;&nbsp;</td>*@
-            </tr>
 
-        </table>
 
-        <br />
-        <div class="card-body">
-            <br /><br />
-            <table id="DataTable1" style="width:100%;" class="table table-bordered">
-                <thead>
-                    <tr>
+                    <td>
+                        @Html.Label("Viaggio : ")
+                    </td>
+                    <td>
+                        @Html.Label(myViaggio)
+                    </td>
+                    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
 
-                        @*<th>ID</th>*@
-                        <th>Telaio</th>
-                        <th>Modello</th>
-                        <th>Data perizia</th>
-                        <th>Tipo perizia</th>
-                        <th>Trasportatore</th>
-                        <th>Status</th>
-                        <th>Componente</th>
-                        <th>Danno</th>
-                        <th>N° foto</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in Model.WEB_ListaPerizieFlat_MVC_vw)
-                    {
+                    <td>
+                        @Html.Label("POL : ")
+                    </td>
+                    <td>
+                        @Html.Label(myPOL)
+                    </td>
+                    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+
+                    <td>
+                        @Html.Label("POD : ")
+                    </td>
+                    <td>
+                        @Html.Label(myPOD)
+                    </td>
+                    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                    <td>
+                        @Html.Label("Nave : ")
+                    </td>
+                    <td>
+                        @Html.Label(myNave)
+                    </td>
+                    @*<td>&nbsp;&nbsp;</td>*@
+                </tr>
+
+            </table>
+
+            @*<br />*@
+            <div class="card-body">
+                <br />
+                <table id="DataTable1" style="width:100%;" class="table table-bordered">
+                    <thead>
+                        <tr>
+
+                            @*<th>ID</th>*@
+                            <th>Telaio</th>
+                            <th>Modello</th>
+                            <th>Data perizia</th>
+                            <th>Tipo perizia</th>
+                            <th>Trasportatore</th>
+                            <th>Status</th>
+                            <th>Componente</th>
+                            <th>Danno</th>
+                            <td>Note</td>
+                            <th>N° foto</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.WEB_ListaPerizieFlat_MVC_vw)
+                        {
 
                         <tr>
                             @*<td>@Html.DisplayFor(modelItem => item.ID)</td>*@
@@ -192,11 +207,14 @@
                                 <td>&nbsp;</td>
                                 <td>&nbsp;</td>
                                 <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+
                             }
 
 
                             <td>@Html.DisplayFor(modelItem => item.Parte)</td>
                             <td>@Html.DisplayFor(modelItem => item.Danno)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Note)</td>
 
                             @{OldVin = item.Telaio;}
                             @if (OldVin != NewVin)
@@ -226,112 +244,105 @@
                             }
                             @{NewVin = OldVin;}
                         </tr>
-                    }
-                </tbody>
-            </table>
+                        }
+                    </tbody>
+                </table>
 
+            </div>
         </div>
     </div>
-</div>
 
+}
 
-<div class="container py-4">
-    <div class="card">
-        <div class="card-header bg-primary text-white">
-            <h5>Lista telai Viaggio CHIUSO E VERIFICATO IN ASTREA</h5>
+@if (datiDEF.Count() > 0)
+{
+    <div class="container py-4">
+        <div class="card">
+            <div class="card-header bg-success text-white">
+                <h5>Lista telai Viaggio CHIUSO E VERIFICATO IN ASTREA</h5>
 
-        </div>
-        @try
-        {
-            var item1 = Model.WEB_ListaPerizieFlat_DEF_ALL_vw.ToList();
-            myViaggio = item1[0].Viaggio.ToString();
-            mySpediz = item1[0].IDSpedizione.ToString();
-            myPOL = item1[0].POL.ToString();
-            myPOD = item1[0].POD.ToString();
-            myNave = item1[0].Nave.ToString();
+            </div>
+            @try
+            {
+                var item1 = Model.WEB_ListaPerizieFlat_DEF_ALL_vw.ToList();
+                myViaggio = item1[0].Viaggio.ToString();
+                mySpediz = item1[0].IDSpedizione.ToString();
+                myPOL = item1[0].POL.ToString();
+                myPOD = item1[0].POD.ToString();
+                myNave = item1[0].Nave.ToString();
 
-        }
-        catch { }
-        <table>
-            <tr>
-                <td>
-                    @Html.Label("Spedizione : ")
-                </td>
-                <td>
-                    @Html.Label(mySpediz)
-                </td>
-                <td>&nbsp;&nbsp;</td>
-
-
-            </tr>
-            <tr>
-                <td>
-                    @Html.Label("Viaggio : ")
-                </td>
-                <td>
-                    @Html.Label(myViaggio)
-                </td>
-                @*<td>&nbsp;&nbsp;</td>*@
-            </tr>
-            @*<tr>
+            }
+            catch { }
+            <table>
+                <tr>
                     <td>
-                        @Html.Label("Del : ")
+                        @Html.Label("Spedizione : ")
+                    </td>
+
+                    <td>
+                        @Html.Label(mySpediz)
+                    </td>
+                    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+
+
+
+                    <td>
+                        @Html.Label("Viaggio : ")
                     </td>
                     <td>
-                        @Html.Label(item1[0].DataInizioImbarco.ToString().Substring(0, 10))
+                        @Html.Label(myViaggio)
                     </td>
-                </tr>*@
-            <tr>
-                <td>
-                    @Html.Label("POL : ")
-                </td>
-                <td>
-                    @Html.Label(myPOL)
-                </td>
-            </tr>
-            <tr>
+                    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
 
-                <td>
-                    @Html.Label("POD : ")
-                </td>
-                <td>
-                    @Html.Label(myPOD)
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    @Html.Label("Nave : ")
-                </td>
-                <td>
-                    @Html.Label(myNave)
-                </td>
-                @*<td>&nbsp;&nbsp;</td>*@
-            </tr>
+                    <td>
+                        @Html.Label("POL : ")
+                    </td>
+                    <td>
+                        @Html.Label(myPOL)
+                    </td>
+                    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
 
-        </table>
+                    <td>
+                        @Html.Label("POD : ")
+                    </td>
+                    <td>
+                        @Html.Label(myPOD)
+                    </td>
+                    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                    <td>
+                        @Html.Label("Nave : ")
+                    </td>
+                    <td>
+                        @Html.Label(myNave)
+                    </td>
+                    @*<td>&nbsp;&nbsp;</td>*@
+                </tr>
 
-        <br />
-        <div class="card-body">
-            <br /><br />
-            <table id="DataTable2" style="width:100%;" class="table table-bordered">
-                <thead>
-                    <tr>
+            </table>
 
-                        @*<th>ID</th>*@
-                        <th>Telaio</th>
-                        <th>Modello</th>
-                        <th>Data perizia</th>
-                        <th>Tipo perizia</th>
-                        <th>Trasportatore</th>
-                        <th>Status</th>
-                        <th>Componente</th>
-                        <th>Danno</th>
-                        <th>N° foto</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in Model.WEB_ListaPerizieFlat_DEF_ALL_vw)
-                    {
+
+            <div class="card-body">
+                <br />
+                <table id="DataTable2" style="width:100%;" class="table table-bordered">
+                    <thead>
+                        <tr>
+
+                            @*<th>ID</th>*@
+                            <th>Telaio</th>
+                            <th>Modello</th>
+                            <th>Data perizia</th>
+                            <th>Tipo perizia</th>
+                            <th>Trasportatore</th>
+                            <th>Status</th>
+                            <th>Componente</th>
+                            <th>Danno</th>
+                            <th>Note</th>
+                            <th>N° foto</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.WEB_ListaPerizieFlat_DEF_ALL_vw)
+                        {
 
                         <tr>
                             @*<td>@Html.DisplayFor(modelItem => item.ID)</td>*@
@@ -344,13 +355,13 @@
                                 <td> @Convert.ToDateTime(item.DataPerizia).ToString("dd/MM/yyyy")</td>
                                 <td>@Html.DisplayFor(modelItem => item.IDTipoPerizia)</td>
                                 <td>@Html.DisplayFor(modelItem => item.Trasportatore)</td>
-                                if (item.Status == "DMG")
+                                if (item.STATUS == "DMG")
                                 {
-                                    <td style="color:red">@Html.DisplayFor(modelItem => item.Status)</td>
+                                    <td style="color:red">@Html.DisplayFor(modelItem => item.STATUS)</td>
                                 }
                                 else
                                 {
-                                    <td style="color:forestgreen">@Html.DisplayFor(modelItem => item.Status)</td>
+                                    <td style="color:forestgreen">@Html.DisplayFor(modelItem => item.STATUS)</td>
                                 }
                             }
                             else
@@ -366,6 +377,7 @@
 
                             <td>@Html.DisplayFor(modelItem => item.Parte)</td>
                             <td>@Html.DisplayFor(modelItem => item.Danno)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Note)</td>
 
                             @{OldVin = item.Telaio;}
                             @if (OldVin != NewVin)
@@ -373,21 +385,21 @@
                                 <td>
                                     @Html.DisplayFor(modelItem => item.NumFoto)
                                     @Html.ActionLink("Mostra foto", "CarouselFotoStoricizzate", "ListaPerizie", new
-                                       {
-                                           aIDPerizia = item.IDPerizia,
-                                           IDPerito = ViewBag.IDPerito,
-                                           IDSpedizione = ViewBag.IDSpedizione,
-                                           IDMeteo = ViewBag.IDMeteo,
-                                           IDTP = ViewBag.IDTP,
-                                           aIDTrasportatore = ViewBag.aIDTrasportatore,
-                                           aIDTipoRotabile = ViewBag.aIDTipoRotabile,
-                                           aIDModelloCasa = ViewBag.aIDModelloCasa,
-                                           ErrMess = ViewBag.ErrMess,
-                                           IsUpdate = ViewBag.IsUpdate,
-                                           aTelaio = item.Telaio,
-                                           aViaggio = myViaggio,
-                                           CntrProvenienza = "VERIFICATE"
-                                       }, new { @class = "photoImg" })
+                               {
+                                   aIDPerizia = item.IDPerizia,
+                                   IDPerito = ViewBag.IDPerito,
+                                   IDSpedizione = ViewBag.IDSpedizione,
+                                   IDMeteo = ViewBag.IDMeteo,
+                                   IDTP = ViewBag.IDTP,
+                                   aIDTrasportatore = ViewBag.aIDTrasportatore,
+                                   aIDTipoRotabile = ViewBag.aIDTipoRotabile,
+                                   aIDModelloCasa = ViewBag.aIDModelloCasa,
+                                   ErrMess = ViewBag.ErrMess,
+                                   IsUpdate = ViewBag.IsUpdate,
+                                   aTelaio = item.Telaio,
+                                   aViaggio = myViaggio,
+                                   CntrProvenienza = "VERIFICATE"
+                               }, new { @class = "photoImg" })
                                 </td>
                             }
                             else
@@ -397,239 +409,232 @@
                             }
                             @{NewVin = OldVin;}
                         </tr>
-                    }
-                </tbody>
-            </table>
+                                    }
+                    </tbody>
+                </table>
 
+            </div>
         </div>
     </div>
-</div>
+}
+    @if (datiTMP.Count() > 0)
+    {
 
-<div class="container py-4">
-    <div class="card">
-        <div class="card-header bg-primary text-white">
-            <h5>Lista telai Viaggio CHIUSO NON ANCORA VERIFICATO IN ASTREA</h5>
+        <div class="container py-4">
+            <div class="card">
+                <div class="card-header bg-success text-white">
+                    <h5>Lista telai Viaggio CHIUSO NON ANCORA VERIFICATO IN ASTREA</h5>
 
-        </div>
-        @try
-        {
-            var item1 = Model.WEB_ListaPerizieFlat_TMP_vw.ToList();
-            myViaggio = item1[0].Viaggio.ToString();
-            mySpediz = item1[0].IDSpedizione.ToString();
-            myPOL = item1[0].POL.ToString();
-            myPOD = item1[0].POD.ToString();
-            myNave = item1[0].Nave.ToString();
+                </div>
+                @try
+                {
+                    var item1 = Model.WEB_ListaPerizieFlat_TMP_vw.ToList();
+                    myViaggio = item1[0].Viaggio.ToString();
+                    mySpediz = item1[0].IDSpedizione.ToString();
+                    myPOL = item1[0].POL.ToString();
+                    myPOD = item1[0].POD.ToString();
+                    myNave = item1[0].Nave.ToString();
 
-        }
-        catch { }
-        <table id="DataTable3" style="width:100%;" class="table table-bordered">
-            <tr>
-                <td>
-                    @Html.Label("Spedizione : ")
-                </td>
-                <td>
-                    @Html.Label(mySpediz)
-                </td>
-                <td>&nbsp;&nbsp;</td>
-
-
-            </tr>
-            <tr>
-                <td>
-                    @Html.Label("Viaggio : ")
-                </td>
-                <td>
-                    @Html.Label(myViaggio)
-                </td>
-                @*<td>&nbsp;&nbsp;</td>*@
-            </tr>
-            @*<tr>
-            <td>
-                @Html.Label("Del : ")
-            </td>
-            <td>
-                @Html.Label(item1[0].DataInizioImbarco.ToString().Substring(0, 10))
-            </td>
-        </tr>*@
-            <tr>
-                <td>
-                    @Html.Label("POL : ")
-                </td>
-                <td>
-                    @Html.Label(myPOL)
-                </td>
-            </tr>
-            <tr>
-
-                <td>
-                    @Html.Label("POD : ")
-                </td>
-                <td>
-                    @Html.Label(myPOD)
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    @Html.Label("Nave : ")
-                </td>
-                <td>
-                    @Html.Label(myNave)
-                </td>
-                @*<td>&nbsp;&nbsp;</td>*@
-            </tr>
-
-        </table>
-
-        <br />
-        <div class="card-body">
-            <br /><br />
-
-            <table id="DataTable3" style="width:100%;" class="table table-bordered">
-                <thead>
+                }
+                catch { }
+                <table>
                     <tr>
+                        <td>
+                            @Html.Label("Spedizione : ")
+                        </td>
+                        <td>
+                            @Html.Label(mySpediz)
+                        </td>
+                        <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
 
-                        @*<th>ID</th>*@
-                        <th>Telaio</th>
-                        <th>Modello</th>
-                        <th>Data perizia</th>
-                        <th>Tipo perizia</th>
-                        <th>Trasportatore</th>
-                        <th>Status</th>
-                        <th>Componente</th>
-                        <th>Danno</th>
-                        <th>N° foto</th>
+                        <td>
+                            @Html.Label("Viaggio : ")
+                        </td>
+                        <td>
+                            @Html.Label(myViaggio)
+                        </td>
+
+                        <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                        <td>
+                            @Html.Label("POL : ")
+                        </td>
+                        <td>
+                            @Html.Label(myPOL)
+                        </td>
+                        <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+
+                        <td>
+                            @Html.Label("POD : ")
+                        </td>
+                        <td>
+                            @Html.Label(myPOD)
+                        </td>
+                        <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                        <td>
+                            @Html.Label("Nave : ")
+                        </td>
+                        <td>
+                            @Html.Label(myNave)
+                        </td>
+
                     </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in Model.WEB_ListaPerizieFlat_TMP_vw)
-                    {
 
-                        <tr>
-                            @*<td>@Html.DisplayFor(modelItem => item.ID)</td>*@
-                            @{OldVin = item.Telaio;}
-                            @if (OldVin != NewVin)
+                </table>
+
+                <br />
+                <div class="card-body">
+                    <br /><br />
+
+                    <table id="DataTable3" style="width:100%;" class="table table-bordered">
+                        <thead>
+                            <tr>
+
+                                @*<th>ID</th>*@
+                                <th>Telaio</th>
+                                <th>Modello</th>
+                                <th>Data perizia</th>
+                                <th>Tipo perizia</th>
+                                <th>Trasportatore</th>
+                                <th>Status</th>
+                                <th>Componente</th>
+                                <th>Danno</th>
+                                <th>Note</th>
+                                <th>N° foto</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.WEB_ListaPerizieFlat_TMP_vw)
                             {
-                                <td>@Html.DisplayFor(modelItem => item.Telaio)</td>
-                                <td>@Html.DisplayFor(modelItem => item.Modello)</td>
-                                @*<td>@Html.DisplayFor(modelItem => item.DataPerizia)</td>*@
-                                <td> @Convert.ToDateTime(item.DataPerizia).ToString("dd/MM/yyyy")</td>
-                                <td>@Html.DisplayFor(modelItem => item.IDTipoPerizia)</td>
-                                <td>@Html.DisplayFor(modelItem => item.Trasportatore)</td>
-                                if (item.Status == "DMG")
+
+                            <tr>
+                                @*<td>@Html.DisplayFor(modelItem => item.ID)</td>*@
+                                @{OldVin = item.Telaio;}
+                                @if (OldVin != NewVin)
                                 {
-                                    <td style="color:red">@Html.DisplayFor(modelItem => item.Status)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Telaio)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Modello)</td>
+                                    @*<td>@Html.DisplayFor(modelItem => item.DataPerizia)</td>*@
+                                    <td> @Convert.ToDateTime(item.DataPerizia).ToString("dd/MM/yyyy")</td>
+                                    <td>@Html.DisplayFor(modelItem => item.IDTipoPerizia)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Trasportatore)</td>
+                                    if (item.Status == "DMG")
+                                    {
+                                        <td style="color:red">@Html.DisplayFor(modelItem => item.Status)</td>
+                                    }
+                                    else
+                                    {
+                                        <td style="color:forestgreen">@Html.DisplayFor(modelItem => item.Status)</td>
+                                    }
                                 }
                                 else
                                 {
-                                    <td style="color:forestgreen">@Html.DisplayFor(modelItem => item.Status)</td>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
                                 }
+
+
+                                <td>@Html.DisplayFor(modelItem => item.Parte)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Danno)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Note)</td>
+
+                                @{OldVin = item.Telaio;}
+                                @if (OldVin != NewVin)
+                                {
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.NumFoto)
+                                        @Html.ActionLink("Mostra foto", "CarouselFotoStoricizzate", "ListaPerizie", new
+                                   {
+                                       aIDPerizia = item.IDPerizia,
+                                       IDPerito = ViewBag.IDPerito,
+                                       IDSpedizione = ViewBag.IDSpedizione,
+                                       IDMeteo = ViewBag.IDMeteo,
+                                       IDTP = ViewBag.IDTP,
+                                       aIDTrasportatore = ViewBag.aIDTrasportatore,
+                                       aIDTipoRotabile = ViewBag.aIDTipoRotabile,
+                                       aIDModelloCasa = ViewBag.aIDModelloCasa,
+                                       ErrMess = ViewBag.ErrMess,
+                                       IsUpdate = ViewBag.IsUpdate,
+                                       aTelaio = item.Telaio,
+                                       aViaggio = myViaggio,
+                                       CntrProvenienza = "NONVERIFICATE"
+                                   }, new { @class = "photoImg" })
+                                    </td>
+                                }
+                                else
+                                {
+                                    <td>&nbsp;</td>
+
+                                }
+                                @{NewVin = OldVin;}
+                            </tr>
                             }
-                            else
-                            {
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                            }
+                        </tbody>
+                    </table>
 
-
-                            <td>@Html.DisplayFor(modelItem => item.Parte)</td>
-                            <td>@Html.DisplayFor(modelItem => item.Danno)</td>
-
-                            @{OldVin = item.Telaio;}
-                            @if (OldVin != NewVin)
-                            {
-                            <td>
-                                @Html.DisplayFor(modelItem => item.NumFoto)
-                                @Html.ActionLink("Mostra foto", "CarouselFotoStoricizzate", "ListaPerizie", new
-                                    {
-                                        aIDPerizia = item.IDPerizia,
-                                        IDPerito = ViewBag.IDPerito,
-                                        IDSpedizione = ViewBag.IDSpedizione,
-                                        IDMeteo = ViewBag.IDMeteo,
-                                        IDTP = ViewBag.IDTP,
-                                        aIDTrasportatore = ViewBag.aIDTrasportatore,
-                                        aIDTipoRotabile = ViewBag.aIDTipoRotabile,
-                                        aIDModelloCasa = ViewBag.aIDModelloCasa,
-                                        ErrMess = ViewBag.ErrMess,
-                                        IsUpdate = ViewBag.IsUpdate,
-                                        aTelaio = item.Telaio,
-                                        aViaggio = myViaggio,
-                                        CntrProvenienza = "NONVERIFICATE"
-                                    }, new { @class = "photoImg" })
-                            </td>
-                            }
-                            else
-                            {
-                                <td>&nbsp;</td>
-
-                            }
-                            @{NewVin = OldVin;}
-                        </tr>
-                    }
-                </tbody>
-            </table>
-
+                </div>
+            </div>
         </div>
-    </div>
-</div>
+    }
 
-<script>
-    $(document).ready(function () {
-        $('#example').DataTable();
-    });
-</script>
-<script>
-    $(document).ready(function () {
-        var table = $('#DataTable').DataTable({
-            "autoWidth": false,
-            stateSave: true,
-            "lengthMenu": [[-1, 50, 100], ["Tutti", 50, 100]],
-            "iDisplayLength": -1,
-
-
-
-            dom: 'frtip',
-
-            language: {
-
-                processing: "Ricerca in corso...",
-                search: "Ricerca:",
-                //lengthMenu: "Visualizza _MENU_ elementi",
-
-                info: "Elenca da _START_ a _END_ di _TOTAL_ elementi",
-                infoEmpty: "Elenca da 0 a 0 di 0 elementi",
-                infoFiltered: "(filtrati da _MAX_ elementi totali)",
-                infoPostFix: "",
-                loadingRecords: "Caricamento...",
-                zeroRecords: "La ricerca non ha portato alcun risultato.",
-                emptyTable: "Nessun record presente in tabella",
-                paginate: {
-                    first: "Inizio",
-                    previous: "Precedente",
-                    next: "Successivo",
-                    last: "Fine"
-                },
-                aria: {
-                    sortAscending: ": attiva per ordinare la colonna in ordine crescente",
-                    sortDescending: ": attiva per ordinare la colonna in ordine decrescente"
-                },
-                searchPanes: {
-                    title: {
-                        _: 'Filtri selezionati : %d',
-                        0: 'Nessun filtro selezionato',
-                        1: 'Un solo filtro selezionato'
-                    },
-                    clearMessage: 'Azzera filtri !',
-                    collapse: { 0: 'Ricerca avanzata', _: 'Scelte selezionate (%d)' }
-                },
-                buttons: [
-                    'copy', 'csv', 'excel', 'print'
-                ]
-            }
+    <script>
+        $(document).ready(function () {
+            $('#example').DataTable();
         });
-    });
+    </script>
+    <script>
+        $(document).ready(function () {
+            var table = $('#DataTable').DataTable({
+                "autoWidth": false,
+                stateSave: true,
+                "lengthMenu": [[-1, 50, 100], ["Tutti", 50, 100]],
+                "iDisplayLength": -1,
 
-</script>
+
+
+                dom: 'frtip',
+
+                language: {
+
+                    processing: "Ricerca in corso...",
+                    search: "Ricerca:",
+                    //lengthMenu: "Visualizza _MENU_ elementi",
+
+                    info: "Elenca da _START_ a _END_ di _TOTAL_ elementi",
+                    infoEmpty: "Elenca da 0 a 0 di 0 elementi",
+                    infoFiltered: "(filtrati da _MAX_ elementi totali)",
+                    infoPostFix: "",
+                    loadingRecords: "Caricamento...",
+                    zeroRecords: "La ricerca non ha portato alcun risultato.",
+                    emptyTable: "Nessun record presente in tabella",
+                    paginate: {
+                        first: "Inizio",
+                        previous: "Precedente",
+                        next: "Successivo",
+                        last: "Fine"
+                    },
+                    aria: {
+                        sortAscending: ": attiva per ordinare la colonna in ordine crescente",
+                        sortDescending: ": attiva per ordinare la colonna in ordine decrescente"
+                    },
+                    searchPanes: {
+                        title: {
+                            _: 'Filtri selezionati : %d',
+                            0: 'Nessun filtro selezionato',
+                            1: 'Un solo filtro selezionato'
+                        },
+                        clearMessage: 'Azzera filtri !',
+                        collapse: { 0: 'Ricerca avanzata', _: 'Scelte selezionate (%d)' }
+                    },
+                    buttons: [
+                        'copy', 'csv', 'excel', 'print'
+                    ]
+                }
+            });
+        });
+
+    </script>
 

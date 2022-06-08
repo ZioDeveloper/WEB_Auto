@@ -11,7 +11,7 @@
     int progFoto = 1;}
 <br />
 <div>
-    @Html.ActionLink("Esci da visualizzazione foto", "CercaStoriaTelaio", "Storico", new { aTelaio = ViewBag.Telaio }, new { @class = "btn btn-success custom" })
+    @Html.ActionLink("Esci da visualizzazione foto", "CercaStoriaTelaio", "Storico", new { aTelaio = ViewBag.Telaio, FiltroData = ViewBag.FiltroData, FiltroStato = ViewBag.FiltroStato }, new { @class = "btn btn-success custom" })
 </div>
 <div class="container">
     <h4>Foto allegate</h4>

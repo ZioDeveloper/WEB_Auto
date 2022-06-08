@@ -36,22 +36,30 @@
                         @Html.LiActionLink("Dati preload", "VisualizzaPreload", "Storico", "")
                         if (Session["IDRuolo"].ToString() == "2")
                         {
-                            @Html.LiActionLink("Lista perizie cancellate", "ListaPerizieCancellate", "RecuperaDatiCancellati", "") 
+                            @Html.LiActionLink("Lista perizie cancellate", "ListaPerizieCancellate", "RecuperaDatiCancellati", "")
                         }
-                        @Html.LiActionLink("Invio mail", "AllegaFoto", "InvioFotoViaEmail", "")
+                        @*@Html.LiActionLink("Invio mail", "AllegaFoto", "InvioFotoViaEmail", "")*@
+                        @*@Html.LiActionLink("PDF Viaggio", "InsertPDFViaggio", "PDFViaggio", "")*@
                         @Html.LiActionLink("Contact", "Contact", "Home", "")
 
+                        <li class="dropdown-submenu">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <span class="nav-label">Utilities</span><span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li>@Html.LiActionLink("PDF Viaggio", "InsertPDFViaggio", "PDFViaggio", "")</li>
+                                <li>@Html.LiActionLink("Invio mail", "AllegaFoto", "InvioFotoViaEmail", "")</li> 
+                            </ul>
+                        </li>
 
-                }
+                    }
 
-                else
-                {
-                    @Html.LiActionLink("Home", "Index", "Home", "")
+                    else
+                    {
+                        @Html.LiActionLink("Home", "Index", "Home", "")
 
-                    @Html.LiActionLink("Lista viaggi", "ListaSpedizioni", "ListaPerizie", "")
+                        @Html.LiActionLink("Lista viaggi", "ListaSpedizioni", "ListaPerizie", "")
 
-                    @Html.LiActionLink("Contact", "Contact", "Home", "")
-                }
+                        @Html.LiActionLink("Contact", "Contact", "Home", "")
+                    }
 
 
 

@@ -21,7 +21,7 @@ namespace WEB_Auto.Controllers
             
             //string a = Request.Browser.Platform;
             //a = Request.Browser.Version;
-            string MachineName = "";
+            //string MachineName = "";
             string OS = "";
 
             Session["DataRicorda"] = "";
@@ -45,14 +45,14 @@ namespace WEB_Auto.Controllers
                 // usr = "Astrea"; // pierangeli
                 //usr = "VGrimaldi";
                 //usr = "grimaldi"; // 
-                usr = "pierangeli"; // 
+                //usr = "pierangeli"; // 
                 //usr = "patrizia"; // 
                // usr = "DiGennaro";
                //usr = "DiSalvo";
                // usr = "patrizia";
                 //usr = "Torresan"; // 
                // usr = "DiNinno";
-               //usr = "Maurizio";
+               usr = "Maurizio";
                 //usr = Session["User"].ToString();
             }
 

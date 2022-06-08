@@ -407,7 +407,7 @@ namespace WEB_Auto.Controllers
             return RedirectToAction("ListaSpedizioni");
         }
 
-        public ActionResult CarouselFoto(string aIDPerizia, string aTelaio, string CntrProvenienza = "")
+        public ActionResult CarouselFoto(string aIDPerizia, string aTelaio, string CntrProvenienza = "" , int FiltroData = 0 , string FiltroStato = "")
         {
             var model = new Models.HomeModel();
             var foto = (from m in db.WEB_AUTO_FOTO
@@ -423,6 +423,8 @@ namespace WEB_Auto.Controllers
             ViewBag.IDTP = myIDSpedizione.IDTipoPerizia;
             ViewBag.Telaio = aTelaio;
             ViewBag.CntrProvenienza = CntrProvenienza;
+            ViewBag.FiltroData = FiltroData;
+            ViewBag.FiltroStato = FiltroStato;
             return View(model);
         }
 

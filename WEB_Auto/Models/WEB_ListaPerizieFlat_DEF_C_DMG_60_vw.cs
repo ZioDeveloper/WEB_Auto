@@ -12,7 +12,7 @@ namespace WEB_Auto.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class WEB_ListaPerizieFlat_DEF_ALL_vw
+    public partial class WEB_ListaPerizieFlat_DEF_C_DMG_60_vw
     {
         public int ID { get; set; }
         public string IDPerizia { get; set; }
@@ -26,7 +26,7 @@ namespace WEB_Auto.Models
         public string Cliente { get; set; }
         public string Telaio { get; set; }
         public string Modello { get; set; }
-        public System.DateTime DataPerizia { get; set; }
+        public Nullable<System.DateTime> DataPerizia { get; set; }
         public string IDTipoPerizia { get; set; }
         public string Trasportatore { get; set; }
         public Nullable<short> Qta { get; set; }
@@ -36,6 +36,6 @@ namespace WEB_Auto.Models
         public string Gravita { get; set; }
         public Nullable<int> Cnt { get; set; }
         public string STATUS { get; set; }
-        public short NumFoto { get; set; }
+        public Nullable<short> NumFoto { get; set; }
     }
 }

@@ -72,5 +72,13 @@ namespace WEB_Auto.Models
         public virtual DbSet<WEB_AUTO_FOTO_X_EMAIL> WEB_AUTO_FOTO_X_EMAIL { get; set; }
         public virtual DbSet<AGR_Perizie_TEMP_MVC_STANDBY> AGR_Perizie_TEMP_MVC_STANDBY { get; set; }
         public virtual DbSet<WEB_AUTO_ListaSpedizioni_3_vw> WEB_AUTO_ListaSpedizioni_3_vw { get; set; }
+        public virtual DbSet<WEB_ListaPerizieFlat_DEF_C_ALL_15_vw> WEB_ListaPerizieFlat_DEF_C_ALL_15_vw { get; set; }
+        public virtual DbSet<WEB_ListaPerizieFlat_DEF_C_ALL_30_vw> WEB_ListaPerizieFlat_DEF_C_ALL_30_vw { get; set; }
+        public virtual DbSet<WEB_ListaPerizieFlat_DEF_C_ALL_60_vw> WEB_ListaPerizieFlat_DEF_C_ALL_60_vw { get; set; }
+        public virtual DbSet<WEB_ListaPerizieFlat_DEF_C_ALL_90_vw> WEB_ListaPerizieFlat_DEF_C_ALL_90_vw { get; set; }
+        public virtual DbSet<WEB_ListaPerizieFlat_DEF_C_DMG_15_vw> WEB_ListaPerizieFlat_DEF_C_DMG_15_vw { get; set; }
+        public virtual DbSet<WEB_ListaPerizieFlat_DEF_C_DMG_30_vw> WEB_ListaPerizieFlat_DEF_C_DMG_30_vw { get; set; }
+        public virtual DbSet<WEB_ListaPerizieFlat_DEF_C_DMG_60_vw> WEB_ListaPerizieFlat_DEF_C_DMG_60_vw { get; set; }
+        public virtual DbSet<WEB_ListaPerizieFlat_DEF_C_DMG_90_vw> WEB_ListaPerizieFlat_DEF_C_DMG_90_vw { get; set; }
     }
 }

@@ -52,10 +52,18 @@
         <EntityTypeShape EntityType="wisedbModel.BKP_AGR_PERIZIE_DETT_TEMP_MVC" Width="1.5" PointX="19.375" PointY="12.75" />
         <EntityTypeShape EntityType="wisedbModel.BKP_AGR_PerizieExpGrim_Temp_MVC" Width="1.5" PointX="19.375" PointY="18.75" />
         <EntityTypeShape EntityType="wisedbModel.BKP_AGR_Perizie_TEMP_MVC_ELIMINATE_vw" Width="2.875" PointX="16.375" PointY="20.75" />
-        <EntityTypeShape EntityType="wisedbModel.WEB_ListaPerizieFlat_DEF_ALL_vw" Width="1.5" PointX="21.375" PointY="3.75" />
+        <EntityTypeShape EntityType="wisedbModel.WEB_ListaPerizieFlat_DEF_ALL_vw" Width="4.25" PointX="21.25" PointY="4.125" />
         <EntityTypeShape EntityType="wisedbModel.WEB_AUTO_FOTO_X_EMAIL" Width="1.5" PointX="3.375" PointY="21.75" />
         <EntityTypeShape EntityType="wisedbModel.AGR_Perizie_TEMP_MVC_STANDBY" Width="3.625" PointX="21.375" PointY="10.75" />
         <EntityTypeShape EntityType="wisedbModel.WEB_AUTO_ListaSpedizioni_3_vw" Width="1.5" PointX="21.375" PointY="13.75" />
+        <EntityTypeShape EntityType="wisedbModel.WEB_ListaPerizieFlat_DEF_C_ALL_15_vw" Width="1.5" PointX="21.75" PointY="18.75" />
+        <EntityTypeShape EntityType="wisedbModel.WEB_ListaPerizieFlat_DEF_C_ALL_30_vw" Width="1.5" PointX="23.75" PointY="0.75" />
+        <EntityTypeShape EntityType="wisedbModel.WEB_ListaPerizieFlat_DEF_C_ALL_60_vw" Width="1.5" PointX="0.75" PointY="23.75" />
+        <EntityTypeShape EntityType="wisedbModel.WEB_ListaPerizieFlat_DEF_C_ALL_90_vw" Width="1.5" PointX="5.75" PointY="23.75" />
+        <EntityTypeShape EntityType="wisedbModel.WEB_ListaPerizieFlat_DEF_C_DMG_15_vw" Width="1.5" PointX="23.75" PointY="13.75" />
+        <EntityTypeShape EntityType="wisedbModel.WEB_ListaPerizieFlat_DEF_C_DMG_30_vw" Width="1.5" PointX="23.75" PointY="20.75" />
+        <EntityTypeShape EntityType="wisedbModel.WEB_ListaPerizieFlat_DEF_C_DMG_60_vw" Width="1.5" PointX="2.75" PointY="24.75" />
+        <EntityTypeShape EntityType="wisedbModel.WEB_ListaPerizieFlat_DEF_C_DMG_90_vw" Width="1.5" PointX="13.75" PointY="24.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

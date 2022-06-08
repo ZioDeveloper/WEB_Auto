@@ -161,6 +161,7 @@
     <Compile Include="Controllers\InvioFotoViaEmailController.cs" />
     <Compile Include="Controllers\ListaPerizieController.cs" />
     <Compile Include="Controllers\ModificaViaggioController.cs" />
+    <Compile Include="Controllers\PDFViaggioController.cs" />
     <Compile Include="Controllers\RecuperaDatiCancellatiController.cs" />
     <Compile Include="Controllers\StoricoController.cs" />
     <Compile Include="Controllers\TelaiAnagraficaController.cs" />
@@ -314,6 +315,30 @@
       <DependentUpon>Autocargo.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\WEB_ListaPerizieFlat_DEF_ALL_vw.cs">
+      <DependentUpon>Autocargo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\WEB_ListaPerizieFlat_DEF_C_ALL_15_vw.cs">
+      <DependentUpon>Autocargo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\WEB_ListaPerizieFlat_DEF_C_ALL_30_vw.cs">
+      <DependentUpon>Autocargo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\WEB_ListaPerizieFlat_DEF_C_ALL_60_vw.cs">
+      <DependentUpon>Autocargo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\WEB_ListaPerizieFlat_DEF_C_ALL_90_vw.cs">
+      <DependentUpon>Autocargo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\WEB_ListaPerizieFlat_DEF_C_DMG_15_vw.cs">
+      <DependentUpon>Autocargo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\WEB_ListaPerizieFlat_DEF_C_DMG_30_vw.cs">
+      <DependentUpon>Autocargo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\WEB_ListaPerizieFlat_DEF_C_DMG_60_vw.cs">
+      <DependentUpon>Autocargo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\WEB_ListaPerizieFlat_DEF_C_DMG_90_vw.cs">
       <DependentUpon>Autocargo.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\WEB_ListaPerizieFlat_DEF_vw.cs">
@@ -554,6 +579,8 @@
     <Content Include="Views\RecuperaDatiCancellati\ListaPerizieCancellate.cshtml" />
     <Content Include="Views\ListaPerizie\CarouselFotoStoricizzate.cshtml" />
     <Content Include="Views\InvioFotoViaEmail\AllegaFoto.cshtml" />
+    <Content Include="Views\Storico\CarouselFotoTemporaneo.cshtml" />
+    <Content Include="Views\PDFViaggio\InsertPDFViaggio.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

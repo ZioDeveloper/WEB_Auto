@@ -581,6 +581,7 @@
     <Content Include="Views\InvioFotoViaEmail\AllegaFoto.cshtml" />
     <Content Include="Views\Storico\CarouselFotoTemporaneo.cshtml" />
     <Content Include="Views\PDFViaggio\InsertPDFViaggio.cshtml" />
+    <Content Include="Views\PDFViaggio\ScattaPDFSpedizione.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

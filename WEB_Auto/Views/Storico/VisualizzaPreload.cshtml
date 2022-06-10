@@ -64,7 +64,7 @@
             }
 
         </div>
-        @using (Html.BeginForm("VisualizzaPreload", "Storico", new { }, FormMethod.Get))
+        @using (Html.BeginForm("VisualizzaPreload", "Storico",  FormMethod.Get, new { name = "frmPratica", id = "frmPratica" }))
         {
             <label>Filtro periodo ricerca viaggi</label><br />
 
@@ -84,7 +84,7 @@
             <label>Viaggio @Html.TextBox("aViaggio")</label>
             <label>Telaio @Html.TextBox("FiltroTelaio")</label>
 
-            <button type="submit" value="Cerca" class="btn btn-sm btn-dark rounded-0"><i class="fa fa-search fa-lg"></i> Ricerca  viaggio - telaio</button>
+            <button type="submit" value="Cerca" class="btn btn-sm btn-dark rounded-0" onClick="javascript:myFunction();"   ><i class="fa fa-search fa-lg"></i> Ricerca  viaggio - telaio</button>
         }
         <br />
        
@@ -96,7 +96,7 @@
     <div class="container py-4">
         <div class="card">
             <div class="card-header bg-success text-black">
-                <h5>Lista telai Viaggio NON ANCORA CHIUSO</h5>
+                <h5>Perizie da palmare non ancora chiuse</h5>
 
             </div>
             @try
@@ -259,7 +259,7 @@
     <div class="container py-4">
         <div class="card">
             <div class="card-header bg-success text-white">
-                <h5>Lista telai Viaggio CHIUSO E VERIFICATO IN ASTREA</h5>
+                <h5>Lista telai STORICO</h5>
 
             </div>
             @try
@@ -423,7 +423,7 @@
         <div class="container py-4">
             <div class="card">
                 <div class="card-header bg-success text-white">
-                    <h5>Lista telai Viaggio CHIUSO NON ANCORA VERIFICATO IN ASTREA</h5>
+                    <h5>Lista telai IN ELABORAZIONE c/o ASTREA</h5>
 
                 </div>
                 @try
@@ -638,3 +638,28 @@
 
     </script>
 
+<script type="text/javascript">
+
+    function winEMail() {
+        
+        var aViaggio = document.getElementsByName("aViaggio").value;
+        
+        if (aViaggio == "") {
+            alert("Selezionare un perito!");
+            //document.frmPratica.ID_perito.focus();
+            return (false);
+        }
+
+    }
+</script>
+
+<script>
+    function myFunction() {
+        var aViaggio = document.getElementById('aViaggio').value
+        if (aViaggio == "") {
+            alert("Selezionare un Viaggio!");
+            //document.frmPratica.aViaggio.focus();
+            //return (false);
+        }
+    }
+</script>

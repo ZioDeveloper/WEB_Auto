@@ -428,6 +428,8 @@ warning 6002: The table/view 'wisedb.dbo.BKP_AGR_PerizieExpGrim_Temp_MVC' does n
           <Property Name="FileName" Type="varchar" MaxLength="50" />
           <Property Name="Prog" Type="int" />
           <Property Name="InsertTime" Type="datetime" />
+          <Property Name="Flags" Type="int" />
+          <Property Name="IsSent" Type="bit" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'wisedb.dbo.AAA_Prova' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -2636,6 +2638,8 @@ warning 6002: The table/view 'wisedb.dbo.WEB_ListaPerizieFlat_TMP_vw' does not h
           <Property Name="FileName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Prog" Type="Int32" />
           <Property Name="InsertTime" Type="DateTime" Precision="3" />
+          <Property Name="Flags" Type="Int32" />
+          <Property Name="IsSent" Type="Boolean" />
         </EntityType>
         <EntityType Name="WEB_AUTO_ListaSpedizioni_2_vw">
           <Key>
@@ -3805,6 +3809,8 @@ warning 6002: The table/view 'wisedb.dbo.WEB_ListaPerizieFlat_TMP_vw' does not h
           <EntitySetMapping Name="WEB_AUTO_PDF">
             <EntityTypeMapping TypeName="wisedbModel.WEB_AUTO_PDF">
               <MappingFragment StoreEntitySet="WEB_AUTO_PDF">
+                <ScalarProperty Name="IsSent" ColumnName="IsSent" />
+                <ScalarProperty Name="Flags" ColumnName="Flags" />
                 <ScalarProperty Name="InsertTime" ColumnName="InsertTime" />
                 <ScalarProperty Name="Prog" ColumnName="Prog" />
                 <ScalarProperty Name="FileName" ColumnName="FileName" />

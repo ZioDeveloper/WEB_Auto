@@ -8,6 +8,7 @@ using WEB_Auto.Models;
 using System.Net.Mail;
 using System.Net;
 using System.Data.SqlClient;
+using System.Text.RegularExpressions;
 
 namespace WEB_Auto.Controllers
 {
@@ -45,6 +46,7 @@ namespace WEB_Auto.Controllers
                string IDTP, string aIDTrasportatore, string aIDTipoRotabile, string aIDModelloCasa, string ErrMess = "", bool IsUpdate = false)
         {
             string filename = "";
+            string pathtrimmed = "";
             string path = System.IO.Path.Combine(Server.MapPath("~/DocumentiXTelai/Email/Foto"));
 
            System.IO.DirectoryInfo di = new DirectoryInfo(path);
@@ -65,7 +67,8 @@ namespace WEB_Auto.Controllers
                     path = System.IO.Path.Combine(Server.MapPath("~/DocumentiXTelai/Email/Foto"), filename);
                     if (file != null)
                     {
-                        file.SaveAs(path);
+                        pathtrimmed = Regex.Replace(path, @"\s", "");
+                        file.SaveAs(pathtrimmed);
                     }
                     int cnt = 0;
                     //try
@@ -76,7 +79,7 @@ namespace WEB_Auto.Controllers
                     //}
                     //catch { }
                     cnt++;
-
+                    filename = Regex.Replace(filename, @"\s", "");
                     var sql = @"INSERT INTO WEB_AUTO_FOTO_X_EMAIL ( FileName) Values (@FileName)";
                     int noOfRowInserted = db.Database.ExecuteSqlCommand(sql, new SqlParameter("@FileName", filename));
 

@@ -15,8 +15,9 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/pdfmake.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/vfs_fonts.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
-<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.4/js/buttons.html5.min.js"</script>
-<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.4/js/buttons.print.min.js"</script>
+
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.4/js/buttons.html5.min.js"></script></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.4/js/buttons.print.min.js"></script></script>
 <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.4/js/dataTables.buttons.min.js"></script>
 @*<link rel="stylesheet" type="text/css" href="https://nightly.datatables.net/searchpanes/css/searchPanes.dataTables.min.css" />
     <script type="text/javascript" src="https://nightly.datatables.net/searchpanes/js/dataTables.searchPanes.min.js"</script>*@
@@ -112,6 +113,13 @@
                     { <div style="color:red">@Html.Label("Viaggio già chiuso, non modificabile!")</div>}
             }
             catch { }
+
+            if (ViewBag.aMsg != "")
+            {
+                    <br /><br />
+                string msg = ViewBag.aMsg;
+                <div style="color:forestgreen">@Html.Label(msg)</div>
+            }
             <br /><br />
             <table id="NODataTable" style="width:100%;" class="table table-bordered">
                 <thead>

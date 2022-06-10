@@ -56,16 +56,16 @@ namespace WEB_Auto.Controllers
             var Chassis1 = from m in db.WEB_ListaPerizieFlat_MVC_vw
                            where m.Telaio == myTelaio
                            where m.IsClosed == false
-                           where m.IDTipoPerizia == "C"
+                           //where m.IDTipoPerizia == "C"
                            select m;
-            model.WEB_ListaPerizieFlat_MVC_vw = Chassis1.ToList();
+            model.WEB_ListaPerizieFlat_MVC_vw = Chassis1.ToList().OrderByDescending(s=>s.DataPerizia);
             ViewBag.Chassis1 = myTelaio;
 
 
             var Chassis2 = from m in db.WEB_ListaPerizieFlat_TMP_vw
                            where m.Telaio == myTelaio
                            select m;
-            model.WEB_ListaPerizieFlat_TMP_vw = Chassis2.ToList();
+            model.WEB_ListaPerizieFlat_TMP_vw = Chassis2.ToList().OrderByDescending(s => s.DataPerizia);
 
             //Filtriamo...
 
@@ -100,7 +100,7 @@ namespace WEB_Auto.Controllers
             }
 
 
-            model.WEB_ListaPerizieFlat_DEF_ALL_vw = Chassis3.ToList();
+            model.WEB_ListaPerizieFlat_DEF_ALL_vw = Chassis3.ToList().OrderByDescending(s => s.DataPerizia);
 
             ViewBag.FiltroData = FiltroData;
             ViewBag.FiltroStato = FiltroStato;

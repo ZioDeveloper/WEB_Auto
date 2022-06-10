@@ -864,7 +864,7 @@ namespace WEB_Auto.Controllers
                                                                      new SqlParameter("@ID_TipoRotabile", (object)IDTipoRotabile ?? DBNull.Value),
                                                                      new SqlParameter("@FlgNuovoUsato", (object)Condizione ?? DBNull.Value));
 
-                    if(Condizione == "U")
+                    if(Condizione == "U" && IDTP == "C")
                     {
 
                         var hasdanni = (from m in db.AGR_PERIZIE_DETT_TEMP_MVC_vw
@@ -1000,7 +1000,7 @@ namespace WEB_Auto.Controllers
                                                                      new SqlParameter("@ID_TipoRotabile", (object)IDTipoRotabile ?? DBNull.Value),
                                                                      new SqlParameter("@FlgNuovoUsato", (object)Condizione ?? DBNull.Value));
 
-                    if (Condizione == "U")
+                    if (Condizione == "U" && IDTP == "C")
                     {
 
                         var hasdanni = (from m in db.AGR_PERIZIE_DETT_TEMP_MVC_vw
@@ -1394,7 +1394,7 @@ namespace WEB_Auto.Controllers
                             bool IsInspecting = false, bool IsModelActive = false)
         {
             // Controlli
-            string a = "";
+            //string a = "";
             string myIDModello = "";
             string aNewModel = "";
             ViewBag.IsModelActive = IsModelActive;
@@ -1494,10 +1494,16 @@ namespace WEB_Auto.Controllers
                            bool IsInspecting = false, bool IsModelActive = false, string diff = "" )
         {
             // Controlli
-            string a = "";
+            //string a = "";
             string myIDModello = "";
             string aNewModel = "";
             ViewBag.IsModelActive = IsModelActive;
+
+            if (String.IsNullOrEmpty(IDModelloCasa))
+            {
+                return RedirectToAction("AggiornaSpedizioneEDataPerizia", "TelaiAnagrafica", new { IDSpedizione, IDPerizia, IDMeteo, IDTP, IDPerito, Chassis, aIDModello, IDModelloCasa,IsInspecting, IsModelActive });
+                
+            }
 
             var oldPerizia = (from m in db.AGR_PERIZIE_TEMP_MVC
                               where m.ID == IDPerizia
@@ -1683,8 +1689,17 @@ namespace WEB_Auto.Controllers
             // Dati spedizione
             errMEss = "";
 
+            int cnt = (from m in db.AGR_PERIZIE_TEMP_MVC
+                          where m.IDSpedizione == aIDSpedizione
+                          where m.Telaio == aTelaio
+                          select m.ID).Count();
+            if(cnt>0)
+            {
+                //{ errMEss = "Il telaio esiste già !"; return false; }
+            }
+
             // Controllo modello
-            if(String.IsNullOrEmpty(IDModelloCasa))
+            if (String.IsNullOrEmpty(IDModelloCasa))
             {
                 if(Session["Classe"].ToString() =="0")
                 { errMEss = "Modello obbligatorio"; return false; }

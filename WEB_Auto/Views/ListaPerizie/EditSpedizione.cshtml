@@ -273,22 +273,24 @@ else if (Session["Classe"].ToString() == "1")
                         }
                        
                     </td>*@
-                    <td>
-                        @if (item.Stato == "S")
-                        {
-                            @Html.ActionLink("Standby", "SetStandbyPerizia", "ListaPerizie", new
-                               {
-                                   IDPerizia = item.ID,
-                                   IDPerito = item.IDPerito,
-                                   IDSpedizione = item.IDSpedizione,
-                                   IDMeteo = item.IDMeteo,
-                                   IDTP = item.IDTipoPerizia
+                     @if (!IsClosed)
+                     {
+                        <td>
+                            @if (item.Stato == "S")
+                            {
+                                @Html.ActionLink("Standby", "SetStandbyPerizia", "ListaPerizie", new
+                           {
+                               IDPerizia = item.ID,
+                               IDPerito = item.IDPerito,
+                               IDSpedizione = item.IDSpedizione,
+                               IDMeteo = item.IDMeteo,
+                               IDTP = item.IDTipoPerizia
 
-                               }, new { @class = "btn btn-danger btn-xs  " })
-                        }
-                        else
-                        {
-                            @Html.ActionLink("Standby", "SetStandbyPerizia", "ListaPerizie", new
+                           }, new { @class = "btn btn-danger btn-xs  " })
+                            }
+                            else
+                            {
+                                @Html.ActionLink("Standby", "SetStandbyPerizia", "ListaPerizie", new
                            {
                                IDPerizia = item.ID,
                                IDPerito = item.IDPerito,
@@ -297,8 +299,13 @@ else if (Session["Classe"].ToString() == "1")
                                IDTP = item.IDTipoPerizia
 
                            }, new { @class = "btn btn-success btn-xs  " })
-                        }
-                    </td>
+                            }
+                        </td>
+                     }
+                     else
+                     {
+                         <td>&nbsp;</td>
+                     }
                 </tr>
                 }
             </tbody>

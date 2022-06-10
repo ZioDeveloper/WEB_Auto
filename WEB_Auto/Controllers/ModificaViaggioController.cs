@@ -15,7 +15,7 @@ namespace WEB_Auto.Controllers
         private wisedbEntities db = new wisedbEntities();
        
         // GET: ModificaViaggio
-        public ActionResult ModificaViaggio(string aViaggio,string TipoMezzo = "TUTTE")
+        public ActionResult ModificaViaggio(string aViaggio,string TipoMezzo = "TUTTE" , string aMsg = "")
         {
             var model = new Models.HomeModel();
             string aPerito = Session["IDPeritoVero"].ToString();
@@ -63,12 +63,12 @@ namespace WEB_Auto.Controllers
                              where (m.IDPortoImbarco == myIDPorto || m.IDPortoSbarco == myIDPorto)
                              where m.IDCliente == "51" || m.IDCliente == "GN"
                              select m;
-            model.AGR_SpedizioniWEB_vw = Spedizioni.ToList().OrderBy(s => s.DataInizioImbarco).OrderBy(s => s.IDPortoImbarco).OrderBy(s => s.IDPortoSbarco).OrderBy(s => s.IDOriginale1);
+            model.AGR_SpedizioniWEB_vw = Spedizioni.ToList().OrderBy(s => s.DataInizioImbarco);
 
             var ElencoSpedizioni = new SelectList(model.AGR_SpedizioniWEB_vw.ToList(), "IDOriginale1", "DescrAlt");
 
 
-
+            ViewBag.aMsg = aMsg;
             ViewBag.myViaggio = aViaggio;
             ViewBag.IsOpen = true;
             ViewBag.TipoMezzo = TipoMezzo;
@@ -112,7 +112,7 @@ namespace WEB_Auto.Controllers
                 catch { return RedirectToAction("ModificaNonConsentita", "ModificaViaggio", new { Message = "Errore non riconoscituo contattare Astrea" , aViaggio = VecchioViaggio, TipoMezzo }); }
             }
            
-            return RedirectToAction("ModificaViaggio" , new { aViaggio = VecchioViaggio });
+            return RedirectToAction("ModificaViaggio" , new { aViaggio = VecchioViaggio, aMsg = "MODIFCA TERMINATA - VERIFICA NEL MENU “LISTA VIAGGI" });
            
 
         }

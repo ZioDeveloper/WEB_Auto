@@ -19,5 +19,7 @@ namespace WEB_Auto.Models
         public string FileName { get; set; }
         public Nullable<int> Prog { get; set; }
         public Nullable<System.DateTime> InsertTime { get; set; }
+        public Nullable<int> Flags { get; set; }
+        public Nullable<bool> IsSent { get; set; }
     }
 }

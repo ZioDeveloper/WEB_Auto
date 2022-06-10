@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
 using WEB_Auto.Models;
@@ -56,6 +57,7 @@ namespace WEB_Auto.Controllers
         {
             string filename = "";
             string path = "";
+            string pathtrimmed = "";
 
 
             foreach (var file in files)
@@ -67,7 +69,8 @@ namespace WEB_Auto.Controllers
                     path = System.IO.Path.Combine(Server.MapPath("~/DocumentiXTelai/Foto"), filename);
                     if (file != null)
                     {
-                        file.SaveAs(path);
+                        pathtrimmed = Regex.Replace(path, @"\s", "");
+                        file.SaveAs(pathtrimmed);
                     }
                     int cnt = 0;
                     try
@@ -78,7 +81,7 @@ namespace WEB_Auto.Controllers
                     }
                     catch {   }
                     cnt++;
-
+                    filename = Regex.Replace(filename, @"\s", "");
                     var sql = @"INSERT INTO WEB_AUTO_FOTO (IDPerizia, FileName,Prog) Values (@IDPerizia, @FileName,@Prog)";
                     int noOfRowInserted = db.Database.ExecuteSqlCommand(sql,
                         new SqlParameter("@IDPerizia", myIDPerizia),
@@ -203,6 +206,7 @@ namespace WEB_Auto.Controllers
         {
             string filename = "";
             string path = "";
+            string pathtrimmed = "";
 
 
             foreach (var file in files)
@@ -214,7 +218,9 @@ namespace WEB_Auto.Controllers
                     path = System.IO.Path.Combine(Server.MapPath("~/DocumentiXTelai/PDF"), filename);
                     if (file != null)
                     {
-                        file.SaveAs(path);
+                        pathtrimmed = Regex.Replace(path, @"\s", "");
+                        file.SaveAs(pathtrimmed);
+                        
                     }
                     int cnt = 0;
                     try
@@ -225,11 +231,13 @@ namespace WEB_Auto.Controllers
                     }
                     catch { }
                     cnt++;
+                    filename = Regex.Replace(filename, @"\s", "");
 
-                    var sql = @"INSERT INTO WEB_AUTO_PDF (IDPerizia, FileName,Prog) Values (@IDPerizia, @FileName,@Prog)";
+                    var sql = @"INSERT INTO WEB_AUTO_PDF (IDPerizia, FileName,Prog,Flags, IsSent ) Values (@IDPerizia, @FileName,@Prog,@Flags, 0 )";
                     int noOfRowInserted = db.Database.ExecuteSqlCommand(sql,
                         new SqlParameter("@IDPerizia", myIDPerizia),
                         new SqlParameter("@FileName", filename),
+                        new SqlParameter("@Flags", 1),
                         new SqlParameter("@Prog", cnt));
                 }
             }
@@ -262,6 +270,7 @@ namespace WEB_Auto.Controllers
         {
             string filename = "";
             string path = "";
+            string pathtrimmed = "";
 
 
             foreach (var file in files)
@@ -273,7 +282,8 @@ namespace WEB_Auto.Controllers
                     path = System.IO.Path.Combine(Server.MapPath("~/DocumentiXTelai/PDF"), filename);
                     if (file != null)
                     {
-                        file.SaveAs(path);
+                        pathtrimmed = Regex.Replace(path, @"\s", "");
+                        file.SaveAs(pathtrimmed);
                     }
                     int cnt = 0;
                     try
@@ -284,11 +294,13 @@ namespace WEB_Auto.Controllers
                     }
                     catch { }
                     cnt++;
+                    filename = Regex.Replace(filename, @"\s", "");
 
-                    var sql = @"INSERT INTO WEB_AUTO_PDF (IDPerizia, FileName,Prog) Values (@IDPerizia, @FileName,@Prog)";
+                    var sql = @"INSERT INTO WEB_AUTO_PDF (IDPerizia, FileName,Prog,Flags,IsSent) Values (@IDPerizia, @FileName,@Prog,@Flags,0)";
                     int noOfRowInserted = db.Database.ExecuteSqlCommand(sql,
                         new SqlParameter("@IDPerizia", IDSpedizione),
                         new SqlParameter("@FileName", filename),
+                        new SqlParameter("@Flags", 4),
                         new SqlParameter("@Prog", cnt));
                 }
             }

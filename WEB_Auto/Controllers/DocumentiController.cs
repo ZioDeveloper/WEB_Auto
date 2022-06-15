@@ -196,8 +196,6 @@ namespace WEB_Auto.Controllers
             
             return View("ScattaPDFSpedizione", myFoto);
 
-
-
         }
 
 

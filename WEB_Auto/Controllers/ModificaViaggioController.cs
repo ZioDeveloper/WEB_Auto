@@ -112,7 +112,7 @@ namespace WEB_Auto.Controllers
                 catch { return RedirectToAction("ModificaNonConsentita", "ModificaViaggio", new { Message = "Errore non riconoscituo contattare Astrea" , aViaggio = VecchioViaggio, TipoMezzo }); }
             }
            
-            return RedirectToAction("ModificaViaggio" , new { aViaggio = VecchioViaggio, aMsg = "MODIFCA TERMINATA - VERIFICA NEL MENU “LISTA VIAGGI" });
+            return RedirectToAction("ModificaViaggio" , new { aViaggio = VecchioViaggio, aMsg = "MODIFCA TERMINATA - VERIFICA NEL MENU LISTA VIAGGI" });
            
 
         }

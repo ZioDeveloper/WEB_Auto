@@ -48,8 +48,8 @@
 {
     using (Html.BeginForm("EditSpedizione", "ListaPerizie", new { ViewBag.IDSpedizione, ViewBag.IDTP }, FormMethod.Post))
     {
-        <label>Solo Rotabili : @Html.RadioButton("TipoMezzo", "RTB", false, new { onclick = "this.form.submit()" })</label>
-        <label>&nbsp;&nbsp; &nbsp;&nbsp; Solo auto  @Html.RadioButton("TipoMezzo", "AUTO", false, new { onclick = "this.form.submit()" })</label>
+        <label>Semirimorchi : @Html.RadioButton("TipoMezzo", "RTB", false, new { onclick = "this.form.submit()" })</label>
+        <label>&nbsp;&nbsp; &nbsp;&nbsp; Auto  @Html.RadioButton("TipoMezzo", "AUTO", false, new { onclick = "this.form.submit()" })</label>
         <label>&nbsp;&nbsp; &nbsp;&nbsp; Tutte:  @Html.RadioButton("TipoMezzo", "TUTTE", true, new { onclick = "this.form.submit()" })</label>
     }
 }

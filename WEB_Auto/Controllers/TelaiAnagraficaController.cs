@@ -565,14 +565,30 @@ namespace WEB_Auto.Controllers
 
                     if (cnt == 1)
                     {
-                        var modello = from m in db.AGR_ModelliAuto_vw
-                                      where m.IDCliente == "**"
-                                      where m.IDCasa == aCasa
-                                      select m;
-                        model.AGR_ModelliAuto_vw = modello.ToList().OrderBy(m => m.Descr);
-                        var ElencoModelli = new SelectList(model.AGR_ModelliAuto_vw.ToList(), "ID", "Descr");
-                        ViewBag.IsTrasportatore = false;
-                        ViewData["ElencoModelli"] = ElencoModelli;
+                        if (aCasa.ToUpper() == "CAB" && Session["RTB"].ToString().ToUpper() == "TRUE" )
+                        {
+                            var modello = from m in db.AGR_ModelliAuto_vw
+                                          where m.IDCliente == "**"
+                                          where m.IDCasa == aCasa
+                                          where m.IDModelloCasa == "1240"
+                                          select m;
+                            model.AGR_ModelliAuto_vw = modello.ToList().OrderBy(m => m.Descr);
+                            var ElencoModelli = new SelectList(model.AGR_ModelliAuto_vw.ToList(), "ID", "Descr");
+                            ViewBag.IsTrasportatore = false;
+                            ViewData["ElencoModelli"] = ElencoModelli;
+                        }
+                        else
+                        {
+                            var modello = from m in db.AGR_ModelliAuto_vw
+                                          where m.IDCliente == "**"
+                                          where m.IDCasa == aCasa
+                                          select m;
+                            model.AGR_ModelliAuto_vw = modello.ToList().OrderBy(m => m.Descr);
+                            var ElencoModelli = new SelectList(model.AGR_ModelliAuto_vw.ToList(), "ID", "Descr");
+                            ViewBag.IsTrasportatore = false;
+                            ViewData["ElencoModelli"] = ElencoModelli;
+                        }
+                        
                     }
                     else
                     {
@@ -1750,7 +1766,7 @@ namespace WEB_Auto.Controllers
             // Tipo rotabile
             if ((IDModelloCasa == "1240" || IDModelloCasa == "1241") && String.IsNullOrEmpty(IDTipoRotabile))
             {
-                errMEss += "Tipo rotabile obbligatorio ";
+                errMEss += "Tipo semirimorchio obbligatorio ";
                 return false;
             }
 

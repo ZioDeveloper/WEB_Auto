@@ -121,8 +121,10 @@
 <br />
 @if (ViewBag.ErrMess == "Sbloccato")
 {
-    <div style="color:green;font-size:18px;text-align:center"><b>
-        Controllo OK !</b>
+    <div style="color:green;font-size:18px;text-align:center">
+        <b>
+            Controllo OK !
+        </b>
     </div>
 }
 else if (ViewBag.ErrMess == "TARGA CONOSCIUTA")
@@ -256,11 +258,11 @@ else
                     </tr>*@
                 <tr>
                     <td>
-                        @Html.Label("Rotabile")
+                        @Html.Label("Semirimorchio")
 
                     </td>
                     <td>
-                        @Html.DropDownList("IDTipoRotabile", new SelectList((SelectList)ViewData["ElencoTipoRotabile"], "Value", "Text", ViewBag.aIDTipoRotabile), "-- Seleziona tipo rotabile --", new { @class = "form-control selectpicker data-live-search=true ", @onchange = "submitform();" })
+                        @Html.DropDownList("IDTipoRotabile", new SelectList((SelectList)ViewData["ElencoTipoRotabile"], "Value", "Text", ViewBag.aIDTipoRotabile), "-- Seleziona tipo semirimorchio --", new { @class = "form-control selectpicker data-live-search=true ", @onchange = "submitform();" })
 
                     </td>
                 </tr>
@@ -302,7 +304,7 @@ else
                             @*@Html.RadioButtonFor(model => item4[0].FlagControllo, "Test", new { @checked = true })*@
                         </td>
                     }
-                    else if( ViewBag.aIDModelloCasa != "1240" && ViewBag.aIDModelloCasa != "1241")
+                    else if (ViewBag.aIDModelloCasa != "1240" && ViewBag.aIDModelloCasa != "1241")
                     {
                         <td>
                             Nuovo:   @Html.RadioButton("Condizione", "N", new { @onchange = "submitform();" })
@@ -339,29 +341,29 @@ else
                         if (Session["RTB"].ToString().ToUpper() == "TRUE" || ViewBag.aIDModelloCasa == "1240" || ViewBag.aIDModelloCasa == "1241")
                         {
 
-                            <td>
-                                @Html.Label("DMG Rapido")
-                                @Html.CheckBox("isRapid", false, new { @onchange = "submitform();" })
-                            </td>
-                        }
-
-
+                        <td>
+                            @Html.Label("DMG Rapido")
+                            @Html.CheckBox("isRapid", false, new { @onchange = "submitform();" })
+                        </td>
                     }
-                    else
+
+
+                }
+                else
+                {
+                    @*@Html.CheckBox("isDamaged", false, new { disabled = "disabled" })*@
+                    @Html.CheckBox("isDamaged", false, new { @onchange = "submitform();" })
+                    if (Session["RTB"].ToString().ToUpper() == "TRUE")
                     {
-                        @*@Html.CheckBox("isDamaged", false, new { disabled = "disabled" })*@
-                        @Html.CheckBox("isDamaged", false, new { @onchange = "submitform();" })
-                        if (Session["RTB"].ToString().ToUpper() == "TRUE")
-                        {
-                            <td>
-                                @Html.Label("Rapido")
-                                @Html.CheckBox("isRapid", false, new { @onchange = "submitform();" })
-                            </td>
-                        }
-
+                        <td>
+                            @Html.Label("Rapido")
+                            @Html.CheckBox("isRapid", false, new { @onchange = "submitform();" })
+                        </td>
                     }
-                    
-            <tr>
+
+                }
+
+                <tr>
 
 
                     @if (@ViewBag.HasDanni == "Perizia GOOD")
@@ -548,7 +550,7 @@ else
                }, new { @class = "btn btn-success custom disabled " })
             }
 
-            else if (ViewBag.ErrMess == "In modifica" )
+            else if (ViewBag.ErrMess == "In modifica")
             {
                 @Html.ActionLink("Chiudi perizia", "InputTelaio", new
                 {
@@ -748,6 +750,16 @@ else
 <div>
     @*@Html.ActionLink("Esci", "Index", null, new { @class = "btn btn-danger custom" })*@
 </div>
+
+<script>
+    $(document).ready(function () {
+        function disableBack() { window.history.forward() }
+
+        window.onload = disableBack();
+        window.onpageshow = function (evt) { if (evt.persisted) disableBack() }
+    });
+</script>
+
 <script>
     function tryMe(arg) {
         document.write(arg);
@@ -793,7 +805,20 @@ else
     }
 
 </script>
-
+<script>
+    window.onhashchange = function () {
+        if (window.innerDocClick) {
+            window.innerDocClick = false;
+        } else {
+            if (window.location.hash != '#undefined') {
+                goBack();
+            } else {
+                history.pushState("", document.title, window.location.pathname);
+                location.reload();
+            }
+        }
+    }
+</script>
 @*@if (ViewBag.ToDoRefresh == true && Session["OS"].ToString()!="WINDOWS")
     {
         <script>

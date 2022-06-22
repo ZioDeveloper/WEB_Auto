@@ -32,10 +32,10 @@
         using (Html.BeginForm("Index", "Home", new { usr = Session["User"].ToString() }))
         {
             <label>Filtro periodo ricerca viaggi ( +/- giorni)</label><br />
-            <label>Oggi: @Html.RadioButton("Filtro", "OGGI", false, new { onclick = "this.form.submit()" })</label>
-            <label>&nbsp;&nbsp; &nbsp;&nbsp;3 gg:@Html.RadioButton("Filtro", "TRE", true, new { onclick = "this.form.submit()" })</label>
+            <label>Oggi: @Html.RadioButton("Filtro", "OGGI", true, new { onclick = "this.form.submit()" })</label>
+            <label>&nbsp;&nbsp; &nbsp;&nbsp;3 gg:@Html.RadioButton("Filtro", "TRE", false, new { onclick = "this.form.submit()" })</label>
             <label>&nbsp;&nbsp; &nbsp;&nbsp;7 gg:@Html.RadioButton("Filtro", "SETTE", false, new { onclick = "this.form.submit()" })</label>
-            <label>&nbsp;&nbsp; &nbsp;&nbsp;40 gg:@Html.RadioButton("Filtro", "VENTUNO", false, new { onclick = "this.form.submit()" })</label>
+            <label>&nbsp;&nbsp; &nbsp;&nbsp;21 gg:@Html.RadioButton("Filtro", "VENTUNO", false, new { onclick = "this.form.submit()" })</label>
 
             if ((item3[0].ID == "PMO" || item3[0].ID == "TRI" )&& Session["IDRuolo"].ToString() == "1")
             {

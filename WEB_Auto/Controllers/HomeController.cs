@@ -14,7 +14,7 @@ namespace WEB_Auto.Controllers
 
         private wisedbEntities db  = new wisedbEntities();
 
-        public ActionResult Index(string usr, string Filtro = "TRE", string errMess = "", string IDPorto = "")
+        public ActionResult Index(string usr, string Filtro = "OGGI", string errMess = "", string IDPorto = "")
         {
             var model = new Models.HomeModel();
 
@@ -46,13 +46,14 @@ namespace WEB_Auto.Controllers
                 //usr = "VGrimaldi";
                 //usr = "grimaldi"; // 
                 //usr = "pierangeli"; // 
-                //usr = "patrizia"; // 
+               // usr = "patrizia"; // 
+               // usr = "mmarti"; // 
                // usr = "DiGennaro";
               // usr = "DiSalvo";
                // usr = "patrizia";
                 //usr = "Torresan"; // 
                // usr = "DiNinno";
-               usr = "Maurizio";
+              usr = "Maurizio";
                 //usr = Session["User"].ToString();
             }
 
@@ -134,9 +135,9 @@ namespace WEB_Auto.Controllers
                 var ElencoPorti = new SelectList(model.AGR_Porti.ToList(), "ID", "Descr");
 
             var PortiAdmin = from m in db.AGR_Porti
-                        where m.ID == "PMO" || m.ID == "TRI" || m.ID == "GOA" || m.ID == "CVV"
-                        select m;
-            model.AGR_Porti = PortiAdmin.ToList();
+                        where m.ID == "PMO" || m.ID == "TRI" || m.ID == "GOA" || m.ID == "CVV" || m.ID == "PMI" || m.ID == "IBZ" || m.ID == "MAH" || m.ID == "BCN" || m.ID == "VLC"
+                             select m;
+            model.AGR_Porti = PortiAdmin.ToList().OrderBy(s=>s.Descr);
             var ElencoPortiAdmin = new SelectList(model.AGR_Porti.ToList(), "ID", "Descr");
 
 
@@ -175,8 +176,8 @@ namespace WEB_Auto.Controllers
             }
             else if (Filtro == "VENTUNO")
             {
-                ini = DateTime.Today.AddDays(-40);
-                end = DateTime.Today.AddDays(+40);
+                ini = DateTime.Today.AddDays(-21);
+                end = DateTime.Today.AddDays(+21);
             }
              
 

@@ -52,13 +52,13 @@
             if (Session["RTB"].ToString().ToUpper() == "TRUE")
             {
                 <td>
-                    Perizia RTB  @Html.CheckBox("IsRTB", true, new { @onclick = "this.form.submit();" })
+                    Semirimorchi  @Html.CheckBox("IsRTB", true, new { @onclick = "this.form.submit();" })
                 </td>
             }
             else
             {
                 <td>
-                    Perizia RTB  @Html.CheckBox("IsRTB", false, new { @onclick = "this.form.submit();" })
+                    Semirimorchi  @Html.CheckBox("IsRTB", false, new { @onclick = "this.form.submit();" })
                 </td>
             }
         }

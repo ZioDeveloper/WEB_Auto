@@ -61,3 +61,29 @@ textarea {
     padding: 5px;
     display: none;
 }
+.spanishFlag {
+    display: block;
+    background: url(../img/spanish.png) no-repeat;
+    width: 36px;
+    height: 36px;
+    text-indent: -9999px; /*hides the link text*/
+    vertical-align: middle
+}
+
+.italianFlag {
+    display: block;
+    background: url(../img/italian.png) no-repeat;
+    width: 36px;
+    height: 36px;
+    text-indent: -9999px; /*hides the link text*/
+    vertical-align: middle
+}
+
+.englishFlag {
+    display: block;
+    background: url(../img/english.png) no-repeat;
+    width: 36px;
+    height: 36px;
+    text-indent: -9999px; /*hides the link text*/
+    vertical-align: middle
+}

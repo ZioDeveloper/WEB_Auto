@@ -224,9 +224,9 @@ else
 
                     }
                     @*else if (Session["Classe"].ToString() == "1")
-                        {
-                            @Html.DropDownList("IDModelloCasa", new SelectList((SelectList)ViewData["ElencoModelli"], "Value", "Text", null), "-- Seleziona valore --", new { @class = "form-control selectpicker dropupAuto=false data-live-search=true data-size=5", @onchange = "submitform();" })
-                        }*@
+        {
+            @Html.DropDownList("IDModelloCasa", new SelectList((SelectList)ViewData["ElencoModelli"], "Value", "Text", null), "-- Seleziona valore --", new { @class = "form-control selectpicker dropupAuto=false data-live-search=true data-size=5", @onchange = "submitform();" })
+        }*@
                     else
                     {
                         @Html.DropDownList("IDModelloCasa", new SelectList((SelectList)ViewData["ElencoModelli"], "Value", "Text", ViewBag.aIDModelloCasa), "-- Seleziona valore --", new { @class = "form-control selectpicker dropupAuto=false data-live-search=true data-size=5", @onchange = "submitform();" })
@@ -234,10 +234,11 @@ else
                     }
                     @*@Html.DropDownList("IDModelloCasa", new SelectList((SelectList)ViewData["ElencoModelli"], "Value", "Text", ViewBag.aIDModelloCasa), "-- Seleziona valore --", new { @class = "form-control selectpicker dropupAuto=false data-live-search=true data-size=5", @onchange = "submitform();" })*@
                     @if (item1[0].IDCasa.ToUpper() == "CAB" && ((ViewBag.aIDModelloCasa != "1240" && ViewBag.aIDModelloCasa == "1241") || String.IsNullOrEmpty(ViewBag.aIDModelloCasa)))
+                   
                     {
                         <div style="font-size:smaller">Solo trasportatori in uso !  @Html.CheckBox("Filtrati", true, new { @onchange = "this.form.submit();" })</div>
                     }
-                </td>
+                    </td>
             </tr>
             <tr></tr>
             @if (item1[0].IDCasa.ToUpper() == "RTB" || (item4[0].IDModello.ToString() == "1240" && ViewBag.aIDModelloCasa == "") || ViewBag.aIDModelloCasa == "1240" || ViewBag.aIDModelloCasa == "1241")

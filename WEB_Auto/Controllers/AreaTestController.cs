@@ -173,7 +173,9 @@ namespace WEB_Auto.Controllers
                     var perizia = id;
                     string aPerizia = perizia.ToString();
                     if (aPerizia != "false")
-                        aPerizia = aPerizia;
+                    {
+                        //aPerizia = aPerizia;
+                    }
                 }
                 catch { }
             }

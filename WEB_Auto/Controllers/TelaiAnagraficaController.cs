@@ -12,7 +12,7 @@ using System.Data.Entity;
 
 namespace WEB_Auto.Controllers
 {
-    public class TelaiAnagraficaController : Controller
+    public class TelaiAnagraficaController : ExtendedController
     {
         private wisedbEntities db = new wisedbEntities();
         // GET: TelaiAnagrafica
@@ -562,10 +562,21 @@ namespace WEB_Auto.Controllers
                                      select new { m.IDModello }).FirstOrDefault();
 
 
-
                     if (cnt == 1)
                     {
                         if (aCasa.ToUpper() == "CAB" && Session["RTB"].ToString().ToUpper() == "TRUE" )
+                        {
+                            var modello = from m in db.AGR_ModelliAuto_vw
+                                          where m.IDCliente == "**"
+                                          where m.IDCasa == aCasa
+                                          where m.IDModelloCasa == "1240"
+                                          select m;
+                            model.AGR_ModelliAuto_vw = modello.ToList().OrderBy(m => m.Descr);
+                            var ElencoModelli = new SelectList(model.AGR_ModelliAuto_vw.ToList(), "ID", "Descr");
+                            ViewBag.IsTrasportatore = false;
+                            ViewData["ElencoModelli"] = ElencoModelli;
+                        }
+                        else if (aCasa.ToUpper() == "CAB" && myModello.IDModello.ToString() == "1240")
                         {
                             var modello = from m in db.AGR_ModelliAuto_vw
                                           where m.IDCliente == "**"
@@ -647,11 +658,12 @@ namespace WEB_Auto.Controllers
             {
                 if (IDMeteo == "3" || IDMeteo == "4")
                 {
-                    string sqlcmd = " UPDATE AGR_PERIZIE_Temp_MVC " +
-                                    " SET  Note = @Note " +
-                                    " WHERE ID = @IDPerizia";
-
                     // ABOLITO con mail multi richiesta del 12/05/2022
+                    //string sqlcmd = " UPDATE AGR_PERIZIE_Temp_MVC " +
+                    //                " SET  Note = @Note " +
+                    //                " WHERE ID = @IDPerizia";
+
+
                     //int Inserted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@IDPerizia", myIDPerizia),
                     //                                                     new SqlParameter("@Note", "No foto causa pioggia"));
                 }
@@ -1512,7 +1524,7 @@ namespace WEB_Auto.Controllers
             // Controlli
             //string a = "";
             string myIDModello = "";
-            string aNewModel = "";
+           // string aNewModel = "";
             ViewBag.IsModelActive = IsModelActive;
 
             if (String.IsNullOrEmpty(IDModelloCasa))

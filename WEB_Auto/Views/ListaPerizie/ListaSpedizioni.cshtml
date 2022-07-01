@@ -16,8 +16,11 @@
     <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.4/js/buttons.html5.min.js"</script>
     <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.4/js/buttons.print.min.js"</script>
     <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.4/js/dataTables.buttons.min.js"></script>
-    @*<link rel="stylesheet" type="text/css" href="https://nightly.datatables.net/searchpanes/css/searchPanes.dataTables.min.css" />
-        <script type="text/javascript" src="https://nightly.datatables.net/searchpanes/js/dataTables.searchPanes.min.js"</script>*@
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.4/moment.min.js"></script>
+    <script type="text/javascript" src="https:////cdn.datatables.net/plug-ins/1.12.1/sorting/datetime-moment.js"></script>
+    @*
+    <link rel="stylesheet" type="text/css" href="https://nightly.datatables.net/searchpanes/css/searchPanes.dataTables.min.css" />
+    <script type="text/javascript" src="https://nightly.datatables.net/searchpanes/js/dataTables.searchPanes.min.js"</script>*@
 </head>
 <h4>Lista viaggi </h4>
 @*<hr />
@@ -325,3 +328,10 @@
     });
 
 </script>
+@*<script>
+    $(document).ready(function () {
+        //$.fn.dataTable.moment('dddd, MMMM Do, YYYY');
+        $.fn.dataTable.moment().format("dddd, MMMM Do YYYY, h: mm: ss a");
+        $('#ElencoSpedizioni').DataTable();
+    });
+</script>*@

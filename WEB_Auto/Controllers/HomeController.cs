@@ -9,10 +9,18 @@ using WEB_Auto.Models;
 
 namespace WEB_Auto.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : ExtendedController
     {
 
         private wisedbEntities db  = new wisedbEntities();
+
+        
+        public ActionResult ChangeLanguage(string lang)
+        {
+            new LanguageMang().SetLanguage(lang);
+            Session["ISLanguageDecided"] = true;
+            return RedirectToAction("Index", "Home", new { lang });
+        }
 
         public ActionResult Index(string usr, string Filtro = "OGGI", string errMess = "", string IDPorto = "")
         {

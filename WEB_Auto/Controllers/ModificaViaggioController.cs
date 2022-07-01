@@ -306,7 +306,7 @@ namespace WEB_Auto.Controllers
                     string aPerizia = perizia.ToString();
                     if (aPerizia != "false")
                     {
-                        aPerizia = aPerizia;
+                        //aPerizia = aPerizia;
                         ModificaData(NuovaDataPerizia, aPerizia);
                         aMessage = "Cambio data OK !";
                     }

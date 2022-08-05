@@ -8,6 +8,7 @@ using WEB_Auto.Models;
 using ClosedXML.Excel;
 using System.IO;
 using System.Transactions;
+using System.IO.Compression;
 using System.Data.Entity;
 
 namespace WEB_Auto.Controllers
@@ -102,6 +103,7 @@ namespace WEB_Auto.Controllers
                 {
                     var lista = (from m in db.WEB_AUTO_ListaSpedizioni_CMN_vw
                                  where m.IDPerito == aPerito
+                                 where m.ID == "F2034275"
                                  select m).ToList();
                     model.WEB_AUTO_ListaSpedizioni_CMN_vw = lista;
 
@@ -110,6 +112,7 @@ namespace WEB_Auto.Controllers
                 {
                     var lista = (from m in db.WEB_AUTO_ListaSpedizioni_CMN_vw
                                  where m.IDPerito == aPerito
+                                 where m.ID == "F2034275"
                                  where m.IsClosed == false
                                  select m).ToList();
                     model.WEB_AUTO_ListaSpedizioni_CMN_vw = lista;
@@ -119,6 +122,7 @@ namespace WEB_Auto.Controllers
                 {
                     var lista = (from m in db.WEB_AUTO_ListaSpedizioni_CMN_vw
                                  where m.IDPerito == aPerito
+                                 where m.ID == "F2034275"
                                  where m.IsClosed == true
                                  select m).ToList();
                     model.WEB_AUTO_ListaSpedizioni_CMN_vw = lista;
@@ -785,5 +789,97 @@ namespace WEB_Auto.Controllers
 
             int Inserted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@NumFoto", myFoto), new SqlParameter("@NumPDF", myPDF), new SqlParameter("@IDPerizia", aIDPerizia));
         }
+
+
+        public ActionResult EsportaFotoSpedizione(string IDSpedizione 
+            )
+        {
+
+
+            System.IO.DirectoryInfo di = new DirectoryInfo(Path.Combine(Server.MapPath("~/ZIPPED").ToString()));
+
+            foreach (FileInfo file in di.GetFiles())
+            {
+                file.Delete();
+            }
+            foreach (DirectoryInfo dir in di.GetDirectories())
+            {
+                dir.Delete(true);
+            }
+
+            System.IO.DirectoryInfo di2 = new DirectoryInfo(Path.Combine(Server.MapPath("~/ZIPCreated").ToString()));
+
+            foreach (FileInfo file in di2.GetFiles())
+            {
+                file.Delete();
+            }
+            foreach (DirectoryInfo dir in di2.GetDirectories())
+            {
+                dir.Delete(true);
+            }
+
+            var targa = (from f in db.WEB_AUTO_FOTO
+                         join t in db.AGR_PERIZIE_TEMP_MVC on f.IDPerizia equals t.ID
+                         where t.IDSpedizione == IDSpedizione
+                         select new { t.Telaio }).ToList();
+
+            string nomecartella = "";
+            string oldname = "";
+            foreach (var item in targa)
+            {
+                if (!String.IsNullOrEmpty(item.Telaio))
+                { nomecartella = item.Telaio.ToString(); }
+                else
+                { nomecartella = item.Telaio.ToString(); }
+
+                bool exists = System.IO.Directory.Exists(Server.MapPath(@"~/ZIPPED/" + nomecartella).ToString());
+                if (!exists)
+                {
+                    System.IO.Directory.CreateDirectory(Server.MapPath(@"~/ZIPPED/" + nomecartella).ToString());
+                    var foto = (from m in db.WEB_AUTO_FOTO
+                                join t in db.AGR_PERIZIE_TEMP_MVC on m.IDPerizia equals t.ID
+                                where t.IDSpedizione == IDSpedizione
+                                where t.Telaio == nomecartella 
+                                select m.FileName).ToList();
+                    foreach (var itemfoto in foto)
+                    {
+
+                        string test = itemfoto.ToString();
+                        string path2 = System.IO.Path.Combine(Server.MapPath("~/DocumentiXTelai/Foto"), itemfoto);
+                        try
+                        {
+                            System.IO.File.Copy(path2, System.IO.Path.Combine(Server.MapPath("~/ZIPPED/" + nomecartella), itemfoto));
+                        }
+                        catch (Exception exc)
+                        {
+                            string a = exc.Message;
+                        }
+                    }
+                }
+                else
+                {
+
+                }
+
+
+            }
+
+
+            string nomecommessa = "TEST";
+            string source = Path.Combine(Server.MapPath("~/ZIPPED").ToString());
+            string dest = Path.Combine(Server.MapPath("~/ZIPCreated"), nomecommessa + ".zip");
+
+
+            ZipFile.CreateFromDirectory(source, dest);
+
+
+
+            ViewBag.NomeFile = nomecommessa + ".zip";
+
+
+
+            return View();
+        }
+
     }
 }

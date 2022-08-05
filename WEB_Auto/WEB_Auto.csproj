@@ -64,6 +64,8 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.IO.Compression.FileSystem" />
     <Reference Include="System.IO.FileSystem.Primitives, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.IO.FileSystem.Primitives.4.0.1\lib\net46\System.IO.FileSystem.Primitives.dll</HintPath>
     </Reference>
@@ -382,6 +384,7 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="img\english.png" />
+    <Content Include="img\folder.png" />
     <Content Include="img\image.png" />
     <Content Include="img\italian.png" />
     <Content Include="img\pdf.png" />
@@ -603,6 +606,7 @@
     <Content Include="Views\Storico\CarouselFotoTemporaneo.cshtml" />
     <Content Include="Views\PDFViaggio\InsertPDFViaggio.cshtml" />
     <Content Include="Views\PDFViaggio\ScattaPDFSpedizione.cshtml" />
+    <Content Include="Views\ListaPerizie\EsportaFotoSpedizione.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -610,6 +614,8 @@
     <Folder Include="DocumentiXTelai\Foto\" />
     <Folder Include="DocumentiXTelai\PDF\" />
     <Folder Include="DocumentiXTelai\TXT\" />
+    <Folder Include="ZIPCreated\" />
+    <Folder Include="ZIPPED\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

@@ -61,7 +61,7 @@ namespace WEB_Auto {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Search for VIN.
+        ///   Looks up a localized string similar to Search VIN.
         /// </summary>
         public static string NavCercaTelaio {
             get {

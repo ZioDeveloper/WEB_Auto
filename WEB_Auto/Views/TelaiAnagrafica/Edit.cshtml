@@ -279,7 +279,7 @@ else
                     @Html.Label("Condizione")
 
                 </td>
-                @if (item1[0].IDCasa.ToUpper() == "YYY")
+                @if (item1[0].IDCasa.ToUpper() == "YYY" || item1[0].IDCasa.ToUpper() == "KKK")
                 {
                     <td>
                         Nuovo:   @Html.RadioButton("Condizione", "N", new { @checked = true, @onchange = "submitform();" })

@@ -364,10 +364,10 @@ else if (Session["Classe"].ToString() == "1")
                 string aIDOperatore = item.IDOperatore.ToString();
 
 
-                < tr >
+                <tr>
 
 
-                < td >
+                <td>
                 @if (!IsClosed)
                 {
                     @Html.ActionLink("Modifica", "Edit", "TelaiAnagrafica", new
@@ -404,49 +404,49 @@ else if (Session["Classe"].ToString() == "1")
                         IsUpdate = true
                     }, new { @class = "btn btn-success btn-xs  disabled" })}
 
-                </ td >
+                </td>
                 @if (aIDOperatore.ToUpper() == "12")
                 {
-                    < td style = "color:forestgreen" >
+                    <td style = "color:forestgreen" >
 
                     Da periziare
-                    </ td >
+                    </td>
                 }
                 else
                 {
-                    < td style = "color:red" >
+                    <td style = "color:red" >
 
                     Già vista
-                    </ td >
+                    </td>
                 }
-                < td >
+                <td>
                 @Html.DisplayFor(modelItem => item.Telaio)
-                </ td >
-                < td >
+                </td >
+                <td >
                 @Html.DisplayFor(modelItem => item.Modello)
-                </ td >
+                </td>
 
-                < td >
+                <td >
                 @*@Html.DisplayFor(modelItem => item.DataPerizia)*@
                 @Convert.ToDateTime(item.DataPerizia).ToString("dd/MM/yyyy")
-                </ td >
+                </td>
 
 
                 @if (aStatus.ToUpper() == "GOOD")
                 {
-                    < td style = "color:forestgreen" >
+                    <td style = "color:forestgreen" >
 
                     @Html.DisplayFor(modelItem => item.Status)
-                    </ td >
+                    </td>
                 }
                 else
                 {
-                    < td style = "color:red" >
+                    <td style = "color:red" >
 
                     @Html.DisplayFor(modelItem => item.Status)
-                    </ td >
+                    </td>
                 }
-                < td >
+                <td>
                 @Html.DisplayFor(modelItem => item.NumFoto)
                 @if (item.NumFoto > 0)
                 {
@@ -464,8 +464,8 @@ else if (Session["Classe"].ToString() == "1")
                         IsUpdate = ViewBag.IsUpdate
                     }, new { @class = "photoImg" })
                 }
-                </ td >
-                < td >
+                </td>
+                <td>
                 @Html.DisplayFor(modelItem => item.NumPDF)
                 @if (item.NumPDF > 0)
                 {
@@ -483,8 +483,8 @@ else if (Session["Classe"].ToString() == "1")
                         IsUpdate = ViewBag.IsUpdate
                     }, new { @class = "pdfImg" })
                 }
-                </ td >
-                < td >
+                </td>
+                <td>
                 @if (!IsClosed)
                 {
                     @Html.ActionLink("Cancella", "EliminaPerizia", "TelaiAnagrafica", new
@@ -510,9 +510,9 @@ else if (Session["Classe"].ToString() == "1")
                         IsUpdate = true
                     }, new { @class = "btn btn-danger btn-xs disabled " })
                 }
-                </ td >
+                </td>
 
-                </ tr >
+                </tr>
             }
         </tbody>
         <tfoot>

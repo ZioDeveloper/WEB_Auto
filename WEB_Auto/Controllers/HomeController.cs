@@ -49,19 +49,19 @@ namespace WEB_Auto.Controllers
 
             if (String.IsNullOrEmpty(usr))
             {
-                //usr = "caminita"; // pierangeli
+               usr = "caminita"; // pierangeli
                 // usr = "Astrea"; // pierangeli
                 //usr = "VGrimaldi";
                 //usr = "grimaldi"; // 
                 //usr = "pierangeli"; // 
                // usr = "patrizia"; // 
                // usr = "mmarti"; // 
-               // usr = "DiGennaro";
+              //  usr = "DiGennaro";
               // usr = "DiSalvo";
                // usr = "patrizia";
                 //usr = "Torresan"; // 
                // usr = "DiNinno";
-              usr = "Maurizio";
+              //usr = "Maurizio";
                 //usr = Session["User"].ToString();
             }
 
@@ -247,6 +247,7 @@ namespace WEB_Auto.Controllers
             {
                 var Spedizioni = from m in db.AGR_SpedizioniWEB_vw
                                  where m.IDCliente == "BE"
+                                 where m.ID == "F2034275"
                                  //where m.DataInizioImbarco >= ini
                                  select m;
                 model.AGR_SpedizioniWEB_vw = Spedizioni.ToList();

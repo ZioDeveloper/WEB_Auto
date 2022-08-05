@@ -30,7 +30,8 @@
 
                         <li>@Html.ActionLink(WEB_Auto.Resource.NavHome, "Index", "Home", new { usr = Session["User"].ToString() }, null)</li>
                         @*@Html.LiActionLink("Home", "Index", "Home", Session["User"].ToString());*@
-                        @Html.LiActionLink(WEB_Auto.Resource.NavCercaTelaio, "CercaTelaio", "Storico", "")
+                        @*@Html.LiActionLink(WEB_Auto.Resource.NavCercaTelaio, "CercaTelaio", "Storico", "")*@
+                        @Html.LiActionLink("Cerca telaio", "CercaTelaio", "Storico", "")
                         @Html.LiActionLink("Lista viaggi", "ListaSpedizioni", "ListaPerizie", "")
                         @Html.LiActionLink("Modifica viaggio", "ModificaViaggio", "ModificaViaggio", "")
                         @Html.LiActionLink("Dati preload", "VisualizzaPreload", "Storico", "")
@@ -51,22 +52,23 @@
                         </li>
 
                         // SEZIONE MULTILINGUA
-                        <li class="dropdown-submenu">
+
+                        @*<li class="dropdown-submenu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <span class="nav-label">Language</span><span class="caret"></span></a>
                             <ul class="dropdown-menu">
                                 @foreach (var i in WEB_Auto.LanguageMang.AvailableLanguages)
                                 {
-                                <li class="nav-item">
-                                     @Html.Raw(i.LanguageFullName) &nbsp;  @Html.ActionLink(i.LanguageFullName, "ChangeLanguage", "Home", new { lang = i.LanguageCultureName }, new { @class = i.LanguageFlag })
-                                </li>
+                                    <li class="nav-item">
+                                        @Html.Raw(i.LanguageFullName) &nbsp;  @Html.ActionLink(i.LanguageFullName, "ChangeLanguage", "Home", new { lang = i.LanguageCultureName }, new { @class = i.LanguageFlag })
+                                    </li>
                                 }
                             </ul>
-                        </li>
+                        </li>*@
                         // END END END SEZIONE MULTILINGUA
 
                         @Html.LiActionLink("Contact", "Contact", "Home", "")
 
-                        
+
                     }
 
                     else

@@ -247,6 +247,7 @@
         var table = $('#ElencoSpedizioni').DataTable({
             "autoWidth": false,
             stateSave: true,
+            search: "Ricerca:",
             "lengthMenu": [[-1, 50, 100], ["Tutti", 50, 100]],
             "iDisplayLength": -1,
             buttons: [
@@ -303,7 +304,7 @@
             language: {
 
                 processing: "Ricerca in corso...",
-                search: "Ricerca:",
+                //search: "Ricerca:",
                 //lengthMenu: "Visualizza _MENU_ elementi",
 
                 info: "Elenca da _START_ a _END_ di _TOTAL_ elementi",

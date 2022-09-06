@@ -49,7 +49,7 @@ namespace WEB_Auto.Controllers
 
             if (String.IsNullOrEmpty(usr))
             {
-               usr = "caminita"; // pierangeli
+              // usr = "caminita"; // pierangeli
                 // usr = "Astrea"; // pierangeli
                 //usr = "VGrimaldi";
                 //usr = "grimaldi"; // 
@@ -61,7 +61,7 @@ namespace WEB_Auto.Controllers
                // usr = "patrizia";
                 //usr = "Torresan"; // 
                // usr = "DiNinno";
-              //usr = "Maurizio";
+               usr = "Maurizio";
                 //usr = Session["User"].ToString();
             }
 

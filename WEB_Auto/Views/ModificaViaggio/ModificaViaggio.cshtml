@@ -94,7 +94,8 @@
 
                     if (item4[0].IsClosed == false)
                     {
-                        @Html.Label("Nuovo numero di viaggio ")<br />
+                        @Html.Label("Nuovo numero di viaggio")<br />
+                        @Html.Label("(ricerca viaggi disponibili effettuata entro  20 gg + e -  rispetto data odierna)", new { @style = "font-size: 11px;" })<br />
                         @*@Html.TextBox("NuovoViaggio", null, new { @Value = Testo })*@
                         @*@Html.TextBox("NuovoViaggio1")*@
                         @Html.DropDownList("NuovoViaggio", (SelectList)ViewData["ElencoSpedizioni"], "-- Seleziona viaggio --", new { @style = "font-size: 13px;", @class = "form-control selectpicker dropupAuto = false data-live-search=true data-size=5" }) @*onfocus = "blur();",*@
@@ -116,7 +117,7 @@
 
             if (ViewBag.aMsg != "")
             {
-                    <br /><br />
+                <br /><br />
                 string msg = ViewBag.aMsg;
                 <div style="color:forestgreen">@Html.Label(msg)</div>
             }

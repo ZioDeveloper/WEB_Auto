@@ -53,8 +53,8 @@ namespace WEB_Auto.Controllers
             DateTime ini = DateTime.Today;
             DateTime end = DateTime.Today;
             
-            ini = DateTime.Today.AddDays(-5);
-            end = DateTime.Today.AddDays(+5);
+            ini = DateTime.Today.AddDays(-20);
+            end = DateTime.Today.AddDays(+20);
             string myIDPorto = Session["IDPortoPerito"].ToString();
 
             var Spedizioni = from m in db.AGR_SpedizioniWEB_vw

@@ -16,11 +16,8 @@
     <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.4/js/buttons.html5.min.js"</script>
     <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.4/js/buttons.print.min.js"</script>
     <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.4/js/dataTables.buttons.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.4/moment.min.js"></script>
-    <script type="text/javascript" src="https:////cdn.datatables.net/plug-ins/1.12.1/sorting/datetime-moment.js"></script>
-    @*
-        <link rel="stylesheet" type="text/css" href="https://nightly.datatables.net/searchpanes/css/searchPanes.dataTables.min.css" />
-        <script type="text/javascript" src="https://nightly.datatables.net/searchpanes/js/dataTables.searchPanes.min.js"</script>*@
+    @*<link rel="stylesheet" type="text/css" href="https://nightly.datatables.net/searchpanes/css/searchPanes.dataTables.min.css" />
+    <script type="text/javascript" src="https://nightly.datatables.net/searchpanes/js/dataTables.searchPanes.min.js"</script>*@
 </head>
 <h4>Lista viaggi </h4>
 @*<hr />
@@ -50,11 +47,10 @@
             <th>Modifica</th>
             <th>Viaggio</th>
             <th>Spedizione</th>
-
             <th>POD</th>
             <th>Casa</th>
             <th>Partenza</th>
-            @*<th>Arrivo</th>*@
+
             <th>TP</th>
             <th>Num perizie</th>
             <th>Good</th>
@@ -65,12 +61,12 @@
             <th>Stato chiusura</th>
             <th>PDF Viaggio</th>
             <th>n°</th>
-            @if (Session["Classe"].ToString() == "0")
+            @*@if (Session["Classe"].ToString() == "0")
             {
 
                 <th>Download</th>
-            }
-            </tr>
+            }*@
+        </tr>
 
     </thead>
     <tbody>
@@ -240,11 +236,110 @@
         </tr>
     </tfoot>
 </table>
-
-
+@*ElencoSpedizioni*@
 <script>
     $(document).ready(function () {
         var table = $('#ElencoSpedizioni').DataTable({
+            "autoWidth": false,
+            stateSave: true,
+            "lengthMenu": [[-1, 50, 100], ["Tutti", 50, 100]],
+            "iDisplayLength": -1,
+            buttons: [
+                //{
+                //    extend: 'searchPanes',
+                //    config: {
+                //        cascadePanes: true
+                //    }
+                //},
+                {
+                    extend: 'excelHtml5',
+                    text: 'Crea excel ',
+                    exportOptions: {
+                        modifier: {
+                            search: 'none'
+                        }
+                    }
+                }
+                ,
+                {
+                    extend: 'print',
+                    text: 'Stampa griglia',
+                    exportOptions: {
+                        modifier: {
+                            search: 'none'
+                        }
+                    }
+                },
+                {
+                    extend: 'pdf',
+                    text: 'Crea PDF',
+                    exportOptions: {
+                        modifier: {
+                            page: 'current'
+                        }
+                    }
+                }
+
+            ],
+
+
+            dom: 'Blfrtip',
+            //buttons: [
+            //    'copy', 'csv', 'excel',  'print'
+            //],
+            //"columnDefs": [
+            //    { "width": "110px", "targets": 0 },
+            //    { "width": "40px", "targets": 1 },
+            //    { "width": "100px", "targets": 2 },
+            //    { "width": "70px", "targets": 3 },
+            //    { "width": "270px", "targets": 4 },
+            //    { "width": "70px", "targets": 5 }
+            //],
+            //stateSave: true,
+            language: {
+
+                processing: "Ricerca in corso...",
+                search: "Ricerca:",
+                //lengthMenu: "Visualizza _MENU_ elementi",
+
+                info: "Elenca da _START_ a _END_ di _TOTAL_ elementi",
+                infoEmpty: "Elenca da 0 a 0 di 0 elementi",
+                infoFiltered: "(filtrati da _MAX_ elementi totali)",
+                infoPostFix: "",
+                loadingRecords: "Caricamento...",
+                zeroRecords: "La ricerca non ha portato alcun risultato.",
+                emptyTable: "Nessun record presente in tabella",
+                paginate: {
+                    first: "Inizio",
+                    previous: "Precedente",
+                    next: "Successivo",
+                    last: "Fine"
+                },
+                aria: {
+                    sortAscending: ": attiva per ordinare la colonna in ordine crescente",
+                    sortDescending: ": attiva per ordinare la colonna in ordine decrescente"
+                },
+                searchPanes: {
+                    title: {
+                        _: 'Filtri selezionati : %d',
+                        0: 'Nessun filtro selezionato',
+                        1: 'Un solo filtro selezionato'
+                    },
+                    clearMessage: 'Azzera filtri !',
+                    collapse: { 0: 'Ricerca avanzata', _: 'Scelte selezionate (%d)' }
+                },
+                buttons: [
+                    'copy', 'csv', 'excel', 'print'
+                ]
+            }
+        });
+    });
+
+</script>
+
+<script>
+    $(document).ready(function () {
+        var table = $('#ElencoSpedizioni1').DataTable({
             "autoWidth": false,
             stateSave: true,
             search: "Ricerca:",
@@ -341,10 +436,3 @@
     });
 
 </script>
-@*<script>
-        $(document).ready(function () {
-            //$.fn.dataTable.moment('dddd, MMMM Do, YYYY');
-            $.fn.dataTable.moment().format("dddd, MMMM Do YYYY, h: mm: ss a");
-            $('#ElencoSpedizioni').DataTable();
-        });
-    </script>*@

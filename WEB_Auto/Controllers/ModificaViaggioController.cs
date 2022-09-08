@@ -87,7 +87,7 @@ namespace WEB_Auto.Controllers
                 return RedirectToAction("ModificaViaggio", new { aViaggio = VecchioViaggio });
             }
 
-
+            string test = formCollection["ID"];
 
             string[] ids = formCollection["ID"].Split(new char[] { ',' });
             foreach (string id in ids)
@@ -105,11 +105,11 @@ namespace WEB_Auto.Controllers
                         IsCorrect = ModificaSpedizione(NuovoViaggio, aPerizia, out string aMsg);
                         if (!IsCorrect)
                         {
-                            return RedirectToAction("ModificaNonConsentita", "ModificaViaggio", new { Message = aMsg , aViaggio = VecchioViaggio, TipoMezzo });
+                            return RedirectToAction("ModificaNonConsentita", "ModificaViaggio", new { formCollection, Message = aMsg , aViaggio = VecchioViaggio, TipoMezzo });
                         }
                     }
                 }
-                catch { return RedirectToAction("ModificaNonConsentita", "ModificaViaggio", new { Message = "Errore non riconoscituo contattare Astrea" , aViaggio = VecchioViaggio, TipoMezzo }); }
+                catch { return RedirectToAction("ModificaNonConsentita", "ModificaViaggio", new { formCollection, Message = "Errore non riconoscituo contattare Astrea" , aViaggio = VecchioViaggio, TipoMezzo }); }
             }
            
             return RedirectToAction("ModificaViaggio" , new { aViaggio = VecchioViaggio, aMsg = "MODIFCA TERMINATA - VERIFICA NEL MENU LISTA VIAGGI" });
@@ -160,7 +160,14 @@ namespace WEB_Auto.Controllers
 
             if(cnt > 0)
             {
-                aMsg = "Lo stesso telaio è già presente !";
+                aMsg = "Il telaio : " + myPerizia.Telaio.ToString() + " è già presente !";
+
+                // Scrivo il telaio che origina l'errore....
+                string sqlcmd = " INSERT INTO  AGR_TelaiScartati_MVC " +
+                                                " (Telaio ) VALUES( @Telaio) ";
+                                                
+                int Inserted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@Telaio", myPerizia.Telaio.ToString()));
+
                 return false;
             }
 
@@ -336,7 +343,7 @@ namespace WEB_Auto.Controllers
 
         }
 
-        public ActionResult ModificaNonConsentita(string Message , string aViaggio , string TipoMezzo = "TUTTE")
+        public ActionResult ModificaNonConsentita(FormCollection formCollection , string Message , string aViaggio , string TipoMezzo = "TUTTE")
         {
             ViewBag.MEssage = Message;
             ViewBag.aViaggio = aViaggio;

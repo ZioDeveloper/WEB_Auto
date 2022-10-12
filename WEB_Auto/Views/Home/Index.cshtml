@@ -54,6 +54,7 @@
 
         }
     }
+    <br />
     <div style="color:red">
         @ViewBag.errMess
     </div>
@@ -61,7 +62,7 @@
 
 
     <div>
-        @using (Html.BeginForm("InputTelaio", "TelaiAnagrafica", new { IDPerito = @item2[0].ID, IDSpedizione = @item1[0].ID }, FormMethod.Post))
+        @using (Html.BeginForm("InputTelaio", "TelaiAnagrafica", new { IDPerito = @item2[0].ID, IDSpedizione = @item1[0].ID }, FormMethod.Post, new { name = "frmPratica", id = "frmPratica", onSubmit = " return VerifyMeteo();" }))
         {
 
             @Html.Label("Seleziona viaggio")
@@ -77,7 +78,7 @@
 
             @Html.Label("Seleziona meteo")
             @*@Html.DropDownList("IDMeteo", (SelectList)ViewData["ElencoMeteo"], "-- Seleziona meteo --", new { @class = "form-control" })*@
-            @Html.DropDownList("IDMeteo", (SelectList)ViewData["ElencoMeteo"], new { @class = "form-control selectpicker data-live-search=true" }) <br />
+            @Html.DropDownList("IDMeteo", (SelectList)ViewData["ElencoMeteo"], "-- Seleziona meteo --", new { @class = "form-control selectpicker data-live-search=true" }) <br />
 
 
             @Html.Label("Seleziona tipo perizia")
@@ -131,5 +132,23 @@
 <script>
     function submitform() {
         $('form').submit();
+    }
+</script>
+<script type="text/javascript">
+    function VerifyMeteo() {
+        var IDMeteo = document.frmPratica.IDMeteo.value
+        var IDSpedizione = document.frmPratica.IDSpedizione.value 
+        if (IDMeteo == "") {
+            alert("Selezionare il tipo METEO !");
+            document.frmPratica.IDMeteo.focus();
+            return false;
+        }
+        else if (IDSpedizione == "") {
+            alert("Selezionare spedizione !");
+            document.frmPratica.IDSpedizione.focus();
+            return false;
+        }
+        else
+            return true;
     }
 </script>

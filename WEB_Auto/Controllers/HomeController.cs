@@ -22,7 +22,7 @@ namespace WEB_Auto.Controllers
             return RedirectToAction("Index", "Home", new { lang });
         }
 
-        public ActionResult Index(string usr, string Filtro = "OGGI", string errMess = "", string IDPorto = "")
+        public ActionResult Index(string usr, string Filtro = "OGGI", string errMess = "", string IDPorto = "", string aSpedizione = "")
         {
             var model = new Models.HomeModel();
 
@@ -56,12 +56,12 @@ namespace WEB_Auto.Controllers
                 //usr = "pierangeli"; // 
                // usr = "patrizia"; // 
                // usr = "mmarti"; // 
-              //  usr = "DiGennaro";
+               // usr = "DiGennaro";
               // usr = "DiSalvo";
-                usr = "patrizia";
+               //usr = "patrizia";
                 //usr = "Torresan"; // 
                // usr = "DiNinno";
-              // usr = "Maurizio";
+               usr = "Maurizio";
                 //usr = Session["User"].ToString();
             }
 
@@ -136,11 +136,11 @@ namespace WEB_Auto.Controllers
 
             // Porti - TEST TEST TEST
            
-                var Porti = from m in db.AGR_Porti
+            var Porti = from m in db.AGR_Porti
                             where m.ID == "PMO" || m.ID == "TRI"
                             select m;
-                model.AGR_Porti = Porti.ToList();
-                var ElencoPorti = new SelectList(model.AGR_Porti.ToList(), "ID", "Descr");
+            model.AGR_Porti = Porti.ToList();
+            var ElencoPorti = new SelectList(model.AGR_Porti.ToList(), "ID", "Descr");
 
             var PortiAdmin = from m in db.AGR_Porti
                         where m.ID == "PMO" || m.ID == "TRI" || m.ID == "GOA" || m.ID == "CVV" || m.ID == "PMI" || m.ID == "IBZ" || m.ID == "MAH" || m.ID == "BCN" || m.ID == "VLC"
@@ -216,6 +216,7 @@ namespace WEB_Auto.Controllers
 
                 // Dati per dropdown Meteo
                 var Meteo = from m in db.AGR_Meteo
+                            where m.ID != "*"
                             select m;
                 model.AGR_Meteo = Meteo.ToList();
 
@@ -257,6 +258,8 @@ namespace WEB_Auto.Controllers
                 // Dati per dropdown Meteo
                 var Meteo = from m in db.AGR_Meteo
                             select m;
+
+
                 model.AGR_Meteo = Meteo.ToList();
 
                 var ElencoMeteo = new SelectList(model.AGR_Meteo.ToList(), "ID", "DescrITA");

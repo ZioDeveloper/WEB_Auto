@@ -35,11 +35,20 @@ namespace WEB_Auto.Controllers
 
             return false;
         }
-        public ActionResult InputTelaio(string IDPerito, string IDSpedizione,string IDMeteo, string IDTP, string Chassis,string aIDModello,string DataPerizia, bool IsRTB = false)
+        public ActionResult InputTelaio(string IDPerito, string IDSpedizione,string IDMeteo, string IDTP, string Chassis,string aIDModello,string DataPerizia, bool IsRTB = false, string aErrorMsg = "" )
         {
-            if(!String.IsNullOrEmpty(IDPerito))
+            string errMSg = "";
+
+            if (!String.IsNullOrEmpty(IDPerito))
                 EliminaTelaiSenzaModello(IDPerito);
 
+            if (String.IsNullOrEmpty(IDSpedizione))
+            {
+                string usr = Session["User"].ToString();
+                return RedirectToAction("Index", "Home", new { usr = usr, errMess = "Selezionare una spedizione" });
+            }
+
+           
             // verifica TP
             var Spedizioni = (from m in db.AGR_SpedizioniWEB_vw
                              where m.ID == IDSpedizione
@@ -59,6 +68,89 @@ namespace WEB_Auto.Controllers
                 }
             }
 
+            // Verifica congruità date
+            if (IDTP == "C" && !String.IsNullOrEmpty(DataPerizia) )
+            {
+                DateTime dtSpedizione = (DateTime)Spedizioni.DataPartenzaImbarco;
+                DateTime dtPerizia;
+
+                DateTime ora = DateTime.Now;
+                string ore = ora.Hour.ToString("00");
+                string minuti = ora.Minute.ToString("00"); ;
+                string secondi = ora.Second.ToString("00"); ;
+               
+                string myISoDate = DataPerizia.Right(4) + DataPerizia.Substring(3, 2) + DataPerizia.Left(2) + " " + ore + ":" + minuti + ":" + secondi;
+                try
+                {
+                    dtPerizia = DateTime.ParseExact(myISoDate, "yyyyMMdd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
+                    if (dtPerizia.Date > dtSpedizione.Date)
+                    {
+                        string usr = Session["User"].ToString();
+                        DataPerizia = null;
+                        Session["DataRicorda"] = "";
+                        Chassis = null;
+                        errMSg = "Errore : Perizia C - Data perizia maggiore della data partenza, valore non ammesso !";
+                        return RedirectToAction("InputTelaio", "TelaiAnagrafica", new { IDPerito, IDSpedizione, IDMeteo, IDTP, Chassis, aIDModello, DataPerizia, IsRTB, aErrorMsg = errMSg });
+                    }
+                    else
+                    {
+                        errMSg = "";
+                    }
+                }
+                catch
+                {
+                    string usr = Session["User"].ToString();
+                    DataPerizia = null;
+                    Session["DataRicorda"] =  "";
+                    Chassis = null;
+                    errMSg = "Errore : Formato data non ammesso !";
+                    return RedirectToAction("InputTelaio", "TelaiAnagrafica", new { IDPerito, IDSpedizione, IDMeteo, IDTP, Chassis, aIDModello, DataPerizia, IsRTB, aErrorMsg = errMSg });
+                }
+
+                
+
+            }
+            if (IDTP == "D" && !String.IsNullOrEmpty(DataPerizia))
+            {
+                DateTime dtSpedizione = (DateTime)Spedizioni.DataPartenzaImbarco;
+                DateTime dtPerizia;
+
+                DateTime ora = DateTime.Now;
+                string ore = ora.Hour.ToString("00");
+                string minuti = ora.Minute.ToString("00"); ;
+                string secondi = ora.Second.ToString("00"); ;
+
+                string myISoDate = DataPerizia.Right(4) + DataPerizia.Substring(3, 2) + DataPerizia.Left(2) + " " + ore + ":" + minuti + ":" + secondi;
+                try
+                {
+                    dtPerizia = DateTime.ParseExact(myISoDate, "yyyyMMdd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
+                    if (dtPerizia.Date < dtSpedizione.Date)
+                    {
+                        string usr = Session["User"].ToString();
+                        Session["DataRicorda"] = "";
+                        DataPerizia = null;
+                        Chassis = null;
+                        errMSg = "Errore : Perizia D - Data perizia minore della data partenza, valore non ammesso !";
+                        return RedirectToAction("InputTelaio", "TelaiAnagrafica", new { IDPerito, IDSpedizione, IDMeteo, IDTP, Chassis, aIDModello, DataPerizia, IsRTB, aErrorMsg = errMSg });
+                    }
+                    else
+                    {
+                        errMSg = "";
+                    }
+                }
+                catch
+                {
+                    string usr = Session["User"].ToString();
+                    Session["DataRicorda"] = "";
+                    DataPerizia = null;
+                    Chassis = null;
+                    errMSg = "Errore : Formato data non ammesso !";
+                    return RedirectToAction("InputTelaio", "TelaiAnagrafica", new { IDPerito, IDSpedizione, IDMeteo, IDTP, Chassis, aIDModello, DataPerizia, IsRTB, aErrorMsg = errMSg });
+                }
+
+            }
+
+
             int chiuse = (from m in db.AGR_PERIZIE_TEMP_MVC
                       
                        where m.IDSpedizione == IDSpedizione
@@ -73,7 +165,7 @@ namespace WEB_Auto.Controllers
             if (String.IsNullOrEmpty(IDSpedizione))
             {
                 string usr = Session["User"].ToString();
-                return RedirectToAction("Index", "Home", new { usr = usr, errMess = "Selezionare una spedizione" });
+                return RedirectToAction("Index", "Home", new { usr = usr,  errMess = "Selezionare una spedizione" });
             }
 
             string Test = Session["RTB"].ToString();
@@ -120,7 +212,7 @@ namespace WEB_Auto.Controllers
             if (String.IsNullOrEmpty(IDMeteo))
             {
                 string usr = Session["User"].ToString();
-                return RedirectToAction("Index", "Home", new { usr = usr, errMess = "Selezionare un tipo meteo" });
+                return RedirectToAction("Index", "Home", new { usr = usr, aSpedizione = IDSpedizione, errMess = "Selezionare un tipo meteo" });
             }
 
             if (String.IsNullOrEmpty(IDTP))
@@ -326,6 +418,7 @@ namespace WEB_Auto.Controllers
             ViewBag.IDMeteo = IDMeteo;
             ViewBag.IDTP = IDTP;
             ViewBag.aIDModello = aIDModello;
+            ViewBag.errMSg = aErrorMsg;
             return View();
         }
 

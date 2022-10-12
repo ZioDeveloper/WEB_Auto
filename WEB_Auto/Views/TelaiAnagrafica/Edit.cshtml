@@ -153,237 +153,240 @@ else
     {
 
 
-        <table style="background-color:#E8E8E8">
-            <tr>
-                <td>
-                    @Html.Label("Viaggio")
-                </td>
-                <td>
-                    @Html.DropDownList("IDSpedizione", new SelectList((SelectList)ViewData["ElencoSpedizioni"], "Value", "Text", ViewBag.IDSpedizione), "-- Seleziona spedizione --", new { @class = "form-control selectpicker dropupAuto = false data-live-search=true data-size=5", @onchange = "submitform();" })
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    @Html.Label("Data perizia")
-                </td>
-                <td>
-                    @*@Html.TextBox("DataPerizia", DateTime.Now.ToString("dd/MM/yyyy"))*@
-                    @if (Session["OS"].ToString() == "ANDROID")
-                    {
-                        @Html.TextBox("DataPerizia", DateTime.Now.ToString("dd/MM/yyyy"), new { @readonly = "readonly", style = "background:lightgrey" })
-                    }
-                    else
-                    {
-                        @Html.TextBox("DataPerizia", @Convert.ToDateTime(item4[0].DataPerizia).ToString("dd/MM/yyyy"), new { style = "background:lightgrey" })
-                        @*@Html.TextBox("DataPerizia", DateTime.Now.ToString("dd/MM/yyyy"), new { @readonly = "readonly", style = "background:lightgrey" })*@
-
-                    }
-
-                </td>
-            </tr>
-            @*<tr>
-                    <td>
-                        &nbsp;
-                    </td>
-                </tr>*@
-            <tr>
-                <td>
-                    @Html.Label("Telaio")
-                </td>
-                <td>
-                    @Html.TextBox("Chassis", item4[0].Telaio, new { onkeyup = "InputToUpper(this);" })
-                </td>
-            </tr>
-            @*<tr>
-                    <td>
-                        &nbsp;
-                    </td>
-                </tr>*@
-            <tr>
-                <td>
-                    @if (Session["Classe"].ToString() == "0")
-                    {
-                        if (ViewBag.IsTrasportatore)
-                        {
-                            @Html.Label("Trasportatore")
-                        }
-                        else
-                        {
-                            @Html.Label("Modello")
-                        }
-                    }
-                    else
-                    {
-                        @Html.Label("Marca")
-                    }
-                </td>
-                <td>
-                    @if (ViewBag.IsTrasportatore)
-                    {
-                        @Html.DropDownList("IDModelloCasa", new SelectList((SelectList)ViewData["ElencoModelli"], "Value", "Text", ViewBag.aIDModelloCasa), "-- Seleziona trasportatore --", new { @class = "form-control selectpicker dropupAuto=false data-live-search=true data-size=5", @onchange = "submitform();" })
-
-                    }
-                    @*else if (Session["Classe"].ToString() == "1")
-        {
-            @Html.DropDownList("IDModelloCasa", new SelectList((SelectList)ViewData["ElencoModelli"], "Value", "Text", null), "-- Seleziona valore --", new { @class = "form-control selectpicker dropupAuto=false data-live-search=true data-size=5", @onchange = "submitform();" })
-        }*@
-                    else
-                    {
-                        @Html.DropDownList("IDModelloCasa", new SelectList((SelectList)ViewData["ElencoModelli"], "Value", "Text", ViewBag.aIDModelloCasa), "-- Seleziona valore --", new { @class = "form-control selectpicker dropupAuto=false data-live-search=true data-size=5", @onchange = "submitform();" })
-
-                    }
-                    @*@Html.DropDownList("IDModelloCasa", new SelectList((SelectList)ViewData["ElencoModelli"], "Value", "Text", ViewBag.aIDModelloCasa), "-- Seleziona valore --", new { @class = "form-control selectpicker dropupAuto=false data-live-search=true data-size=5", @onchange = "submitform();" })*@
-                    @if (item1[0].IDCasa.ToUpper() == "CAB" && ((ViewBag.aIDModelloCasa != "1240" && ViewBag.aIDModelloCasa == "1241") || String.IsNullOrEmpty(ViewBag.aIDModelloCasa)))
-                   
-                    {
-                        <div style="font-size:smaller">Solo trasportatori in uso !  @Html.CheckBox("Filtrati", true, new { @onchange = "this.form.submit();" })</div>
-                    }
-                    </td>
-            </tr>
-            <tr></tr>
-            @if (item1[0].IDCasa.ToUpper() == "RTB" || (item4[0].IDModello.ToString() == "1240" && ViewBag.aIDModelloCasa == "") || ViewBag.aIDModelloCasa == "1240" || ViewBag.aIDModelloCasa == "1241")
-            {
-                <tr>
-                    <td>
-                        @Html.Label("Trasportatore")
-
-                    </td>
-                    <td>
-                        @Html.DropDownList("IDTrasportatoreGrim", new SelectList((SelectList)ViewData["ElencoTraspGrim"], "Value", "Text", ViewBag.aIDTrasportatore), "-- Seleziona trasportatore --", new { @class = "form-control selectpicker data-live-search=true", @onchange = "submitform();" })
-                    </td>
-                </tr>
-                @*<tr>
-                        <td>
-                            &nbsp;
-                        </td>
-                    </tr>*@
-                <tr>
-                    <td>
-                        @Html.Label("Semirimorchio")
-
-                    </td>
-                    <td>
-                        @Html.DropDownList("IDTipoRotabile", new SelectList((SelectList)ViewData["ElencoTipoRotabile"], "Value", "Text", ViewBag.aIDTipoRotabile), "-- Seleziona tipo semirimorchio --", new { @class = "form-control selectpicker data-live-search=true ", @onchange = "submitform();" })
-
-                    </td>
-                </tr>
-            }
-            @*<tr>
-                    <td>
-                        &nbsp;
-                    </td>
-                </tr>*@
-
-            <tr>
-                <td>
-                    @Html.Label("Condizione")
-
-                </td>
-                @if (item1[0].IDCasa.ToUpper() == "YYY" || item1[0].IDCasa.ToUpper() == "KKK")
+    <table style="background-color:#E8E8E8">
+        <tr>
+            <td>
+                @Html.Label("Viaggio")
+            </td>
+            <td>
+                @Html.DropDownList("IDSpedizione", new SelectList((SelectList)ViewData["ElencoSpedizioni"], "Value", "Text", ViewBag.IDSpedizione), "-- Seleziona spedizione --", new { @class = "form-control selectpicker dropupAuto = false data-live-search=true data-size=5", @onchange = "submitform();" })
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.Label("Data perizia")
+            </td>
+            <td>
+                @*@Html.TextBox("DataPerizia", DateTime.Now.ToString("dd/MM/yyyy"))*@
+                @if (Session["OS"].ToString() == "ANDROID")
                 {
-                    <td>
-                        Nuovo:   @Html.RadioButton("Condizione", "N", new { @checked = true, @onchange = "submitform();" })
-                        Usato: @Html.RadioButton("Condizione", "U", new { disabled = "disabled" })
-                        @*@Html.RadioButtonFor(model => item4[0].FlagControllo, "Test", new { @checked = true })*@
-                    </td>
+                    @Html.TextBox("DataPerizia", DateTime.Now.ToString("dd/MM/yyyy"), new { @readonly = "readonly", style = "background:lightgrey" })
                 }
-                else if (item1[0].IDCasa.ToUpper() != "RTB" && (item4[0].IDModello.ToString() != "1240") || (item4[0].IDModello.ToString() == "1240" && ViewBag.aIDModelloCasa != "1240"))
+                else
                 {
-                    if (item4[0].FlgNuovoUsato == "N" || ViewBag.flagNU == "N")
+                    @Html.TextBox("DataPerizia", @Convert.ToDateTime(item4[0].DataPerizia).ToString("dd/MM/yyyy"), new { style = "background:lightgrey" })
+                    @*@Html.TextBox("DataPerizia", DateTime.Now.ToString("dd/MM/yyyy"), new { @readonly = "readonly", style = "background:lightgrey" })*@
+
+                }
+
+            </td>
+        </tr>
+        @*<tr>
+            <td>
+                &nbsp;
+            </td>
+        </tr>*@
+        <tr>
+            <td>
+                @Html.Label("Telaio")
+            </td>
+            <td>
+                @Html.TextBox("Chassis", item4[0].Telaio, new { onkeyup = "InputToUpper(this);" })
+            </td>
+        </tr>
+        @*<tr>
+            <td>
+                &nbsp;
+            </td>
+        </tr>*@
+        <tr>
+            <td>
+                @if (Session["Classe"].ToString() == "0")
+                {
+                    if (ViewBag.IsTrasportatore)
                     {
-                        <td>
-                            Nuovo:   @Html.RadioButton("Condizione", "N", new { @checked = true, @onchange = "submitform();" })
-                            Usato: @Html.RadioButton("Condizione", "U", new { @onchange = "submitform();" }) @*Aggiunto*@
-                            @*@Html.RadioButtonFor(model => item4[0].FlagControllo, "Test", new { @checked = true })*@
-                        </td>
+                        @Html.Label("Trasportatore")
                     }
-                    else if (item4[0].FlgNuovoUsato == "U" || ViewBag.flagNU == "U")
+                    else
                     {
-                        <td>
-                            Nuovo:   @Html.RadioButton("Condizione", "N", new { @onchange = "submitform();" }) @*Aggiunto*@
-                            Usato: @Html.RadioButton("Condizione", "U", new { @checked = true, @onchange = "submitform();" })
-                            @*@Html.RadioButtonFor(model => item4[0].FlagControllo, "Test", new { @checked = true })*@
-                        </td>
-                    }
-                    else if (ViewBag.aIDModelloCasa != "1240" && ViewBag.aIDModelloCasa != "1241")
-                    {
-                        <td>
-                            Nuovo:   @Html.RadioButton("Condizione", "N", new { @onchange = "submitform();" })
-                            Usato: @Html.RadioButton("Condizione", "U", new { @onchange = "submitform();" })
-                            @*@Html.RadioButtonFor(model => item4[0].FlagControllo, "Test", new { @checked = true })*@
-                        </td>
+                        @Html.Label("Modello")
                     }
                 }
                 else
                 {
-                    if (ViewBag.aIDModelloCasa != "1240" && ViewBag.aIDModelloCasa != "1241")
-                    {
-                        <td>
-                            Nuovo:   @Html.RadioButton("Condizione", "N", new { disabled = "disabled" })
-                            Usato: @Html.RadioButton("Condizione", "U", new { disabled = "disabled" })
-                        </td>
-                    }
+                    @Html.Label("Marca")
                 }
-            </tr>
+            </td>
+            <td>
+                @if (ViewBag.IsTrasportatore)
+                {
+                    @Html.DropDownList("IDModelloCasa", new SelectList((SelectList)ViewData["ElencoModelli"], "Value", "Text", ViewBag.aIDModelloCasa), "-- Seleziona trasportatore --", new { @class = "form-control selectpicker dropupAuto=false data-live-search=true data-size=5", @onchange = "submitform();" })
+
+                }
+                @*else if (Session["Classe"].ToString() == "1")
+                {
+                    @Html.DropDownList("IDModelloCasa", new SelectList((SelectList)ViewData["ElencoModelli"], "Value", "Text", null), "-- Seleziona valore --", new { @class = "form-control selectpicker dropupAuto=false data-live-search=true data-size=5", @onchange = "submitform();" })
+                }*@
+                else
+                {
+                    @Html.DropDownList("IDModelloCasa", new SelectList((SelectList)ViewData["ElencoModelli"], "Value", "Text", ViewBag.aIDModelloCasa), "-- Seleziona valore --", new { @class = "form-control selectpicker dropupAuto=false data-live-search=true data-size=5", @onchange = "submitform();" })
+
+                }
+                @*@Html.DropDownList("IDModelloCasa", new SelectList((SelectList)ViewData["ElencoModelli"], "Value", "Text", ViewBag.aIDModelloCasa), "-- Seleziona valore --", new { @class = "form-control selectpicker dropupAuto=false data-live-search=true data-size=5", @onchange = "submitform();" })*@
+                @if (item1[0].IDCasa.ToUpper() == "CAB" && ((ViewBag.aIDModelloCasa != "1240" && ViewBag.aIDModelloCasa == "1241") || String.IsNullOrEmpty(ViewBag.aIDModelloCasa)))
+
+                {
+                    <div style="font-size:smaller">Solo trasportatori in uso !  @Html.CheckBox("Filtrati", true, new { @onchange = "this.form.submit();" })</div>
+                }
+            </td>
+        </tr>
+        <tr></tr>
+        @if (item1[0].IDCasa.ToUpper() == "RTB" || (item4[0].IDModello.ToString() == "1240" && ViewBag.aIDModelloCasa == "") || ViewBag.aIDModelloCasa == "1240" || ViewBag.aIDModelloCasa == "1241")
+        {
             <tr>
+                <td>
+                    @Html.Label("Trasportatore")
+
+                </td>
+                <td>
+                    @Html.DropDownList("IDTrasportatoreGrim", new SelectList((SelectList)ViewData["ElencoTraspGrim"], "Value", "Text", ViewBag.aIDTrasportatore), "-- Seleziona trasportatore --", new { @class = "form-control selectpicker data-live-search=true", @onchange = "submitform();" })
+                </td>
+            </tr>
+            @*<tr>
                 <td>
                     &nbsp;
                 </td>
-            </tr>
-
+            </tr>*@
             <tr>
                 <td>
+                    @Html.Label("Semirimorchio")
 
-                    @Html.Label("DMG") &nbsp
-                    @if (ViewBag.ErrMess == "" || ViewBag.ErrMess == "Sbloccato" || ViewBag.ErrMess == "In fase modifica" || ViewBag.ErrMess == "In modifica" || ViewBag.ErrMess == "TARGA CONOSCIUTA")
+                </td>
+                <td>
+                    @Html.DropDownList("IDTipoRotabile", new SelectList((SelectList)ViewData["ElencoTipoRotabile"], "Value", "Text", ViewBag.aIDTipoRotabile), "-- Seleziona tipo semirimorchio --", new { @class = "form-control selectpicker data-live-search=true ", @onchange = "submitform();" })
+
+                </td>
+            </tr>
+        }
+        @*<tr>
+            <td>
+                &nbsp;
+            </td>
+        </tr>*@
+
+        <tr>
+            <td>
+                @Html.Label("Condizione")
+
+            </td>
+            @if (item1[0].IDCasa.ToUpper() == "YYY" || item1[0].IDCasa.ToUpper() == "KKK")
+            {
+                <td>
+                    Nuovo:   @Html.RadioButton("Condizione", "N", new { @checked = true, @onchange = "submitform();" })
+                    Usato: @Html.RadioButton("Condizione", "U", new { disabled = "disabled" })
+                    @*@Html.RadioButtonFor(model => item4[0].FlagControllo, "Test", new { @checked = true })*@
+                </td>
+            }
+            else if (item1[0].IDCasa.ToUpper() != "RTB" && (item4[0].IDModello.ToString() != "1240") || (item4[0].IDModello.ToString() == "1240" && ViewBag.aIDModelloCasa != "1240"))
+            {
+                if (item4[0].FlgNuovoUsato == "N" || ViewBag.flagNU == "N")
+                {
+                    <td>
+                        Nuovo:   @Html.RadioButton("Condizione", "N", new { @checked = true, @onchange = "submitform();" })
+                        Usato: @Html.RadioButton("Condizione", "U", new { @onchange = "submitform();" }) @*Aggiunto*@
+                        @*@Html.RadioButtonFor(model => item4[0].FlagControllo, "Test", new { @checked = true })*@
+                    </td>
+                }
+                else if (item4[0].FlgNuovoUsato == "U" || ViewBag.flagNU == "U")
+                {
+                    <td>
+                        Nuovo:   @Html.RadioButton("Condizione", "N", new { @onchange = "submitform();" }) @*Aggiunto*@
+                        Usato: @Html.RadioButton("Condizione", "U", new { @checked = true, @onchange = "submitform();" })
+                        @*@Html.RadioButtonFor(model => item4[0].FlagControllo, "Test", new { @checked = true })*@
+                    </td>
+                }
+                else if (ViewBag.aIDModelloCasa != "1240" && ViewBag.aIDModelloCasa != "1241")
+                {
+                    <td>
+                        Nuovo:   @Html.RadioButton("Condizione", "N", new { @onchange = "submitform();" })
+                        Usato: @Html.RadioButton("Condizione", "U", new { @onchange = "submitform();" })
+                        @*@Html.RadioButtonFor(model => item4[0].FlagControllo, "Test", new { @checked = true })*@
+                    </td>
+                }
+            }
+            else
+            {
+                if (ViewBag.aIDModelloCasa != "1240" && ViewBag.aIDModelloCasa != "1241")
+                {
+                    <td>
+                        Nuovo:   @Html.RadioButton("Condizione", "N", new { disabled = "disabled" })
+                        Usato: @Html.RadioButton("Condizione", "U", new { disabled = "disabled" })
+                    </td>
+                }
+            }
+        </tr>
+        <tr>
+            <td>
+                <b style="color:steelblue">Meteo :</b> @Html.Label(item3[0].ID + " - " + item3[0].DescrITA, new { @style = "color:steelblue" })
+            </td>
+            <td>
+                <b style="color:steelblue">TP :</b>  @Html.Label(item2[0].ID + " - " + item2[0].DescrITA, new { @style = "color:steelblue" })
+            </td>
+        </tr>
+       
+        <tr>
+            <td>
+
+                @Html.Label("DMG") &nbsp
+                @if (ViewBag.ErrMess == "" || ViewBag.ErrMess == "Sbloccato" || ViewBag.ErrMess == "In fase modifica" || ViewBag.ErrMess == "In modifica" || ViewBag.ErrMess == "TARGA CONOSCIUTA")
+                {
+                    @Html.CheckBox("isDamaged", false, new { @onchange = "submitform();" })
+
+                    if (Session["RTB"].ToString().ToUpper() == "TRUE" || ViewBag.aIDModelloCasa == "1240" || ViewBag.aIDModelloCasa == "1241")
                     {
-                        @Html.CheckBox("isDamaged", false, new { @onchange = "submitform();" })
 
-                        if (Session["RTB"].ToString().ToUpper() == "TRUE" || ViewBag.aIDModelloCasa == "1240" || ViewBag.aIDModelloCasa == "1241")
-                        {
+                    <td>
+                        @Html.Label("DMG Rapido")
+                        @Html.CheckBox("isRapid", false, new { @onchange = "submitform();" })
+                    </td>
+                }
 
-                        <td>
-                            @Html.Label("DMG Rapido")
-                            @Html.CheckBox("isRapid", false, new { @onchange = "submitform();" })
-                        </td>
-                    }
 
+            }
+            else
+            {
+                @*@Html.CheckBox("isDamaged", false, new { disabled = "disabled" })*@
+                @Html.CheckBox("isDamaged", false, new { @onchange = "submitform();" })
+                if (Session["RTB"].ToString().ToUpper() == "TRUE")
+                {
+                    <td>
+                        @Html.Label("Rapido")
+                        @Html.CheckBox("isRapid", false, new { @onchange = "submitform();" })
+                    </td>
+                }
+
+            }
+
+            <tr>
+
+
+                @if (@ViewBag.HasDanni == "Perizia GOOD")
+                {
+                    <td style="color:green; font-weight:bold;">
+                        @ViewBag.HasDanni
+                    </td>
 
                 }
                 else
                 {
-                    @*@Html.CheckBox("isDamaged", false, new { disabled = "disabled" })*@
-                    @Html.CheckBox("isDamaged", false, new { @onchange = "submitform();" })
-                    if (Session["RTB"].ToString().ToUpper() == "TRUE")
-                    {
-                        <td>
-                            @Html.Label("Rapido")
-                            @Html.CheckBox("isRapid", false, new { @onchange = "submitform();" })
-                        </td>
-                    }
-
+                    <td style="color:red; font-weight:bold;">
+                        @ViewBag.HasDanni
+                    </td>
                 }
 
-                <tr>
 
 
-                    @if (@ViewBag.HasDanni == "Perizia GOOD")
-                    {
-                        <td style="color:green; font-weight:bold;">
-                            @ViewBag.HasDanni
-                        </td>
-
-                    }
-                    else
-                    {
-                        <td style="color:red; font-weight:bold;">
-                            @ViewBag.HasDanni
-                        </td>
-                    }
-
-
-
-            </table>
+        </table>
 
 
             <br />

@@ -19,35 +19,46 @@ namespace WEB_Auto.Controllers
         {
             var model = new Models.HomeModel();
             string aPerito = Session["IDPeritoVero"].ToString();
+            var NumTelai = 0;
             
             if (TipoMezzo == "TUTTE")
             {
                 var listaFlt = (from m in db.WEB_Auto_ListaPerizieXSpedizione_vw
+                                //join n in db.AGR_TelaiScartati_MVC on m.Telaio equals n.Telaio into r
+                                //where r.Count() == 0
+                               
                                 where m.IDOriginale1 == aViaggio
                                 where m.IDPerito == aPerito
                                 where m.IsClosed == false
-                                select m).ToList().OrderBy(s => s.Telaio);
+                                select  m ).ToList().OrderBy(s => s.Telaio)     ;
                 model.WEB_Auto_ListaPerizieXSpedizione_vw = listaFlt;
+                NumTelai = listaFlt.Count();
             }
             else if (TipoMezzo == "RTB")
             {
                 var listaFlt = (from m in db.WEB_Auto_ListaPerizieXSpedizione_vw
-                            where m.IDOriginale1 == aViaggio
-                            where m.IDPerito == aPerito
+                                //join n in db.AGR_TelaiScartati_MVC on m.Telaio equals n.Telaio into r
+                                //where r.Count() == 0
+                                where m.IDOriginale1 == aViaggio
+                                where m.IDPerito == aPerito
                                 where m.IsClosed == false
                                 where m.IDModello.ToString() == "1240" || m.IDModello.ToString() == "1241"
                              select m).ToList().OrderBy(s => s.Telaio);
                 model.WEB_Auto_ListaPerizieXSpedizione_vw = listaFlt;
+                NumTelai = listaFlt.Count();
             }
             if (TipoMezzo == "AUTO")
             {
                 var listaFlt = (from m in db.WEB_Auto_ListaPerizieXSpedizione_vw
-                            where m.IDOriginale1 == aViaggio
-                            where m.IDPerito == aPerito
+                                //join n in db.AGR_TelaiScartati_MVC on m.Telaio equals n.Telaio into r
+                                //where r.Count() == 0
+                                where m.IDOriginale1 == aViaggio
+                                where m.IDPerito == aPerito
                                 where m.IsClosed == false
                                 where m.IDModello.ToString() != "1240" && m.IDModello.ToString() != "1241"
                              select m).ToList().OrderBy(s => s.Telaio);
                 model.WEB_Auto_ListaPerizieXSpedizione_vw = listaFlt;
+                NumTelai = listaFlt.Count();
             }
 
             DateTime ini = DateTime.Today;
@@ -68,10 +79,23 @@ namespace WEB_Auto.Controllers
             var ElencoSpedizioni = new SelectList(model.AGR_SpedizioniWEB_vw.ToList(), "IDOriginale1", "DescrAlt");
 
 
+            var ElencoSelezionati = from a in db.AGR_TelaiSelezionati_MVC
+                                 select a;
+            model.AGR_TelaiSelezionati_MVC = ElencoSelezionati.ToList();
+
+            var ElencoScartati = from a in db.AGR_TelaiScartati_MVC
+                                    select a;
+            model.AGR_TelaiScartati_MVC = ElencoScartati.ToList();
+
             ViewBag.aMsg = aMsg;
             ViewBag.myViaggio = aViaggio;
             ViewBag.IsOpen = true;
             ViewBag.TipoMezzo = TipoMezzo;
+            if(NumTelai == 0)
+                ViewBag.NumSelezionati = 0;
+            else
+                ViewBag.NumSelezionati = ElencoSelezionati.Count();
+            ViewBag.NumTelai = NumTelai;
             ViewData["ElencoSpedizioni"] = ElencoSpedizioni;
 
             return View(model);
@@ -87,7 +111,31 @@ namespace WEB_Auto.Controllers
                 return RedirectToAction("ModificaViaggio", new { aViaggio = VecchioViaggio });
             }
 
-            string test = formCollection["ID"];
+            // MI scrivo i telai selzionati...
+            string[] sel = formCollection["ID"].Split(new char[] { ',' });
+            foreach (string id in sel)
+            {
+                var perizia = id;
+                string aPerizia = perizia.ToString();
+                if (aPerizia != "false")
+                {
+                    // MI scrivo i telai selzionati...
+                    string aPerito = Session["IDPeritoVero"].ToString();
+                    var myPerizia = (from m in db.WEB_Auto_ListaPerizieXSpedizione_vw
+                                     where m.ID == aPerizia
+                                     select new { m.Telaio }).FirstOrDefault();
+                    string sqlcmd = " INSERT INTO  AGR_TelaiSelezionati_MVC " +
+                                           " (Telaio,IDPeritoVero ) VALUES( @Telaio,@IDPeritoVero) ";
+                    try
+                    {
+                        int Inserted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@Telaio", myPerizia.Telaio.ToString()),
+                                                                             new SqlParameter("@IDPeritoVero", aPerito));
+                    }
+                    catch { }
+
+
+                }
+            }
 
             string[] ids = formCollection["ID"].Split(new char[] { ',' });
             foreach (string id in ids)
@@ -98,9 +146,7 @@ namespace WEB_Auto.Controllers
                     string aPerizia = perizia.ToString();
                     if (aPerizia != "false")
                     {
-                        //aPerizia = aPerizia;
-
-                        //string aMsg = "Modifica non ammessa, contattare Maurizio, perizia : " + aPerizia;
+                        
 
                         IsCorrect = ModificaSpedizione(NuovoViaggio, aPerizia, out string aMsg);
                         if (!IsCorrect)
@@ -111,7 +157,15 @@ namespace WEB_Auto.Controllers
                 }
                 catch { return RedirectToAction("ModificaNonConsentita", "ModificaViaggio", new { formCollection, Message = "Errore non riconoscituo contattare Astrea" , aViaggio = VecchioViaggio, TipoMezzo }); }
             }
-           
+
+             string myPerito = Session["IDPeritoVero"].ToString();
+
+            string sql = " DELETE FROM  AGR_TelaiSelezionati_MVC WHERE IDPeritoVero = @IDPeritoVero "; 
+            int i = db.Database.ExecuteSqlCommand(sql,new SqlParameter("@IDPeritoVero", myPerito));
+
+            sql = " DELETE FROM  AGR_TelaiScartati_MVC WHERE IDPeritoVero = @IDPeritoVero ";
+            i = db.Database.ExecuteSqlCommand(sql, new SqlParameter("@IDPeritoVero", myPerito));
+
             return RedirectToAction("ModificaViaggio" , new { aViaggio = VecchioViaggio, aMsg = "MODIFCA TERMINATA - VERIFICA NEL MENU LISTA VIAGGI" });
            
 
@@ -126,7 +180,7 @@ namespace WEB_Auto.Controllers
             var myPerizia = (from m in db.WEB_Auto_ListaPerizieXSpedizione_vw
 
                              where m.ID == IDPerizia
-                             select new { m.IDSpedizione, m.IDCasa,m.Telaio,m.IDModello,m.DataPerizia,m.IDTipoPerizia }).FirstOrDefault();
+                             select new { m.IDSpedizione, m.IDCasa,m.Telaio,m.IDModello,m.DataPerizia,m.IDTipoPerizia,m.POL,m.POD }).FirstOrDefault();
 
             string myIDSpedizione = myPerizia.IDSpedizione;
             string myIDCasa = myPerizia.IDCasa;
@@ -152,6 +206,52 @@ namespace WEB_Auto.Controllers
                 return false;
             }
 
+            string myIDPortoPErito = Session["IDPortoPerito"].ToString();
+            string oldTP = myPerizia.IDTipoPerizia;
+            var newPOL = (from m in db.AGR_Spedizioni
+                         where m.IDOriginale1 == newViaggio
+                         select m.IDPortoImbarco).FirstOrDefault();
+            var newPOD = (from m in db.AGR_Spedizioni
+                          where m.IDOriginale1 == newViaggio
+                          select m.IDPortoSbarco).FirstOrDefault();
+            if (oldTP == "C")
+            {
+                if(newPOL.ToString() != myPerizia.POL)
+                {
+                    aMsg = "Tipo perizia  : PRELOAD - dati  non compatibili con il cambiamento assegnazione viaggio , i porti di imbarco sono differenti!";
+                    // Scrivo il telaio che origina l'errore....
+                    string aPerito = Session["IDPeritoVero"].ToString();
+                    string sqlcmd = " INSERT INTO  AGR_TelaiScartati_MVC (Telaio, IDPeritoVero) VALUES(@Telaio, @IDPeritoVero) ";
+
+                    try
+                    {
+                        int Inserted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@Telaio", myPerizia.Telaio.ToString()),
+                                                                             new SqlParameter("@IDPeritoVero", aPerito));
+                    }
+                    catch { }
+                    return false;
+                }
+            }
+            else if(oldTP == "D")
+            {
+                if (newPOD.ToString() != myPerizia.POD)
+                {
+                    aMsg = "Tipo perizia: POST DISCHARGE, dati non compatibili con il cambiamento assegnazione viaggio , i porti di imbarco sono differenti!";
+                    // Scrivo il telaio che origina l'errore....
+                    string aPerito = Session["IDPeritoVero"].ToString();
+                    string sqlcmd = " INSERT INTO  AGR_TelaiScartati_MVC (Telaio, IDPeritoVero) VALUES(@Telaio, @IDPeritoVero) ";
+
+                    try
+                    {
+                        int Inserted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@Telaio", myPerizia.Telaio.ToString()),
+                                                                             new SqlParameter("@IDPeritoVero", aPerito));
+                    }
+                    catch { }
+                    return false;
+                }
+            }
+
+
             // Verifico che nn ci sia già lo stesso telaio 
             var cnt = (from m in db.AGR_PERIZIE_TEMP_MVC
                             where m.IDSpedizione == myNewIDSped
@@ -160,13 +260,19 @@ namespace WEB_Auto.Controllers
 
             if(cnt > 0)
             {
-                aMsg = "Il telaio : " + myPerizia.Telaio.ToString() + " è già presente !";
+                aMsg = "Il telaio : " + myPerizia.Telaio.ToString() + " è già presente nel viaggio : " + myNewIDSped.ToString();
 
                 // Scrivo il telaio che origina l'errore....
-                string sqlcmd = " INSERT INTO  AGR_TelaiScartati_MVC " +
-                                                " (Telaio ) VALUES( @Telaio) ";
-                                                
-                int Inserted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@Telaio", myPerizia.Telaio.ToString()));
+                string aPerito = Session["IDPeritoVero"].ToString();
+                string sqlcmd = " INSERT INTO  AGR_TelaiScartati_MVC (Telaio, IDPeritoVero) VALUES(@Telaio, @IDPeritoVero) ";
+
+                try
+                {
+                    int Inserted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@Telaio", myPerizia.Telaio.ToString()),
+                                                                         new SqlParameter("@IDPeritoVero", aPerito));
+                }
+                catch { }
+                
 
                 return false;
             }

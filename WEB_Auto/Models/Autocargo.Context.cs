@@ -80,5 +80,8 @@ namespace WEB_Auto.Models
         public virtual DbSet<WEB_ListaPerizieFlat_DEF_C_DMG_30_vw> WEB_ListaPerizieFlat_DEF_C_DMG_30_vw { get; set; }
         public virtual DbSet<WEB_ListaPerizieFlat_DEF_C_DMG_60_vw> WEB_ListaPerizieFlat_DEF_C_DMG_60_vw { get; set; }
         public virtual DbSet<WEB_ListaPerizieFlat_DEF_C_DMG_90_vw> WEB_ListaPerizieFlat_DEF_C_DMG_90_vw { get; set; }
+        public virtual DbSet<AGR_ConteggioPerizieInseriteWEB> AGR_ConteggioPerizieInseriteWEB { get; set; }
+        public virtual DbSet<AGR_TelaiScartati_MVC> AGR_TelaiScartati_MVC { get; set; }
+        public virtual DbSet<AGR_TelaiSelezionati_MVC> AGR_TelaiSelezionati_MVC { get; set; }
     }
 }

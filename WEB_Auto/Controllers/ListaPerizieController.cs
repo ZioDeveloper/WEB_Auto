@@ -228,8 +228,16 @@ namespace WEB_Auto.Controllers
                 int Updated = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@IDOperatore", (int)Session["IDOperatore"]),
                                                                      new SqlParameter("@ID", IDPerizia));
             }
-            
-            
+
+            // Dati per dropdown Meteo
+            var Meteo = from m in db.AGR_Meteo
+                        where m.ID != "*"
+                        select m;
+            model.AGR_Meteo = Meteo.ToList();
+
+            var ElencoMeteo = new SelectList(model.AGR_Meteo.ToList(), "ID", "DescrITA");
+            ViewData["ElencoMeteo"] = ElencoMeteo;
+
             ViewBag.IDSpedizione = IDSpedizione;
             ViewBag.IDTP = IDTP;
             ViewBag.myViaggio = myViaggio;
@@ -352,7 +360,13 @@ namespace WEB_Auto.Controllers
                 int Updated = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@IDOperatore", (int)Session["IDOperatore"]),
                                                                      new SqlParameter("@ID", IDPerizia));
             }
-
+            // Dati per dropdown Meteo
+            var Meteo = from m in db.AGR_Meteo
+                        where m.ID != "*"
+                        select m;
+            model.AGR_Meteo = Meteo.ToList();
+            var ElencoMeteo = new SelectList(model.AGR_Meteo.ToList(), "ID", "DescrITA");
+            ViewData["ElencoMeteo"] = ElencoMeteo;
 
             ViewBag.IDSpedizione = IDSpedizione;
             ViewBag.IDTP = IDTP;
@@ -824,7 +838,7 @@ namespace WEB_Auto.Controllers
                          select new { t.Telaio }).ToList();
 
             string nomecartella = "";
-            string oldname = "";
+            //string oldname = "";
             foreach (var item in targa)
             {
                 if (!String.IsNullOrEmpty(item.Telaio))

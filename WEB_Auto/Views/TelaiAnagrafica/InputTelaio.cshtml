@@ -8,7 +8,7 @@
 <div style="text-align:left">
 <h4>Inserire Telaio </h4>
     @{string aData = ViewBag.DataRipetuta;}
-@using (Html.BeginForm("InputTelaio", "TelaiAnagrafica", new
+    @using (Html.BeginForm("InputTelaio", "TelaiAnagrafica", new
     {
         IDPerito = ViewBag.IDPerito,
         IDSpedizione = ViewBag.IDSpedizione,
@@ -32,20 +32,33 @@
     <tr>
         @if (Session["OS"].ToString() == "WINDOWS" && Session["CLASSE"].ToString() == "0")
         {
-        <td>
+            <td>
 
-            <div style="color:red">
-                Compilare solo per inserimenti retrodatati.<br />
+                <div style="color:red">
+                    Compilare solo per inserimenti retrodatati.<br />
 
-            </div>
-            <div style="color:black">
-                Formato data = gg/mm/aaaa
-            </div>
-                @Html.TextBox("DataPerizia", aData, new { style = "width:180px;text-transform:uppercase", @id = "Telaio", @maxlength = "17", @placeholder = "Data NON di sistema ", @autofocus = "autofocus", @autocomplete = "off" })
-</td>
+                </div>
+                <div>
+                    &nbsp;
+                </div>
+                <div style="color:black">
+                    Formato data = gg/mm/aaaa - Date format (dd/mm/yyyy)
+                </div>
+                <div>
+                    @Html.TextBox("DataPerizia", aData, new { style = "width:180px;text-transform:uppercase", @id = "Telaio", @maxlength = "17", @placeholder = "dd/mm/yyyy ", @autofocus = "autofocus", @autocomplete = "off" })
+                </div>
+            </td>
+
         }
     </tr>
-    <tr><td>&nbsp;</td></tr>@*<tr><td>&nbsp;</td></tr>*@
+    <tr><td>&nbsp;</td></tr>
+    <tr>
+        <td style="color:red">
+            @ViewBag.errMSg
+        </td>
+    </tr>
+    <tr><td>&nbsp;</td></tr>
+
     <tr>
         @if (ViewBag.Casa == "CAB")
         {
@@ -64,6 +77,8 @@
         }
 
     </tr>
+
+
     <tr>
 
         <td>
@@ -74,6 +89,7 @@
 
         </td>
     </tr>
+
 </table>
 }
 

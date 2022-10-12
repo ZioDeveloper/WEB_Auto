@@ -16,8 +16,8 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/vfs_fonts.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
 
-<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.4/js/buttons.html5.min.js"></script></script>
-<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.4/js/buttons.print.min.js"></script></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.4/js/buttons.html5.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.4/js/buttons.print.min.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.4/js/dataTables.buttons.min.js"></script>
 @*<link rel="stylesheet" type="text/css" href="https://nightly.datatables.net/searchpanes/css/searchPanes.dataTables.min.css" />
     <script type="text/javascript" src="https://nightly.datatables.net/searchpanes/js/dataTables.searchPanes.min.js"</script>*@
@@ -27,14 +27,13 @@
 <script type="text/javascript">
 
     $(document).ready(function () {
-        //$('#DataTable').DataTable();
         $('#checkBoxAll').click(function () {
             if ($(this).is(":checked")) {
                 $(".chkCheckBoxId").prop("checked", true)
                 window.updateCount = function () {
-                    var x = $(".custom-checkbox:checked").length-1;
+                    var x = $(".custom-checkbox:checked").length - 1;
                     document.getElementById("myCounter").innerHTML = "Telai selezionati : " + x.toString();
-
+                    document.getElementById("myCounter2").innerHTML = "Telai selezionati : " + x.toString();
                 };
 
             }
@@ -43,16 +42,21 @@
                 window.updateCount = function () {
                     var x = $(".custom-checkbox:checked").length;
                     document.getElementById("myCounter").innerHTML = "Telai selezionati : " + x.toString();
+                    document.getElementById("myCounter2").innerHTML = "Telai selezionati : " + x.toString();
 
                 };
 
             }
         });
+
     });
+
+
 </script>
 <br />
 @{var item4 = Model.WEB_Auto_ListaPerizieXSpedizione_vw.ToList();}
-@{string Testo = "Mio testo"; bool IsOpen = ViewBag.ISOpen;}
+@{ var scartati = Model.AGR_TelaiSelezionati_MVC.ToList();}
+@{bool IsOpen = ViewBag.ISOpen;}
 <div>
     @Html.ActionLink("Chiudi", "Index", "Home", new { usr = Session["User"].ToString() }, new { @class = "btn btn-primary" })
 </div>
@@ -63,6 +67,7 @@
             <h5>Telai da modificare</h5>
 
         </div>
+        
         @*@using (Html.BeginForm("Verifica", "ModificaViaggio", new { NuovoViaggio = "TEST" , VecchioViaggio = ViewBag.myViaggio }, FormMethod.Post))
         {
             <button type="submit" value="Cerca" class="btn btn-sm btn-dark rounded-0"><i class="fa fa-floppy-o fa-lg"></i>Controllo incongruenze</button>
@@ -76,12 +81,12 @@
             <label>&nbsp;&nbsp; &nbsp;&nbsp; Auto  @Html.RadioButton("TipoMezzo", "AUTO", false, new { onclick = "this.form.submit()" })</label>
             <label>&nbsp;&nbsp; &nbsp;&nbsp; Tutte:  @Html.RadioButton("TipoMezzo", "TUTTE", true, new { onclick = "this.form.submit()" })</label>
             <br />
-            <div id="myCounter" style="color:red"></div>
+            <div id="myCounter" style="color:red">Selezionati : @ViewBag.NumSelezionati</div>
             <br />
             @Html.Label("Viaggio da modificare")<br />
             @Html.TextBox("aViaggio")
             <button type="submit" value="Cerca" class="btn btn-sm btn-dark rounded-0"><i class="fa fa-search fa-lg"></i> Ricerca  viaggio</button>
-            
+
         }
         <br />
         <div class="card-body">
@@ -138,13 +143,53 @@
                     {
 
                         <tr>
+                            @{ var cnt = from m in Model.AGR_TelaiSelezionati_MVC
+                                          where m.Telaio == item.Telaio
+                                          select m.Telaio;
+                                int myCnt = cnt.Count();
 
-                            <td>@Html.CheckBox("ID", new { value = item.ID, @class = "custom-checkbox chkCheckBoxId", @onchange = "updateCount()" })</td>
+                            }
 
-                            <td>@Html.DisplayFor(modelItem => item.Telaio)</td>
-                            <td>@Html.DisplayFor(modelItem => item.Modello)</td>
-                            <td>@Html.DisplayFor(modelItem => item.DataPerizia)</td>
-                            <td>@Html.DisplayFor(modelItem => item.Note)</td>
+                            @{ var sca = from m in Model.AGR_TelaiScartati_MVC
+                                          where m.Telaio == item.Telaio
+                                          select m.Telaio;
+                                int mySca = sca.Count();
+
+                            }
+
+                            @if (myCnt > 0)
+                            {
+                                if (mySca > 0)
+                                {
+                                    <td>@Html.CheckBox("ID", new { value = item.ID, @class = "custom-checkbox chkCheckBoxId", @onchange = "updateCount()", @checked = "checked" })</td>
+                                }
+                                else
+                                {
+                                    <td>@Html.CheckBox("ID", new { value = item.ID, @class = "custom-checkbox chkCheckBoxId", @onchange = "updateCount()", @checked = "checked" })</td>
+                                }
+
+                            }
+                            else
+                            {
+
+                                <td>@Html.CheckBox("ID", new { value = item.ID, @class = "custom-checkbox chkCheckBoxId", @onchange = "updateCount()" })</td>
+
+                            }
+
+                            @if (mySca > 0)
+                            {
+                                <td style="color:red">@Html.DisplayFor(modelItem => item.Telaio)</td>
+                                <td style="color:red">@Html.DisplayFor(modelItem => item.Modello)</td>
+                                <td style="color:red">@Html.DisplayFor(modelItem => item.DataPerizia)</td>
+                                <td style="color:red">@Html.DisplayFor(modelItem => item.Note)</td>
+                            }
+                            else
+                            {
+                                <td>@Html.DisplayFor(modelItem => item.Telaio)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Modello)</td>
+                                <td>@Html.DisplayFor(modelItem => item.DataPerizia)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Note)</td>
+                            }
 
                         </tr>
                     }
@@ -154,7 +199,7 @@
         </div>
     </div>
 </div>
-@*<div id="myCounter" style="color:red"></div>*@
+<div id="myCounter2" style="color:red">Selezionati : @ViewBag.NumSelezionati</div>
 
 <script>
     $(document).ready(function () {
@@ -209,11 +254,12 @@
 
 </script>
 
-@*<script>
+
+<script>
         window.updateCount = function () {
             var x = $(".custom-checkbox:checked").length;
-            document.getElementById("y").innerHTML = "Telai selezionati : " + x.toString();
+            document.getElementById("myCounter").innerHTML = "Telai selezionati : " + x.toString();
+            document.getElementById("myCounter2").innerHTML = "Telai selezionati : " + x.toString();
         };
 
-    </script>*@
-
+    </script>

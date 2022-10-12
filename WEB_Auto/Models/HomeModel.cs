@@ -71,6 +71,9 @@ namespace WEB_Auto.Models
         public IEnumerable<WEB_ListaPerizieFlat_DEF_C_DMG_90_vw> WEB_ListaPerizieFlat_DEF_C_DMG_90_vw { get; set; }
         public IEnumerable<BKP_AGR_Perizie_TEMP_MVC_ELIMINATE_vw> BKP_AGR_Perizie_TEMP_MVC_ELIMINATE_vw { get; set; }
 
+        public IEnumerable<AGR_TelaiSelezionati_MVC> AGR_TelaiSelezionati_MVC { get; set; }
+        public IEnumerable<AGR_TelaiScartati_MVC> AGR_TelaiScartati_MVC { get; set; }
+
 
 
 

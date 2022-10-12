@@ -176,6 +176,9 @@
     <Compile Include="Models\AAA_Prova.cs">
       <DependentUpon>Autocargo.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\AGR_ConteggioPerizieInseriteWEB.cs">
+      <DependentUpon>Autocargo.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\AGR_Danni_SDU.cs">
       <DependentUpon>Autocargo.tt</DependentUpon>
     </Compile>
@@ -240,6 +243,12 @@
       <DependentUpon>Autocargo.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\AGR_SpedizioniWEB_vw.cs">
+      <DependentUpon>Autocargo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AGR_TelaiScartati_MVC.cs">
+      <DependentUpon>Autocargo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AGR_TelaiSelezionati_MVC.cs">
       <DependentUpon>Autocargo.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\AGR_TipiPerizia.cs">

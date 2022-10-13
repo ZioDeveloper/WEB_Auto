@@ -60,8 +60,8 @@ namespace WEB_Auto.Controllers
               // usr = "DiSalvo";
                //usr = "patrizia";
                 //usr = "Torresan"; // 
-               // usr = "DiNinno";
-               usr = "Maurizio";
+                usr = "DiNinno";
+              // usr = "Maurizio";
                 //usr = Session["User"].ToString();
             }
 
@@ -217,7 +217,11 @@ namespace WEB_Auto.Controllers
                 // Dati per dropdown Meteo
                 var Meteo = from m in db.AGR_Meteo
                             where m.ID != "*"
+                            where m.ID != "5"
+                            where m.ID != "6"
+                            where m.ID != "7"
                             select m;
+
                 model.AGR_Meteo = Meteo.ToList();
 
                 var ElencoMeteo = new SelectList(model.AGR_Meteo.ToList(), "ID", "DescrITA");

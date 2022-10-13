@@ -232,6 +232,9 @@ namespace WEB_Auto.Controllers
             // Dati per dropdown Meteo
             var Meteo = from m in db.AGR_Meteo
                         where m.ID != "*"
+                        where m.ID != "5"
+                        where m.ID != "6"
+                        where m.ID != "7"
                         select m;
             model.AGR_Meteo = Meteo.ToList();
 

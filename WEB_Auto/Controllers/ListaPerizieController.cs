@@ -136,7 +136,8 @@ namespace WEB_Auto.Controllers
 
         }
         
-        public ActionResult EditSpedizione(string IDSpedizione, string IDTP, string TipoMezzo = "TUTTE", string IDPerizia = "",string SDU_Viste = "TUTTE", string Status = "APERTE")
+        public ActionResult EditSpedizione(string IDSpedizione, string IDTP, string TipoMezzo = "TUTTE", string IDPerizia = "",
+                                           string SDU_Viste = "TUTTE", string Status = "APERTE" )
         {
             var model = new Models.HomeModel();
             string aPerito = Session["IDPeritoVero"].ToString();
@@ -250,7 +251,7 @@ namespace WEB_Auto.Controllers
         }
 
         [HttpPost]
-        public ActionResult EditSpedizione(FormCollection formCollection, string IDSpedizione, string IDTP, string TipoMezzo = "TUTTE", string IDPerizia = "", string SDU_Viste = "TUTTE")
+        public ActionResult EditSpedizione(FormCollection formCollection, string IDSpedizione, string IDTP, string IDPerito, string TipoMezzo = "TUTTE", string IDPerizia = "", string SDU_Viste = "TUTTE")
         {
             bool canDelete = true;
             try
@@ -266,7 +267,7 @@ namespace WEB_Auto.Controllers
                         string aPerizia = perizia.ToString();
                         if (aPerizia != "false")
                         {
-                            EliminaPerizia(aPerizia, IDSpedizione, IDTP);
+                            EliminaPerizia(aPerizia, IDSpedizione, IDTP,IDPerito);
                         }
 
                     }
@@ -699,7 +700,7 @@ namespace WEB_Auto.Controllers
                                                                new SqlParameter("@IDOriginale", aIDOriginale));
         }
 
-        public void EliminaPerizia(string IDPerizia, string IDSpedizione, string IDTP, bool IsUpdate = false, string TipoMezzo = "TUTTE")
+        public void EliminaPerizia(string IDPerizia, string IDSpedizione, string IDTP,string IDPErito, bool IsUpdate = false, string TipoMezzo = "TUTTE")
         {
 
             using ( wisedbEntities db = new wisedbEntities())
@@ -718,10 +719,25 @@ namespace WEB_Auto.Controllers
                         sqlcmd = " DELETE FROM  AGR_PERIZIE_TEMP_MVC WHERE ID = @ID";
                         deleted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@ID", IDPerizia));
 
+                        string OS = Session["OS"].ToString();
+
+                        sqlcmd = " INSERT INTO AGR_PERIZIE_TEMP_MVC_LOG (IDPerizia,InsertDate,IDPerito,IDOperatore , MachineName,TipoOperazione) " +
+                                 " VALUES (@IDPerizia, @InsertDate, @IDPerito,@IDOperatore, @MachineName,@TipoOperazione)";
+
+                        deleted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@IDPerizia", IDPerizia),
+                                                                             new SqlParameter("@InsertDate", DateTime.Now),
+                                                                             new SqlParameter("@IDPerito", IDPErito),
+                                                                             new SqlParameter("@IDOperatore", (int)Session["IDOperatore"]),
+                                                                             new SqlParameter("@MachineName", OS),
+                                                                             new SqlParameter("@TipoOperazione", "Delete"));
+
+
+
                         transaction.Commit();
                     }
-                    catch
+                    catch (SqlException exc)
                     {
+                        string a = exc.Message;
                         transaction.Rollback();
                     }
                 }

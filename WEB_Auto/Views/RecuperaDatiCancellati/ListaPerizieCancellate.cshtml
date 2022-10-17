@@ -82,7 +82,7 @@
                       @Html.DisplayFor(modelItem => item.Condition)
                   </td>
                   <td>
-                      @Html.ActionLink("Reinserisci perizia", "www", "aaa", new { IDSpedizione = ViewBag.IDSpedizione, ViewBag.IDTP, ViewBag.TipoMezzo }, new { @class = "btn btn-success btn-xs " })
+                      @Html.ActionLink("Reinserisci perizia", "RipristinaPerizia", "RecuperaDatiCancellati", new { aIDPerizia = item.ID }, new { @class = "btn btn-success btn-xs " })
 
                   </td>
               </tr>

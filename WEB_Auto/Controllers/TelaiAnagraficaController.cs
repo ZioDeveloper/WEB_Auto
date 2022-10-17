@@ -934,25 +934,59 @@ namespace WEB_Auto.Controllers
             isOkHasDetails = true;
             if (isOK && isOkHasDetails)
             {
-                
+                string sqlcmd = "";
+                int Inserted = 0;
 
-                // Aggiorno dati perizia
-                // Vecchio update che metteva foto a 0....
-                //string sqlcmd = " UPDATE AGR_PERIZIE_Temp_MVC " +
-                //                " SET IDSpedizione = @IDSpedizione , IDModello = @IDModello, Telaio = @Telaio, NumFoto = @NumFoto , FileNumber = 0 , Note = @Note,DataPerizia = @DataPerizia " +
-                //                " WHERE ID = @IDPerizia";
-                string sqlcmd = " UPDATE AGR_PERIZIE_Temp_MVC " +
-                                " SET IDSpedizione = @IDSpedizione , IDModello = @IDModello, Telaio = @Telaio,  FileNumber = 0 , Note = @Note,DataPerizia = @DataPerizia " +
-                                " WHERE ID = @IDPerizia";
+                if (!IsUpdate)
+                {
 
+                    sqlcmd = " UPDATE AGR_PERIZIE_Temp_MVC " +
+                                    " SET IDSpedizione = @IDSpedizione , IDModello = @IDModello, Telaio = @Telaio,  FileNumber = 0 , Note = @Note,DataPerizia = @DataPerizia " +
+                                    " WHERE ID = @IDPerizia";
 
 
-                int Inserted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@IDPerizia", myIDPerizia),
-                                                                     new SqlParameter("@IDSpedizione", IDSpedizione),
-                                                                     new SqlParameter("@IDModello", IDModelloCasa),
+
+                    Inserted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@IDPerizia", myIDPerizia),
+                                                                         new SqlParameter("@IDSpedizione", IDSpedizione),
+                                                                         new SqlParameter("@IDModello", IDModelloCasa),
+                                                                         new SqlParameter("@Telaio", Chassis),
+                                                                         new SqlParameter("@DataPerizia", myISoDate),
+                                                                         new SqlParameter("@Note", Annotazioni));
+                }
+                else
+                {
+                    string OS = Session["OS"].ToString();
+
+                    sqlcmd = " UPDATE AGR_PERIZIE_Temp_MVC " +
+                                    " SET IDSpedizione = @IDSpedizione , IDModello = @IDModello, Telaio = @Telaio,  FileNumber = 0 , " +
+                                    "     Note = @Note,DataPerizia = @DataPerizia,IDPerito = @IDPerito, IDOperatore = @IDOperatore,MachineName = @MachineName " +
+                                    " WHERE ID = @IDPerizia";
+
+
+
+                    Inserted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@IDPerizia", myIDPerizia),
+                                                                         new SqlParameter("@IDSpedizione", IDSpedizione),
+                                                                         new SqlParameter("@IDModello", IDModelloCasa),
+                                                                         new SqlParameter("@Telaio", Chassis),
+                                                                         new SqlParameter("@DataPerizia", myISoDate),
+                                                                         new SqlParameter("@Note", Annotazioni),
+                                                                         new SqlParameter("@IDPerito", IDPerito),
+                                                                         new SqlParameter("@IDOperatore", (int)Session["IDOperatore"]),
+                                                                         new SqlParameter("@MachineName", OS));
+
+                    sqlcmd = " INSERT INTO AGR_PERIZIE_TEMP_MVC_LOG (IDPerizia,Telaio,InsertDate,IDPerito,IDOperatore , MachineName,TipoOperazione) " +
+                             " VALUES (@IDPerizia, @Telaio, @InsertDate, @IDPerito, @IDOperatore, @MachineName, @TipoOperazione)";
+
+                   
+                    Inserted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@IDPerizia", myIDPerizia),
                                                                      new SqlParameter("@Telaio", Chassis),
-                                                                     new SqlParameter("@DataPerizia", myISoDate),
-                                                                     new SqlParameter("@Note", Annotazioni));
+                                                                     new SqlParameter("@InsertDate", DateTime.Now),
+                                                                     new SqlParameter("@IDPerito", IDPerito),
+                                                                     new SqlParameter("@IDOperatore", (int)Session["IDOperatore"]),
+                                                                     new SqlParameter("@MachineName", OS),
+                                                                     new SqlParameter("@TipoOperazione", "Update"));
+                }
+
                 if (Inserted > 0)
                 {
                     if (String.IsNullOrEmpty(Condizione))
@@ -1030,10 +1064,10 @@ namespace WEB_Auto.Controllers
                         
                         try
                         {
-                            Inserted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@IDPerizia", myIDPerizia),
-                                                                         new SqlParameter("@IDParte", "045"),
-                                                                         new SqlParameter("@IDDanno", "Y")
-                                                                         );
+                            //Inserted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@IDPerizia", myIDPerizia),
+                            //                                             new SqlParameter("@IDParte", "045"),
+                            //                                             new SqlParameter("@IDDanno", "Y")
+                            //                                             );
                         }
                         catch (Exception exc)
                         {
@@ -1166,10 +1200,10 @@ namespace WEB_Auto.Controllers
 
                         try
                         {
-                            Inserted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@IDPerizia", myIDPerizia),
-                                                                         new SqlParameter("@IDParte", "045"),
-                                                                         new SqlParameter("@IDDanno", "Y")
-                                                                         );
+                            //Inserted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@IDPerizia", myIDPerizia),
+                            //                                             new SqlParameter("@IDParte", "045"),
+                            //                                             new SqlParameter("@IDDanno", "Y")
+                            //                                             );
                         }
                         catch (Exception exc)
                         {
@@ -1484,6 +1518,17 @@ namespace WEB_Auto.Controllers
 
                         sqlcmd = " DELETE FROM  AGR_PERIZIE_TEMP_MVC WHERE ID = @ID";
                         deleted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@ID", IDPerizia));
+
+                        sqlcmd = " INSERT INTO AGR_PERIZIE_TEMP_MVC_LOG (IDPerizia,InsertDate,IDPerito,IDOperatore , MachineName,TipoOperazione) " +
+                            " VALUES (@IDPerizia, @InsertDate, @IDPerito,@IDOperatore, @MachineName,@TipoOperazione)";
+
+                        string OS = Session["OS"].ToString();
+                        deleted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@IDPerizia", IDPerizia),
+                                                                             new SqlParameter("@InsertDate", DateTime.Now),
+                                                                             new SqlParameter("@IDPerito", IDPerito),
+                                                                             new SqlParameter("@IDOperatore", (int)Session["IDOperatore"]),
+                                                                             new SqlParameter("@MachineName", OS),
+                                                                             new SqlParameter("@TipoOperazione", "Delete"));
 
                         transaction.Commit();
                     }

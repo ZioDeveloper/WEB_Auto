@@ -19,9 +19,9 @@
 
 
 </head>
-<h4>Viaggio : <b>@ViewBag.myViaggio</b></h4>
-<h4>Spedizione : <b> @ViewBag.IDSpedizione</b></h4>
-<br />
+<h4><b>Viaggio : @ViewBag.myViaggio &nbsp;&nbsp;Spedizione : @ViewBag.IDSpedizione </b></h4>
+@*<h4>Spedizione : <b> @ViewBag.IDSpedizione</b></h4>*@
+
 @{string aIDPerito = "";
     string aIDMeteo = "";
     string aIDTP = "";}
@@ -39,10 +39,15 @@
     <table style="width:100%">
         <tr>
             <td>
-
                 <button type="submit" value="Confirm" class="btn btn-sm btn-primary btn-xs rounded-0"><i class="fa fa-floppy-o fa-lg"></i>Inserisci nuova perizia...</button>
+            </td>
 
-
+        </tr>
+        <tr>
+            <td>&nbsp;</td>
+        </tr>
+        <tr>
+            <td>
                 @Html.Label("Seleziona meteo")
                 @Html.DropDownList("IDMeteo", (SelectList)ViewData["ElencoMeteo"], "-- Seleziona meteo --", new { style = "width:10" }) <br />
             </td>
@@ -80,7 +85,7 @@ else if (Session["Classe"].ToString() == "1")
 <br />
 @if (Session["Classe"].ToString() == "0")
 {
-    using (Html.BeginForm("EditSpedizione", "ListaPerizie", new { ViewBag.IDSpedizione, ViewBag.IDTP }, FormMethod.Post))
+    using (Html.BeginForm("EditSpedizione", "ListaPerizie", new { ViewBag.IDSpedizione, ViewBag.IDTP, IDPerito = aIDPerito }, FormMethod.Post))
     {
         <button type="submit" value="Confirm" class="btn btn-sm btn-danger rounded-0" onclick="return confirm('Procedere con eliminazione dei telai selezionati ?')"><i class="fa fa-floppy-o fa-lg"></i>Cancellazione multipla dei telai selezionati...</button>
 

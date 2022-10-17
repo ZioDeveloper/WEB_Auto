@@ -180,7 +180,7 @@ namespace WEB_Auto.Controllers
             var myPerizia = (from m in db.WEB_Auto_ListaPerizieXSpedizione_vw
 
                              where m.ID == IDPerizia
-                             select new { m.IDSpedizione, m.IDCasa,m.Telaio,m.IDModello,m.DataPerizia,m.IDTipoPerizia,m.POL,m.POD }).FirstOrDefault();
+                             select new { m.ID,m.IDSpedizione, m.IDCasa,m.Telaio,m.IDModello,m.DataPerizia,m.IDTipoPerizia,m.POL,m.POD }).FirstOrDefault();
 
             string myIDSpedizione = myPerizia.IDSpedizione;
             string myIDCasa = myPerizia.IDCasa;
@@ -301,10 +301,32 @@ namespace WEB_Auto.Controllers
                     if (!String.IsNullOrEmpty(myNewIDSped))
                     {
                         string sqlcmd = " UPDATE AGR_PERIZIE_Temp_MVC " +
-                                                " SET  IDSpedizione = @IDSpedizione " +
+                                                " SET  IDSpedizione = @IDSpedizione , " +
+                                                "      IDOperatore = @IDOperatore  " +
                                                 " WHERE ID = @IDPerizia";
                         int Inserted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@IDPerizia", IDPerizia),
+                                                                             new SqlParameter("@IDOperatore", (int)Session["IDOperatore"]),
                                                                              new SqlParameter("@IDSpedizione", myNewIDSped));
+
+                        string OS = Session["OS"].ToString();
+                        string aPerito = Session["IDPeritoVero"].ToString();
+                        sqlcmd = " INSERT INTO AGR_PERIZIE_TEMP_MVC_LOG (IDPerizia,Telaio,InsertDate,IDPerito,IDOperatore , MachineName,TipoOperazione) " +
+                             " VALUES (@IDPerizia, @Telaio, @InsertDate, @IDPerito, @IDOperatore, @MachineName, @TipoOperazione)";
+
+                        try
+                        {
+                            Inserted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@IDPerizia", myPerizia.ID.ToString()),
+                                                                             new SqlParameter("@Telaio", myPerizia.Telaio.ToString()),
+                                                                             new SqlParameter("@InsertDate", DateTime.Now),
+                                                                             new SqlParameter("@IDPerito", aPerito),
+                                                                             new SqlParameter("@IDOperatore", (int)Session["IDOperatore"]),
+                                                                             new SqlParameter("@MachineName", OS),
+                                                                             new SqlParameter("@TipoOperazione", "Modifica viaggio: da " + myPerizia.IDSpedizione.ToString() + " a : " + myNewIDSped));
+                        }
+                        catch(Exception ex)
+                        {
+                            string a = ex.Message;
+                        }
                     }
                 }
                 else
@@ -327,6 +349,19 @@ namespace WEB_Auto.Controllers
                         int Inserted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@IDPerizia", IDPerizia),
                                                                              new SqlParameter("@IDSpedizione", myNewIDSped),
                                                                              new SqlParameter("@IDModello", myIDModello));
+                        string OS = Session["OS"].ToString();
+                        string aPerito = Session["IDPeritoVero"].ToString();
+                        sqlcmd = " INSERT INTO AGR_PERIZIE_TEMP_MVC_LOG (IDPerizia,Telaio,InsertDate,IDPerito,IDOperatore , MachineName,TipoOperazione) " +
+                             " VALUES (@IDPerizia, @Telaio, @InsertDate, @IDPerito, @IDOperatore, @MachineName, @TipoOperazione)";
+
+
+                        Inserted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@IDPerizia", myPerizia.ID.ToString()),
+                                                                         new SqlParameter("@Telaio", myPerizia.Telaio.ToString()),
+                                                                         new SqlParameter("@InsertDate", DateTime.Now),
+                                                                         new SqlParameter("@IDPerito", aPerito),
+                                                                         new SqlParameter("@IDOperatore", (int)Session["IDOperatore"]),
+                                                                         new SqlParameter("@MachineName", OS),
+                                                                         new SqlParameter("@TipoOperazione", "Modifica viaggio: da " + myPerizia.IDSpedizione.ToString() + " a : " + myNewIDSped));
                     }
                     else
                     {
@@ -340,32 +375,6 @@ namespace WEB_Auto.Controllers
             {
                 //aMsg = "Errore in fase cambio spedizione, contattare EDP !";
                 return false;
-
-
-                //RedirectToAction("ModificaNonConsentita", "ModificaViaggio", new { Message = "Modifica non ammessa, contattare Maurizio." });
-                /*var IDPeriziaDaCancellare = (from m in db.AGR_PERIZIE_TEMP_MVC
-                                          where m.Telaio == myPerizia.Telaio
-                                          where m.IDSpedizione == myNewIDSped
-                                          select m.ID ).FirstOrDefault();
-
-                string sqlcmd = " DELETE FROM  AGR_PerizieExpGrim_Temp_MVC  WHERE ID = @ID";
-                int deleted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@ID", IDPeriziaDaCancellare));
-
-                sqlcmd = " DELETE FROM  AGR_PERIZIE_DETT_TEMP_MVC  WHERE IDPerizia = @IDPerizia";
-                deleted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@IDPerizia", IDPeriziaDaCancellare));
-
-                sqlcmd = " DELETE FROM  AGR_PERIZIE_TEMP_MVC WHERE ID = @ID";
-                deleted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@ID", IDPeriziaDaCancellare));
-
-
-                // Se esiste già un telaio nella nuova spedizione, lo cancello e inserisco i dati più vecchi
-               
-                sqlcmd = " UPDATE AGR_PERIZIE_Temp_MVC " +
-                         " SET  IDSpedizione = @IDSpedizione " +
-                         " WHERE ID = @IDPerizia";
-                int Updated = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@IDPerizia", IDPerizia),
-                                                                    new SqlParameter("@IDSpedizione", myNewIDSped));*/
-
 
 
             }
@@ -445,6 +454,9 @@ namespace WEB_Auto.Controllers
                                         " WHERE ID = @IDPerizia";
                 int Inserted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@IDPerizia", IDPerizia),
                                                                  new SqlParameter("@DataPerizia", myISoDate));
+
+
+
             //}
 
         }

@@ -119,6 +119,38 @@ namespace WEB_Auto.Controllers
                 myIDPeritoVero = "MG";
             }
 
+            if (myIDPorto == "PMI")
+            {
+                myIDPerito = "VR1";
+                myIDPeritoVero = "Y1";
+            }
+
+            if (myIDPorto == "IBZ")
+            {
+                myIDPerito = "VR2";
+                myIDPeritoVero = "Y2";
+            }
+
+            if (myIDPorto == "MAH")
+            {
+                myIDPerito = "VR3";
+                myIDPeritoVero = "Y3";
+            }
+
+            if (myIDPorto == "BCN")
+            {
+                myIDPerito = "VR4";
+                myIDPeritoVero = "Y4";
+            }
+
+            if (myIDPorto == "VLC")
+            {
+                myIDPerito = "VR5";
+                myIDPeritoVero = "Y5";
+            }
+
+
+
             var myClasse = (from s in db.AGR_Periti_WEB
                              where s.Name == usr
                              select s.Classe).FirstOrDefault();

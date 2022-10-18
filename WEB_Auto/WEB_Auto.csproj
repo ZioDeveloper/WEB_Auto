@@ -230,6 +230,9 @@
     <Compile Include="Models\AGR_PERIZIE_TEMP_MVC.cs">
       <DependentUpon>Autocargo.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\AGR_PERIZIE_TEMP_MVC_LOG.cs">
+      <DependentUpon>Autocargo.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\AGR_Perizie_TEMP_MVC_STANDBY.cs">
       <DependentUpon>Autocargo.tt</DependentUpon>
     </Compile>
@@ -616,6 +619,7 @@
     <Content Include="Views\PDFViaggio\InsertPDFViaggio.cshtml" />
     <Content Include="Views\PDFViaggio\ScattaPDFSpedizione.cshtml" />
     <Content Include="Views\ListaPerizie\EsportaFotoSpedizione.cshtml" />
+    <Content Include="Views\ListaPerizie\ErroreInCancellazioneMulti.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

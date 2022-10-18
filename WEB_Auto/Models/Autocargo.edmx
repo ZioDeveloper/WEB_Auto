@@ -181,6 +181,19 @@ warning 6002: The table/view 'wisedb.dbo.AGR_Danni_SDU' does not have a primary 
           <Property Name="IsTransferred" Type="bit" Nullable="false" />
           <Property Name="MachineName" Type="varchar" MaxLength="250" />
         </EntityType>
+        <EntityType Name="AGR_PERIZIE_TEMP_MVC_LOG">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IDPerizia" Type="varchar" MaxLength="18" />
+          <Property Name="Telaio" Type="varchar" MaxLength="20" />
+          <Property Name="InsertDate" Type="datetime" />
+          <Property Name="IDPerito" Type="varchar" MaxLength="2" />
+          <Property Name="IDOperatore" Type="int" />
+          <Property Name="MachineName" Type="varchar" MaxLength="50" />
+          <Property Name="TipoOperazione" Type="varchar" MaxLength="100" />
+        </EntityType>
         <EntityType Name="AGR_Perizie_TEMP_MVC_STANDBY">
           <Key>
             <PropertyRef Name="ID" />
@@ -1342,6 +1355,7 @@ warning 6002: The table/view 'wisedb.dbo.WEB_ListaPerizieFlat_TMP_vw' does not h
           <EntitySet Name="AGR_Periti_WEB" EntityType="Self.AGR_Periti_WEB" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AGR_PERIZIE_DETT_TEMP_MVC" EntityType="Self.AGR_PERIZIE_DETT_TEMP_MVC" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AGR_PERIZIE_TEMP_MVC" EntityType="Self.AGR_PERIZIE_TEMP_MVC" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AGR_PERIZIE_TEMP_MVC_LOG" EntityType="Self.AGR_PERIZIE_TEMP_MVC_LOG" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AGR_Perizie_TEMP_MVC_STANDBY" EntityType="Self.AGR_Perizie_TEMP_MVC_STANDBY" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AGR_PerizieExpGrim_Temp_MVC" EntityType="Self.AGR_PerizieExpGrim_Temp_MVC" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AGR_Porti" EntityType="Self.AGR_Porti" Schema="dbo" store:Type="Tables" />
@@ -2151,6 +2165,7 @@ warning 6002: The table/view 'wisedb.dbo.WEB_ListaPerizieFlat_TMP_vw' does not h
           <EntitySet Name="AGR_ConteggioPerizieInseriteWEB" EntityType="wisedbModel.AGR_ConteggioPerizieInseriteWEB" />
           <EntitySet Name="AGR_TelaiScartati_MVC" EntityType="wisedbModel.AGR_TelaiScartati_MVC" />
           <EntitySet Name="AGR_TelaiSelezionati_MVC" EntityType="wisedbModel.AGR_TelaiSelezionati_MVC" />
+          <EntitySet Name="AGR_PERIZIE_TEMP_MVC_LOG" EntityType="wisedbModel.AGR_PERIZIE_TEMP_MVC_LOG" />
         </EntityContainer>
         <EntityType Name="AGR_Periti_WEB">
           <Key>
@@ -3408,6 +3423,19 @@ warning 6002: The table/view 'wisedb.dbo.WEB_ListaPerizieFlat_TMP_vw' does not h
           <Property Name="InsertDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="IDPeritoVero" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
         </EntityType>
+        <EntityType Name="AGR_PERIZIE_TEMP_MVC_LOG">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IDPerizia" Type="String" MaxLength="18" FixedLength="false" Unicode="false" />
+          <Property Name="Telaio" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="InsertDate" Type="DateTime" Precision="3" />
+          <Property Name="IDPerito" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="IDOperatore" Type="Int32" />
+          <Property Name="MachineName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TipoOperazione" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -4564,6 +4592,20 @@ warning 6002: The table/view 'wisedb.dbo.WEB_ListaPerizieFlat_TMP_vw' does not h
                 <ScalarProperty Name="IDPeritoVero" ColumnName="IDPeritoVero" />
                 <ScalarProperty Name="InsertDate" ColumnName="InsertDate" />
                 <ScalarProperty Name="Telaio" ColumnName="Telaio" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AGR_PERIZIE_TEMP_MVC_LOG">
+            <EntityTypeMapping TypeName="wisedbModel.AGR_PERIZIE_TEMP_MVC_LOG">
+              <MappingFragment StoreEntitySet="AGR_PERIZIE_TEMP_MVC_LOG">
+                <ScalarProperty Name="TipoOperazione" ColumnName="TipoOperazione" />
+                <ScalarProperty Name="MachineName" ColumnName="MachineName" />
+                <ScalarProperty Name="IDOperatore" ColumnName="IDOperatore" />
+                <ScalarProperty Name="IDPerito" ColumnName="IDPerito" />
+                <ScalarProperty Name="InsertDate" ColumnName="InsertDate" />
+                <ScalarProperty Name="Telaio" ColumnName="Telaio" />
+                <ScalarProperty Name="IDPerizia" ColumnName="IDPerizia" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

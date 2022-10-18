@@ -7,7 +7,11 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     <script src="~/Scripts/jquery-3.3.1.js"></script>
-
+    @*<style>
+        div.container {
+            width: 75%;
+        }
+    </style>*@
 </head>
 <body>
     
@@ -98,12 +102,17 @@
         @*<div style="color:red">TEST !!!!</div>*@
         @RenderBody()
         <hr />
-
-        <footer>
+        @*<div class="alert alert-danger" role="alert">
+            Attenzione ! Oggi alle 12.40 il server verrà spento per pochi minuti per pubblicazione nuova versione 1.4.2.0 !
+        </div>*@
+        <footer  class="footer mt-auto py-3 alert-success">
             @*<div style="color:red">TEST !!!!</div>*@
             <p>&copy; @DateTime.Now.Year - Astrea Claim Solutions S.r.l. -  Release : @Html.AssemblyVersion() </p>
+            
+                
 
-           
+
+
         </footer>
     </div>
 

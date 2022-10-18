@@ -60,8 +60,9 @@ namespace WEB_Auto.Controllers
               // usr = "DiSalvo";
                //usr = "patrizia";
                 //usr = "Torresan"; // 
-                usr = "DiNinno";
+               // usr = "DiNinno";
               // usr = "Maurizio";
+                usr = "amolina"; // 
                 //usr = Session["User"].ToString();
             }
 

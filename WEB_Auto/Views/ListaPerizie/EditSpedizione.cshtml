@@ -55,7 +55,12 @@
     </table>
 }
 <hr />
-
+@if (ViewBag.StabdBy != "")
+{
+    <div class="alert alert-danger" role="alert">
+        @ViewBag.StabdBy
+    </div>
+}
 @*Cancellazione multipla !*@
 @*<div style="text-align:right">
         @using (Html.BeginForm("EliminaPerizia", "TelaiAnagrafica", null, FormMethod.Post))

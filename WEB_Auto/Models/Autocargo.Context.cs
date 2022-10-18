@@ -83,5 +83,6 @@ namespace WEB_Auto.Models
         public virtual DbSet<AGR_ConteggioPerizieInseriteWEB> AGR_ConteggioPerizieInseriteWEB { get; set; }
         public virtual DbSet<AGR_TelaiScartati_MVC> AGR_TelaiScartati_MVC { get; set; }
         public virtual DbSet<AGR_TelaiSelezionati_MVC> AGR_TelaiSelezionati_MVC { get; set; }
+        public virtual DbSet<AGR_PERIZIE_TEMP_MVC_LOG> AGR_PERIZIE_TEMP_MVC_LOG { get; set; }
     }
 }

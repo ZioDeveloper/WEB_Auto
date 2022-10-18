@@ -199,63 +199,64 @@
         </div>
     </div>
 </div>
-<div id="myCounter2" style="color:red">Selezionati : @ViewBag.NumSelezionati</div>
+<div class="container py-4">
+    <div id="myCounter2" style="color:red">Selezionati : @ViewBag.NumSelezionati</div>
+</div>
+    <script>
+        $(document).ready(function () {
+            var table = $('#DataTable').DataTable({
+                "autoWidth": false,
+                stateSave: true,
+                "lengthMenu": [[10, 50, 100, -1], [10, 50, 100, "Tutti"]],
+                "iDisplayLength": -1,
 
-<script>
-    $(document).ready(function () {
-        var table = $('#DataTable').DataTable({
-            "autoWidth": false,
-            stateSave: true,
-            "lengthMenu": [[10, 50, 100, -1], [10, 50, 100, "Tutti"]],
-            "iDisplayLength": -1,
 
 
+                dom: 'frtip',
 
-            dom: 'frtip',
+                language: {
 
-            language: {
+                    processing: "Ricerca in corso...",
+                    search: "Ricerca:",
+                    //lengthMenu: "Visualizza _MENU_ elementi",
 
-                processing: "Ricerca in corso...",
-                search: "Ricerca:",
-                //lengthMenu: "Visualizza _MENU_ elementi",
-
-                info: "Elenca da _START_ a _END_ di _TOTAL_ elementi",
-                infoEmpty: "Elenca da 0 a 0 di 0 elementi",
-                infoFiltered: "(filtrati da _MAX_ elementi totali)",
-                infoPostFix: "",
-                loadingRecords: "Caricamento...",
-                zeroRecords: "La ricerca non ha portato alcun risultato.",
-                emptyTable: "Nessun record presente in tabella",
-                paginate: {
-                    first: "Inizio",
-                    previous: "Precedente",
-                    next: "Successivo",
-                    last: "Fine"
-                },
-                aria: {
-                    sortAscending: ": attiva per ordinare la colonna in ordine crescente",
-                    sortDescending: ": attiva per ordinare la colonna in ordine decrescente"
-                },
-                searchPanes: {
-                    title: {
-                        _: 'Filtri selezionati : %d',
-                        0: 'Nessun filtro selezionato',
-                        1: 'Un solo filtro selezionato'
+                    info: "Elenca da _START_ a _END_ di _TOTAL_ elementi",
+                    infoEmpty: "Elenca da 0 a 0 di 0 elementi",
+                    infoFiltered: "(filtrati da _MAX_ elementi totali)",
+                    infoPostFix: "",
+                    loadingRecords: "Caricamento...",
+                    zeroRecords: "La ricerca non ha portato alcun risultato.",
+                    emptyTable: "Nessun record presente in tabella",
+                    paginate: {
+                        first: "Inizio",
+                        previous: "Precedente",
+                        next: "Successivo",
+                        last: "Fine"
                     },
-                    clearMessage: 'Azzera filtri !',
-                    collapse: { 0: 'Ricerca avanzata', _: 'Scelte selezionate (%d)' }
-                },
-                buttons: [
-                    'copy', 'csv', 'excel', 'print'
-                ]
-            }
+                    aria: {
+                        sortAscending: ": attiva per ordinare la colonna in ordine crescente",
+                        sortDescending: ": attiva per ordinare la colonna in ordine decrescente"
+                    },
+                    searchPanes: {
+                        title: {
+                            _: 'Filtri selezionati : %d',
+                            0: 'Nessun filtro selezionato',
+                            1: 'Un solo filtro selezionato'
+                        },
+                        clearMessage: 'Azzera filtri !',
+                        collapse: { 0: 'Ricerca avanzata', _: 'Scelte selezionate (%d)' }
+                    },
+                    buttons: [
+                        'copy', 'csv', 'excel', 'print'
+                    ]
+                }
+            });
         });
-    });
 
-</script>
+    </script>
 
 
-<script>
+    <script>
         window.updateCount = function () {
             var x = $(".custom-checkbox:checked").length;
             document.getElementById("myCounter").innerHTML = "Telai selezionati : " + x.toString();

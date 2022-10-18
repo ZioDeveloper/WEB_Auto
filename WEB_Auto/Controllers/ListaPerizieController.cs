@@ -92,8 +92,18 @@ namespace WEB_Auto.Controllers
 
                 }
 
+                var stby = (from m in db.WEB_AUTO_ListaSpedizioni_3_vw
+                            where m.IDPerito == aPerito
+                            where m.StandBy > 0
+                            select m).Count();
+
 
                 ViewBag.Status = Status;
+                if (stby > 0)
+                    ViewBag.StabdBy = "Attenzione :  ci sono n° " + stby.ToString() + " perizie in standby !";
+                else
+                    ViewBag.StabdBy = "";
+
                 return View(model);
             }
             else
@@ -239,6 +249,19 @@ namespace WEB_Auto.Controllers
                         select m;
             model.AGR_Meteo = Meteo.ToList();
 
+            var stby = (from m in db.WEB_AUTO_ListaSpedizioni_3_vw
+                        where m.IDPerito == aPerito
+                        where m.ID == IDSpedizione
+                        where m.StandBy > 0
+                        select m).Count();
+
+
+
+            if (stby > 0)
+                ViewBag.StabdBy = "Attenzione :  ci sono n° " + stby.ToString() + " perizie in standby !";
+            else
+                ViewBag.StabdBy = "";
+
             var ElencoMeteo = new SelectList(model.AGR_Meteo.ToList(), "ID", "DescrITA");
             ViewData["ElencoMeteo"] = ElencoMeteo;
 
@@ -371,6 +394,21 @@ namespace WEB_Auto.Controllers
             model.AGR_Meteo = Meteo.ToList();
             var ElencoMeteo = new SelectList(model.AGR_Meteo.ToList(), "ID", "DescrITA");
             ViewData["ElencoMeteo"] = ElencoMeteo;
+
+            var stby = (from m in db.WEB_AUTO_ListaSpedizioni_3_vw
+                        where m.IDPerito == aPerito
+                        where m.ID == IDSpedizione
+                        where m.StandBy > 0
+                        select m).Count();
+
+
+            
+            if (stby > 0)
+                ViewBag.StabdBy = "Attenzione :  ci sono n° " + stby.ToString() + " perizie in standby !";
+            else
+                ViewBag.StabdBy = "";
+
+
 
             ViewBag.IDSpedizione = IDSpedizione;
             ViewBag.IDTP = IDTP;
@@ -705,8 +743,8 @@ namespace WEB_Auto.Controllers
 
             using ( wisedbEntities db = new wisedbEntities())
             {
-                using (DbContextTransaction transaction = db.Database.BeginTransaction())
-                {
+                //using (DbContextTransaction transaction = db.Database.BeginTransaction())
+                //{
 
                     try
                     {
@@ -731,21 +769,30 @@ namespace WEB_Auto.Controllers
                                                                              new SqlParameter("@MachineName", OS),
                                                                              new SqlParameter("@TipoOperazione", "Delete"));
 
+    
 
-
-                        transaction.Commit();
+                        //transaction.Commit();
                     }
                     catch (SqlException exc)
                     {
                         string a = exc.Message;
-                        transaction.Rollback();
+                        ViewBag.Message = a;
+                        RedirectToAction ("ErroreInCancellazioneMulti");
+
                     }
-                }
+                //}
             }
             //else
             //    return RedirectToAction("EditSpedizione", "ListaPerizie", new { IDPerito, IDSpedizione, IDMeteo, IDTP, TipoMezzo });
 
         }
+
+        public ActionResult ErroreInCancellazioneMulti(string aMsg)
+        {
+            ViewBag.Message = aMsg;
+            return View();
+        }
+
 
         public ActionResult SetStandbyPerizia(string IDPerizia, string IDPerito, string IDSpedizione, string IDMeteo, string IDTP)
         {

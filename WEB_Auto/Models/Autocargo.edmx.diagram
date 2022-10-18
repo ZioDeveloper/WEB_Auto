@@ -67,6 +67,7 @@
         <EntityTypeShape EntityType="wisedbModel.AGR_ConteggioPerizieInseriteWEB" Width="1.5" PointX="16.375" PointY="25.75" />
         <EntityTypeShape EntityType="wisedbModel.AGR_TelaiScartati_MVC" Width="1.5" PointX="18.375" PointY="25.75" />
         <EntityTypeShape EntityType="wisedbModel.AGR_TelaiSelezionati_MVC" Width="1.5" PointX="20.375" PointY="25.75" />
+        <EntityTypeShape EntityType="wisedbModel.AGR_PERIZIE_TEMP_MVC_LOG" Width="1.5" PointX="26.375" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

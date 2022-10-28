@@ -73,6 +73,8 @@ namespace WEB_Auto.Models
 
         public IEnumerable<AGR_TelaiSelezionati_MVC> AGR_TelaiSelezionati_MVC { get; set; }
         public IEnumerable<AGR_TelaiScartati_MVC> AGR_TelaiScartati_MVC { get; set; }
+        public IEnumerable<WEB_Auto_ListaPerizieXSpedizione_withInfo_vw> WEB_Auto_ListaPerizieXSpedizione_withInfo_vw { get; set; }
+
 
 
 

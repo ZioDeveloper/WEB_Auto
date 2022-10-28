@@ -17,8 +17,8 @@
     <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.4/js/buttons.print.min.js"</script>
     <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.4/js/dataTables.buttons.min.js"></script>
     @*<link rel="stylesheet" type="text/css" href="https://nightly.datatables.net/searchpanes/css/searchPanes.dataTables.min.css" />
-    <script type="text/javascript" src="https://nightly.datatables.net/searchpanes/js/dataTables.searchPanes.min.js"</script>*@
-    
+        <script type="text/javascript" src="https://nightly.datatables.net/searchpanes/js/dataTables.searchPanes.min.js"</script>*@
+
 </head>
 <h4>Lista viaggi </h4>
 @*<hr />
@@ -32,9 +32,18 @@
 {
     using (Html.BeginForm("ListaSpedizioni", "ListaPerizie", new { Status = ViewBag.Status }))
     {
-        <label>Solo aperti : @Html.RadioButton("Status", "APERTE", true, new { onclick = "this.form.submit()" })</label>
+        <label>Solo aperti (no standby) : @Html.RadioButton("Status", "APERTE", true, new { onclick = "this.form.submit()" })</label>
+        if (ViewBag.StabdBy != "")
+        {
+            <label style="color:red">&nbsp;&nbsp; &nbsp;&nbsp; In Standby:  @Html.RadioButton("Status", "STANDBY", false, new { onclick = "this.form.submit()" })</label>
+        }
+        else
+        {
+            <label>&nbsp;&nbsp; &nbsp;&nbsp; In Standby:  @Html.RadioButton("Status", "STANDBY", false, new { onclick = "this.form.submit()" })</label>
+        }
         <label>&nbsp;&nbsp; &nbsp;&nbsp; Solo chiusi  @Html.RadioButton("Status", "CHIUSE", false, new { onclick = "this.form.submit()" })</label>
         <label>&nbsp;&nbsp; &nbsp;&nbsp; Tutti:  @Html.RadioButton("Status", "TUTTE", false, new { onclick = "this.form.submit()" })</label>
+
     }
 }
 

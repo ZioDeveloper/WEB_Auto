@@ -211,7 +211,8 @@ namespace WEB_Auto.Controllers
             {
                 if (file != null)
                 {
-                    filename = System.IO.Path.GetFileName(file.FileName);
+                    filename = System.IO.Path.GetFileNameWithoutExtension(file.FileName);
+                    filename += "_" + DateTime.Now.ToString("yyyyMMdd_hhmmss") + ".pdf";
 
                     path = System.IO.Path.Combine(Server.MapPath("~/DocumentiXTelai/PDF"), filename);
                     if (file != null)
@@ -231,12 +232,20 @@ namespace WEB_Auto.Controllers
                     cnt++;
                     filename = Regex.Replace(filename, @"\s", "");
 
-                    var sql = @"INSERT INTO WEB_AUTO_PDF (IDPerizia, FileName,Prog,Flags, IsSent ) Values (@IDPerizia, @FileName,@Prog,@Flags, 0 )";
-                    int noOfRowInserted = db.Database.ExecuteSqlCommand(sql,
-                        new SqlParameter("@IDPerizia", myIDPerizia),
-                        new SqlParameter("@FileName", filename),
-                        new SqlParameter("@Flags", 1),
-                        new SqlParameter("@Prog", cnt));
+                    //filename += DateTime.Now.ToString("yyyyMMdd_hhmmss");
+
+                    string fullPath = Request.MapPath("~/DocumentiXTelai/PDF/" + filename);
+                    if (System.IO.File.Exists(fullPath))
+                    {
+                        var sql = @"INSERT INTO WEB_AUTO_PDF (IDPerizia, FileName,Prog,Flags, IsSent ) Values (@IDPerizia, @FileName,@Prog,@Flags, 0 )";
+                        int noOfRowInserted = db.Database.ExecuteSqlCommand(sql,
+                            new SqlParameter("@IDPerizia", myIDPerizia),
+                            new SqlParameter("@FileName", filename),
+                            new SqlParameter("@Flags", 1),
+                            new SqlParameter("@Prog", cnt));
+                    }
+
+                   
                 }
             }
 
@@ -294,12 +303,18 @@ namespace WEB_Auto.Controllers
                     cnt++;
                     filename = Regex.Replace(filename, @"\s", "");
 
-                    var sql = @"INSERT INTO WEB_AUTO_PDF (IDPerizia, FileName,Prog,Flags,IsSent) Values (@IDPerizia, @FileName,@Prog,@Flags,0)";
-                    int noOfRowInserted = db.Database.ExecuteSqlCommand(sql,
-                        new SqlParameter("@IDPerizia", IDSpedizione),
-                        new SqlParameter("@FileName", filename),
-                        new SqlParameter("@Flags", 4),
-                        new SqlParameter("@Prog", cnt));
+                    string fullPath = Request.MapPath("~/DocumentiXTelai/PDF/" + filename);
+                    if (System.IO.File.Exists(fullPath))
+                    {
+                        var sql = @"INSERT INTO WEB_AUTO_PDF (IDPerizia, FileName,Prog,Flags,IsSent) Values (@IDPerizia, @FileName,@Prog,@Flags,0)";
+                        int noOfRowInserted = db.Database.ExecuteSqlCommand(sql,
+                            new SqlParameter("@IDPerizia", IDSpedizione),
+                            new SqlParameter("@FileName", filename),
+                            new SqlParameter("@Flags", 4),
+                            new SqlParameter("@Prog", cnt));
+                    }
+
+                    
                 }
             }
 

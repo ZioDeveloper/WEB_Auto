@@ -78,6 +78,7 @@ namespace WEB_Auto.Controllers
                     var lista = (from m in db.WEB_AUTO_ListaSpedizioni_3_vw
                                  where m.IDPerito == aPerito
                                  where m.Aperte != 0
+                                 where m.StandBy == 0
                                  select m).ToList();
                     model.WEB_AUTO_ListaSpedizioni_3_vw = lista;
 
@@ -87,6 +88,17 @@ namespace WEB_Auto.Controllers
                     var lista = (from m in db.WEB_AUTO_ListaSpedizioni_3_vw
                                  where m.IDPerito == aPerito
                                  where m.Aperte == 0
+                                 select m).ToList();
+                    model.WEB_AUTO_ListaSpedizioni_3_vw = lista;
+
+                }
+
+                else if (Status == "STANDBY")
+                {
+                    var lista = (from m in db.WEB_AUTO_ListaSpedizioni_3_vw
+                                 where m.IDPerito == aPerito
+                                 where m.Aperte != 0
+                                 where m.StandBy != 0
                                  select m).ToList();
                     model.WEB_AUTO_ListaSpedizioni_3_vw = lista;
 
@@ -871,8 +883,7 @@ namespace WEB_Auto.Controllers
         }
 
 
-        public ActionResult EsportaFotoSpedizione(string IDSpedizione 
-            )
+        public ActionResult EsportaFotoSpedizione(string IDSpedizione)
         {
 
 
@@ -959,6 +970,17 @@ namespace WEB_Auto.Controllers
 
 
             return View();
+        }
+
+        public ActionResult ListaPerizieInStandBy()
+        {
+            var model = new Models.HomeModel();
+            var myListStby = (from m in db.WEB_Auto_ListaPerizieXSpedizione_withInfo_vw
+                              where m.Stato.ToUpper() == "S"
+                                select m).ToList();
+            model.WEB_Auto_ListaPerizieXSpedizione_withInfo_vw = myListStby;
+
+            return View(model);
         }
 
     }

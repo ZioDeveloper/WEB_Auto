@@ -41,8 +41,16 @@
                         @Html.LiActionLink("Dati preload", "VisualizzaPreload", "Storico", "")
                         if (Session["IDRuolo"].ToString() == "2")
                         {
-                            @Html.LiActionLink("Lista perizie cancellate", "ListaPerizieCancellate", "RecuperaDatiCancellati", "")
+                            <li class="dropdown-submenu">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <span class="nav-label">Tools amministrativi</span><span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li>@Html.LiActionLink("Lista perizie cancellate", "ListaPerizieCancellate", "RecuperaDatiCancellati", "")</li>
+                                    <li>@Html.LiActionLink("Lista perizie in standby", "ListaPerizieInStandBy", "ListaPerizie","")</li>
+                                </ul>
+                            </li>
+                            
                         }
+
                         @*@Html.LiActionLink("Invio mail", "AllegaFoto", "InvioFotoViaEmail", "")*@
                         @*@Html.LiActionLink("PDF Viaggio", "InsertPDFViaggio", "PDFViaggio", "")*@
 
@@ -58,16 +66,16 @@
                         // SEZIONE MULTILINGUA
 
                         @*<li class="dropdown-submenu">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <span class="nav-label">Language</span><span class="caret"></span></a>
-                            <ul class="dropdown-menu">
-                                @foreach (var i in WEB_Auto.LanguageMang.AvailableLanguages)
-                                {
-                                    <li class="nav-item">
-                                        @Html.Raw(i.LanguageFullName) &nbsp;  @Html.ActionLink(i.LanguageFullName, "ChangeLanguage", "Home", new { lang = i.LanguageCultureName }, new { @class = i.LanguageFlag })
-                                    </li>
-                                }
-                            </ul>
-                        </li>*@
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <span class="nav-label">Language</span><span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    @foreach (var i in WEB_Auto.LanguageMang.AvailableLanguages)
+                    {
+                        <li class="nav-item">
+                            @Html.Raw(i.LanguageFullName) &nbsp;  @Html.ActionLink(i.LanguageFullName, "ChangeLanguage", "Home", new { lang = i.LanguageCultureName }, new { @class = i.LanguageFlag })
+                        </li>
+                    }
+                </ul>
+            </li>*@
                         // END END END SEZIONE MULTILINGUA
 
                         @Html.LiActionLink("Contact", "Contact", "Home", "")

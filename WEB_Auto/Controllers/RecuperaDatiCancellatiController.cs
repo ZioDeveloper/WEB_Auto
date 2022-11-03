@@ -18,13 +18,44 @@ namespace WEB_Auto.Controllers
         private wisedbEntities db = new wisedbEntities();
 
         // GET: RecuperaDatiCancellati
-        public ActionResult ListaPerizieCancellate(bool CaricaDati = false)
+        public ActionResult ListaPerizieCancellate(string POL, string POD,string DataINI, string DataEND, bool CaricaDati = false, int FiltroData = 30)
         {
             var model = new Models.HomeModel();
-            var ListaCancellate = (from m in db.BKP_AGR_Perizie_TEMP_MVC_ELIMINATE_vw
-                                   select m).ToList().OrderByDescending(s=>s.DataPerizia).Where(s=>s.DataPerizia >= DateTime.Now.AddDays(-60));
+            if (CaricaDati)
+            {
 
-            model.BKP_AGR_Perizie_TEMP_MVC_ELIMINATE_vw = ListaCancellate;
+                var Lista = (from m in db.BKP_AGR_Perizie_TEMP_MVC_ELIMINATE_vw
+                                           //where m.POL ==POL
+                                           //where m.POD == POD
+                                       select m).ToList().OrderByDescending(s => s.DataPerizia).Where(s => s.DataPerizia >= DateTime.Now.AddDays(-FiltroData));
+
+
+
+               
+
+                if (!String.IsNullOrEmpty(POL))
+                {
+                    Lista = (from f in Lista
+                             where f.POL.ToUpper() == POL.ToUpper()
+                                       select f).ToList();
+                }
+                if (!String.IsNullOrEmpty(POD))
+                {
+                    Lista = (from f in Lista
+                             where f.POD.ToUpper() == POD.ToUpper()
+                                       select f).ToList();
+                }
+                model.BKP_AGR_Perizie_TEMP_MVC_ELIMINATE_vw = Lista;
+            }
+            else
+            {
+                var Lista = (from m in db.BKP_AGR_Perizie_TEMP_MVC_ELIMINATE_vw
+                                           where 0==1
+                                           //where m.POD == POD
+                                       select m).ToList().OrderByDescending(s => s.DataPerizia).Where(s => s.DataPerizia >= DateTime.Now.AddDays(-FiltroData));
+                model.BKP_AGR_Perizie_TEMP_MVC_ELIMINATE_vw = Lista;
+            }
+
             return View(model);
         }
 

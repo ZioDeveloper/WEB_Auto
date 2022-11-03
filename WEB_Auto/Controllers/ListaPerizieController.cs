@@ -806,7 +806,7 @@ namespace WEB_Auto.Controllers
         }
 
 
-        public ActionResult SetStandbyPerizia(string IDPerizia, string IDPerito, string IDSpedizione, string IDMeteo, string IDTP)
+        public ActionResult SetStandbyPerizia(string IDPerizia, string IDPerito, string IDSpedizione, string IDMeteo, string IDTP, bool VengoDaListaPerito = false)
         {
 
             var myStatus = (from m in db.AGR_PERIZIE_TEMP_MVC
@@ -861,7 +861,14 @@ namespace WEB_Auto.Controllers
                     }
                 }
             }
-            return RedirectToAction("EditSpedizione", "ListaPerizie", new { IDPerito, IDSpedizione, IDMeteo, IDTP});
+            if (!VengoDaListaPerito)
+            {
+                return RedirectToAction("EditSpedizione", "ListaPerizie", new { IDPerito, IDSpedizione, IDMeteo, IDTP });
+            }
+            else
+            {
+                return RedirectToAction("ListaPerizieInStandByPErPerito", "ListaPerizie");
+            }
         }
 
         public void AggiornaContatoreFoto(string aIDPerizia)
@@ -983,5 +990,17 @@ namespace WEB_Auto.Controllers
             return View(model);
         }
 
+        public ActionResult ListaPerizieInStandByPErPerito()
+        {
+            var model = new Models.HomeModel();
+            string aPerito = Session["IDPeritoVero"].ToString();
+            var myListStby = (from m in db.WEB_Auto_ListaPerizieXSpedizione_withInfo_vw
+                              where m.Stato.ToUpper() == "S"
+                              where m.IDPerito == aPerito
+                              select m).ToList();
+            model.WEB_Auto_ListaPerizieXSpedizione_withInfo_vw = myListStby;
+
+            return View(model);
+        }
     }
 }

@@ -548,6 +548,8 @@ namespace WEB_Auto.Controllers
             AggiornaFlagGoodDamaged(myIDPerizia);
             AggiornaContatoreFoto(myIDPerizia);
 
+            ViewBag.Standby = dati.Stato;
+
             var model = new Models.HomeModel();
             // COME RECUPERARE CAMPI DA TABELLA/VISTA = select new{m. ecc ecc}
 
@@ -919,6 +921,23 @@ namespace WEB_Auto.Controllers
 
             if (isDamaged == true)
                 isRapid = false;
+
+
+            // Cerco dati pregressi
+            if(IDModelloCasa == "1240" ||IDModelloCasa == "1241")
+            {
+                try
+                { 
+                var datiPregressi = (from m in db.AGR_DatiRotabiliInUSo_vw
+                                     where m.Telaio == Chassis
+                                     orderby m.DataPerizia descending
+                                     select new { m.ID_TipoRotabile, m.ID_TrasportatoreGrimaldi }).FirstOrDefault();
+                IDTrasportatoreGrim = datiPregressi.ID_TrasportatoreGrimaldi;
+                IDTipoRotabile = datiPregressi.ID_TipoRotabile;
+                }
+                catch { }
+
+            }
 
             DateTime ora = DateTime.Now;
             string ore = ora.Hour.ToString("00");

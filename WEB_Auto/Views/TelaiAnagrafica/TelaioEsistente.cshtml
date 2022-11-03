@@ -19,14 +19,30 @@
         color: red;
     }
 </style>
+@{var dati = Model.WEB_ListaPerizieFlat_MVC_vw.ToList();}
 
 <br />
 <div class="center" @*style="color:red"*@>
     <h4>Attenzione ! <br />il telaio è già stato periziato ed il viaggio è aperto </h4>
+    @if (!String.IsNullOrEmpty(dati[0].Stato))
+    {
+        <div style="color:red; font-weight:bold;">
+            La perizia è in stato STANDBY !
+        </div>
+
+    }
+
 </div>
 
-@{var dati = Model.WEB_ListaPerizieFlat_MVC_vw.ToList();}
 <br />
+
+@*@if (dati[0].Stato.ToUpper() == "S")
+    {
+        <div style="background-color:red">
+            @Html.Label("Perizia in stand by !")
+        </div>
+    }*@
+
 
 <h4><b>Dati perizia esistente :</b></h4>
 <table border="0">
@@ -71,6 +87,7 @@
             @Html.Label("Stato veicolo") :  @Html.Label(dati[0].Status, new { @class = "blue" })
         </td>
     </tr>
+
 </table>
 
 <br /><br />
@@ -115,7 +132,7 @@
     }
 }
 
-@if (ViewBag.IsModelActive == false )
+@if (ViewBag.IsModelActive == false)
 {
     @Html.ActionLink("Aggiorna viaggio / data perizia  e termina", "AggiornaSpedizioneEDataPerizia", new
     {
@@ -129,7 +146,7 @@
         Chassis = dati[0].Telaio
 
     }, new { @class = "btn btn-success custom" })
-        <br /><br />
+    <br /><br />
 
 
     @Html.ActionLink("Aggiorna viaggio / data perizia / condizione  e continua perizia", "AggiornaSpedizioneEDataPerizia", new

@@ -27,5 +27,8 @@ namespace WEB_Auto.Models
         public int NumPDF { get; set; }
         public string Name { get; set; }
         public string Condition { get; set; }
+        public string POL { get; set; }
+        public string POD { get; set; }
+        public string Viaggio { get; set; }
     }
 }

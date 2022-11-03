@@ -371,23 +371,31 @@ else
 
                 }
 
-                <tr>
+            <tr>
 
 
-                    @if (@ViewBag.HasDanni == "Perizia GOOD")
-                    {
-                        <td style="color:green; font-weight:bold;">
-                            @ViewBag.HasDanni
-                        </td>
+                @if (@ViewBag.HasDanni == "Perizia GOOD")
+                {
+                    <td style="color:green; font-weight:bold;">
+                        @ViewBag.HasDanni
+                    </td>
 
-                    }
-                    else
-                    {
-                        <td style="color:red; font-weight:bold;">
-                            @ViewBag.HasDanni
-                        </td>
-                    }
+                }
+                else
+                {
+                    <td style="color:red; font-weight:bold;">
+                        @ViewBag.HasDanni
+                    </td>
+                }
 
+                @if (!String.IsNullOrEmpty(ViewBag.Standby))
+                {
+                    <td style="color:red; font-weight:bold;">
+                        Attenzione : Perizia in standby !
+                    </td>
+
+                }
+            </tr>
 
 
             </table>

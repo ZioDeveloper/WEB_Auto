@@ -53,6 +53,10 @@
     <div class="alert alert-danger" role="alert">
         @ViewBag.StabdBy
     </div>
+    using (Html.BeginForm("ListaPerizieInStandByPErPerito", "ListaPerizie"))
+    {
+        <button type="submit" id="btnConfirm" class="btn btn-danger">Vai a lista perizie in standby</button>
+    }
 }
 <hr />
 <div>

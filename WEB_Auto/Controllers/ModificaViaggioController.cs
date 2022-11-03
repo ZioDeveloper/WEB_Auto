@@ -206,6 +206,12 @@ namespace WEB_Auto.Controllers
                 return false;
             }
 
+            if (myIDSpedizione == myNewIDSped)
+            {
+                aMsg = "Il viaggio è lo stesso , da: " + myIDSpedizione + " a: " + myNewIDSped + " modifica annullata !";
+                return false;
+            }
+
             string myIDPortoPErito = Session["IDPortoPerito"].ToString();
             string oldTP = myPerizia.IDTipoPerizia;
             var newPOL = (from m in db.AGR_Spedizioni
@@ -279,7 +285,7 @@ namespace WEB_Auto.Controllers
 
             var dataInizioImbarco =  (from m in db.AGR_Spedizioni
                             where m.ID == myNewIDSped
-                            select new { m.DataInizioImbarco }).FirstOrDefault();
+                            select new { m.DataInizioImbarco }).OrderByDescending(s=>s.DataInizioImbarco).Take(1).FirstOrDefault();
 
             if(myPerizia.DataPerizia.Value.Date > Convert.ToDateTime(dataInizioImbarco.DataInizioImbarco.Value.Date))
             {

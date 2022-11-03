@@ -39,5 +39,6 @@ namespace WEB_Auto.Models
         public string IDPerizia { get; set; }
         public string IDModelloCasa { get; set; }
         public Nullable<bool> IsClosed { get; set; }
+        public string Stato { get; set; }
     }
 }

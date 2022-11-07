@@ -806,6 +806,34 @@ namespace WEB_Auto.Controllers
         }
 
 
+        public ActionResult SetStandbyPeriziaFromPerizia(string IDPerizia)
+        {
+            using (wisedbEntities db = new wisedbEntities())
+            {
+                using (DbContextTransaction transaction = db.Database.BeginTransaction())
+                {
+
+                    try
+                    {
+                        string sqlcmd = " UPDATE  AGR_PERIZIE_TEMP_MVC SET Stato = NULL WHERE ID = @IDPerizia";
+                        int deleted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@IDPerizia", IDPerizia));
+
+
+
+                        transaction.Commit();
+                    }
+                    catch (SqlException exc)
+                    {
+                        string a = exc.Message;
+                        transaction.Rollback();
+                    }
+                }
+            }
+
+            return View();
+        }
+
+
         public ActionResult SetStandbyPerizia(string IDPerizia, string IDPerito, string IDSpedizione, string IDMeteo, string IDTP, bool VengoDaListaPerito = false)
         {
 

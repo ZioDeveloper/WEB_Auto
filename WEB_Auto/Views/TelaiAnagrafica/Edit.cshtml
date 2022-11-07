@@ -393,6 +393,10 @@ else
                     <td style="color:red; font-weight:bold;">
                         Attenzione : Perizia in standby !
                     </td>
+                    <td>
+                        @Html.Label("Rimuovi standby")
+                        @Html.CheckBox("ChangeStandBy", false, new { @onchange = "submitform();" })
+                    </td>
 
                 }
             </tr>

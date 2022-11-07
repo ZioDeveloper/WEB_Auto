@@ -57,12 +57,12 @@ namespace WEB_Auto.Controllers
                // usr = "patrizia"; // 
                // usr = "mmarti"; // 
                // usr = "DiGennaro";
-              // usr = "DiSalvo";
+               //usr = "DiSalvo";
               // usr = "patrizia";
                 //usr = "Torresan"; // 
                // usr = "DiNinno";
-               usr = "Maurizio";
-              //  usr = "amolina"; // 
+              // usr = "Maurizio";
+                usr = "amolina"; // 
                 //usr = Session["User"].ToString();
             }
 
@@ -77,6 +77,10 @@ namespace WEB_Auto.Controllers
             var myIDPeritoVero = (from s in db.AGR_Periti_WEB
                               where s.Name == usr
                               select s.IDVero).FirstOrDefault();
+
+            var myLang = (from s in db.AGR_Periti_WEB
+                                  where s.Name == usr
+                                  select s.IDVero).FirstOrDefault();
 
             //var myIDPorto = (from s in db.AGR_Periti_WEB
             //                  where s.Name == usr

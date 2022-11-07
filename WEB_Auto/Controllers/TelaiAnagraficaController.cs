@@ -35,6 +35,7 @@ namespace WEB_Auto.Controllers
 
             return false;
         }
+
         public ActionResult InputTelaio(string IDPerito, string IDSpedizione,string IDMeteo, string IDTP, string Chassis,string aIDModello,string DataPerizia, bool IsRTB = false, string aErrorMsg = "" )
         {
             string errMSg = "";
@@ -914,7 +915,7 @@ namespace WEB_Auto.Controllers
 
         public ActionResult SalvaPeriziaTesta(string IDPerito, string IDSpedizione, string IDMeteo, string IDTP, string Chassis, string DataPerizia, string IDModelloCasa, string IDTrasportatoreGrim,
                                               string IDTipoRotabile, bool? isDamaged, string Condizione, string Annotazioni, string myIDPerizia, 
-                                              bool IsUpdate = false,bool Filtrati=true, bool isRapid = false, bool ToDoRefresh = false)
+                                              bool IsUpdate = false,bool Filtrati=true, bool isRapid = false, bool ToDoRefresh = false, bool ChangeStandBy = false)
         {
             if (isRapid == true)
                 isDamaged = false;
@@ -922,9 +923,13 @@ namespace WEB_Auto.Controllers
             if (isDamaged == true)
                 isRapid = false;
 
+            if(ChangeStandBy)
+            {
+                SetStandbyPeriziaFromPerizia(myIDPerizia);
+            }
 
             // Cerco dati pregressi
-            if(IDModelloCasa == "1240" ||IDModelloCasa == "1241")
+            if( (IDModelloCasa == "1240" ||IDModelloCasa == "1241") && String.IsNullOrEmpty(IDTrasportatoreGrim) && String.IsNullOrEmpty(IDTipoRotabile) )
             {
                 try
                 { 
@@ -938,7 +943,7 @@ namespace WEB_Auto.Controllers
                 catch { }
 
             }
-
+            
             DateTime ora = DateTime.Now;
             string ore = ora.Hour.ToString("00");
             string minuti = ora.Minute.ToString("00"); ;
@@ -2360,6 +2365,33 @@ namespace WEB_Auto.Controllers
         {
             ViewBag.MEssage = Message;
             return View();
+        }
+
+        public void SetStandbyPeriziaFromPerizia(string IDPerizia)
+        {
+            using (wisedbEntities db = new wisedbEntities())
+            {
+                using (DbContextTransaction transaction = db.Database.BeginTransaction())
+                {
+
+                    try
+                    {
+                        string sqlcmd = " UPDATE  AGR_PERIZIE_TEMP_MVC SET Stato = NULL WHERE ID = @IDPerizia";
+                        int deleted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@IDPerizia", IDPerizia));
+
+
+
+                        transaction.Commit();
+                    }
+                    catch (SqlException exc)
+                    {
+                        string a = exc.Message;
+                        transaction.Rollback();
+                    }
+                }
+            }
+
+            
         }
     }
 }

@@ -60,9 +60,10 @@ namespace WEB_Auto.Controllers
                //usr = "DiSalvo";
               // usr = "patrizia";
                 //usr = "Torresan"; // 
-               // usr = "DiNinno";
-              // usr = "Maurizio";
-                usr = "amolina"; // 
+                usr = "DiNinno";
+                // usr = "Maurizio";
+                //  usr = "amolina"; // 
+              //  usr = "pezzulo";
                 //usr = Session["User"].ToString();
             }
 
@@ -80,7 +81,9 @@ namespace WEB_Auto.Controllers
 
             var myLang = (from s in db.AGR_Periti_WEB
                                   where s.Name == usr
-                                  select s.IDVero).FirstOrDefault();
+                                  select s.Lang).FirstOrDefault();
+
+            Session["Lang"] = myLang;
 
             //var myIDPorto = (from s in db.AGR_Periti_WEB
             //                  where s.Name == usr
@@ -154,6 +157,12 @@ namespace WEB_Auto.Controllers
                 myIDPeritoVero = "Y5";
             }
 
+            if (myIDPorto == "NAP")
+            {
+                myIDPerito = "INA";
+                myIDPeritoVero = "I0";
+            }
+
 
 
             var myClasse = (from s in db.AGR_Periti_WEB
@@ -180,7 +189,7 @@ namespace WEB_Auto.Controllers
             var ElencoPorti = new SelectList(model.AGR_Porti.ToList(), "ID", "Descr");
 
             var PortiAdmin = from m in db.AGR_Porti
-                        where m.ID == "PMO" || m.ID == "TRI" || m.ID == "GOA" || m.ID == "CVV" || m.ID == "PMI" || m.ID == "IBZ" || m.ID == "MAH" || m.ID == "BCN" || m.ID == "VLC"
+                        where m.ID == "PMO" || m.ID == "TRI" || m.ID == "GOA" || m.ID == "CVV" || m.ID == "PMI" || m.ID == "IBZ" || m.ID == "MAH" || m.ID == "BCN" || m.ID == "VLC" || m.ID == "NAP"
                              select m;
             model.AGR_Porti = PortiAdmin.ToList().OrderBy(s=>s.Descr);
             var ElencoPortiAdmin = new SelectList(model.AGR_Porti.ToList(), "ID", "Descr");

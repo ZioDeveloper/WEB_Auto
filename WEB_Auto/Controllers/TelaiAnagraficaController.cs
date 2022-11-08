@@ -1303,46 +1303,86 @@ namespace WEB_Auto.Controllers
             // Dati per dropdown AGR_Parti
             if (ISGEFCO_GN_51 && Session["Classe"].ToString() == "0")
             {
-                var parti = from m in db.WEB_AGR_Parti_vw
-                            where m.IDCliente == "**"
-                            where m.IDCasa == "RTB"
-                            select m;
-                model.WEB_AGR_Parti_vw = parti.ToList();
-                var ElencoParti = new SelectList(model.WEB_AGR_Parti_vw.ToList().OrderBy(m => m.DescrITA), "ID", "DescrITA");
-                ViewData["ElencoParti"] = ElencoParti;
+                if (Session["Lang"].ToString() == "ITA")
+                {
+                    var parti = from m in db.WEB_AGR_Parti_vw
+                                where m.IDCliente == "**"
+                                where m.IDCasa == "RTB"
+                                select m;
+                    model.WEB_AGR_Parti_vw = parti.ToList();
+                    var ElencoParti = new SelectList(model.WEB_AGR_Parti_vw.ToList().OrderBy(m => m.DescrITA), "ID", "DescrITA");
+                    ViewData["ElencoParti"] = ElencoParti;
+                }
+                else if (Session["Lang"].ToString() == "ESP")
+                {
+                    var parti = from m in db.WEB_AGR_Parti_vw
+                                where m.IDCliente == "**"
+                                where m.IDCasa == "RTB"
+                                select m;
+                    model.WEB_AGR_Parti_vw = parti.ToList();
+                    var ElencoParti = new SelectList(model.WEB_AGR_Parti_vw.ToList().OrderBy(m => m.DescrESP), "ID", "DescrESP");
+                    ViewData["ElencoParti"] = ElencoParti;
+                }
             }
             else if (Session["Classe"].ToString() == "1")
             {
                 var parti = from m in db.AGR_Parti_SDU
-                          
+
                             select m;
                 model.AGR_Parti_SDU = parti.ToList();
                 var ElencoParti = new SelectList(model.AGR_Parti_SDU.ToList().OrderBy(m => m.DescrITA), "ID", "DescrITA");
                 ViewData["ElencoParti"] = ElencoParti;
             }
-            else 
+            else
             {
-                var parti = from m in db.WEB_AGR_Parti_vw
-                            where m.IDCliente == "**"
-                            where m.IDCasa != "RTB"
-                            select m;
-                model.WEB_AGR_Parti_vw = parti.ToList();
-                var ElencoParti = new SelectList(model.WEB_AGR_Parti_vw.ToList().OrderBy(m => m.DescrITA), "ID", "DescrITA");
-                ViewData["ElencoParti"] = ElencoParti;
+                if (Session["Lang"].ToString() == "ITA")
+                {
+                    var parti = from m in db.WEB_AGR_Parti_vw
+                                where m.IDCliente == "**"
+                                where m.IDCasa != "RTB"
+                                select m;
+                    model.WEB_AGR_Parti_vw = parti.ToList();
+                    var ElencoParti = new SelectList(model.WEB_AGR_Parti_vw.ToList().OrderBy(m => m.DescrITA), "ID", "DescrITA");
+                    ViewData["ElencoParti"] = ElencoParti;
+                }
+                else if (Session["Lang"].ToString() == "ESP")
+                {
+                    var parti = from m in db.WEB_AGR_Parti_vw
+                                where m.IDCliente == "**"
+                                where m.IDCasa != "RTB"
+                                select m;
+                    model.WEB_AGR_Parti_vw = parti.ToList();
+                    var ElencoParti = new SelectList(model.WEB_AGR_Parti_vw.ToList().OrderBy(m => m.DescrESP), "ID", "DescrESP");
+                    ViewData["ElencoParti"] = ElencoParti;
+                }
             }
 
             // Dati per dropdown AGR_Danni
             if (Session["Classe"].ToString() == "0")
             {
 
-               
-                var danni = from m in db.WEB_AGR_Danni_vw
-                            where m.IDCliente == "**"
+                if (Session["Lang"].ToString() == "ITA")
+                {
+                    var danni = from m in db.WEB_AGR_Danni_vw
+                                where m.IDCliente == "**"
 
-                            select m;
-                model.WEB_AGR_Danni_vw = danni.ToList();
-                var ElencoDanni = new SelectList(model.WEB_AGR_Danni_vw.ToList().OrderBy(m => m.DescrITA), "ID", "DescrITA");
-                ViewData["ElencoDanni"] = ElencoDanni;
+                                select m;
+                    model.WEB_AGR_Danni_vw = danni.ToList();
+                    var ElencoDanni = new SelectList(model.WEB_AGR_Danni_vw.ToList().OrderBy(m => m.DescrITA), "ID", "DescrITA");
+                    ViewData["ElencoDanni"] = ElencoDanni;
+                }
+                else if (Session["Lang"].ToString() == "ESP")
+                {
+                    var danni = from m in db.WEB_AGR_Danni_vw
+                                where m.IDCliente == "**"
+
+                                select m;
+                    model.WEB_AGR_Danni_vw = danni.ToList();
+                    var ElencoDanni = new SelectList(model.WEB_AGR_Danni_vw.ToList().OrderBy(m => m.DescrESP), "ID", "DescrESP");
+                    ViewData["ElencoDanni"] = ElencoDanni;
+                }
+
+
             }
             else if (Session["Classe"].ToString() == "1")
             {
@@ -1357,16 +1397,28 @@ namespace WEB_Auto.Controllers
 
             // Dati per dropdown AGR_Gravita
             // *******************************
-            if (ISGEFCO_GN_51 )
+            if (ISGEFCO_GN_51)
             {
-                var gravita = from m in db.WEB_AGR_Gravita_vw
-                              where m.IDCliente == "FI"
-                              select m;
-                model.WEB_AGR_Gravita_vw = gravita.ToList();
-                var ElencoGravita = new SelectList(model.WEB_AGR_Gravita_vw.ToList().OrderBy(m => m.DescrITA), "ID", "DescrITA");
-                ViewData["ElencoGravita"] = ElencoGravita;
+                if (Session["Lang"].ToString() == "ITA")
+                {
+                    var gravita = from m in db.WEB_AGR_Gravita_vw
+                                  where m.IDCliente == "FI"
+                                  select m;
+                    model.WEB_AGR_Gravita_vw = gravita.ToList();
+                    var ElencoGravita = new SelectList(model.WEB_AGR_Gravita_vw.ToList().OrderBy(m => m.DescrITA), "ID", "DescrITA");
+                    ViewData["ElencoGravita"] = ElencoGravita;
+                }
+                else if (Session["Lang"].ToString() == "ESP")
+                {
+                    var gravita = from m in db.WEB_AGR_Gravita_vw
+                                  where m.IDCliente == "FI"
+                                  select m;
+                    model.WEB_AGR_Gravita_vw = gravita.ToList();
+                    var ElencoGravita = new SelectList(model.WEB_AGR_Gravita_vw.ToList().OrderBy(m => m.DescrESP), "ID", "DescrESP");
+                    ViewData["ElencoGravita"] = ElencoGravita;
+                }
             }
-            else if ( Session["Classe"].ToString() == "1")
+            else if (Session["Classe"].ToString() == "1")
             {
                 var gravita = from m in db.AGR_Gravita_SDU
                               select m;
@@ -1376,67 +1428,79 @@ namespace WEB_Auto.Controllers
             }
             else
             {
-                var gravita = from m in db.WEB_AGR_Gravita_vw
-                              where m.IDCliente == "NULL"
+                if (Session["Lang"].ToString() == "ITA")
+                {
+                    var gravita = from m in db.WEB_AGR_Gravita_vw
+                                  where m.IDCliente == "NULL"
 
-                              select m;
-                model.WEB_AGR_Gravita_vw = gravita.ToList();
-                var ElencoGravita = new SelectList(model.WEB_AGR_Gravita_vw.ToList().OrderBy(m => m.DescrITA), "ID", "DescrITA");
-                ViewData["ElencoGravita"] = ElencoGravita;
-                ISGravitaEnabled = false;
-
-            }
-
-            try
-            {
-                var Dettagli = from m in db.AGR_PERIZIE_DETT_TEMP_MVC_vw
-                               where m.IDPerizia == myIDPerizia
-                               select m;
-                model.AGR_PERIZIE_DETT_TEMP_MVC_vw = Dettagli.ToList();
-            }
-            catch { }
-
-            try
-            {
-                var DettagliSDU = from m in db.AGR_PERIZIE_DETT_TEMP_MVC_SDU_vw
-                                  where m.IDPerizia == myIDPerizia
                                   select m;
-                model.AGR_PERIZIE_DETT_TEMP_MVC_SDU_vw = DettagliSDU.ToList();
+                    model.WEB_AGR_Gravita_vw = gravita.ToList();
+                    var ElencoGravita = new SelectList(model.WEB_AGR_Gravita_vw.ToList().OrderBy(m => m.DescrITA), "ID", "DescrITA");
+                    ViewData["ElencoGravita"] = ElencoGravita;
+                    ISGravitaEnabled = false;
+                }
+                else if (Session["Lang"].ToString() == "ESP")
+                {
+                    var gravita = from m in db.WEB_AGR_Gravita_vw
+                                  where m.IDCliente == "NULL"
+
+                                  select m;
+                    model.WEB_AGR_Gravita_vw = gravita.ToList();
+                    var ElencoGravita = new SelectList(model.WEB_AGR_Gravita_vw.ToList().OrderBy(m => m.DescrESP), "ID", "DescrESP");
+                    ViewData["ElencoGravita"] = ElencoGravita;
+                    ISGravitaEnabled = false;
+                }
             }
-            catch { }
-            // Ricerca dettagli altre tipi perizia dello stesso telaio
-            //var DettagliAltri = from m in db.AGR_PERIZIE_DETT_TEMP_MVC_vw
-            //                    where m.IDPerizia == myIDPerizia
-            //                    select m;
-            //model.AGR_PERIZIE_DETT_TEMP_MVC_vw_Altri = DettagliAltri.ToList();
+                try
+                {
+                    var Dettagli = from m in db.AGR_PERIZIE_DETT_TEMP_MVC_vw
+                                   where m.IDPerizia == myIDPerizia
+                                   select m;
+                    model.AGR_PERIZIE_DETT_TEMP_MVC_vw = Dettagli.ToList();
+                }
+                catch { }
 
-            ViewBag.IDPerizia = myIDPerizia;
+                try
+                {
+                    var DettagliSDU = from m in db.AGR_PERIZIE_DETT_TEMP_MVC_SDU_vw
+                                      where m.IDPerizia == myIDPerizia
+                                      select m;
+                    model.AGR_PERIZIE_DETT_TEMP_MVC_SDU_vw = DettagliSDU.ToList();
+                }
+                catch { }
+                // Ricerca dettagli altre tipi perizia dello stesso telaio
+                //var DettagliAltri = from m in db.AGR_PERIZIE_DETT_TEMP_MVC_vw
+                //                    where m.IDPerizia == myIDPerizia
+                //                    select m;
+                //model.AGR_PERIZIE_DETT_TEMP_MVC_vw_Altri = DettagliAltri.ToList();
 
-            var test = (from m in db.AGR_PERIZIE_TEMP_MVC
-                       where m.ID.ToString() == myIDPerizia
-                       select new { m.IDPerito, m.IDSpedizione, m.IDMeteo, m.IDTipoPerizia, m.IDModello,m.ID }).FirstOrDefault();
+                ViewBag.IDPerizia = myIDPerizia;
 
-            var test2 = (from m in db.AGR_PerizieExpGrim_Temp_MVC
-                        where m.ID.ToString() == myIDPerizia
-                        select new { m.ID_TipoRotabile,m.ID_TrasportatoreGrimaldi}).FirstOrDefault();
+                var test = (from m in db.AGR_PERIZIE_TEMP_MVC
+                            where m.ID.ToString() == myIDPerizia
+                            select new { m.IDPerito, m.IDSpedizione, m.IDMeteo, m.IDTipoPerizia, m.IDModello, m.ID }).FirstOrDefault();
 
-            
+                var test2 = (from m in db.AGR_PerizieExpGrim_Temp_MVC
+                             where m.ID.ToString() == myIDPerizia
+                             select new { m.ID_TipoRotabile, m.ID_TrasportatoreGrimaldi }).FirstOrDefault();
 
-            ViewBag.IDPerito = test.IDPerito;
-            ViewBag.IDSpedizione = test.IDSpedizione;
-            ViewBag.IDMeteo = test.IDMeteo;
-            ViewBag.IDTP = test.IDTipoPerizia;
-            ViewBag.aIDTrasportatore = test2.ID_TrasportatoreGrimaldi;
-            ViewBag.aIDTipoRotabile = test2.ID_TipoRotabile;
-            ViewBag.aIDModelloCasa = test.IDModello;
-            ViewBag.IDPeriz = test.ID;
-            ViewBag.ISGravitaEnabled = ISGravitaEnabled;
-            ViewBag.IsUpdate = IsUpdate;
-            ViewBag.ErrMess = ErrMess;
-            ViewBag.IDParte = myIDParte;
-            ViewBag.IDDanno = myIDDanno;
-            return View(model);
-        }
+
+
+                ViewBag.IDPerito = test.IDPerito;
+                ViewBag.IDSpedizione = test.IDSpedizione;
+                ViewBag.IDMeteo = test.IDMeteo;
+                ViewBag.IDTP = test.IDTipoPerizia;
+                ViewBag.aIDTrasportatore = test2.ID_TrasportatoreGrimaldi;
+                ViewBag.aIDTipoRotabile = test2.ID_TipoRotabile;
+                ViewBag.aIDModelloCasa = test.IDModello;
+                ViewBag.IDPeriz = test.ID;
+                ViewBag.ISGravitaEnabled = ISGravitaEnabled;
+                ViewBag.IsUpdate = IsUpdate;
+                ViewBag.ErrMess = ErrMess;
+                ViewBag.IDParte = myIDParte;
+                ViewBag.IDDanno = myIDDanno;
+                return View(model);
+            }
 
         [HttpPost]
         public ActionResult SalvaPeriziaDettagli(string myIDPerizia, string IDParte, string IDDanno, string Qta, string Note, string Flags,

@@ -34,5 +34,8 @@ namespace WEB_Auto.Models
         public string PosSide { get; set; }
         public string IDPerizia { get; set; }
         public string Gravita { get; set; }
+        public string ParteESP { get; set; }
+        public string DannoESP { get; set; }
+        public string GravitaESP { get; set; }
     }
 }

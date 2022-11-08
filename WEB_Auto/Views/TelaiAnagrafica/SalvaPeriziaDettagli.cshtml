@@ -1,7 +1,7 @@
 ﻿@model WEB_Auto.Models.HomeModel
 
 @{
-    ViewBag.Title = "SalvaPeriziaDettagli";
+    ViewBag.Title = " ";
 }
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
@@ -34,67 +34,86 @@ else
 {
     <table id="Report" class="display" style="width:100%;font-size:11px">
         <thead>
-            <tr>
-                <th style="display:none;">ID</th>
-                <th>Parte</th>
-                <th>Danno</th>
-
-                <th>Gravità</th>
-                @*<th>Cancella</th>*@
-                @*<th>Responsabilità</th>
-                    <th>Attribuzione</th>*@
-                @*<th>Qta</th>*@
-                @*<th>Note</th>*@
-
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model.AGR_PERIZIE_DETT_TEMP_MVC_vw)
+            @if (Session["Lang"].ToString() == "ITA")
             {
                 <tr>
-                    <td style="display:none">
-                        @Html.DisplayFor(modelItem => item.ID)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Parte)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Danno)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Gravita)
-                    </td>
-                    @*<td>
-                            @Html.ActionLink("Edit", "EditDettaglio", new {  aIDDett = item.ID, aIDPerizia = item.IDPerizia }, new { @class = "btn btn-primary btn-xs disabled" })
-                        </td>*@
-                    <td>
-                        @Html.ActionLink("Canc", "DeleteDettaglio", new { aIDDett = item.ID, myIDPerizia = item.IDPerizia, IsUpdate = ViewBag.IsUpdate }, new { @class = "btn btn-danger btn-xs", onclick = "return confirm('Confermi cancellazione ?');" })
-                    </td>
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Note)
-                    </td>
-                </tr>
+                    <th style="display:none;">ID</th>
+                    <th>Parte</th>
+                    <th>Danno</th>
 
-
-                @*<td>
-
-                        @Html.DisplayFor(modelItem => item.Qta)
-                    </td>*@
-                @*<td>
-                        @Html.DisplayFor(modelItem => item.Note)
-                    </td>*@
-
-                @*<td>
-                        @Html.DisplayFor(modelItem => item.IDResponsabilita)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.IDAttribuzione)
-                    </td>*@
+                    <th>Gravità</th>
                 </tr>
             }
+            else if (Session["Lang"].ToString() == "ESP")
+            {
+                <tr>
+                    <th style="display:none;">ID</th>
+                    <th>COMPONENTE DAÑO</th>
+                    <th>Tipo daño</th>
 
+                    <th>Gravedad</th>
+                </tr>
+            }
+        </thead>
         <tbody>
+            @if (Session["Lang"].ToString() == "ITA")
+            {
+                foreach (var item in Model.AGR_PERIZIE_DETT_TEMP_MVC_vw)
+                {
+            <tr>
+                <td style="display:none">
+                    @Html.DisplayFor(modelItem => item.ID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Parte)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Danno)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Gravita)
+                </td>
+                <td>
+                    @Html.ActionLink("Canc", "DeleteDettaglio", new { aIDDett = item.ID, myIDPerizia = item.IDPerizia, IsUpdate = ViewBag.IsUpdate }, new { @class = "btn btn-danger btn-xs", onclick = "return confirm('Confermi cancellazione ?');" })
+                </td>
+            </tr>
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Note)
+                        </td>
+                    </tr>
+                }
+            }
+            else if (Session["Lang"].ToString() == "ESP")
+            {
+                foreach (var item in Model.AGR_PERIZIE_DETT_TEMP_MVC_vw)
+                {
+                    <tr>
+                        <td style="display:none">
+                            @Html.DisplayFor(modelItem => item.ID)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ParteESP)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DannoESP)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.GravitaESP)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Canc", "DeleteDettaglio", new { aIDDett = item.ID, myIDPerizia = item.IDPerizia, IsUpdate = ViewBag.IsUpdate }, new { @class = "btn btn-danger btn-xs", onclick = "return confirm('Confirmar cancelación ?');" })
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Note)
+                        </td>
+                    </tr>
+                }
+            }
+
+<tbody>
     </table>
 }
 else if (Session["Classe"].ToString() == "1")
@@ -107,7 +126,7 @@ else if (Session["Classe"].ToString() == "1")
                 <th>Danno</th>
 
                 <th>Gravità</th>
-                @*<th>Cancella</th>*@
+                <th>Cancella</th>
                 @*<th>Responsabilità</th>
                     <th>Attribuzione</th>*@
                 @*<th>Qta</th>*@

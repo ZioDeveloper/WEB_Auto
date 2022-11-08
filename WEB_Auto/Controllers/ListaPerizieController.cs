@@ -112,7 +112,7 @@ namespace WEB_Auto.Controllers
 
                 ViewBag.Status = Status;
                 if (stby > 0)
-                    ViewBag.StabdBy = "Attenzione :  ci sono n° " + stby.ToString() + " perizie in standby !";
+                    ViewBag.StabdBy = "Attenzione :  ci sono n° " + stby.ToString() + " viaggi con perizie in standby !";
                 else
                     ViewBag.StabdBy = "";
 

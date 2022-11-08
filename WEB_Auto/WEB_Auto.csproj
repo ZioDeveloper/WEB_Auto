@@ -553,6 +553,7 @@
     <Content Include="Resources\ITA_Manuale di utilizzo WEB_Auto 1.3.docx" />
     <Content Include="Resources\ITA_Manuale di utilizzo WEB_Auto 1.4.docx" />
     <Content Include="Resources\WEB_AUTO 1.4.4.0.docx" />
+    <Content Include="Resources\WEB_AUTO 1.4.5.0.docx" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\i18n\defaults-zh_TW.min.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />

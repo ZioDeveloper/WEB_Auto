@@ -18,5 +18,6 @@ namespace WEB_Auto.Models
         public string IDCliente { get; set; }
         public string DescrITA { get; set; }
         public string DescrENG { get; set; }
+        public string DescrESP { get; set; }
     }
 }

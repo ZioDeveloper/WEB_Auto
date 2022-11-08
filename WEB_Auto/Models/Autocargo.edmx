@@ -82,6 +82,7 @@ warning 6002: The table/view 'wisedb.dbo.AGR_Danni_SDU' does not have a primary 
           <Property Name="DescrENG" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="IDClasse" Type="varchar" MaxLength="1" Nullable="false" />
           <Property Name="IDCliente" Type="varchar" MaxLength="2" Nullable="false" />
+          <Property Name="DescrESP" Type="varchar" MaxLength="255" />
         </EntityType>
         <EntityType Name="AGR_Parti_SDU">
           <Key>
@@ -105,6 +106,7 @@ warning 6002: The table/view 'wisedb.dbo.AGR_Danni_SDU' does not have a primary 
           <Property Name="Descr" Type="varchar" MaxLength="50" />
           <Property Name="IDRuolo" Type="int" />
           <Property Name="EmailAddress" Type="varchar" MaxLength="100" />
+          <Property Name="Lang" Type="varchar" MaxLength="5" />
         </EntityType>
         <EntityType Name="AGR_PERIZIE_DETT_TEMP_MVC">
           <Key>
@@ -592,6 +594,9 @@ warning 6002: The table/view 'wisedb.dbo.AGR_PERIZIE_DETT_TEMP_MVC_vw' does not 
           <Property Name="PosNumber" Type="int" />
           <Property Name="PosSide" Type="varchar" MaxLength="1" />
           <Property Name="Gravita" Type="varchar" MaxLength="123" />
+          <Property Name="ParteESP" Type="varchar" MaxLength="276" />
+          <Property Name="DannoESP" Type="varchar" MaxLength="259" />
+          <Property Name="GravitaESP" Type="varchar" MaxLength="278" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'wisedb.dbo.AGR_Perizie_MVC_Flat_vw' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -736,6 +741,7 @@ warning 6002: The table/view 'wisedb.dbo.WEB_AGR_Danni_vw' does not have a prima
           <Property Name="DescrITA" Type="varchar" MaxLength="278" Nullable="false" />
           <Property Name="IDCliente" Type="varchar" MaxLength="2" Nullable="false" />
           <Property Name="IDClasse" Type="varchar" MaxLength="1" Nullable="false" />
+          <Property Name="DescrESP" Type="varchar" MaxLength="278" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'wisedb.dbo.WEB_AGR_Gravita_vw' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -750,6 +756,7 @@ warning 6002: The table/view 'wisedb.dbo.WEB_AGR_Gravita_vw' does not have a pri
           <Property Name="DescrITA" Type="varchar" MaxLength="123" Nullable="false" />
           <Property Name="IDCliente" Type="varchar" MaxLength="2" Nullable="false" />
           <Property Name="DescrENG" Type="varchar" MaxLength="123" Nullable="false" />
+          <Property Name="DescrESP" Type="varchar" MaxLength="278" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'wisedb.dbo.WEB_AGR_Parti_vw' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -764,6 +771,7 @@ warning 6002: The table/view 'wisedb.dbo.WEB_AGR_Parti_vw' does not have a prima
           <Property Name="DescrITA" Type="varchar" MaxLength="278" Nullable="false" />
           <Property Name="IDCasa" Type="varchar" MaxLength="3" Nullable="false" />
           <Property Name="IDCliente" Type="varchar" MaxLength="2" Nullable="false" />
+          <Property Name="DescrESP" Type="varchar" MaxLength="278" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'wisedb.dbo.WEB_Auto_ListaPerizieXSpedizione_vw' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -1579,7 +1587,10 @@ warning 6002: The table/view 'wisedb.dbo.WEB_ListaPerizieFlat_TMP_vw' does not h
     [AGR_PERIZIE_DETT_TEMP_MVC_vw].[PosLetter] AS [PosLetter], 
     [AGR_PERIZIE_DETT_TEMP_MVC_vw].[PosNumber] AS [PosNumber], 
     [AGR_PERIZIE_DETT_TEMP_MVC_vw].[PosSide] AS [PosSide], 
-    [AGR_PERIZIE_DETT_TEMP_MVC_vw].[Gravita] AS [Gravita]
+    [AGR_PERIZIE_DETT_TEMP_MVC_vw].[Gravita] AS [Gravita], 
+    [AGR_PERIZIE_DETT_TEMP_MVC_vw].[ParteESP] AS [ParteESP], 
+    [AGR_PERIZIE_DETT_TEMP_MVC_vw].[DannoESP] AS [DannoESP], 
+    [AGR_PERIZIE_DETT_TEMP_MVC_vw].[GravitaESP] AS [GravitaESP]
     FROM [dbo].[AGR_PERIZIE_DETT_TEMP_MVC_vw] AS [AGR_PERIZIE_DETT_TEMP_MVC_vw]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="AGR_Perizie_MVC_Flat_vw" EntityType="Self.AGR_Perizie_MVC_Flat_vw" store:Type="Views" store:Schema="dbo">
@@ -1681,7 +1692,8 @@ warning 6002: The table/view 'wisedb.dbo.WEB_ListaPerizieFlat_TMP_vw' does not h
     [WEB_AGR_Danni_vw].[ID] AS [ID], 
     [WEB_AGR_Danni_vw].[DescrITA] AS [DescrITA], 
     [WEB_AGR_Danni_vw].[IDCliente] AS [IDCliente], 
-    [WEB_AGR_Danni_vw].[IDClasse] AS [IDClasse]
+    [WEB_AGR_Danni_vw].[IDClasse] AS [IDClasse], 
+    [WEB_AGR_Danni_vw].[DescrESP] AS [DescrESP]
     FROM [dbo].[WEB_AGR_Danni_vw] AS [WEB_AGR_Danni_vw]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="WEB_AGR_Gravita_vw" EntityType="Self.WEB_AGR_Gravita_vw" store:Type="Views" store:Schema="dbo">
@@ -1689,7 +1701,8 @@ warning 6002: The table/view 'wisedb.dbo.WEB_ListaPerizieFlat_TMP_vw' does not h
     [WEB_AGR_Gravita_vw].[ID] AS [ID], 
     [WEB_AGR_Gravita_vw].[DescrITA] AS [DescrITA], 
     [WEB_AGR_Gravita_vw].[IDCliente] AS [IDCliente], 
-    [WEB_AGR_Gravita_vw].[DescrENG] AS [DescrENG]
+    [WEB_AGR_Gravita_vw].[DescrENG] AS [DescrENG], 
+    [WEB_AGR_Gravita_vw].[DescrESP] AS [DescrESP]
     FROM [dbo].[WEB_AGR_Gravita_vw] AS [WEB_AGR_Gravita_vw]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="WEB_AGR_Parti_vw" EntityType="Self.WEB_AGR_Parti_vw" store:Type="Views" store:Schema="dbo">
@@ -1697,7 +1710,8 @@ warning 6002: The table/view 'wisedb.dbo.WEB_ListaPerizieFlat_TMP_vw' does not h
     [WEB_AGR_Parti_vw].[ID] AS [ID], 
     [WEB_AGR_Parti_vw].[DescrITA] AS [DescrITA], 
     [WEB_AGR_Parti_vw].[IDCasa] AS [IDCasa], 
-    [WEB_AGR_Parti_vw].[IDCliente] AS [IDCliente]
+    [WEB_AGR_Parti_vw].[IDCliente] AS [IDCliente], 
+    [WEB_AGR_Parti_vw].[DescrESP] AS [DescrESP]
     FROM [dbo].[WEB_AGR_Parti_vw] AS [WEB_AGR_Parti_vw]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="WEB_Auto_ListaPerizieXSpedizione_vw" EntityType="Self.WEB_Auto_ListaPerizieXSpedizione_vw" store:Type="Views" store:Schema="dbo">
@@ -2273,6 +2287,7 @@ warning 6002: The table/view 'wisedb.dbo.WEB_ListaPerizieFlat_TMP_vw' does not h
           <NavigationProperty Name="AGR_Periti_WEB2" Relationship="wisedbModel.FK_AGR_Periti_WEB_AGR_Periti_WEB" FromRole="AGR_Periti_WEB1" ToRole="AGR_Periti_WEB" />
           <Property Name="IDRuolo" Type="Int32" />
           <Property Name="EmailAddress" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Lang" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Periti">
           <Key>
@@ -2547,6 +2562,9 @@ warning 6002: The table/view 'wisedb.dbo.WEB_ListaPerizieFlat_TMP_vw' does not h
           <Property Name="PosSide" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
           <Property Name="IDPerizia" Type="String" Nullable="false" MaxLength="18" FixedLength="false" Unicode="false" />
           <Property Name="Gravita" Type="String" MaxLength="123" FixedLength="false" Unicode="false" />
+          <Property Name="ParteESP" Type="String" MaxLength="276" FixedLength="false" Unicode="false" />
+          <Property Name="DannoESP" Type="String" MaxLength="259" FixedLength="false" Unicode="false" />
+          <Property Name="GravitaESP" Type="String" MaxLength="278" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="AGR_Parti">
           <Key>
@@ -2559,6 +2577,7 @@ warning 6002: The table/view 'wisedb.dbo.WEB_ListaPerizieFlat_TMP_vw' does not h
           <Property Name="DescrENG" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="IDClasse" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
           <Property Name="IDCliente" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="DescrESP" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="WEB_AGR_Parti_vw">
           <Key>
@@ -2571,6 +2590,7 @@ warning 6002: The table/view 'wisedb.dbo.WEB_ListaPerizieFlat_TMP_vw' does not h
           <Property Name="DescrITA" Type="String" Nullable="false" MaxLength="278" FixedLength="false" Unicode="false" />
           <Property Name="IDCasa" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
           <Property Name="IDCliente" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="DescrESP" Type="String" MaxLength="278" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="WEB_AGR_Danni_vw">
           <Key>
@@ -2583,6 +2603,7 @@ warning 6002: The table/view 'wisedb.dbo.WEB_ListaPerizieFlat_TMP_vw' does not h
           <Property Name="DescrITA" Type="String" Nullable="false" MaxLength="278" FixedLength="false" Unicode="false" />
           <Property Name="IDCliente" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
           <Property Name="IDClasse" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="DescrESP" Type="String" MaxLength="278" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="WEB_AGR_Gravita_vw">
           <Key>
@@ -2595,6 +2616,7 @@ warning 6002: The table/view 'wisedb.dbo.WEB_ListaPerizieFlat_TMP_vw' does not h
           <Property Name="IDCliente" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
           <Property Name="DescrITA" Type="String" Nullable="false" MaxLength="123" FixedLength="false" Unicode="false" />
           <Property Name="DescrENG" Type="String" Nullable="false" MaxLength="123" FixedLength="false" Unicode="false" />
+          <Property Name="DescrESP" Type="String" MaxLength="278" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="AGR_PERIZIE_TEMP_MVC">
           <Key>
@@ -3585,6 +3607,7 @@ warning 6002: The table/view 'wisedb.dbo.WEB_ListaPerizieFlat_TMP_vw' does not h
           <EntitySetMapping Name="AGR_Periti_WEB">
             <EntityTypeMapping TypeName="wisedbModel.AGR_Periti_WEB">
               <MappingFragment StoreEntitySet="AGR_Periti_WEB">
+                <ScalarProperty Name="Lang" ColumnName="Lang" />
                 <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
                 <ScalarProperty Name="IDRuolo" ColumnName="IDRuolo" />
                 <ScalarProperty Name="Descr" ColumnName="Descr" />
@@ -3813,6 +3836,9 @@ warning 6002: The table/view 'wisedb.dbo.WEB_ListaPerizieFlat_TMP_vw' does not h
           <EntitySetMapping Name="AGR_PERIZIE_DETT_TEMP_MVC_vw">
             <EntityTypeMapping TypeName="wisedbModel.AGR_PERIZIE_DETT_TEMP_MVC_vw">
               <MappingFragment StoreEntitySet="AGR_PERIZIE_DETT_TEMP_MVC_vw">
+                <ScalarProperty Name="GravitaESP" ColumnName="GravitaESP" />
+                <ScalarProperty Name="DannoESP" ColumnName="DannoESP" />
+                <ScalarProperty Name="ParteESP" ColumnName="ParteESP" />
                 <ScalarProperty Name="Gravita" ColumnName="Gravita" />
                 <ScalarProperty Name="IDPerizia" ColumnName="IDPerizia" />
                 <ScalarProperty Name="PosSide" ColumnName="PosSide" />
@@ -3839,6 +3865,7 @@ warning 6002: The table/view 'wisedb.dbo.WEB_ListaPerizieFlat_TMP_vw' does not h
           <EntitySetMapping Name="AGR_Parti">
             <EntityTypeMapping TypeName="wisedbModel.AGR_Parti">
               <MappingFragment StoreEntitySet="AGR_Parti">
+                <ScalarProperty Name="DescrESP" ColumnName="DescrESP" />
                 <ScalarProperty Name="IDCliente" ColumnName="IDCliente" />
                 <ScalarProperty Name="IDClasse" ColumnName="IDClasse" />
                 <ScalarProperty Name="DescrENG" ColumnName="DescrENG" />
@@ -3852,6 +3879,7 @@ warning 6002: The table/view 'wisedb.dbo.WEB_ListaPerizieFlat_TMP_vw' does not h
           <EntitySetMapping Name="WEB_AGR_Parti_vw">
             <EntityTypeMapping TypeName="wisedbModel.WEB_AGR_Parti_vw">
               <MappingFragment StoreEntitySet="WEB_AGR_Parti_vw">
+                <ScalarProperty Name="DescrESP" ColumnName="DescrESP" />
                 <ScalarProperty Name="IDCliente" ColumnName="IDCliente" />
                 <ScalarProperty Name="IDCasa" ColumnName="IDCasa" />
                 <ScalarProperty Name="DescrITA" ColumnName="DescrITA" />
@@ -3862,6 +3890,7 @@ warning 6002: The table/view 'wisedb.dbo.WEB_ListaPerizieFlat_TMP_vw' does not h
           <EntitySetMapping Name="WEB_AGR_Danni_vw">
             <EntityTypeMapping TypeName="wisedbModel.WEB_AGR_Danni_vw">
               <MappingFragment StoreEntitySet="WEB_AGR_Danni_vw">
+                <ScalarProperty Name="DescrESP" ColumnName="DescrESP" />
                 <ScalarProperty Name="IDClasse" ColumnName="IDClasse" />
                 <ScalarProperty Name="IDCliente" ColumnName="IDCliente" />
                 <ScalarProperty Name="DescrITA" ColumnName="DescrITA" />
@@ -3872,6 +3901,7 @@ warning 6002: The table/view 'wisedb.dbo.WEB_ListaPerizieFlat_TMP_vw' does not h
           <EntitySetMapping Name="WEB_AGR_Gravita_vw">
             <EntityTypeMapping TypeName="wisedbModel.WEB_AGR_Gravita_vw">
               <MappingFragment StoreEntitySet="WEB_AGR_Gravita_vw">
+                <ScalarProperty Name="DescrESP" ColumnName="DescrESP" />
                 <ScalarProperty Name="DescrENG" ColumnName="DescrENG" />
                 <ScalarProperty Name="DescrITA" ColumnName="DescrITA" />
                 <ScalarProperty Name="IDCliente" ColumnName="IDCliente" />

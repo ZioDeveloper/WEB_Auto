@@ -23,6 +23,18 @@
     }
 </style>
 
+@{  string msg = "";
+    try
+    {
+        msg = TempData["Alert"].ToString();
+        
+    }
+    catch
+    {
+        msg = "";
+    }
+}
+
 
 @{var item1 = Model.AGR_SpedizioniWEB_Decoded_vw.ToList();}
 @{var item2 = Model.AGR_TipiPerizia.ToList();}
@@ -174,14 +186,15 @@ else
                     @*@Html.TextBox("DataPerizia", DateTime.Now.ToString("dd/MM/yyyy"))*@
                     @if (Session["OS"].ToString() == "ANDROID")
                     {
-                        @Html.TextBox("DataPerizia", DateTime.Now.ToString("dd/MM/yyyy"), new { @readonly = "readonly", style = "background:lightgrey" })
+                        @Html.TextBox("DataPerizia", DateTime.Now.ToString("dd/MM/yyyy"), new { @id = "DataPerizia",  @readonly = "readonly", style = "background:lightgrey" }) 
                     }
                     else
                     {
-                        @Html.TextBox("DataPerizia", @Convert.ToDateTime(item4[0].DataPerizia).ToString("dd/MM/yyyy"), new { style = "background:lightgrey" })
+                        @Html.TextBox("DataPerizia", @Convert.ToDateTime(item4[0].DataPerizia).ToString("dd/MM/yyyy"), new { @id = "DataPerizia", style = "background:lightgrey" })
                         @*@Html.TextBox("DataPerizia", DateTime.Now.ToString("dd/MM/yyyy"), new { @readonly = "readonly", style = "background:lightgrey" })*@
 
                     }
+                    @*&nbsp; <b style=" color:red">(dd/mm/yyyy)</b>*@
 
                 </td>
             </tr>
@@ -195,7 +208,7 @@ else
                     @Html.Label("Telaio")
                 </td>
                 <td>
-                    @Html.TextBox("Chassis", item4[0].Telaio, new { onkeyup = "InputToUpper(this);" })
+                    @Html.TextBox("Chassis", item4[0].Telaio, new { @id = "Telaio", onkeyup = "InputToUpper(this);" })
                 </td>
             </tr>
             @*<tr>
@@ -449,19 +462,19 @@ else
         <br />
     </div>
     <div>
-        <button type="submit" class="btn btn-primary custom" id="miocmd">Salva modifiche</button> &nbsp;&nbsp;&nbsp;
+        @*<button type="submit" class="btn btn-primary custom" id="miocmd">Salva modifiche</button> &nbsp;&nbsp;&nbsp;*@
 
         @if (ViewBag.IsUpdate == true)
         {
             if (Session["Classe"].ToString() == "0")
             {
-                @*@Html.ActionLink("Chiudi perizia", "EditSpedizione", "ListaPerizie", new { IDSpedizione = ViewBag.IDSpedizione, ViewBag.IDTP, ViewBag.TipoMezzo, Telaio = "xxx" }, new { @class = "btn btn-success custom ", id = "link" })*@
-                @Html.ActionLink("Chiudi perizia", "EditSpedizione", "ListaPerizie", new { IDSpedizione = ViewBag.IDSpedizione, ViewBag.IDTP, ViewBag.TipoMezzo }, new { @class = "btn btn-success custom " })
+                @*@Html.ActionLink("Salva e Chiudi perizia", "EditSpedizione", "ListaPerizie", new { IDSpedizione = ViewBag.IDSpedizione, ViewBag.IDTP, ViewBag.TipoMezzo, Telaio = "xxx" }, new { @class = "btn btn-success custom ", id = "link" })*@
+                @Html.ActionLink("Salva e Chiudi perizia", "EditSpedizione", "ListaPerizie", new { IDSpedizione = ViewBag.IDSpedizione, ViewBag.IDTP, ViewBag.TipoMezzo }, new { @class = "btn btn-success custom " })
 
             }
             else if (Session["Classe"].ToString() == "1")
             {
-                @Html.ActionLink("Chiudi perizia", "EditSpedizione", "ListaPerizie", new { IDSpedizione = ViewBag.IDSpedizione, ViewBag.IDTP, IDPerizia = item4[0].ID }, new { @class = "btn btn-success custom " })
+                @Html.ActionLink("Salva e Chiudi perizia", "EditSpedizione", "ListaPerizie", new { IDSpedizione = ViewBag.IDSpedizione, ViewBag.IDTP, IDPerizia = item4[0].ID }, new { @class = "btn btn-success custom " })
             }
 
         }
@@ -477,21 +490,28 @@ else
                 {
                     if (@ViewBag.HasDanni == "Perizia GOOD" && item4[0].IDTipoPerizia == "D")
                     {
-                        @Html.ActionLink("Chiudi perizia", "SalvaPeriziaTesta", "TelaiAnagrafica", new
-                        {
-                            IDPerito = item4[0].IDPerito,
-                            IDSpedizione = item4[0].IDSpedizione,
-                            IDMeteo = @item3[0].ID,
-                            IDTP = item2[0].ID,
-                            myIDPerizia = item4[0].ID,
-                            IsUpdate = ViewBag.IsUpdate,
-                            DataPerizia = item4[0].DataPerizia
-                        }, new { @class = "btn btn-success custom", onclick = "alert('La perizia è Post discharge e non contiene ITEM danno , operazione annullata');" })
+                        @Html.ActionLink("Salva e Chiudi perizia", "SalvaPeriziaTesta", "TelaiAnagrafica", new
+                   {
+
+
+                       Chassis = item4[0].Telaio,
+                       IDModelloCasa = item4[0].IDModello,
+                       IDTrasportatoreGrim = item4[0].ID_TrasportatoreGrimaldi,
+                       IDTipoRotabile = item4[0].ID_TipoRotabile,
+                       IsUpdate = ViewBag.IsUpdate,
+                       IDPerito = item4[0].IDPerito,
+                       IDSpedizione = item4[0].IDSpedizione,
+                       IDMeteo = @item3[0].ID,
+                       IDTP = item2[0].ID,
+                       myIDPerizia = item4[0].ID,
+                       Condizione = item4[0].FlgNuovoUsato,
+                       DataPerizia = @Convert.ToDateTime(item4[0].DataPerizia).ToString("dd/MM/yyyy")
+                   }, new { @class = "btn btn-success custom", onclick = "alert('La perizia è Post discharge e non contiene ITEM danno , operazione annullata');" })
                     }
 
                     else if (@ViewBag.HasDanni == "Perizia GOOD" && ViewBag.NumFoto.ToString() != "0")
                     {
-                        @Html.ActionLink("Chiudi perizia", "InputTelaio", new
+                        @Html.ActionLink("Salva e Chiudi perizia", "InputTelaio", new
                            {
                                IDPerito = ViewBag.IDPerito,
                                IDSpedizione = ViewBag.IDSpedizione,
@@ -504,7 +524,7 @@ else
                     }
                     else if (@ViewBag.HasDanni == "Perizia con danni" && (ViewBag.NumFoto.ToString() == "0" || ViewBag.NumFoto.ToString() == "1"))
                     {
-                        @Html.ActionLink("Chiudi perizia", "InputTelaio", new
+                        @Html.ActionLink("Salva e Chiudi perizia", "InputTelaio", new
                            {
                                IDPerito = ViewBag.IDPerito,
                                IDSpedizione = ViewBag.IDSpedizione,
@@ -517,7 +537,7 @@ else
                     }
                     else
                     {
-                        @Html.ActionLink("Chiudi perizia", "InputTelaio", new
+                        @Html.ActionLink("Salva e Chiudi perizia", "InputTelaio", new
                            {
                                IDPerito = ViewBag.IDPerito,
                                IDSpedizione = ViewBag.IDSpedizione,
@@ -527,11 +547,13 @@ else
                                aIDModello = ViewBag.aIDModelloCasa,
                                IsRTB = Session["RTB"]
                            }, new { @class = "btn btn-success custom" })
+
+                        @*@Html.ActionLink("SalvaPeriziaEChiudi", "SalvaPeriziaEChiudi", new { IDPerizia = item4[0].ID, DataPerizia = item4[0].DataPerizia, Chassis = item4[0].Telaio }, new { @class = "btn btn-success custom" });*@
                     }
                 }
                 else
                 {
-                    @Html.ActionLink("Chiudi perizia", "InputTelaio", new
+                    @Html.ActionLink("Salva e Chiudi perizia", "InputTelaio", new
                        {
                            IDPerito = ViewBag.IDPerito,
                            IDSpedizione = ViewBag.OldIDSpedizione,
@@ -541,13 +563,15 @@ else
                            aIDModello = ViewBag.aIDModelloCasa,
                            IsRTB = Session["RTB"]
                        }, new { @class = "btn btn-success custom" })
+
+                    @*@Html.ActionLink("SalvaPeriziaEChiudi", "SalvaPeriziaEChiudi", new { IDPerizia = item4[0].ID, DataPerizia = item4[0].DataPerizia, Chassis = item4[0].Telaio }, new { @class = "btn btn-success custom" });*@
                 }
             }
 
             //
             else if ((ViewBag.ErrMess == "" || ViewBag.ErrMess == "Sbloccato" || ViewBag.ErrMess == "TARGA CONOSCIUTA") && Session["Classe"].ToString() == "1")
             {
-                @Html.ActionLink("Chiudi perizia", "InputTelaio", new
+                @Html.ActionLink("Salva e Chiudi perizia", "InputTelaio", new
                {
                    IDPerito = ViewBag.IDPerito,
                    IDSpedizione = ViewBag.IDSpedizione,
@@ -560,7 +584,7 @@ else
             }
             else if (Session["Classe"].ToString() == "1")
             {
-                @Html.ActionLink("Chiudi perizia", "InputTelaio", new
+                @Html.ActionLink("Salva e Chiudi perizia", "InputTelaio", new
                {
                    IDPerito = ViewBag.IDPerito,
                    IDSpedizione = ViewBag.IDSpedizione,
@@ -574,7 +598,7 @@ else
 
             else if (ViewBag.ErrMess == "In modifica")
             {
-                @Html.ActionLink("Chiudi perizia", "InputTelaio", new
+                @Html.ActionLink("Salva e Chiudi perizia", "InputTelaio", new
                 {
                     IDPerito = ViewBag.IDPerito,
                     IDSpedizione = ViewBag.IDSpedizione,
@@ -588,7 +612,7 @@ else
             {
 
 
-                @Html.ActionLink("Chiudi perizia", "InputTelaio", new
+                @Html.ActionLink("Salva e Chiudi perizia", "InputTelaio", new
                 {
                     IDPerito = ViewBag.IDPerito,
                     IDSpedizione = ViewBag.IDSpedizione,
@@ -597,6 +621,8 @@ else
                     aIDModello = ViewBag.aIDModelloCasa,
                     IsRTB = Session["RTB"]
                 }, new { @class = "btn btn-success custom disabled" })
+
+                @*@Html.ActionLink("SalvaPeriziaEChiudi", "SalvaPeriziaEChiudi", new { IDPerizia = item4[0].ID, DataPerizia = item4[0].DataPerizia, Chassis = item4[0].Telaio }, new { @class = "btn btn-success custom" });*@
 
             }
         }
@@ -932,7 +958,7 @@ else
 
         submitform();
     }
-    }
+    
 
 </script>
 <script>
@@ -949,25 +975,34 @@ else
         }
     }
 </script>
-@*@if (ViewBag.ToDoRefresh == true && Session["OS"].ToString()!="WINDOWS")
-    {
-        <script>
-            var auto_refresh = setInterval(
-                function () {
-                    submitform2();
-                }, 100);   // mezzo secondo
-
-            function submitform2() {
-                document.getElementById('miocmd').click();
-            }
-        </script>
-    }*@
-
-@*<script>
+<script>
     $(function () {
-        $('#link').click(function () {
-            var ipvalue = $("#Chassis").val();
-            this.href = this.href.replace("xxx", ipvalue);
+        var $id = $('#Telaio');
+        $id.keyup(function (e) {
+           $(this.form).submit();
+            
         });
     });
-</script>*@
+</script>
+
+<script>
+    $(function () {
+        var $id = $('#DataPerizia');
+        $id.keyup(function (e) {
+            if ($id.val().length == 10)
+                $(this.form).submit();
+
+        });
+    });
+</script>
+
+<script>
+    $(document).ready(function () {
+        var jmsg = '@msg';
+        
+        if (jmsg != "" && jmsg != null) {
+            jmsg = "Telaio gi\u00E0 visionato ! \nperizia aperta in modifica.";
+            alert(jmsg);
+        }
+    });
+</script>

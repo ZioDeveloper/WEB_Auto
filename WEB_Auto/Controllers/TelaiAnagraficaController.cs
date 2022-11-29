@@ -39,6 +39,10 @@ namespace WEB_Auto.Controllers
         public ActionResult InputTelaio(string IDPerito, string IDSpedizione,string IDMeteo, string IDTP, string Chassis,string aIDModello,string DataPerizia, bool IsRTB = false, string aErrorMsg = "" )
         {
             string errMSg = "";
+            if(aErrorMsg == "Telaio esistente nel viaggio ! \\nperizia aperta in modifica.")
+                TempData["Alert"] = aErrorMsg;
+            else
+                TempData["Alert"] = "";
 
             if (!String.IsNullOrEmpty(IDPerito))
                 EliminaTelaiSenzaModello(IDPerito);
@@ -913,6 +917,13 @@ namespace WEB_Auto.Controllers
             return View(model);
         }
 
+        public ActionResult SalvaPeriziaEChiudi(string IDPerizia , string IDPerito, string IDSpedizione, string IDMeteo, string IDTP, string Chassis, string aIDModello, DateTime? DataPerizia, bool IsRTB = false, string aErrorMsg = "")
+        {
+           
+
+            return RedirectToAction("InputTelaio");
+        }
+
         public ActionResult SalvaPeriziaTesta(string IDPerito, string IDSpedizione, string IDMeteo, string IDTP, string Chassis, string DataPerizia, string IDModelloCasa, string IDTrasportatoreGrim,
                                               string IDTipoRotabile, bool? isDamaged, string Condizione, string Annotazioni, string myIDPerizia, 
                                               bool IsUpdate = false,bool Filtrati=true, bool isRapid = false, bool ToDoRefresh = false, bool ChangeStandBy = false)
@@ -922,6 +933,11 @@ namespace WEB_Auto.Controllers
 
             if (isDamaged == true)
                 isRapid = false;
+
+                
+
+
+            
 
             if(ChangeStandBy)
             {
@@ -947,15 +963,70 @@ namespace WEB_Auto.Controllers
             DateTime ora = DateTime.Now;
             string ore = ora.Hour.ToString("00");
             string minuti = ora.Minute.ToString("00"); ;
-            string secondi = ora.Second.ToString("00"); ;
+            string secondi = ora.Second.ToString("00"); 
+
+            //if(DataPerizia == null)
+            //{
+            //    DateTime? myData = (from m in db.AGR_PERIZIE_TEMP_MVC
+            //                  where m.ID == myIDPerizia
+            //                  select m.DataPerizia).FirstOrDefault();
+            //    DataPerizia = myData;
+            //}
 
             string myISoDate = DataPerizia.Right(4) + DataPerizia.Substring(3, 2) + DataPerizia.Left(2) + " " + ore + ":" + minuti + ":" + secondi;
             string myerrMess = "";
             string myerrMessD = "";
             // Verifico Sia tutto ok.. to do !!!!!
+            bool IsAlreadyExisting = CheckIsAlreadyExisting(myIDPerizia, IDSpedizione, Chassis, IDModelloCasa, IDTrasportatoreGrim, IDTipoRotabile, Condizione, Annotazioni, DataPerizia, IDTP, out myerrMess);
+            if (IsAlreadyExisting)
+            {
+
+                // cancella perizia attuale e redirect a quella esistente
+
+                EliminaPeriziaDoppia(myIDPerizia, IDSpedizione, IDTP, IDPerito);
+                string Message = "Telaio esistente nel viaggio ! \\nperizia aperta in modifica.";
+                return RedirectToAction("InputTelaio", "TelaiAnagrafica", new { IDPerito, IDSpedizione, IDMeteo, IDTP, Chassis, IsRTB = Session["RTB"] , aErrorMsg = Message });
+                return RedirectToAction("Edit", "TelaiAnagrafica", new
+                {
+                    IDPerito = IDPerito,
+                    IDSpedizione = IDSpedizione,
+                    IDMeteo = IDMeteo,
+                    IDTP = IDTP,
+                    aIDTrasportatore = IDTrasportatoreGrim,
+                    aIDTipoRotabile = IDTipoRotabile,
+                    aIDModelloCasa = IDModelloCasa,
+                    myIDPerizia = myIDPerizia,
+                    errMess = myerrMess,
+                    IsUpdate = IsUpdate,
+                    Filtrati = Filtrati,
+                    flagNU = Condizione
+                });
+            }
+
+           bool test = CheckIsAlreadyExistingDifferentVIN(myIDPerizia, IDSpedizione, Chassis, IDModelloCasa, IDTrasportatoreGrim, IDTipoRotabile, Condizione, Annotazioni, DataPerizia, IDTP, out myerrMess);
+            if(test == true)
+            {
+                try
+                {
+                    string sqlcmd = " UPDATE AGR_PERIZIE_Temp_MVC " +
+                                        " SET  Telaio = @Telaio " +
+                                        " WHERE ID = @IDPerizia";
+
+
+
+                    int Updated = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@IDPerizia", myIDPerizia),
+                                                                        new SqlParameter("@Telaio", Chassis));
+                }
+                catch { }
+            }
+                 
+            
             bool isOK = CheckAll(myIDPerizia, IDSpedizione, Chassis, IDModelloCasa, IDTrasportatoreGrim , IDTipoRotabile, Condizione , Annotazioni,DataPerizia,  IDTP,  out  myerrMess);
             bool isOkHasDetails = CheckhasDetails(myIDPerizia, IDSpedizione, Chassis, IDModelloCasa, IDTrasportatoreGrim, IDTipoRotabile, Condizione, Annotazioni, DataPerizia, IDTP, out myerrMessD);
             isOkHasDetails = true;
+
+            
+
             if (isOK && isOkHasDetails)
             {
                 string sqlcmd = "";
@@ -968,7 +1039,8 @@ namespace WEB_Auto.Controllers
                                     " SET IDSpedizione = @IDSpedizione , IDModello = @IDModello, Telaio = @Telaio,  FileNumber = 0 , Note = @Note,DataPerizia = @DataPerizia " +
                                     " WHERE ID = @IDPerizia";
 
-
+                    if (String.IsNullOrEmpty(Annotazioni))
+                        Annotazioni = "";
 
                     Inserted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@IDPerizia", myIDPerizia),
                                                                          new SqlParameter("@IDSpedizione", IDSpedizione),
@@ -1120,6 +1192,7 @@ namespace WEB_Auto.Controllers
                         Filtrati = Filtrati
                     });
                 }
+               
                 else
                 {
                     if (isDamaged == true && isRapid == false)
@@ -1239,10 +1312,11 @@ namespace WEB_Auto.Controllers
                 }
 
 
-                if (isDamaged == false && isRapid == false)
+                if (isDamaged == false && isRapid == false )
                 {
                     if (myerrMess == "")
                         myerrMess = myerrMessD;
+
 
                     return RedirectToAction("Edit", "TelaiAnagrafica", new
                     {
@@ -1259,6 +1333,8 @@ namespace WEB_Auto.Controllers
                         Filtrati = Filtrati
                     });
                 }
+                
+
                 else
                 {
                     if (isDamaged == true && isRapid == false)
@@ -1577,6 +1653,55 @@ namespace WEB_Auto.Controllers
             int deleted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@ID", aIDDett));
 
             return RedirectToAction("SalvaPeriziaDettagliRapid", "TelaiAnagrafica", new { myIDPerizia, IsUpdate = IsUpdate });
+        }
+
+        public void EliminaPeriziaDoppia(string IDPerizia, string IDSpedizione, string IDTP, string IDPErito, bool IsUpdate = false, string TipoMezzo = "TUTTE")
+        {
+
+            using (wisedbEntities db = new wisedbEntities())
+            {
+                //using (DbContextTransaction transaction = db.Database.BeginTransaction())
+                //{
+
+                try
+                {
+                    string sqlcmd = " DELETE FROM  AGR_PerizieExpGrim_Temp_MVC  WHERE ID = @ID";
+                    int deleted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@ID", IDPerizia));
+
+                    sqlcmd = " DELETE FROM  AGR_PERIZIE_DETT_TEMP_MVC  WHERE IDPerizia = @IDPerizia";
+                    deleted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@IDPerizia", IDPerizia));
+
+                    sqlcmd = " DELETE FROM  AGR_PERIZIE_TEMP_MVC WHERE ID = @ID";
+                    deleted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@ID", IDPerizia));
+
+                    string OS = Session["OS"].ToString();
+
+                    sqlcmd = " INSERT INTO AGR_PERIZIE_TEMP_MVC_LOG (IDPerizia,InsertDate,IDPerito,IDOperatore , MachineName,TipoOperazione) " +
+                             " VALUES (@IDPerizia, @InsertDate, @IDPerito,@IDOperatore, @MachineName,@TipoOperazione)";
+
+                    deleted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@IDPerizia", IDPerizia),
+                                                                         new SqlParameter("@InsertDate", DateTime.Now),
+                                                                         new SqlParameter("@IDPerito", IDPErito),
+                                                                         new SqlParameter("@IDOperatore", (int)Session["IDOperatore"]),
+                                                                         new SqlParameter("@MachineName", OS),
+                                                                         new SqlParameter("@TipoOperazione", "Delete"));
+
+
+
+                    //transaction.Commit();
+                }
+                catch (SqlException exc)
+                {
+                    string a = exc.Message;
+                    ViewBag.Message = a;
+                    RedirectToAction("ErroreInCancellazioneMulti");
+
+                }
+                //}
+            }
+            //else
+            //    return RedirectToAction("EditSpedizione", "ListaPerizie", new { IDPerito, IDSpedizione, IDMeteo, IDTP, TipoMezzo });
+
         }
 
         public ActionResult EliminaPerizia(string IDPerizia , string IDPerito, string IDSpedizione, string IDMeteo, string IDTP, bool IsUpdate = false, string TipoMezzo = "TUTTE")
@@ -1937,6 +2062,52 @@ namespace WEB_Auto.Controllers
             return true;
         }
 
+        public bool CheckIsAlreadyExisting(string myIDPerizia, string aIDSpedizione, string aTelaio, string IDModelloCasa, string IDTrasportatoreGrim, string IDTipoRotabile, string Condizione,
+                             string Annotazioni, string DataPerizia, string IDTP, out string errMEss)
+        {
+            errMEss = "Telaio : " + aTelaio + " esistente, non puoi modificare questa perizia";
+            int cnt = (from m in db.AGR_PERIZIE_TEMP_MVC
+                       where m.IDSpedizione == aIDSpedizione
+                       where m.ID != myIDPerizia
+                       where m.Telaio == aTelaio
+                       where m.IDTipoPerizia == IDTP
+                       select m).Count();
+            if (cnt > 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
+
+            
+        }
+
+        public bool CheckIsAlreadyExistingDifferentVIN(string myIDPerizia, string aIDSpedizione, string aTelaio, string IDModelloCasa, string IDTrasportatoreGrim, string IDTipoRotabile, string Condizione,
+                             string Annotazioni, string DataPerizia, string IDTP, out string errMEss)
+        {
+            errMEss = "Telaio : " + aTelaio + " esistente, non puoi modificare questa perizia";
+            int cnt = (from m in db.AGR_PERIZIE_TEMP_MVC
+                       where m.IDSpedizione == aIDSpedizione
+                       where m.ID == myIDPerizia
+                       where m.Telaio != aTelaio
+                       where m.IDTipoPerizia == IDTP
+                       select m).Count();
+            if (cnt > 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
+
+
+        }
+
         public bool CheckAll(string myIDPerizia ,string aIDSpedizione ,string aTelaio, string IDModelloCasa, string IDTrasportatoreGrim,  string IDTipoRotabile , string Condizione,
                              string Annotazioni,string DataPerizia,string IDTP, out string errMEss)
         {
@@ -1946,11 +2117,18 @@ namespace WEB_Auto.Controllers
             int cnt = (from m in db.AGR_PERIZIE_TEMP_MVC
                           where m.IDSpedizione == aIDSpedizione
                           where m.Telaio == aTelaio
-                          select m.ID).Count();
+                          where m.IDTipoPerizia == IDTP 
+                          select m).Count();
             if(cnt>0)
             {
-                //{ errMEss = "Il telaio esiste già !"; return false; }
+                
             }
+            else                                                        
+            {
+                
+            }
+
+
 
             // Controllo modello
             if (String.IsNullOrEmpty(IDModelloCasa))

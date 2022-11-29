@@ -258,13 +258,14 @@ namespace WEB_Auto.Controllers
             }
 
 
-            // Verifico che nn ci sia già lo stesso telaio 
+            // Verifico che nn ci sia già lo stesso telaio , nello stesso viaggio, con medesimo tipo perizia
             var cnt = (from m in db.AGR_PERIZIE_TEMP_MVC
                             where m.IDSpedizione == myNewIDSped
+                            where m.IDTipoPerizia == oldTP
                             where m.Telaio == myPerizia.Telaio
                             select m.ID).Count();
 
-            if(cnt > 0)
+            if (cnt > 0)
             {
                 aMsg = "Il telaio : " + myPerizia.Telaio.ToString() + " è già presente nel viaggio : " + myNewIDSped.ToString();
 
@@ -278,7 +279,7 @@ namespace WEB_Auto.Controllers
                                                                          new SqlParameter("@IDPeritoVero", aPerito));
                 }
                 catch { }
-                
+
 
                 return false;
             }

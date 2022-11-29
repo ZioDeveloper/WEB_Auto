@@ -414,6 +414,9 @@
       <DependentUpon>Autocargo.edmx</DependentUpon>
       <LastGenOutput>Autocargo.cs</LastGenOutput>
     </Content>
+    <Content Include="Resources\Elenco periti WEB.docx" />
+    <Content Include="Resources\ElencoSpagna.docx" />
+    <Content Include="Resources\Elenco PEriti spagna.xlsx" />
     <None Include="Resources\Image1.bmp" />
     <Content Include="Scripts\bootstrap-select.js" />
     <Content Include="Scripts\bootstrap-select.min.js" />

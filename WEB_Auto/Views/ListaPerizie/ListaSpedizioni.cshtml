@@ -18,7 +18,9 @@
     <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.4/js/dataTables.buttons.min.js"></script>
     @*<link rel="stylesheet" type="text/css" href="https://nightly.datatables.net/searchpanes/css/searchPanes.dataTables.min.css" />
         <script type="text/javascript" src="https://nightly.datatables.net/searchpanes/js/dataTables.searchPanes.min.js"</script>*@
-
+    <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.4/moment.min.js"></script>
+    <script src="//cdn.datatables.net/plug-ins/1.12.1/sorting/datetime-moment.js"></script>
+    <script src="//cdn.datatables.net/plug-ins/1.10.11/sorting/date-eu.js" type="text/javascript"></script>
 </head>
 <h4>Lista viaggi </h4>
 @*<hr />
@@ -108,8 +110,8 @@
                         <td>
                             @Html.DisplayFor(modelItem => item.IDCasa)
                         </td>
-
                         <td>
+                            
                             @Convert.ToDateTime(item.DataPartenzaImbarco).ToString("dd/MM/yyyy")
                             @*@Html.DisplayFor(modelItem => item.DataPartenzaImbarco)*@
                         </td>
@@ -263,11 +265,15 @@
 @*ElencoSpedizioni*@
 <script>
     $(document).ready(function () {
+       
         var table = $('#ElencoSpedizioni').DataTable({
             "autoWidth": false,
             stateSave: true,
             "lengthMenu": [[-1, 50, 100], ["Tutti", 50, 100]],
             "iDisplayLength": -1,
+            "order": [[5, "desc"]], //or asc 
+            "columnDefs": [{ "targets": 5, "type": "date-eu" }],
+            
             buttons: [
                 //{
                 //    extend: 'searchPanes',

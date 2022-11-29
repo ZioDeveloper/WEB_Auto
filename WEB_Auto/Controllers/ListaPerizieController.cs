@@ -261,10 +261,10 @@ namespace WEB_Auto.Controllers
                         select m;
             model.AGR_Meteo = Meteo.ToList();
 
-            var stby = (from m in db.WEB_AUTO_ListaSpedizioni_3_vw
+            var stby = (from m in db.AGR_PERIZIE_TEMP_MVC
                         where m.IDPerito == aPerito
-                        where m.ID == IDSpedizione
-                        where m.StandBy > 0
+                        where m.IDSpedizione == IDSpedizione
+                        where m.Stato == "S"
                         select m).Count();
 
 
@@ -282,7 +282,7 @@ namespace WEB_Auto.Controllers
             ViewBag.myViaggio = myViaggio;
             ViewBag.TipoMezzo = TipoMezzo;
             ViewBag.Status = Status;
-            return View(model);
+            return View("EditSpedizione", model);
         }
 
         [HttpPost]
@@ -834,7 +834,7 @@ namespace WEB_Auto.Controllers
         }
 
 
-        public ActionResult SetStandbyPerizia(string IDPerizia, string IDPerito, string IDSpedizione, string IDMeteo, string IDTP, bool VengoDaListaPerito = false)
+        public ActionResult SetStandbyPerizia(string IDPerizia, string IDPerito, string IDSpedizione, string IDMeteo, string IDTP, string TipoMezzo , bool VengoDaListaPerito = false)
         {
 
             var myStatus = (from m in db.AGR_PERIZIE_TEMP_MVC
@@ -891,7 +891,7 @@ namespace WEB_Auto.Controllers
             }
             if (!VengoDaListaPerito)
             {
-                return RedirectToAction("EditSpedizione", "ListaPerizie", new { IDPerito, IDSpedizione, IDMeteo, IDTP });
+                return RedirectToAction("EditSpedizione", "ListaPerizie", new { IDPerito, IDSpedizione, IDMeteo, IDTP,TipoMezzo });
             }
             else
             {

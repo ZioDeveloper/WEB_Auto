@@ -63,8 +63,10 @@ namespace WEB_Auto.Controllers
                 usr = "DiNinno";
                 // usr = "Maurizio";
                 //  usr = "amolina"; // 
-              //  usr = "pezzulo";
+                //  usr = "pezzulo";
                 //usr = Session["User"].ToString();
+              //usr = "lmiguel";
+              //  usr = "mmarti";
             }
 
             var myIDPerito = (from s in db.AGR_Periti_WEB

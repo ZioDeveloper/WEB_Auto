@@ -441,18 +441,17 @@ else
 
                     <td>
                         @Html.ActionLink("Inserisci PDF", "ScattaPDF", "Documenti", new
-                   {
-                       myIDPerizia = item4[0].ID,
-                       IDPerito = ViewBag.IDPerito,
-                       IDSpedizione = ViewBag.IDSpedizione,
-                       IDMeteo = ViewBag.IDMeteo,
-                       IDTP = ViewBag.IDTP,
-                       aIDTrasportatore = ViewBag.aIDTrasportatore,
-                       aIDTipoRotabile = ViewBag.aIDTipoRotabile,
-                       aIDModelloCasa = ViewBag.aIDModelloCasa,
-                       ErrMess = ViewBag.ErrMess,
-                       IsUpdate = ViewBag.IsUpdate
-                   }, new { @class = "pdfImg" }) &nbsp;@ViewBag.NumPDF
+                    {
+                        myIDPerizia = item4[0].ID,
+                        IDPerito = ViewBag.IDPerito,
+                        IDSpedizione = ViewBag.IDSpedizione,
+                        IDMeteo = ViewBag.IDMeteo,
+                        IDTP = ViewBag.IDTP,
+                        aIDTrasportatore = ViewBag.aIDTrasportatore,
+                        aIDTipoRotabile = ViewBag.aIDTipoRotabile,
+                        aIDModelloCasa = ViewBag.aIDModelloCasa,
+                        IsUpdate = ViewBag.IsUpdate
+                    }, new { @class = "pdfImg" }) &nbsp;@ViewBag.NumPDF
                 </td>
             </tr>
 
@@ -470,112 +469,25 @@ else
         {
             if (Session["Classe"].ToString() == "0")
             {
-                //if (ViewBag.ErrMess == "" || ViewBag.ErrMess == "Sbloccato" || ViewBag.ErrMess == "TARGA CONOSCIUTA" ||
-                //    (ViewBag.ErrMess == "In fase modifica" && (ViewBag.aIDTrasportatore != "0" && ViewBag.aIDModelloCasa != "219")))
-                if (ViewBag.ErrMess == "" || ViewBag.ErrMess == "Sbloccato" || ViewBag.ErrMess == "TARGA CONOSCIUTA")
+                if (ViewBag.ErrMess == "" || ViewBag.ErrMess == "Sbloccato" || ViewBag.ErrMess == "TARGA CONOSCIUTA" ||
+                    (ViewBag.ErrMess == "In fase modifica" && (ViewBag.aIDTrasportatore != "0" && ViewBag.aIDModelloCasa != "219")))
                 {
-                    <div id="TastoNote" style="display:none;">
-                        <input class="btn btn-warning" type="button" value="Salva note" onClick="javascript: VerificaNote();" />
-                    </div>
-                    <div id="TastoSalva" style="display:block;">
-                        @Html.ActionLink("Salva e Chiudi perizia", "EditSpedizione", "ListaPerizie", new { IDSpedizione = ViewBag.IDSpedizione, ViewBag.IDTP, ViewBag.TipoMezzo }, new { @class = "btn btn-success custom " })
-                    </div>
-
+                    @Html.ActionLink("Salva e Chiudi perizia", "EditSpedizione", "ListaPerizie", new { IDSpedizione = ViewBag.IDSpedizione, ViewBag.IDTP, ViewBag.TipoMezzo }, new { @class = "btn btn-success custom " })
                 }
 
-                // SEZIONE AUTO....
                 else if (ViewBag.ErrMess == "Note obbligatorie " || (ViewBag.ErrMess == "In fase modifica" && ViewBag.aIDModelloCasa == "219" && String.IsNullOrEmpty(item4[0].Note)))
                 {
-
-                    <div id="TastoNote" style="display:block;">
-                        <input class="btn btn-warning" type="button" value="Salva note" onClick="javascript: VerificaNote();" />
-                    </div>
-                    <div id="TastoSalva" style="display:none;">
-                        @Html.ActionLink("Salva e Chiudi perizia", "EditSpedizione", "ListaPerizie", new { IDSpedizione = ViewBag.IDSpedizione, ViewBag.IDTP, ViewBag.TipoMezzo }, new { @class = "btn btn-success custom " })
-                    </div>
-
-
+                    <input class="btn btn-warning" type="button" value="Verifica annotazioni" onClick="javascript: VerificaNote();" />
                 }
-                else if (ViewBag.ErrMess == "Note obbligatorie " || (ViewBag.ErrMess == "In fase modifica" && ViewBag.aIDModelloCasa == "219" && !String.IsNullOrEmpty(item4[0].Note)))
-                {
-                    <div id="TastoNote" style="display:none;">
-                        <input class="btn btn-warning" type="button" value="Salva note" onClick="javascript: VerificaNote();" />
-                    </div>
-                    <div id="TastoSalva" style="display:block;">
-                        @Html.ActionLink("Salva e Chiudi perizia", "EditSpedizione", "ListaPerizie", new { IDSpedizione = ViewBag.IDSpedizione, ViewBag.IDTP, ViewBag.TipoMezzo }, new { @class = "btn btn-success custom " })
-                    </div>
-                }
-
-
-                else if (ViewBag.ErrMess == "Note obbligatorie " || (ViewBag.ErrMess == "In fase modifica" && ViewBag.aIDModelloCasa != "219 " & String.IsNullOrEmpty(ViewBag.aIDTrasportatore)))
-                {
-                    <div id="TastoNote" style="display:none;">
-                        <input class="btn btn-warning" type="button" value="Salva note" onClick="javascript: VerificaNote();" />
-                    </div>
-                    <div id="TastoSalva" style="display:block;">
-                        @Html.ActionLink("Salva e Chiudi perizia", "EditSpedizione", "ListaPerizie", new { IDSpedizione = ViewBag.IDSpedizione, ViewBag.IDTP, ViewBag.TipoMezzo }, new { @class = "btn btn-success custom " })
-                    </div>
-                }
-
-                // SEZIONE SEMIRIMORCHI....
-
                 else if (ViewBag.ErrMess == "Note obbligatorie " || (ViewBag.ErrMess == "In fase modifica" && ViewBag.aIDTrasportatore == "0" && String.IsNullOrEmpty(item4[0].Note)))
                 {
-
-                    <div id="TastoNote" style="display:block;">
-                        <input class="btn btn-warning" type="button" value="Salva note" onClick="javascript: VerificaNote();" />
-                    </div>
-                    <div id="TastoSalva" style="display:none;">
-                        @Html.ActionLink("Salva e Chiudi perizia", "EditSpedizione", "ListaPerizie", new { IDSpedizione = ViewBag.IDSpedizione, ViewBag.IDTP, ViewBag.TipoMezzo }, new { @class = "btn btn-success custom " })
-                    </div>
-
-
-                }
-                else if (ViewBag.ErrMess == "Note obbligatorie " || (ViewBag.ErrMess == "In fase modifica" && ViewBag.aIDTrasportatore == "0" && !String.IsNullOrEmpty(item4[0].Note)))
-                {
-                    <div id="TastoNote" style="display:none;">
-                        <input class="btn btn-warning" type="button" value="Salva note" onClick="javascript: VerificaNote();" />
-                    </div>
-                    <div id="TastoSalva" style="display:block;">
-                        @Html.ActionLink("Salva e Chiudi perizia", "EditSpedizione", "ListaPerizie", new { IDSpedizione = ViewBag.IDSpedizione, ViewBag.IDTP, ViewBag.TipoMezzo }, new { @class = "btn btn-success custom " })
-                    </div>
+                    <input class="btn btn-warning" type="button" value="Verifica annotazioni" onClick="javascript: VerificaNote();" />
                 }
 
-                else if (ViewBag.ErrMess == "Note obbligatorie " || (ViewBag.ErrMess == "In fase modifica" && (ViewBag.aIDTrasportatore != "0" && !String.IsNullOrEmpty(ViewBag.aIDTrasportatore))))
-                {
-                    <div id="TastoNote" style="display:none;">
-                        <input class="btn btn-warning" type="button" value="Salva note" onClick="javascript: VerificaNote();" />
-                    </div>
-                    <div id="TastoSalva" style="display:block;">
-                        @Html.ActionLink("Salva e Chiudi perizia", "EditSpedizione", "ListaPerizie", new { IDSpedizione = ViewBag.IDSpedizione, ViewBag.IDTP, ViewBag.TipoMezzo }, new { @class = "btn btn-success custom " })
-                    </div>
-                }
-
-
-                // END
-
-
-
-                else if (ViewBag.ErrMess == "Note obbligatorie " || (ViewBag.ErrMess == "In fase modifica" && ViewBag.aIDTrasportatore == "0" && String.IsNullOrEmpty(item4[0].Note)))
-                {
-                    <input class="btn btn-warning" type="button" value="Salva note" onClick="javascript: VerificaNote();" />
-                }
-
-                else if (ViewBag.DoRefresh == true)
-                {
-                    @Html.ActionLink("Salva e Chiudi perizia", "EditSpedizione", "ListaPerizie", new { IDSpedizione = ViewBag.IDSpedizione, ViewBag.IDTP, ViewBag.TipoMezzo }, new { @class = "btn btn-success custom disabled" })
-                    <script>submitform();</script>
-                }
-                else if (ViewBag.ErrMess == "Modello obbligatorio")
-                {
-                    @Html.ActionLink("Salva e Chiudi perizia", "EditSpedizione", "ListaPerizie", new { IDSpedizione = ViewBag.IDSpedizione, ViewBag.IDTP, ViewBag.TipoMezzo }, new { @class = "btn btn-success custom  disabled" })
-                }
-
-                else if (ViewBag.ErrMess == " ")
-                {
-                    @Html.ActionLink("Salva e Chiudi perizia", "EditSpedizione", "ListaPerizie", new { IDSpedizione = ViewBag.IDSpedizione, ViewBag.IDTP, ViewBag.TipoMezzo }, new { @class = "btn btn-success custom  " })
-                }
-
+                @*else if (ViewBag.ErrMess == "Note obbligatorie " || ViewBag.ErrMess == "In fase modifica")
+                    {
+                        <input class="btn btn-warning" type="button" value="Verifica dati2" onClick="javascript: VerificaNote();" />
+                    }*@
                 else
                 {
                     @Html.ActionLink("Salva e Chiudi perizia", "EditSpedizione", "ListaPerizie", new { IDSpedizione = ViewBag.IDSpedizione, ViewBag.IDTP, ViewBag.TipoMezzo }, new { @class = "btn btn-success custom  disabled" })
@@ -599,78 +511,54 @@ else
                 {
                     if (@ViewBag.HasDanni == "Perizia GOOD" && item4[0].IDTipoPerizia == "D")
                     {
-                        <div id="TastoNote" style="display:none;">
-                            <input class="btn btn-warning" type="button" value="Salva note" onClick="javascript: VerificaNote();" />
-                        </div>
-                        <div id="TastoSalva" style="display:block;">
-                            @Html.ActionLink("Salva e Chiudi perizia", "SalvaPeriziaTesta", "TelaiAnagrafica", new
-                               {
+                        @Html.ActionLink("Salva e Chiudi perizia", "SalvaPeriziaTesta", "TelaiAnagrafica", new
+                   {
 
 
-                                   Chassis = item4[0].Telaio,
-                                   IDModelloCasa = item4[0].IDModello,
-                                   IDTrasportatoreGrim = item4[0].ID_TrasportatoreGrimaldi,
-                                   IDTipoRotabile = item4[0].ID_TipoRotabile,
-                                   IsUpdate = ViewBag.IsUpdate,
-                                   IDPerito = item4[0].IDPerito,
-                                   IDSpedizione = item4[0].IDSpedizione,
-                                   IDMeteo = @item3[0].ID,
-                                   IDTP = item2[0].ID,
-                                   myIDPerizia = item4[0].ID,
-                                   Condizione = item4[0].FlgNuovoUsato,
-                                   DataPerizia = @Convert.ToDateTime(item4[0].DataPerizia).ToString("dd/MM/yyyy")
-                               }, new { @class = "btn btn-success custom", onclick = "alert('La perizia è Post discharge e non contiene ITEM danno , operazione annullata');" })
-                        </div>
-
+                       Chassis = item4[0].Telaio,
+                       IDModelloCasa = item4[0].IDModello,
+                       IDTrasportatoreGrim = item4[0].ID_TrasportatoreGrimaldi,
+                       IDTipoRotabile = item4[0].ID_TipoRotabile,
+                       IsUpdate = ViewBag.IsUpdate,
+                       IDPerito = item4[0].IDPerito,
+                       IDSpedizione = item4[0].IDSpedizione,
+                       IDMeteo = @item3[0].ID,
+                       IDTP = item2[0].ID,
+                       myIDPerizia = item4[0].ID,
+                       Condizione = item4[0].FlgNuovoUsato,
+                       DataPerizia = @Convert.ToDateTime(item4[0].DataPerizia).ToString("dd/MM/yyyy")
+                   }, new { @class = "btn btn-success custom", onclick = "alert('La perizia è Post discharge e non contiene ITEM danno , operazione annullata');" })
                     }
 
                     else if (@ViewBag.HasDanni == "Perizia GOOD" && ViewBag.NumFoto.ToString() != "0")
                     {
-                        <div id="TastoNote" style="display:none;">
-                            <input class="btn btn-warning" type="button" value="Salva note" onClick="javascript: VerificaNote();" />
-                        </div>
-                        <div id="TastoSalva" style="display:block;">
-                            @Html.ActionLink("Salva e Chiudi perizia", "InputTelaio", new
-                            {
-                                IDPerito = ViewBag.IDPerito,
-                                IDSpedizione = ViewBag.IDSpedizione,
-                                IDMeteo = ViewBag.IDMeteo,
-                                IDTP = ViewBag.IDTP,
-                                IsUpdate = ViewBag.IsUpdate,
-                                aIDModello = ViewBag.aIDModelloCasa,
-                                IsRTB = Session["RTB"]
-                             }, new { @class = "btn btn-success custom", onclick = "return confirm('La perizia è GOOD, ma contiene foto, sei sicuro di voler proseguire ?');" })
-                        </div>
-
+                        @Html.ActionLink("Salva e Chiudi perizia", "InputTelaio", new
+                           {
+                               IDPerito = ViewBag.IDPerito,
+                               IDSpedizione = ViewBag.IDSpedizione,
+                               IDMeteo = ViewBag.IDMeteo,
+                               IDTP = ViewBag.IDTP,
+                               IsUpdate = ViewBag.IsUpdate,
+                               aIDModello = ViewBag.aIDModelloCasa,
+                               IsRTB = Session["RTB"]
+                            }, new { @class = "btn btn-success custom", onclick = "return confirm('La perizia è GOOD, ma contiene foto, sei sicuro di voler proseguire ?');" })
                     }
                     else if (@ViewBag.HasDanni == "Perizia con danni" && (ViewBag.NumFoto.ToString() == "0" || ViewBag.NumFoto.ToString() == "1"))
                     {
-                        <div id="TastoNote" style="display:none;">
-                            <input class="btn btn-warning" type="button" value="Salva note" onClick="javascript: VerificaNote();" />
-                        </div>
-                        <div id="TastoSalva" style="display:block;">
-                            @Html.ActionLink("Salva e Chiudi perizia", "InputTelaio", new
-                          {
-                              IDPerito = ViewBag.IDPerito,
-                              IDSpedizione = ViewBag.IDSpedizione,
-                              IDMeteo = ViewBag.IDMeteo,
-                              IDTP = ViewBag.IDTP,
-                              IsUpdate = ViewBag.IsUpdate,
-                              aIDModello = ViewBag.aIDModelloCasa,
-                              IsRTB = Session["RTB"]
-                          }, new { @class = "btn btn-success custom", onclick = "return confirm('La perizia è DMG, ma contiene meno di 2 foto, sei sicuro di voler proseguire ?');" })
-                        </div>
-
+                        @Html.ActionLink("Salva e Chiudi perizia", "InputTelaio", new
+                           {
+                               IDPerito = ViewBag.IDPerito,
+                               IDSpedizione = ViewBag.IDSpedizione,
+                               IDMeteo = ViewBag.IDMeteo,
+                               IDTP = ViewBag.IDTP,
+                               IsUpdate = ViewBag.IsUpdate,
+                               aIDModello = ViewBag.aIDModelloCasa,
+                               IsRTB = Session["RTB"]
+                           }, new { @class = "btn btn-success custom", onclick = "return confirm('La perizia è DMG, ma contiene meno di 2 foto, sei sicuro di voler proseguire ?');" })
                     }
                     else
                     {
-
-
-                        <div id="TastoNote" style="display:none;">
-                            <input class="btn btn-warning" type="button" value="Salva note" onClick="javascript: VerificaNote();" />
-                        </div>
-                        <div id="TastoSalva" style="display:block;">
-                            @Html.ActionLink("Salva e Chiudi perizia", "InputTelaio", new
+                        @Html.ActionLink("Salva e Chiudi perizia", "InputTelaio", new
                            {
                                IDPerito = ViewBag.IDPerito,
                                IDSpedizione = ViewBag.IDSpedizione,
@@ -680,7 +568,8 @@ else
                                aIDModello = ViewBag.aIDModelloCasa,
                                IsRTB = Session["RTB"]
                            }, new { @class = "btn btn-success custom" })
-                        </div>
+
+                        @*@Html.ActionLink("SalvaPeriziaEChiudi", "SalvaPeriziaEChiudi", new { IDPerizia = item4[0].ID, DataPerizia = item4[0].DataPerizia, Chassis = item4[0].Telaio }, new { @class = "btn btn-success custom" });*@
                     }
                 }
                 else
@@ -703,12 +592,7 @@ else
             //
             else if ((ViewBag.ErrMess == "" || ViewBag.ErrMess == "Sbloccato" || ViewBag.ErrMess == "TARGA CONOSCIUTA") && Session["Classe"].ToString() == "1")
             {
-                
-                <div id="TastoNote" style="display:none;">
-                    <input class="btn btn-warning" type="button" value="Salva note" onClick="javascript: VerificaNote();" />
-                </div>
-                <div id="TastoSalva" style="display:block;">
-                    @Html.ActionLink("Salva e Chiudi perizia", "InputTelaio", new
+                @Html.ActionLink("Salva e Chiudi perizia", "InputTelaio", new
                {
                    IDPerito = ViewBag.IDPerito,
                    IDSpedizione = ViewBag.IDSpedizione,
@@ -718,15 +602,10 @@ else
                    aIDModello = ViewBag.aIDModelloCasa,
                    IsRTB = Session["RTB"]
                }, new { @class = "btn btn-success custom" })
-                </div>
             }
             else if (Session["Classe"].ToString() == "1")
             {
-                <div id="TastoNote" style="display:none;">
-                    <input class="btn btn-warning" type="button" value="Salva note" onClick="javascript: VerificaNote();" />
-                </div>
-                <div id="TastoSalva" style="display:block;">
-                    @Html.ActionLink("Salva e Chiudi perizia", "InputTelaio", new
+                @Html.ActionLink("Salva e Chiudi perizia", "InputTelaio", new
                {
                    IDPerito = ViewBag.IDPerito,
                    IDSpedizione = ViewBag.IDSpedizione,
@@ -736,33 +615,11 @@ else
                    aIDModello = ViewBag.aIDModelloCasa,
                    IsRTB = Session["RTB"]
                }, new { @class = "btn btn-success custom disabled " })
-                </div>
-
             }
 
             else if (ViewBag.ErrMess == "In modifica")
             {
-
-                <div id="TastoNote" style="display:none;">
-                    <input class="btn btn-warning" type="button" value="Salva note" onClick="javascript: VerificaNote();" />
-                </div>
-                <div id="TastoSalva" style="display:block;">
-                    @Html.ActionLink("Salva e Chiudi perizia", "InputTelaio", new
-                   {
-                       IDPerito = ViewBag.IDPerito,
-                       IDSpedizione = ViewBag.IDSpedizione,
-                       IDMeteo = ViewBag.IDMeteo,
-                       IDTP = ViewBag.IDTP,
-                       aIDModello = ViewBag.aIDModelloCasa,
-                       IsRTB = Session["RTB"]
-                   }, new { @class = "btn btn-success custom" })
-                </div>
-
-            }
-            else if (ViewBag.ErrMess == "Note obbligatorie ")
-            {
-                <input class="btn btn-warning" type="button" value="Verifica presenza note" onClick="javascript: VerificaNote();" />
-                @*@Html.ActionLink("Salva e Chiudi perizia", "InputTelaio", new
+                @Html.ActionLink("Salva e Chiudi perizia", "InputTelaio", new
                 {
                     IDPerito = ViewBag.IDPerito,
                     IDSpedizione = ViewBag.IDSpedizione,
@@ -770,7 +627,20 @@ else
                     IDTP = ViewBag.IDTP,
                     aIDModello = ViewBag.aIDModelloCasa,
                     IsRTB = Session["RTB"]
-                }, new { @class = "btn btn-success custom", @onclick = "javascript: validator(); return false;" })*@
+                }, new { @class = "btn btn-success custom" })
+            }
+            else if (ViewBag.ErrMess == "Note obbligatorie ")
+            {
+                <input class="btn btn-warning" type="button" value="Verifica presenza note" onClick="javascript: VerificaNote();" />
+                @*@Html.ActionLink("Salva e Chiudi perizia", "InputTelaio", new
+                    {
+                        IDPerito = ViewBag.IDPerito,
+                        IDSpedizione = ViewBag.IDSpedizione,
+                        IDMeteo = ViewBag.IDMeteo,
+                        IDTP = ViewBag.IDTP,
+                        aIDModello = ViewBag.aIDModelloCasa,
+                        IsRTB = Session["RTB"]
+                    }, new { @class = "btn btn-success custom", @onclick = "javascript: validator(); return false;" })*@
             }
 
             else
@@ -1235,26 +1105,4 @@ else
         }
 
     }
-</script>
-
-<script>
-    $(function () {
-        var $id = $('#Annotazioni');
-        $id.keyup(function (e) {
-            //alert('Eccolo')
-            var x = document.getElementById("TastoNote");
-            var y = document.getElementById("TastoSalva");
-           
-
-
-            if (x.style.display === "none") {
-                x.style.display = "block";
-                y.style.display = "none";
-                
-            }
-            
-
-
-        });
-    });
 </script>

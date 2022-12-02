@@ -20,7 +20,7 @@
 
 <h4>Lista Perizie Cancellate</h4>
 
-<div style="text-align:center;background-color:lightgray">
+<div style="text-align:left;background-color:lightgray">
 
 
     @using (Html.BeginForm("ListaPerizieCancellate", "RecuperaDatiCancellati", new { CaricaDati = true }))
@@ -32,10 +32,11 @@
         <label>&nbsp;&nbsp; &nbsp;&nbsp;30 gg:@Html.RadioButton("FiltroData", 30, true)</label>
         <label>&nbsp;&nbsp; &nbsp;&nbsp;60 gg gg:@Html.RadioButton("FiltroData", 60, false)</label>
         <label>&nbsp;&nbsp; &nbsp;&nbsp;90 gg:@Html.RadioButton("FiltroData", 90, false)</label>
+        <label>&nbsp; &nbsp;VIAGGIO @Html.TextBox("VIAGGIO", null, new { style = "width:100px;text-transform:uppercase", @id = "VIAGGIO", @maxlength = "10", @placeholder = "", @autofocus = "autofocus", @autocomplete = "off" })</label>
         <label>&nbsp; &nbsp;POL @Html.TextBox("POL", null, new { style = "width:60px;text-transform:uppercase", @id = "POL", @maxlength = "3", @placeholder = "", @autofocus = "autofocus", @autocomplete = "off" })</label>
         <label>&nbsp; &nbsp;POD @Html.TextBox("POD", null, new { style = "width:60px;text-transform:uppercase", @id = "POD", @maxlength = "3", @placeholder = "", @autofocus = "autofocus", @autocomplete = "off" })</label>
-        <label>&nbsp; &nbsp;Da data @Html.TextBox("DataINI", null, new { style = "width:150px;text-transform:uppercase", @id = "DataINI", @maxlength = "10", @placeholder = "", @autofocus = "autofocus", @autocomplete = "off", @readonly=true  })</label>
-        <label>&nbsp; &nbsp;A Data @Html.TextBox("DataEND", null, new { style = "width:150px;text-transform:uppercase", @id = "DataEND", @maxlength = "10", @placeholder = "", @autofocus = "autofocus", @autocomplete = "off" , @readonly = true })</label>
+        <label>&nbsp; &nbsp;Da data @Html.TextBox("DataINI", null, new { style = "width:110px;text-transform:uppercase", @id = "DataINI", @maxlength = "10", @placeholder = "", @autofocus = "autofocus", @autocomplete = "off", @readonly = true })</label>
+        <label>&nbsp; &nbsp;A Data @Html.TextBox("DataEND", null, new { style = "width:110px;text-transform:uppercase", @id = "DataEND", @maxlength = "10", @placeholder = "", @autofocus = "autofocus", @autocomplete = "off", @readonly = true })</label>
 
         <button type="submit" id="btnConfirm" class="btn btn-success">Cerca</button>
     }
@@ -63,6 +64,7 @@
                 <th>NumPDF</th>
                 <th>Name</th>
                 <th>Condition</th>
+                <th>Note</th>
                 <th>Reinserisci</th>
             </tr>
 
@@ -73,59 +75,62 @@
         <tbody>
             @foreach (var item in Model.BKP_AGR_Perizie_TEMP_MVC_ELIMINATE_vw)
             {
-                <tr>
+            <tr>
 
-                    @*<td>
-                        @Html.DisplayFor(modelItem => item.ID)
-                    </td>*@
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Viaggio)
-                    </td>
-                    @*<td>
-                        @Html.DisplayFor(modelItem => item.Perito)
-                    </td>*@
-                    <td>
-                        @Html.DisplayFor(modelItem => item.TP)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.POL)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.POD)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.DataPerizia)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Telaio)
-                    </td>
-                    @*<td>
-                        @Html.DisplayFor(modelItem => item.IDModello)
-                    </td>*@
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Modello)
-                    </td>
+                @*<td>
+            @Html.DisplayFor(modelItem => item.ID)
+        </td>*@
+                <td>
+                    @Html.DisplayFor(modelItem => item.Viaggio)
+                </td>
+                @*<td>
+            @Html.DisplayFor(modelItem => item.Perito)
+        </td>*@
+                <td>
+                    @Html.DisplayFor(modelItem => item.TP)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.POL)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.POD)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DataPerizia)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Telaio)
+                </td>
+                @*<td>
+            @Html.DisplayFor(modelItem => item.IDModello)
+        </td>*@
+                <td>
+                    @Html.DisplayFor(modelItem => item.Modello)
+                </td>
 
-                    <td>
-                        @Html.DisplayFor(modelItem => item.MachineName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.NumFoto)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.NumPDF)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Name)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Condition)
-                    </td>
-                    <td>
-                        @Html.ActionLink("Reinserisci perizia", "RipristinaPerizia", "RecuperaDatiCancellati", new { aIDPerizia = item.ID }, new { @class = "btn btn-success btn-xs " })
+                <td>
+                    @Html.DisplayFor(modelItem => item.MachineName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NumFoto)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NumPDF)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Condition)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Note)
+                </td>
+                <td>
+                    @Html.ActionLink("Ripristina", "RipristinaPerizia", "RecuperaDatiCancellati", new { aIDPerizia = item.ID }, new { @class = "btn btn-success btn-xs " })
 
-                    </td>
-                </tr>
+                </td>
+            </tr>
             }
         </tbody>
         <tfoot>
@@ -145,6 +150,7 @@
                 <th>NumPDF</th>
                 <th>Name</th>
                 <th>Condition</th>
+                <th>Note</th>
                 <th>Reinserisci</th>
             </tr>
         </tfoot>

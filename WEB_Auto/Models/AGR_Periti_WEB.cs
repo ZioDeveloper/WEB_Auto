@@ -24,6 +24,7 @@ namespace WEB_Auto.Models
         public Nullable<int> IDRuolo { get; set; }
         public string EmailAddress { get; set; }
         public string Lang { get; set; }
+        public string Pwd { get; set; }
     
         public virtual AGR_Periti_WEB AGR_Periti_WEB1 { get; set; }
         public virtual AGR_Periti_WEB AGR_Periti_WEB2 { get; set; }

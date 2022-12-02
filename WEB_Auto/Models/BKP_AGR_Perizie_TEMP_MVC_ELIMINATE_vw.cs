@@ -30,5 +30,6 @@ namespace WEB_Auto.Models
         public string POL { get; set; }
         public string POD { get; set; }
         public string Viaggio { get; set; }
+        public string Note { get; set; }
     }
 }

@@ -107,6 +107,7 @@ warning 6002: The table/view 'wisedb.dbo.AGR_Danni_SDU' does not have a primary 
           <Property Name="IDRuolo" Type="int" />
           <Property Name="EmailAddress" Type="varchar" MaxLength="100" />
           <Property Name="Lang" Type="varchar" MaxLength="5" />
+          <Property Name="Pwd" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="AGR_PERIZIE_DETT_TEMP_MVC">
           <Key>
@@ -727,6 +728,7 @@ warning 6002: The table/view 'wisedb.dbo.BKP_AGR_Perizie_TEMP_MVC_ELIMINATE_vw' 
           <Property Name="POL" Type="varchar" MaxLength="3" Nullable="false" />
           <Property Name="POD" Type="varchar" MaxLength="3" Nullable="false" />
           <Property Name="Viaggio" Type="varchar" MaxLength="30" />
+          <Property Name="Note" Type="varchar" MaxLength="255" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'wisedb.dbo.WEB_AGR_Danni_vw' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -1684,7 +1686,8 @@ warning 6002: The table/view 'wisedb.dbo.WEB_ListaPerizieFlat_TMP_vw' does not h
     [BKP_AGR_Perizie_TEMP_MVC_ELIMINATE_vw].[Condition] AS [Condition], 
     [BKP_AGR_Perizie_TEMP_MVC_ELIMINATE_vw].[POL] AS [POL], 
     [BKP_AGR_Perizie_TEMP_MVC_ELIMINATE_vw].[POD] AS [POD], 
-    [BKP_AGR_Perizie_TEMP_MVC_ELIMINATE_vw].[Viaggio] AS [Viaggio]
+    [BKP_AGR_Perizie_TEMP_MVC_ELIMINATE_vw].[Viaggio] AS [Viaggio], 
+    [BKP_AGR_Perizie_TEMP_MVC_ELIMINATE_vw].[Note] AS [Note]
     FROM [dbo].[BKP_AGR_Perizie_TEMP_MVC_ELIMINATE_vw] AS [BKP_AGR_Perizie_TEMP_MVC_ELIMINATE_vw]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="WEB_AGR_Danni_vw" EntityType="Self.WEB_AGR_Danni_vw" store:Type="Views" store:Schema="dbo">
@@ -2288,6 +2291,7 @@ warning 6002: The table/view 'wisedb.dbo.WEB_ListaPerizieFlat_TMP_vw' does not h
           <Property Name="IDRuolo" Type="Int32" />
           <Property Name="EmailAddress" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="Lang" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="Pwd" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Periti">
           <Key>
@@ -3185,6 +3189,7 @@ warning 6002: The table/view 'wisedb.dbo.WEB_ListaPerizieFlat_TMP_vw' does not h
           <Property Name="POL" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
           <Property Name="POD" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
           <Property Name="Viaggio" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Note" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="WEB_ListaPerizieFlat_DEF_ALL_vw">
           <Key>
@@ -3607,6 +3612,7 @@ warning 6002: The table/view 'wisedb.dbo.WEB_ListaPerizieFlat_TMP_vw' does not h
           <EntitySetMapping Name="AGR_Periti_WEB">
             <EntityTypeMapping TypeName="wisedbModel.AGR_Periti_WEB">
               <MappingFragment StoreEntitySet="AGR_Periti_WEB">
+                <ScalarProperty Name="Pwd" ColumnName="Pwd" />
                 <ScalarProperty Name="Lang" ColumnName="Lang" />
                 <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
                 <ScalarProperty Name="IDRuolo" ColumnName="IDRuolo" />
@@ -4419,6 +4425,7 @@ warning 6002: The table/view 'wisedb.dbo.WEB_ListaPerizieFlat_TMP_vw' does not h
           <EntitySetMapping Name="BKP_AGR_Perizie_TEMP_MVC_ELIMINATE_vw">
             <EntityTypeMapping TypeName="wisedbModel.BKP_AGR_Perizie_TEMP_MVC_ELIMINATE_vw">
               <MappingFragment StoreEntitySet="BKP_AGR_Perizie_TEMP_MVC_ELIMINATE_vw">
+                <ScalarProperty Name="Note" ColumnName="Note" />
                 <ScalarProperty Name="Viaggio" ColumnName="Viaggio" />
                 <ScalarProperty Name="POD" ColumnName="POD" />
                 <ScalarProperty Name="POL" ColumnName="POL" />

@@ -632,6 +632,7 @@
     <Content Include="Views\ListaPerizie\ErroreInCancellazioneMulti.cshtml" />
     <Content Include="Views\ListaPerizie\ListaPerizieInStandBy.cshtml" />
     <Content Include="Views\ListaPerizie\ListaPerizieInStandByPErPerito.cshtml" />
+    <Content Include="Views\TelaiAnagrafica\AAAAAA.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

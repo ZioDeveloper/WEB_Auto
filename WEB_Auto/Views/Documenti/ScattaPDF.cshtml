@@ -10,7 +10,7 @@
     <h4>Gestione Documenti PDF</h4>
     <br />
 
-    @Html.ActionLink("Torna a perizia", "Edit","TelaiAnagrafica", new { myIDPerizia = ViewBag.myIDPerizia ,
+    @Html.ActionLink("Torna a perizia", "Edit", "TelaiAnagrafica", new { myIDPerizia = ViewBag.myIDPerizia,
     IDPerito = ViewBag.IDPerito,
     IDSpedizione = ViewBag.IDSpedizione,
     IDMeteo = ViewBag.IDMeteo,
@@ -19,8 +19,9 @@
     aIDTipoRotabile = ViewBag.aIDTipoRotabile,
     aIDModelloCasa = ViewBag.aIDModelloCasa,
     errMess = ViewBag.ErrMess,
-    IsUpdate = ViewBag.IsUpdate
-}, new { @class = "btn btn-primary btn-xs" })
+    IsUpdate = ViewBag.IsUpdate,
+    DoRefresh = true
+        }, new { @class = "btn btn-primary btn-xs" })
     &nbsp;&nbsp;
     @*@Html.ActionLink("Drag & drop", "DragAndDrop", new { IDCommessa = Session["IDCommessa"], IDTelaio = ViewBag.IDTelaio, IDTipoDocumento = ViewBag.IDTipoDocumento }, new { @class = "btn btn-warning btn-xs" })*@
 </div>
@@ -41,17 +42,17 @@
 }, FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
 
-<table border="0">
-    <tr>
-        <td>
-            <label class="btn btn-primary btn-xs">
-                Carica PDF <input type="file" onchange="form.submit()" style="display:contents;" name="files" multiple id="files_0" accept="application/pdf">
-            </label>
-        </td>
-    </tr>
-</table>
+    <table border="0">
+        <tr>
+            <td>
+                <label class="btn btn-primary btn-xs">
+                    Carica PDF <input type="file" onchange="form.submit()" style="display:contents;" name="files" multiple id="files_0" accept="application/pdf">
+                </label>
+            </td>
+        </tr>
+    </table>
 
-<br />
+    <br />
 
 }
 

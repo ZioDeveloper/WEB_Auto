@@ -527,13 +527,13 @@ namespace WEB_Auto.Controllers
 
         public ActionResult Edit(string IDPerito, string IDSpedizione, string IDMeteo, string IDTP, string aIDTrasportatore,
                                          string aIDTipoRotabile, string aIDModelloCasa, string myIDPerizia, string flagNU, string Annotazioni, bool Filtrati = true,
-                                         string errMess = " ", bool IsUpdate = false, bool ToDoRefresh = false, string OldIDSpedizione = "", string TipoMezzo = "TUTTE" ) // errMess = " " per eludere primo controllo in View Edit
+                                         string errMess = " ", bool IsUpdate = false, bool ToDoRefresh = false, string OldIDSpedizione = "", string TipoMezzo = "TUTTE", bool DoRefresh = false ) // errMess = " " per eludere primo controllo in View Edit
         {
             // Default = modello, diventa trasportatore per CAB non rotabili
             ViewBag.IsTrasportatore = false;
             ViewBag.ToDoRefresh = ToDoRefresh;
             ViewBag.TipoMezzo = TipoMezzo;
-
+            ViewBag.DoRefresh = DoRefresh;
 
             if (myIDPerizia == null)
             {
@@ -986,21 +986,7 @@ namespace WEB_Auto.Controllers
                 EliminaPeriziaDoppia(myIDPerizia, IDSpedizione, IDTP, IDPerito);
                 string Message = "Telaio esistente nel viaggio ! \\nperizia aperta in modifica.";
                 return RedirectToAction("InputTelaio", "TelaiAnagrafica", new { IDPerito, IDSpedizione, IDMeteo, IDTP, Chassis, IsRTB = Session["RTB"] , aErrorMsg = Message });
-                return RedirectToAction("Edit", "TelaiAnagrafica", new
-                {
-                    IDPerito = IDPerito,
-                    IDSpedizione = IDSpedizione,
-                    IDMeteo = IDMeteo,
-                    IDTP = IDTP,
-                    aIDTrasportatore = IDTrasportatoreGrim,
-                    aIDTipoRotabile = IDTipoRotabile,
-                    aIDModelloCasa = IDModelloCasa,
-                    myIDPerizia = myIDPerizia,
-                    errMess = myerrMess,
-                    IsUpdate = IsUpdate,
-                    Filtrati = Filtrati,
-                    flagNU = Condizione
-                });
+                
             }
 
            bool test = CheckIsAlreadyExistingDifferentVIN(myIDPerizia, IDSpedizione, Chassis, IDModelloCasa, IDTrasportatoreGrim, IDTipoRotabile, Condizione, Annotazioni, DataPerizia, IDTP, out myerrMess);
@@ -1092,6 +1078,11 @@ namespace WEB_Auto.Controllers
                     if (String.IsNullOrEmpty(IDTrasportatoreGrim))
                         IDTrasportatoreGrim = "";
 
+                    //var OldSituazioneNU = (SetStandbyPeriziaFromPerizia )
+                    var OLDNU = (from m in db.AGR_Perizie_MVC_Flat_vw
+                                 where m.ID == myIDPerizia
+                                 select m.FlgNuovoUsato).FirstOrDefault();
+
                     sqlcmd = " UPDATE AGR_PerizieExpGrim_Temp_MVC   " +
                               "  SET ID_TrasportatoreGrimaldi = @ID_TrasportatoreGrimaldi, " +
                               "  ID_TipoRotabile = @ID_TipoRotabile, " +
@@ -1157,13 +1148,16 @@ namespace WEB_Auto.Controllers
                                      "  WHERE IDPerizia = @IDPerizia " +
                                      " AND IDParte = @IDParte " +
                                      " AND IDDanno = @IDDanno";
-                        
+
                         try
                         {
-                            //Inserted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@IDPerizia", myIDPerizia),
-                            //                                             new SqlParameter("@IDParte", "045"),
-                            //                                             new SqlParameter("@IDDanno", "Y")
-                            //                                             );
+                            if (OLDNU != Condizione)
+                            {
+                                Inserted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@IDPerizia", myIDPerizia),
+                                                                             new SqlParameter("@IDParte", "045"),
+                                                                             new SqlParameter("@IDDanno", "Y")
+                                                                             );
+                            }
                         }
                         catch (Exception exc)
                         {

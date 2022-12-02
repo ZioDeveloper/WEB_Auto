@@ -18,9 +18,9 @@ namespace WEB_Auto.Controllers
         private wisedbEntities db = new wisedbEntities();
 
         // GET: RecuperaDatiCancellati
-        public ActionResult ListaPerizieCancellate(string POL, string POD,string DataINI, string DataEND, bool CaricaDati = false, int FiltroData = 30)
+        public ActionResult ListaPerizieCancellate(string POL, string POD, string VIAGGIO, string DataINI, string DataEND, bool CaricaDati = false, int FiltroData = 30)
         {
-            var model = new Models.HomeModel();
+                var model = new Models.HomeModel();
             if (CaricaDati)
             {
 
@@ -45,6 +45,14 @@ namespace WEB_Auto.Controllers
                              where f.POD.ToUpper() == POD.ToUpper()
                                        select f).ToList();
                 }
+
+                if(!String.IsNullOrEmpty(VIAGGIO))
+                {
+                    Lista = (from f in Lista
+                             where f.Viaggio.ToUpper() == VIAGGIO.ToUpper()
+                             select f).ToList();
+                }
+
                 model.BKP_AGR_Perizie_TEMP_MVC_ELIMINATE_vw = Lista;
             }
             else

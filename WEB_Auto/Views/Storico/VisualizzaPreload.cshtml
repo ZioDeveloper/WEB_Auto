@@ -64,7 +64,7 @@
             }
 
         </div>
-        @using (Html.BeginForm("VisualizzaPreload", "Storico",  FormMethod.Get, new { name = "frmPratica", id = "frmPratica" }))
+        @using (Html.BeginForm("VisualizzaPreload", "Storico", FormMethod.Get, new { name = "frmPratica", id = "frmPratica" }))
         {
             <label>Filtro periodo ricerca viaggi</label><br />
 
@@ -82,12 +82,14 @@
             <label>&nbsp;&nbsp; &nbsp;&nbsp;Solo Good:@Html.RadioButton("FiltroStato", "GOOD", false)</label>
             <br /><br />
             <label>Viaggio @Html.TextBox("aViaggio")</label>
-            <label>Telaio @Html.TextBox("FiltroTelaio")</label>
+            @*<label>Telaio @Html.TextBox("FiltroTelaio")</label>*@
+            <label>Telaio  @Html.TextBox("FiltroTelaio", null, new { style = "width:180px;text-transform:uppercase", @maxlength = "17", @placeholder = "", @autofocus = "autofocus", @autocomplete = "off" })</label>
+           
 
-            <button type="submit" value="Cerca" class="btn btn-sm btn-dark rounded-0" onClick="javascript:myFunction();"   ><i class="fa fa-search fa-lg"></i> Ricerca  viaggio - telaio</button>
+            <button type="submit" value="Cerca" class="btn btn-sm btn-dark rounded-0" onClick="javascript:myFunction();"><i class="fa fa-search fa-lg"></i> Ricerca  viaggio - telaio</button>
         }
         <br />
-       
+
 
     </div>
 </div>

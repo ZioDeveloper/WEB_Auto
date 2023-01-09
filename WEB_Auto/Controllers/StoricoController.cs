@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+
 using System.Web;
 using System.Web.Mvc;
 using WEB_Auto.Models;
@@ -20,6 +21,8 @@ namespace WEB_Auto.Controllers
         public ActionResult CercaTelaio()
         {
             return View();
+            // test
+
         }
 
         public ActionResult CercaTelaioSingolo(string aTelaio,string FiltroData,string FiltroStato)
@@ -116,12 +119,17 @@ namespace WEB_Auto.Controllers
             if (!String.IsNullOrEmpty(aViaggio))
             {
                 // Inizio dati su palmare
-                var L1 = (from m in db.WEB_ListaPerizieFlat_MVC_vw
+               /* var L1 = (from m in db.WEB_ListaPerizieFlat_MVC_vw
                          where m.Viaggio == aViaggio
                          where m.IDTipoPerizia == "C"
                          where m.IsClosed == false
-                         select m).ToList();
-                
+                         select m).ToList();*/
+                var L1 = (from m in db.WEB_ListaPerizieFlat_MVC_vw
+                         
+                          where m.IDTipoPerizia == "C"
+                          where m.IsClosed == false
+                          select m).Where(s => s.Viaggio.ToUpper().Contains(aViaggio)).ToList();
+
 
                 if (FiltroStato == "DAMAGED")
                 {
@@ -140,7 +148,7 @@ namespace WEB_Auto.Controllers
                 if (FiltroTelaio != "")
                 {
                     L1 = (from m in L1
-                          where m.Telaio.ToString() == FiltroTelaio
+                          where m.Telaio.ToUpper() == FiltroTelaio.ToUpper()
                           select m).ToList();
                 }
 
@@ -154,10 +162,14 @@ namespace WEB_Auto.Controllers
 
                 // Inizio dati su DEFINITIVO
 
-                var L2 = (from m in db.WEB_ListaPerizieFlat_DEF_ALL_vw
+                /*var L2 = (from m in db.WEB_ListaPerizieFlat_DEF_ALL_vw
                          where m.Viaggio == aViaggio
                          where m.IDTipoPerizia == "C"
-                         select m).ToList();
+                         select m).ToList();*/
+
+                var L2 = (from m in db.WEB_ListaPerizieFlat_DEF_ALL_vw
+                          where m.IDTipoPerizia == "C"
+                          select m).Where(s=>s.Viaggio.ToUpper().Contains(aViaggio)).ToList();
 
                 if (FiltroStato == "DAMAGED")
                 {
@@ -176,7 +188,7 @@ namespace WEB_Auto.Controllers
                 if (FiltroTelaio != "")
                 {
                     L2 = (from m in L2
-                          where m.Telaio.ToString() == FiltroTelaio
+                          where m.Telaio.ToString().ToUpper() == FiltroTelaio.ToUpper()
                           select m).ToList();
                 }
 
@@ -189,10 +201,15 @@ namespace WEB_Auto.Controllers
                 model.WEB_ListaPerizieFlat_DEF_ALL_vw = L2.ToList().OrderBy(s => s.Telaio);
 
 
-                var L3 = (from m in db.WEB_ListaPerizieFlat_TMP_vw
+                /*var L3 = (from m in db.WEB_ListaPerizieFlat_TMP_vw
                          where m.Viaggio == aViaggio
                          where m.IDTipoPerizia == "C"
-                         select m).ToList();
+                         select m).ToList();*/
+
+                var L3 = (from m in db.WEB_ListaPerizieFlat_TMP_vw
+                          where m.IDTipoPerizia == "C"
+                          select m).Where(s => s.Viaggio.ToUpper().Contains(aViaggio)).ToList();
+
                 if (FiltroStato == "DAMAGED")
                 {
                     L3 = (from m in L3
@@ -210,7 +227,7 @@ namespace WEB_Auto.Controllers
                 if (FiltroTelaio != "")
                 {
                     L3 = (from m in L3
-                          where m.Telaio.ToString() == FiltroTelaio
+                          where m.Telaio.ToString().ToUpper() == FiltroTelaio.ToUpper()
                           select m).ToList();
                 }
 

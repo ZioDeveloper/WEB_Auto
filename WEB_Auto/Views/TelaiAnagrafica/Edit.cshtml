@@ -209,7 +209,7 @@ else
                     @Html.Label("Telaio")
                 </td>
                 <td>
-                    @Html.TextBox("Chassis", item4[0].Telaio, new { @id = "Telaio", onkeyup = "InputToUpper(this);" })
+                    @Html.TextBox("Chassis", item4[0].Telaio, new { @id = "Telaio", @onkeyup = "InputToUpper(this);", @autocomplete = "off" })
                 </td>
             </tr>
             @*<tr>
@@ -575,6 +575,14 @@ else
                 {
                     @Html.ActionLink("Salva e Chiudi perizia", "EditSpedizione", "ListaPerizie", new { IDSpedizione = ViewBag.IDSpedizione, ViewBag.IDTP, ViewBag.TipoMezzo }, new { @class = "btn btn-success custom  " })
                 }
+                else if (ViewBag.ErrMess == "Data errata :  non deve essere minore della data partenza !")
+                {
+                    @Html.ActionLink("Salva e Chiudi perizia (data non modificata!)", "EditSpedizione", "ListaPerizie", new { IDSpedizione = ViewBag.IDSpedizione, ViewBag.IDTP, ViewBag.TipoMezzo }, new { @class = "btn btn-success custom  " })
+                }
+                else if (ViewBag.ErrMess == "Data errata :  non deve superare data partenza !")
+                {
+                    @Html.ActionLink("Salva e Chiudi perizia (data non modificata!)", "EditSpedizione", "ListaPerizie", new { IDSpedizione = ViewBag.IDSpedizione, ViewBag.IDTP, ViewBag.TipoMezzo }, new { @class = "btn btn-success custom  " })
+                }
 
                 else
                 {
@@ -703,7 +711,7 @@ else
             //
             else if ((ViewBag.ErrMess == "" || ViewBag.ErrMess == "Sbloccato" || ViewBag.ErrMess == "TARGA CONOSCIUTA") && Session["Classe"].ToString() == "1")
             {
-                
+
                 <div id="TastoNote" style="display:none;">
                     <input class="btn btn-warning" type="button" value="Salva note" onClick="javascript: VerificaNote();" />
                 </div>
@@ -772,6 +780,36 @@ else
                     IsRTB = Session["RTB"]
                 }, new { @class = "btn btn-success custom", @onclick = "javascript: validator(); return false;" })*@
             }
+            else if (ViewBag.ErrMess == "Data errata :  non deve essere minore della data partenza !")
+            {
+                @Html.ActionLink("Salva e Chiudi perizia (data non modificata!)", "InputTelaio", new
+               {
+                   IDPerito = ViewBag.IDPerito,
+                   IDSpedizione = ViewBag.IDSpedizione,
+                   IDMeteo = ViewBag.IDMeteo,
+                   IDTP = ViewBag.IDTP,
+                   Chassis = item4[0].Telaio,
+                   aIDModello = ViewBag.aIDModelloCasa,
+                   IsRTB = Session["RTB"]
+               }, new { @class = "btn btn-success custom  " })
+            }
+
+            else if (ViewBag.ErrMess == "Data errata :  non deve superare data partenza !")
+            {
+                @Html.ActionLink("Salva e Chiudi perizia (data non modificata!)", "InputTelaio", new
+               {
+                   IDPerito = ViewBag.IDPerito,
+                   IDSpedizione = ViewBag.IDSpedizione,
+                   IDMeteo = ViewBag.IDMeteo,
+                   IDTP = ViewBag.IDTP,
+                   Chassis = item4[0].Telaio,
+                   aIDModello = ViewBag.aIDModelloCasa,
+                   IsRTB = Session["RTB"]
+               }, new { @class = "btn btn-success custom  " })
+            }
+
+
+           
 
             else
             {

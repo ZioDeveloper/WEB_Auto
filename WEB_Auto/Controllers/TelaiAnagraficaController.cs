@@ -301,6 +301,7 @@ namespace WEB_Auto.Controllers
                 int cnt = (from m in db.AGR_PERIZIE_TEMP_MVC
                            where m.Telaio == Chassis
                            where m.IDSpedizione == IDSpedizione
+                           where m.IDPerito == IDPerito 
                            where m.IDTipoPerizia == IDTP
                            select m.ID).Count();
 
@@ -353,6 +354,7 @@ namespace WEB_Auto.Controllers
                 int cnt = (from m in db.AGR_PERIZIE_TEMP_MVC
                            where m.Telaio == Chassis
                            where m.IDSpedizione == IDSpedizione
+                           where m.IDPerito == IDPerito
                            where m.IDTipoPerizia == IDTP
                            select m.ID).Count();
 

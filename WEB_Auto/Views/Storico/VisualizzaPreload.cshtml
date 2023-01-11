@@ -81,9 +81,9 @@
             <label>&nbsp;&nbsp; &nbsp;&nbsp;Solo Damaged:@Html.RadioButton("FiltroStato", "DAMAGED", false)</label>
             <label>&nbsp;&nbsp; &nbsp;&nbsp;Solo Good:@Html.RadioButton("FiltroStato", "GOOD", false)</label>
             <br /><br />
-            <label>Viaggio @Html.TextBox("aViaggio")</label>
+            <label>Viaggio @Html.TextBox("aViaggio", null, new { style = "width:180px;text-transform:uppercase", @maxlength = "17", @placeholder = "", @autofocus = "autofocus", @autocomplete = "on" })</label>
             @*<label>Telaio @Html.TextBox("FiltroTelaio")</label>*@
-            <label>Telaio  @Html.TextBox("FiltroTelaio", null, new { style = "width:180px;text-transform:uppercase", @maxlength = "17", @placeholder = "", @autofocus = "autofocus", @autocomplete = "off" })</label>
+            <label>Telaio  @Html.TextBox("FiltroTelaio", null, new { style = "width:180px;text-transform:uppercase", @maxlength = "17", @placeholder = "",  @autocomplete = "off" })</label>
            
 
             <button type="submit" value="Cerca" class="btn btn-sm btn-dark rounded-0" onClick="javascript:myFunction();"><i class="fa fa-search fa-lg"></i> Ricerca  viaggio - telaio</button>

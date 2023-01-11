@@ -446,12 +446,13 @@ namespace WEB_Auto.Controllers
                 return View("CodificaNonInUso");
 
 
-            // NON chiude le perizsie in standby
+            // NON chiude le perizie in standby
             string sqlcmd = " UPDATE AGR_PERIZIE_Temp_MVC " +
                             " SET ISClosed = 1  " +
                             " WHERE IDSpedizione = @IDSpedizione " +
                             " AND IDPerito = @IDPerito " +
                             " AND Stato IS NULL OR Stato <> 'S' " +
+                            " AND IDModello <> 0 " +
                             " AND IDTipoPerizia = @IDTipoPerizia" ;
 
 

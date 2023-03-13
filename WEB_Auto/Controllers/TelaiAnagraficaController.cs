@@ -320,9 +320,12 @@ namespace WEB_Auto.Controllers
                     string ID_TipoRotabile = "";
                     string flagNU = "";
                     string Annotazioni = "";
+
+                    // MODIFICATO QUESTO PUNTO !!!! Mancava riferimento al perito in caso di sbarco ci sono 2 perizie ! - 26/01/2023
                     var dati = (from m in db.AGR_Perizie_MVC_Flat_vw
                               where m.Telaio == myTelaio
                               where m.IDSpedizione == IDSpedizione
+                              where m.IDPerito == IDPerito
                               select new { m.ID_TrasportatoreGrimaldi, m.ID_TipoRotabile,m.IDModello,m.ID,m.FlgNuovoUsato,m.Note}).FirstOrDefault();
                     try
                     {
@@ -331,7 +334,10 @@ namespace WEB_Auto.Controllers
                     catch { ID_Trasportatore = ""; }
                     try { ID_TipoRotabile = dati.ID_TipoRotabile.ToString(); }
                     catch { ID_TipoRotabile = ""; }
+
+                   
                     string myIDPerizia = dati.ID.ToString();
+
                     try {  flagNU = dati.FlgNuovoUsato.ToString(); } catch { flagNU = ""; }
                     try { Annotazioni = dati.Note.ToString(); } catch { Annotazioni = ""; }
                     string IDModello = dati.IDModello.ToString();
@@ -385,6 +391,7 @@ namespace WEB_Auto.Controllers
                     var dati = (from m in db.AGR_Perizie_MVC_Flat_vw
                                 where m.Telaio == myTelaio
                                 where m.IDSpedizione == IDSpedizione
+                                where m.IDPerito == IDPerito
                                 select new { m.ID_TrasportatoreGrimaldi, m.ID_TipoRotabile, m.IDModello, m.ID, m.FlgNuovoUsato, m.Note }).FirstOrDefault();
                     try
                     {
@@ -664,7 +671,7 @@ namespace WEB_Auto.Controllers
                                      select new { m.IDModello }).FirstOrDefault();
 
 
-                    if (cnt == 1)
+                    if (cnt > 1)
                     {
                         if (aCasa.ToUpper() == "CAB" && Session["RTB"].ToString().ToUpper() == "TRUE" )
                         {

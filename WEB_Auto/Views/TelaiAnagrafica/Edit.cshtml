@@ -846,7 +846,7 @@ else
     </div>
     <br />
     @Html.Label("Note:")
-    @Html.TextArea("Annotazioni", item4[0].Note)
+    @Html.TextArea("Annotazioni", item4[0].Note,new { @onpaste = "handlePaste(event)" })
 
 
 
@@ -1295,4 +1295,31 @@ else
 
         });
     });
+</script>
+<script>
+    function handlePaste(event) {
+        //alert("Text pasted: " + event.clipboardData.getData("text"));
+        AttivaIncolla();
+
+    }
+    function handleCopy(event) {
+        alert("Text has been copied!");
+
+    }
+    function handleCut(event) {
+        alert("Text has been copied!");
+    }
+
+    function AttivaIncolla() {
+        var x = document.getElementById("TastoNote");
+        var y = document.getElementById("TastoSalva");
+
+
+
+        if (x.style.display === "none") {
+            x.style.display = "block";
+            y.style.display = "none";
+
+        }
+    }
 </script>

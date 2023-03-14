@@ -124,8 +124,8 @@ else if (Session["Classe"].ToString() == "1")
                     <th>Cancella</th>
                     <th>Select</th>
                     <th>Note</th>
-
                     <th>StandBy</th>
+                    <th>Download</th>
                 </tr>
 
             </thead>
@@ -340,6 +340,20 @@ else if (Session["Classe"].ToString() == "1")
                         {
                             <td>&nbsp;</td>
                         }
+                            <td>
+                                @Html.ActionLink("Download Foto-PDF", "ScaricaDocumentiPerizia", "TelaiAnagrafica", new
+                              {
+                                  Telaio = item.Telaio,
+                                  IDPerizia = item.ID,
+                                  IDPerito = item.IDPerito,
+                                  IDSpedizione = item.IDSpedizione,
+                                  IDMeteo = item.IDMeteo,
+                                  IDTP = item.IDTipoPerizia,
+                                  IsUpdate = true,
+                                  ViewBag.TipoMezzo
+                              }, new { @class = "btn btn-default btn-xs" })
+                                
+                            </td>
                     </tr>
                 }
             </tbody>
@@ -354,7 +368,7 @@ else if (Session["Classe"].ToString() == "1")
                     <th>Data perizia</th>
                     <th>TP</th>
                     @*<th>ETD</th>
-                        <th>ETA</th>*@
+        <th>ETA</th>*@
                     <th>Status</th>
                     <th>N° foto</th>
                     <th>N° PDF</th>
@@ -363,6 +377,7 @@ else if (Session["Classe"].ToString() == "1")
                     <th>Note</th>
                     @*<th>Stato StandBy</th>*@
                     <th>StandBy</th>
+                    <th>Download</th>
                 </tr>
             </tfoot>
         </table>

@@ -9,6 +9,8 @@ using WEB_Auto.Models;
 using System.Text.RegularExpressions;
 using System.Transactions;
 using System.Data.Entity;
+using System.IO.Compression;
+using System.IO;
 
 namespace WEB_Auto.Controllers
 {
@@ -1761,6 +1763,88 @@ namespace WEB_Auto.Controllers
                 return RedirectToAction("EditSpedizione", "ListaPerizie", new { IDPerito, IDSpedizione, IDMeteo, IDTP, TipoMezzo });
             
         }
+
+        public ActionResult ScaricaDocumentiPerizia(string Telaio , string IDPerizia, string IDPerito, string IDSpedizione, string IDMeteo, string IDTP, bool IsUpdate = false, string TipoMezzo = "TUTTE")
+        {
+
+            System.IO.DirectoryInfo di = new DirectoryInfo(Path.Combine(Server.MapPath("~/ZIPPED").ToString()));
+            foreach (FileInfo file in di.GetFiles())
+            {
+                file.Delete();
+            }
+            foreach (DirectoryInfo dir in di.GetDirectories())
+            {
+                dir.Delete(true);
+            }
+
+            System.IO.DirectoryInfo di2 = new DirectoryInfo(Path.Combine(Server.MapPath("~/ZIPCreated").ToString()));
+
+            foreach (FileInfo file in di2.GetFiles())
+            {
+                file.Delete();
+            }
+            foreach (DirectoryInfo dir in di2.GetDirectories())
+            {
+                dir.Delete(true);
+            }
+
+            string nomecartella = "";
+            var documents = db.WEB_AUTO_FOTO.Where(d => d.IDPerizia == IDPerizia);
+           
+
+            var foto = (from m in db.WEB_AUTO_FOTO
+                        join t in db.AGR_PERIZIE_TEMP_MVC on m.IDPerizia equals t.ID
+                        where t.IDSpedizione == IDSpedizione
+                        where t.Telaio == Telaio
+                        select m.FileName).ToList();
+            foreach (var itemfoto in foto)
+            {
+
+                string test = itemfoto.ToString();
+                string path2 = System.IO.Path.Combine(Server.MapPath("~/DocumentiXTelai/Foto"), itemfoto);
+                try
+                {
+                    System.IO.File.Copy(path2, System.IO.Path.Combine(Server.MapPath("~/ZIPPED/" + nomecartella), itemfoto));
+                }
+                catch (Exception exc)
+                {
+                    string a = exc.Message;
+                }
+            }
+
+            var pdf = (from m in db.WEB_AUTO_PDF
+                        join t in db.AGR_PERIZIE_TEMP_MVC on m.IDPerizia equals t.ID
+                        where t.IDSpedizione == IDSpedizione
+                        where t.Telaio == Telaio
+                        select m.FileName).ToList();
+            foreach (var item in pdf)
+            {
+
+                string test = item.ToString();
+                string path2 = System.IO.Path.Combine(Server.MapPath("~/DocumentiXTelai/PDF"), item);
+                try
+                {
+                    System.IO.File.Copy(path2, System.IO.Path.Combine(Server.MapPath("~/ZIPPED/" + nomecartella), item));
+                }
+                catch (Exception exc)
+                {
+                    string a = exc.Message;
+                }
+            }
+
+            string nomecommessa = Telaio;
+            string source = Path.Combine(Server.MapPath("~/ZIPPED").ToString());
+            string dest = Path.Combine(Server.MapPath("~/ZIPCreated"), nomecommessa + ".zip");
+
+
+            ZipFile.CreateFromDirectory(source, dest);
+            byte[] fileBytes = System.IO.File.ReadAllBytes(dest);
+            return File(fileBytes, "application/zip", nomecommessa + ".zip");
+
+            //return RedirectToAction("EditSpedizione", "ListaPerizie", new { IDPerito, IDSpedizione, IDMeteo, IDTP, TipoMezzo });
+        }
+
+        
 
         public bool HasDamages(string aIDPerizia)
         {

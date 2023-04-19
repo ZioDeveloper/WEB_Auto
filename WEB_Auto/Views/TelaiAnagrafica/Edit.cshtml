@@ -176,7 +176,7 @@ else
                     @Html.Label("Viaggio")
                 </td>
                 <td>
-                    @Html.DropDownList("IDSpedizione", new SelectList((SelectList)ViewData["ElencoSpedizioni"], "Value", "Text", ViewBag.IDSpedizione), "-- Seleziona spedizione --", new { @class = "form-control selectpicker dropupAuto = false data-live-search=true data-size=5", @onchange = "submitform();" })
+                    @Html.DropDownList("IDSpedizione", new SelectList((SelectList)ViewData["ElencoSpedizioni"], "Value", "Text", ViewBag.IDSpedizione), "-- Seleziona spedizione --", new { @class = "form-control selectpicker dropupAuto = false data-live-search=true data-size=5"  , @disabled = "disabled", @onchange = "submitform();" })
                 </td>
             </tr>
             <tr>

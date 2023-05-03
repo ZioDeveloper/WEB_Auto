@@ -1404,6 +1404,26 @@ namespace WEB_Auto.Controllers
                     var ElencoParti = new SelectList(model.WEB_AGR_Parti_vw.ToList().OrderBy(m => m.DescrESP), "ID", "DescrESP");
                     ViewData["ElencoParti"] = ElencoParti;
                 }
+                else if (Session["Lang"].ToString() == "FRA")
+                {
+                    var parti = from m in db.WEB_AGR_Parti_vw
+                                where m.IDCliente == "**"
+                                where m.IDCasa == "RTB"
+                                select m;
+                    model.WEB_AGR_Parti_vw = parti.ToList();
+                    var ElencoParti = new SelectList(model.WEB_AGR_Parti_vw.ToList().OrderBy(m => m.DescrFRA), "ID", "DescrFRA");
+                    ViewData["ElencoParti"] = ElencoParti;
+                }
+                else if (Session["Lang"].ToString() == "ENG")
+                {
+                    var parti = from m in db.WEB_AGR_Parti_vw
+                                where m.IDCliente == "**"
+                                where m.IDCasa == "RTB"
+                                select m;
+                    model.WEB_AGR_Parti_vw = parti.ToList();
+                    var ElencoParti = new SelectList(model.WEB_AGR_Parti_vw.ToList().OrderBy(m => m.DescrENG), "ID", "DescrENG");
+                    ViewData["ElencoParti"] = ElencoParti;
+                }
             }
             else if (Session["Classe"].ToString() == "1")
             {
@@ -1436,6 +1456,26 @@ namespace WEB_Auto.Controllers
                     var ElencoParti = new SelectList(model.WEB_AGR_Parti_vw.ToList().OrderBy(m => m.DescrESP), "ID", "DescrESP");
                     ViewData["ElencoParti"] = ElencoParti;
                 }
+                else if (Session["Lang"].ToString() == "FRA")
+                {
+                    var parti = from m in db.WEB_AGR_Parti_vw
+                                where m.IDCliente == "**"
+                                where m.IDCasa != "RTB"
+                                select m;
+                    model.WEB_AGR_Parti_vw = parti.ToList();
+                    var ElencoParti = new SelectList(model.WEB_AGR_Parti_vw.ToList().OrderBy(m => m.DescrFRA), "ID", "DescrFRA");
+                    ViewData["ElencoParti"] = ElencoParti;
+                }
+                else if (Session["Lang"].ToString() == "ENG")
+                {
+                    var parti = from m in db.WEB_AGR_Parti_vw
+                                where m.IDCliente == "**"
+                                where m.IDCasa != "RTB"
+                                select m;
+                    model.WEB_AGR_Parti_vw = parti.ToList();
+                    var ElencoParti = new SelectList(model.WEB_AGR_Parti_vw.ToList().OrderBy(m => m.DescrENG), "ID", "DescrENG");
+                    ViewData["ElencoParti"] = ElencoParti;
+                }
             }
 
             // Dati per dropdown AGR_Danni
@@ -1460,6 +1500,26 @@ namespace WEB_Auto.Controllers
                                 select m;
                     model.WEB_AGR_Danni_vw = danni.ToList();
                     var ElencoDanni = new SelectList(model.WEB_AGR_Danni_vw.ToList().OrderBy(m => m.DescrESP), "ID", "DescrESP");
+                    ViewData["ElencoDanni"] = ElencoDanni;
+                }
+                else if (Session["Lang"].ToString() == "FRA")
+                {
+                    var danni = from m in db.WEB_AGR_Danni_vw
+                                where m.IDCliente == "**"
+
+                                select m;
+                    model.WEB_AGR_Danni_vw = danni.ToList();
+                    var ElencoDanni = new SelectList(model.WEB_AGR_Danni_vw.ToList().OrderBy(m => m.DescrFRA), "ID", "DescrFRA");
+                    ViewData["ElencoDanni"] = ElencoDanni;
+                }
+                else if (Session["Lang"].ToString() == "ENG")
+                {
+                    var danni = from m in db.WEB_AGR_Danni_vw
+                                where m.IDCliente == "**"
+
+                                select m;
+                    model.WEB_AGR_Danni_vw = danni.ToList();
+                    var ElencoDanni = new SelectList(model.WEB_AGR_Danni_vw.ToList().OrderBy(m => m.DescrENG), "ID", "DescrENG");
                     ViewData["ElencoDanni"] = ElencoDanni;
                 }
 
@@ -1498,6 +1558,24 @@ namespace WEB_Auto.Controllers
                     var ElencoGravita = new SelectList(model.WEB_AGR_Gravita_vw.ToList().OrderBy(m => m.DescrESP), "ID", "DescrESP");
                     ViewData["ElencoGravita"] = ElencoGravita;
                 }
+                else if (Session["Lang"].ToString() == "FRA")
+                {
+                    var gravita = from m in db.WEB_AGR_Gravita_vw
+                                  where m.IDCliente == "FI"
+                                  select m;
+                    model.WEB_AGR_Gravita_vw = gravita.ToList();
+                    var ElencoGravita = new SelectList(model.WEB_AGR_Gravita_vw.ToList().OrderBy(m => m.DescrFRA), "ID", "DescrFRA");
+                    ViewData["ElencoGravita"] = ElencoGravita;
+                }
+                else if (Session["Lang"].ToString() == "ENG")
+                {
+                    var gravita = from m in db.WEB_AGR_Gravita_vw
+                                  where m.IDCliente == "FI"
+                                  select m;
+                    model.WEB_AGR_Gravita_vw = gravita.ToList();
+                    var ElencoGravita = new SelectList(model.WEB_AGR_Gravita_vw.ToList().OrderBy(m => m.DescrENG), "ID", "DescrENG");
+                    ViewData["ElencoGravita"] = ElencoGravita;
+                }
             }
             else if (Session["Classe"].ToString() == "1")
             {
@@ -1528,6 +1606,28 @@ namespace WEB_Auto.Controllers
                                   select m;
                     model.WEB_AGR_Gravita_vw = gravita.ToList();
                     var ElencoGravita = new SelectList(model.WEB_AGR_Gravita_vw.ToList().OrderBy(m => m.DescrESP), "ID", "DescrESP");
+                    ViewData["ElencoGravita"] = ElencoGravita;
+                    ISGravitaEnabled = false;
+                }
+                else if (Session["Lang"].ToString() == "FRA")
+                {
+                    var gravita = from m in db.WEB_AGR_Gravita_vw
+                                  where m.IDCliente == "NULL"
+
+                                  select m;
+                    model.WEB_AGR_Gravita_vw = gravita.ToList();
+                    var ElencoGravita = new SelectList(model.WEB_AGR_Gravita_vw.ToList().OrderBy(m => m.DescrFRA), "ID", "DescrFRA");
+                    ViewData["ElencoGravita"] = ElencoGravita;
+                    ISGravitaEnabled = false;
+                }
+                else if (Session["Lang"].ToString() == "ENG")
+                {
+                    var gravita = from m in db.WEB_AGR_Gravita_vw
+                                  where m.IDCliente == "NULL"
+
+                                  select m;
+                    model.WEB_AGR_Gravita_vw = gravita.ToList();
+                    var ElencoGravita = new SelectList(model.WEB_AGR_Gravita_vw.ToList().OrderBy(m => m.DescrENG), "ID", "DescrENG");
                     ViewData["ElencoGravita"] = ElencoGravita;
                     ISGravitaEnabled = false;
                 }

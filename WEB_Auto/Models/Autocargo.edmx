@@ -83,6 +83,7 @@ warning 6002: The table/view 'wisedb.dbo.AGR_Danni_SDU' does not have a primary 
           <Property Name="IDClasse" Type="varchar" MaxLength="1" Nullable="false" />
           <Property Name="IDCliente" Type="varchar" MaxLength="2" Nullable="false" />
           <Property Name="DescrESP" Type="varchar" MaxLength="255" />
+          <Property Name="DescrFRA" Type="varchar" MaxLength="255" />
         </EntityType>
         <EntityType Name="AGR_Parti_SDU">
           <Key>
@@ -574,6 +575,8 @@ warning 6002: The table/view 'wisedb.dbo.AGR_PERIZIE_DETT_TEMP_MVC_vw' does not 
             <PropertyRef Name="Parte" />
             <PropertyRef Name="Danno" />
             <PropertyRef Name="Codice" />
+            <PropertyRef Name="ParteENG" />
+            <PropertyRef Name="DannoENG" />
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="IDPerizia" Type="varchar" MaxLength="18" Nullable="false" />
@@ -598,6 +601,12 @@ warning 6002: The table/view 'wisedb.dbo.AGR_PERIZIE_DETT_TEMP_MVC_vw' does not 
           <Property Name="ParteESP" Type="varchar" MaxLength="276" />
           <Property Name="DannoESP" Type="varchar" MaxLength="259" />
           <Property Name="GravitaESP" Type="varchar" MaxLength="278" />
+          <Property Name="ParteFRA" Type="varchar" MaxLength="276" />
+          <Property Name="DannoFRA" Type="varchar" MaxLength="259" />
+          <Property Name="GravitaFRA" Type="varchar" MaxLength="278" />
+          <Property Name="ParteENG" Type="varchar" MaxLength="276" Nullable="false" />
+          <Property Name="DannoENG" Type="varchar" MaxLength="259" Nullable="false" />
+          <Property Name="GravitaENG" Type="varchar" MaxLength="123" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'wisedb.dbo.AGR_Perizie_MVC_Flat_vw' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -738,12 +747,15 @@ warning 6002: The table/view 'wisedb.dbo.WEB_AGR_Danni_vw' does not have a prima
             <PropertyRef Name="DescrITA" />
             <PropertyRef Name="IDCliente" />
             <PropertyRef Name="IDClasse" />
+            <PropertyRef Name="DescrENG" />
           </Key>
           <Property Name="ID" Type="varchar" MaxLength="3" Nullable="false" />
           <Property Name="DescrITA" Type="varchar" MaxLength="278" Nullable="false" />
           <Property Name="IDCliente" Type="varchar" MaxLength="2" Nullable="false" />
           <Property Name="IDClasse" Type="varchar" MaxLength="1" Nullable="false" />
           <Property Name="DescrESP" Type="varchar" MaxLength="278" />
+          <Property Name="DescrFRA" Type="varchar" MaxLength="278" />
+          <Property Name="DescrENG" Type="varchar" MaxLength="278" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'wisedb.dbo.WEB_AGR_Gravita_vw' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -759,6 +771,7 @@ warning 6002: The table/view 'wisedb.dbo.WEB_AGR_Gravita_vw' does not have a pri
           <Property Name="IDCliente" Type="varchar" MaxLength="2" Nullable="false" />
           <Property Name="DescrENG" Type="varchar" MaxLength="123" Nullable="false" />
           <Property Name="DescrESP" Type="varchar" MaxLength="278" />
+          <Property Name="DescrFRA" Type="varchar" MaxLength="278" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'wisedb.dbo.WEB_AGR_Parti_vw' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -768,12 +781,15 @@ warning 6002: The table/view 'wisedb.dbo.WEB_AGR_Parti_vw' does not have a prima
             <PropertyRef Name="DescrITA" />
             <PropertyRef Name="IDCasa" />
             <PropertyRef Name="IDCliente" />
+            <PropertyRef Name="DescrENG" />
           </Key>
           <Property Name="ID" Type="varchar" MaxLength="3" Nullable="false" />
           <Property Name="DescrITA" Type="varchar" MaxLength="278" Nullable="false" />
           <Property Name="IDCasa" Type="varchar" MaxLength="3" Nullable="false" />
           <Property Name="IDCliente" Type="varchar" MaxLength="2" Nullable="false" />
           <Property Name="DescrESP" Type="varchar" MaxLength="278" />
+          <Property Name="DescrFRA" Type="varchar" MaxLength="278" />
+          <Property Name="DescrENG" Type="varchar" MaxLength="278" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'wisedb.dbo.WEB_Auto_ListaPerizieXSpedizione_vw' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -1592,7 +1608,13 @@ warning 6002: The table/view 'wisedb.dbo.WEB_ListaPerizieFlat_TMP_vw' does not h
     [AGR_PERIZIE_DETT_TEMP_MVC_vw].[Gravita] AS [Gravita], 
     [AGR_PERIZIE_DETT_TEMP_MVC_vw].[ParteESP] AS [ParteESP], 
     [AGR_PERIZIE_DETT_TEMP_MVC_vw].[DannoESP] AS [DannoESP], 
-    [AGR_PERIZIE_DETT_TEMP_MVC_vw].[GravitaESP] AS [GravitaESP]
+    [AGR_PERIZIE_DETT_TEMP_MVC_vw].[GravitaESP] AS [GravitaESP], 
+    [AGR_PERIZIE_DETT_TEMP_MVC_vw].[ParteFRA] AS [ParteFRA], 
+    [AGR_PERIZIE_DETT_TEMP_MVC_vw].[DannoFRA] AS [DannoFRA], 
+    [AGR_PERIZIE_DETT_TEMP_MVC_vw].[GravitaFRA] AS [GravitaFRA], 
+    [AGR_PERIZIE_DETT_TEMP_MVC_vw].[ParteENG] AS [ParteENG], 
+    [AGR_PERIZIE_DETT_TEMP_MVC_vw].[DannoENG] AS [DannoENG], 
+    [AGR_PERIZIE_DETT_TEMP_MVC_vw].[GravitaENG] AS [GravitaENG]
     FROM [dbo].[AGR_PERIZIE_DETT_TEMP_MVC_vw] AS [AGR_PERIZIE_DETT_TEMP_MVC_vw]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="AGR_Perizie_MVC_Flat_vw" EntityType="Self.AGR_Perizie_MVC_Flat_vw" store:Type="Views" store:Schema="dbo">
@@ -1696,7 +1718,9 @@ warning 6002: The table/view 'wisedb.dbo.WEB_ListaPerizieFlat_TMP_vw' does not h
     [WEB_AGR_Danni_vw].[DescrITA] AS [DescrITA], 
     [WEB_AGR_Danni_vw].[IDCliente] AS [IDCliente], 
     [WEB_AGR_Danni_vw].[IDClasse] AS [IDClasse], 
-    [WEB_AGR_Danni_vw].[DescrESP] AS [DescrESP]
+    [WEB_AGR_Danni_vw].[DescrESP] AS [DescrESP], 
+    [WEB_AGR_Danni_vw].[DescrFRA] AS [DescrFRA], 
+    [WEB_AGR_Danni_vw].[DescrENG] AS [DescrENG]
     FROM [dbo].[WEB_AGR_Danni_vw] AS [WEB_AGR_Danni_vw]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="WEB_AGR_Gravita_vw" EntityType="Self.WEB_AGR_Gravita_vw" store:Type="Views" store:Schema="dbo">
@@ -1705,7 +1729,8 @@ warning 6002: The table/view 'wisedb.dbo.WEB_ListaPerizieFlat_TMP_vw' does not h
     [WEB_AGR_Gravita_vw].[DescrITA] AS [DescrITA], 
     [WEB_AGR_Gravita_vw].[IDCliente] AS [IDCliente], 
     [WEB_AGR_Gravita_vw].[DescrENG] AS [DescrENG], 
-    [WEB_AGR_Gravita_vw].[DescrESP] AS [DescrESP]
+    [WEB_AGR_Gravita_vw].[DescrESP] AS [DescrESP], 
+    [WEB_AGR_Gravita_vw].[DescrFRA] AS [DescrFRA]
     FROM [dbo].[WEB_AGR_Gravita_vw] AS [WEB_AGR_Gravita_vw]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="WEB_AGR_Parti_vw" EntityType="Self.WEB_AGR_Parti_vw" store:Type="Views" store:Schema="dbo">
@@ -1714,7 +1739,9 @@ warning 6002: The table/view 'wisedb.dbo.WEB_ListaPerizieFlat_TMP_vw' does not h
     [WEB_AGR_Parti_vw].[DescrITA] AS [DescrITA], 
     [WEB_AGR_Parti_vw].[IDCasa] AS [IDCasa], 
     [WEB_AGR_Parti_vw].[IDCliente] AS [IDCliente], 
-    [WEB_AGR_Parti_vw].[DescrESP] AS [DescrESP]
+    [WEB_AGR_Parti_vw].[DescrESP] AS [DescrESP], 
+    [WEB_AGR_Parti_vw].[DescrFRA] AS [DescrFRA], 
+    [WEB_AGR_Parti_vw].[DescrENG] AS [DescrENG]
     FROM [dbo].[WEB_AGR_Parti_vw] AS [WEB_AGR_Parti_vw]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="WEB_Auto_ListaPerizieXSpedizione_vw" EntityType="Self.WEB_Auto_ListaPerizieXSpedizione_vw" store:Type="Views" store:Schema="dbo">
@@ -2545,6 +2572,8 @@ warning 6002: The table/view 'wisedb.dbo.WEB_ListaPerizieFlat_TMP_vw' does not h
             <PropertyRef Name="Danno" />
             <PropertyRef Name="Codice" />
             <PropertyRef Name="IDPerizia" />
+            <PropertyRef Name="ParteENG" />
+            <PropertyRef Name="DannoENG" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="IDParte" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
@@ -2569,6 +2598,12 @@ warning 6002: The table/view 'wisedb.dbo.WEB_ListaPerizieFlat_TMP_vw' does not h
           <Property Name="ParteESP" Type="String" MaxLength="276" FixedLength="false" Unicode="false" />
           <Property Name="DannoESP" Type="String" MaxLength="259" FixedLength="false" Unicode="false" />
           <Property Name="GravitaESP" Type="String" MaxLength="278" FixedLength="false" Unicode="false" />
+          <Property Name="ParteFRA" Type="String" MaxLength="276" FixedLength="false" Unicode="false" />
+          <Property Name="DannoFRA" Type="String" MaxLength="259" FixedLength="false" Unicode="false" />
+          <Property Name="GravitaFRA" Type="String" MaxLength="278" FixedLength="false" Unicode="false" />
+          <Property Name="ParteENG" Type="String" Nullable="false" MaxLength="276" FixedLength="false" Unicode="false" />
+          <Property Name="DannoENG" Type="String" Nullable="false" MaxLength="259" FixedLength="false" Unicode="false" />
+          <Property Name="GravitaENG" Type="String" MaxLength="123" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="AGR_Parti">
           <Key>
@@ -2582,6 +2617,7 @@ warning 6002: The table/view 'wisedb.dbo.WEB_ListaPerizieFlat_TMP_vw' does not h
           <Property Name="IDClasse" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
           <Property Name="IDCliente" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
           <Property Name="DescrESP" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="DescrFRA" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="WEB_AGR_Parti_vw">
           <Key>
@@ -2589,12 +2625,15 @@ warning 6002: The table/view 'wisedb.dbo.WEB_ListaPerizieFlat_TMP_vw' does not h
             <PropertyRef Name="DescrITA" />
             <PropertyRef Name="IDCasa" />
             <PropertyRef Name="IDCliente" />
+            <PropertyRef Name="DescrENG" />
           </Key>
           <Property Name="ID" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
           <Property Name="DescrITA" Type="String" Nullable="false" MaxLength="278" FixedLength="false" Unicode="false" />
           <Property Name="IDCasa" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
           <Property Name="IDCliente" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
           <Property Name="DescrESP" Type="String" MaxLength="278" FixedLength="false" Unicode="false" />
+          <Property Name="DescrFRA" Type="String" MaxLength="278" FixedLength="false" Unicode="false" />
+          <Property Name="DescrENG" Type="String" Nullable="false" MaxLength="278" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="WEB_AGR_Danni_vw">
           <Key>
@@ -2602,12 +2641,15 @@ warning 6002: The table/view 'wisedb.dbo.WEB_ListaPerizieFlat_TMP_vw' does not h
             <PropertyRef Name="DescrITA" />
             <PropertyRef Name="IDCliente" />
             <PropertyRef Name="IDClasse" />
+            <PropertyRef Name="DescrENG" />
           </Key>
           <Property Name="ID" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
           <Property Name="DescrITA" Type="String" Nullable="false" MaxLength="278" FixedLength="false" Unicode="false" />
           <Property Name="IDCliente" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
           <Property Name="IDClasse" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
           <Property Name="DescrESP" Type="String" MaxLength="278" FixedLength="false" Unicode="false" />
+          <Property Name="DescrFRA" Type="String" MaxLength="278" FixedLength="false" Unicode="false" />
+          <Property Name="DescrENG" Type="String" Nullable="false" MaxLength="278" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="WEB_AGR_Gravita_vw">
           <Key>
@@ -2621,6 +2663,7 @@ warning 6002: The table/view 'wisedb.dbo.WEB_ListaPerizieFlat_TMP_vw' does not h
           <Property Name="DescrITA" Type="String" Nullable="false" MaxLength="123" FixedLength="false" Unicode="false" />
           <Property Name="DescrENG" Type="String" Nullable="false" MaxLength="123" FixedLength="false" Unicode="false" />
           <Property Name="DescrESP" Type="String" MaxLength="278" FixedLength="false" Unicode="false" />
+          <Property Name="DescrFRA" Type="String" MaxLength="278" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="AGR_PERIZIE_TEMP_MVC">
           <Key>
@@ -3842,6 +3885,12 @@ warning 6002: The table/view 'wisedb.dbo.WEB_ListaPerizieFlat_TMP_vw' does not h
           <EntitySetMapping Name="AGR_PERIZIE_DETT_TEMP_MVC_vw">
             <EntityTypeMapping TypeName="wisedbModel.AGR_PERIZIE_DETT_TEMP_MVC_vw">
               <MappingFragment StoreEntitySet="AGR_PERIZIE_DETT_TEMP_MVC_vw">
+                <ScalarProperty Name="GravitaENG" ColumnName="GravitaENG" />
+                <ScalarProperty Name="DannoENG" ColumnName="DannoENG" />
+                <ScalarProperty Name="ParteENG" ColumnName="ParteENG" />
+                <ScalarProperty Name="GravitaFRA" ColumnName="GravitaFRA" />
+                <ScalarProperty Name="DannoFRA" ColumnName="DannoFRA" />
+                <ScalarProperty Name="ParteFRA" ColumnName="ParteFRA" />
                 <ScalarProperty Name="GravitaESP" ColumnName="GravitaESP" />
                 <ScalarProperty Name="DannoESP" ColumnName="DannoESP" />
                 <ScalarProperty Name="ParteESP" ColumnName="ParteESP" />
@@ -3871,6 +3920,7 @@ warning 6002: The table/view 'wisedb.dbo.WEB_ListaPerizieFlat_TMP_vw' does not h
           <EntitySetMapping Name="AGR_Parti">
             <EntityTypeMapping TypeName="wisedbModel.AGR_Parti">
               <MappingFragment StoreEntitySet="AGR_Parti">
+                <ScalarProperty Name="DescrFRA" ColumnName="DescrFRA" />
                 <ScalarProperty Name="DescrESP" ColumnName="DescrESP" />
                 <ScalarProperty Name="IDCliente" ColumnName="IDCliente" />
                 <ScalarProperty Name="IDClasse" ColumnName="IDClasse" />
@@ -3885,6 +3935,8 @@ warning 6002: The table/view 'wisedb.dbo.WEB_ListaPerizieFlat_TMP_vw' does not h
           <EntitySetMapping Name="WEB_AGR_Parti_vw">
             <EntityTypeMapping TypeName="wisedbModel.WEB_AGR_Parti_vw">
               <MappingFragment StoreEntitySet="WEB_AGR_Parti_vw">
+                <ScalarProperty Name="DescrENG" ColumnName="DescrENG" />
+                <ScalarProperty Name="DescrFRA" ColumnName="DescrFRA" />
                 <ScalarProperty Name="DescrESP" ColumnName="DescrESP" />
                 <ScalarProperty Name="IDCliente" ColumnName="IDCliente" />
                 <ScalarProperty Name="IDCasa" ColumnName="IDCasa" />
@@ -3896,6 +3948,8 @@ warning 6002: The table/view 'wisedb.dbo.WEB_ListaPerizieFlat_TMP_vw' does not h
           <EntitySetMapping Name="WEB_AGR_Danni_vw">
             <EntityTypeMapping TypeName="wisedbModel.WEB_AGR_Danni_vw">
               <MappingFragment StoreEntitySet="WEB_AGR_Danni_vw">
+                <ScalarProperty Name="DescrENG" ColumnName="DescrENG" />
+                <ScalarProperty Name="DescrFRA" ColumnName="DescrFRA" />
                 <ScalarProperty Name="DescrESP" ColumnName="DescrESP" />
                 <ScalarProperty Name="IDClasse" ColumnName="IDClasse" />
                 <ScalarProperty Name="IDCliente" ColumnName="IDCliente" />
@@ -3907,6 +3961,7 @@ warning 6002: The table/view 'wisedb.dbo.WEB_ListaPerizieFlat_TMP_vw' does not h
           <EntitySetMapping Name="WEB_AGR_Gravita_vw">
             <EntityTypeMapping TypeName="wisedbModel.WEB_AGR_Gravita_vw">
               <MappingFragment StoreEntitySet="WEB_AGR_Gravita_vw">
+                <ScalarProperty Name="DescrFRA" ColumnName="DescrFRA" />
                 <ScalarProperty Name="DescrESP" ColumnName="DescrESP" />
                 <ScalarProperty Name="DescrENG" ColumnName="DescrENG" />
                 <ScalarProperty Name="DescrITA" ColumnName="DescrITA" />

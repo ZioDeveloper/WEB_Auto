@@ -49,24 +49,27 @@ namespace WEB_Auto.Controllers
 
             if (String.IsNullOrEmpty(usr))
             {
-              // usr = "caminita"; // pierangeli
+                // usr = "caminita"; // pierangeli
                 // usr = "Astrea"; // pierangeli
                 //usr = "VGrimaldi";
                 //usr = "grimaldi"; // 
-               // usr = "pierangeli"; // 
-               // usr = "patrizia"; // 
-               // usr = "mmarti"; // 
-               // usr = "DiGennaro";
-               //usr = "DiSalvo";
-              // usr = "patrizia";
+                // usr = "pierangeli"; // 
+                // usr = "patrizia"; // 
+                // usr = "mmarti"; // 
+                // usr = "DiGennaro";
+                //usr = "DiSalvo";
+                // usr = "patrizia";
                 //usr = "Torresan"; // 
-                usr = "DiNinno";
+                ///usr = "DiNinno";
                 // usr = "Maurizio";
-                //  usr = "amolina"; // 
+                //   usr = "amolina"; // 
                 //  usr = "pezzulo";
                 //usr = Session["User"].ToString();
-              //usr = "lmiguel";
-              //  usr = "mmarti";
+                //usr = "lmiguel";
+                //  usr = "mmarti";
+                //usr = "KRadi";
+               // usr = "YoussefBB";
+                //usr = "Joazz";
             }
 
             var myIDPerito = (from s in db.AGR_Periti_WEB

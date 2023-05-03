@@ -37,5 +37,11 @@ namespace WEB_Auto.Models
         public string ParteESP { get; set; }
         public string DannoESP { get; set; }
         public string GravitaESP { get; set; }
+        public string ParteFRA { get; set; }
+        public string DannoFRA { get; set; }
+        public string GravitaFRA { get; set; }
+        public string ParteENG { get; set; }
+        public string DannoENG { get; set; }
+        public string GravitaENG { get; set; }
     }
 }

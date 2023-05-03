@@ -718,6 +718,26 @@ else
                         <th>Gravedad</th>
                     </tr>
                 }
+                else if (Session["Lang"].ToString() == "FRA")
+                {
+                    <tr>
+                        <th style="display:none;">ID</th>
+                        <th>Composant de voiture</th>
+                        <th>type de dommage</th>
+
+                        <th>Gravité</th>
+                    </tr>
+                }
+                else if (Session["Lang"].ToString() == "ENG")
+                {
+                    <tr>
+                        <th style="display:none;">ID</th>
+                        <th>Component</th>
+                        <th>Damage</th>
+
+                        <th>Damage measure</th>
+                    </tr>
+                }
             </thead>
             <tbody>
                 @if (Session["Lang"].ToString() == "ITA")
@@ -770,12 +790,63 @@ else
                         </tr>
                     }
                 }
+                else if (Session["Lang"].ToString() == "FRA")
+                {
+                    foreach (var item in Model.AGR_PERIZIE_DETT_TEMP_MVC_vw)
+                    {
+                        <tr>
+                            <td style="display:none">
+                                @Html.DisplayFor(modelItem => item.ID)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ParteFRA)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.DannoFRA)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.GravitaFRA)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Note)
+                            </td>
+                        </tr>
+                    }
+                }
+                else if (Session["Lang"].ToString() == "ENG")
+                {
+                    foreach (var item in Model.AGR_PERIZIE_DETT_TEMP_MVC_vw)
+                    {
+                        <tr>
+                            <td style="display:none">
+                                @Html.DisplayFor(modelItem => item.ID)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ParteENG)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.DannoENG)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.GravitaENG)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Note)
+                            </td>
+                        </tr>
+                    }
+                }
+                }
 
-            <tbody>
+            </tbody>
         </table>
-    }
-    else if (Session["Classe"].ToString() == "1")
-    {
+                }
+                else if (Session["Classe"].ToString() == "1")
+                {
         <table id="Report" class="display" style="width:100%;font-size:11px">
             <thead>
                 <tr>

@@ -19,5 +19,6 @@ namespace WEB_Auto.Models
         public string DescrITA { get; set; }
         public string DescrENG { get; set; }
         public string DescrESP { get; set; }
+        public string DescrFRA { get; set; }
     }
 }

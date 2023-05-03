@@ -22,5 +22,6 @@ namespace WEB_Auto.Models
         public string IDClasse { get; set; }
         public string IDCliente { get; set; }
         public string DescrESP { get; set; }
+        public string DescrFRA { get; set; }
     }
 }

@@ -54,29 +54,49 @@ else
                     <th>Gravedad</th>
                 </tr>
             }
+            else if (Session["Lang"].ToString() == "FRA")
+            {
+                <tr>
+                    <th style="display:none;">ID</th>
+                    <th>Composant de voiture</th>
+                    <th>type de dommage</th>
+
+                    <th>Gravité</th>
+                </tr>
+            }
+            else if (Session["Lang"].ToString() == "FRA")
+            {
+                <tr>
+                    <th style="display:none;">ID</th>
+                    <th>Component</th>
+                    <th>Damage</th>
+
+                    <th>Damage measure</th>
+                </tr>
+            }
         </thead>
         <tbody>
             @if (Session["Lang"].ToString() == "ITA")
             {
                 foreach (var item in Model.AGR_PERIZIE_DETT_TEMP_MVC_vw)
                 {
-            <tr>
-                <td style="display:none">
-                    @Html.DisplayFor(modelItem => item.ID)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Parte)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Danno)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Gravita)
-                </td>
-                <td>
-                    @Html.ActionLink("Canc", "DeleteDettaglio", new { aIDDett = item.ID, myIDPerizia = item.IDPerizia, IsUpdate = ViewBag.IsUpdate }, new { @class = "btn btn-danger btn-xs", onclick = "return confirm('Confermi cancellazione ?');" })
-                </td>
-            </tr>
+                    <tr>
+                        <td style="display:none">
+                            @Html.DisplayFor(modelItem => item.ID)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Parte)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Danno)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Gravita)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Canc", "DeleteDettaglio", new { aIDDett = item.ID, myIDPerizia = item.IDPerizia, IsUpdate = ViewBag.IsUpdate }, new { @class = "btn btn-danger btn-xs", onclick = "return confirm('Confermi cancellazione ?');" })
+                        </td>
+                    </tr>
                     <tr>
                         <td>
                             @Html.DisplayFor(modelItem => item.Note)
@@ -103,6 +123,62 @@ else
                         </td>
                         <td>
                             @Html.ActionLink("Canc", "DeleteDettaglio", new { aIDDett = item.ID, myIDPerizia = item.IDPerizia, IsUpdate = ViewBag.IsUpdate }, new { @class = "btn btn-danger btn-xs", onclick = "return confirm('Confirmar cancelación ?');" })
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Note)
+                        </td>
+                    </tr>
+                }
+            }
+            else if (Session["Lang"].ToString() == "FRA")
+            {
+                foreach (var item in Model.AGR_PERIZIE_DETT_TEMP_MVC_vw)
+                {
+                    <tr>
+                        <td style="display:none">
+                            @Html.DisplayFor(modelItem => item.ID)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ParteFRA)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DannoFRA)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.GravitaFRA)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Canc", "DeleteDettaglio", new { aIDDett = item.ID, myIDPerizia = item.IDPerizia, IsUpdate = ViewBag.IsUpdate }, new { @class = "btn btn-danger btn-xs", onclick = "return confirm('Confirmer l'annulation ?');" })
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Note)
+                        </td>
+                    </tr>
+                }
+            }
+            else if (Session["Lang"].ToString() == "ENG")
+            {
+                foreach (var item in Model.AGR_PERIZIE_DETT_TEMP_MVC_vw)
+                {
+                    <tr>
+                        <td style="display:none">
+                            @Html.DisplayFor(modelItem => item.ID)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ParteENG)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DannoENG)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.GravitaENG)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Canc", "DeleteDettaglio", new { aIDDett = item.ID, myIDPerizia = item.IDPerizia, IsUpdate = ViewBag.IsUpdate }, new { @class = "btn btn-danger btn-xs", onclick = "return confirm('Confirm cancellation ?');" })
                         </td>
                     </tr>
                     <tr>

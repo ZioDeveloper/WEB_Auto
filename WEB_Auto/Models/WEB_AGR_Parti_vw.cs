@@ -19,5 +19,7 @@ namespace WEB_Auto.Models
         public string IDCasa { get; set; }
         public string IDCliente { get; set; }
         public string DescrESP { get; set; }
+        public string DescrFRA { get; set; }
+        public string DescrENG { get; set; }
     }
 }

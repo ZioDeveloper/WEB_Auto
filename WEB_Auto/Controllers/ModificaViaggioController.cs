@@ -69,13 +69,73 @@ namespace WEB_Auto.Controllers
             end = DateTime.Today.AddDays(+20);
             string myIDPorto = Session["IDPortoPerito"].ToString();
 
+            // OLD select che non forniva anche troppe spedizioni
+            // ******************************************************************
+            //var Spedizioni = from m in db.AGR_SpedizioniWEB_vw
+            //                 where m.DataInizioImbarco >= ini
+            //                 where m.DataInizioImbarco <= end
+            //                 where (m.IDPortoImbarco == myIDPorto || m.IDPortoSbarco == myIDPorto)
+            //                 where m.IDCliente == "51" || m.IDCliente == "GN"
+            //                 select m;
+            //model.AGR_SpedizioniWEB_vw = Spedizioni.ToList().OrderBy(s => s.DataInizioImbarco);
+
+            // Nuova select che fornisce solo le spedizioni usate dal perito che vuole modificare la perizia
+            // ******************************************************************
+
+            //var Spedizioni = from m in db.AGR_SpedizioniWEB_vw
+            //                 join o in db.AGR_PERIZIE_TEMP_MVC on m.ID equals o.IDSpedizione
+            //                 where m.DataInizioImbarco >= ini &&
+            //                       m.DataInizioImbarco <= end &&
+            //                       (m.IDPortoImbarco == myIDPorto || m.IDPortoSbarco == myIDPorto) &&
+            //                       (m.IDCliente == "51" || m.IDCliente == "GN") &&
+            //                       o.IDPerito == aPerito
+            //                 group o by new { m.IDOriginale1, m.DescrAlt, m.DataInizioImbarco } into g
+            //                 orderby g.Key.DataInizioImbarco
+            //                 select new
+            //                 {
+            //                     IDOriginale1 = g.Key.IDOriginale1,
+            //                     DescrAlt = g.Key.DescrAlt,
+            //                     DataInizioImbarco = g.Key.DataInizioImbarco,
+            //                     altre colonne della tabella AGR_SpedizioniWEB_vw da includere
+            //                 };
+
+
+            //model.AGR_SpedizioniWEB_vw = Spedizioni.ToList().Select(s => new AGR_SpedizioniWEB_vw
+            //{
+            //    IDOriginale1 = s.IDOriginale1,
+            //    DescrAlt = s.DescrAlt,
+            //    DataInizioImbarco = s.DataInizioImbarco,
+            //    altre colonne della tabella AGR_SpedizioniWEB_vw da includere
+            //}).ToList();
+
+            // NUova select che fornisce tutte le spedizioni usate dal perito che vuole modificare la perizia o non usate da nessuno !
+            // ******************************************************************
+
             var Spedizioni = from m in db.AGR_SpedizioniWEB_vw
-                             where m.DataInizioImbarco >= ini
-                             where m.DataInizioImbarco <= end
-                             where (m.IDPortoImbarco == myIDPorto || m.IDPortoSbarco == myIDPorto)
-                             where m.IDCliente == "51" || m.IDCliente == "GN"
-                             select m;
-            model.AGR_SpedizioniWEB_vw = Spedizioni.ToList().OrderBy(s => s.DataInizioImbarco);
+                             join o in db.AGR_PERIZIE_TEMP_MVC on m.ID equals o.IDSpedizione into g
+                             from o in g.DefaultIfEmpty()
+                             where m.DataInizioImbarco >= ini &&
+                                   m.DataInizioImbarco <= end &&
+                                   (m.IDPortoImbarco == myIDPorto || m.IDPortoSbarco == myIDPorto) &&
+                                   (m.IDCliente == "51" || m.IDCliente == "GN") &&
+                                   (o == null || o.IDPerito == aPerito)
+                             group o by new { m.IDOriginale1, m.DescrAlt, m.DataInizioImbarco } into g
+                             orderby g.Key.DataInizioImbarco
+                             select new
+                             {
+                                 IDOriginale1 = g.Key.IDOriginale1,
+                                 DescrAlt = g.Key.DescrAlt,
+                                 DataInizioImbarco = g.Key.DataInizioImbarco,
+                                 // altre colonne della tabella AGR_SpedizioniWEB_vw da includere
+                             };
+
+            model.AGR_SpedizioniWEB_vw = Spedizioni.ToList().Select(s => new AGR_SpedizioniWEB_vw
+            {
+                IDOriginale1 = s.IDOriginale1,
+                DescrAlt = s.DescrAlt,
+                DataInizioImbarco = s.DataInizioImbarco,
+                // altre colonne della tabella AGR_SpedizioniWEB_vw da includere
+            }).ToList();
 
             var ElencoSpedizioni = new SelectList(model.AGR_SpedizioniWEB_vw.ToList(), "IDOriginale1", "DescrAlt");
 

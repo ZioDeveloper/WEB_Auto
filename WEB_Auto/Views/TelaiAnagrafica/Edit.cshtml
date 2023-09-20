@@ -1407,8 +1407,9 @@ else
         if (checkBox.checked == true) {
             if (text.value == "")
                 text.value += "Check list non disponibile.";
-            else
-                text.value += " - Check list non disponibile.";
+            else {
+                text.value += " Check list non disponibile.";
+            }
             x.style.display = "block";
             y.style.display = "none";
 

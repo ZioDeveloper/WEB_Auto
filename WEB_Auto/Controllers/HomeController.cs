@@ -60,7 +60,7 @@ namespace WEB_Auto.Controllers
                 //usr = "DiSalvo";
                 // usr = "patrizia";
                 //usr = "Torresan"; // 
-                ///usr = "DiNinno";
+                 usr = "DiNinno";
                 // usr = "Maurizio";
                 //   usr = "amolina"; // 
                 //  usr = "pezzulo";
@@ -68,8 +68,9 @@ namespace WEB_Auto.Controllers
                 //usr = "lmiguel";
                 //  usr = "mmarti";
                 //usr = "KRadi";
-               // usr = "YoussefBB";
-                //usr = "Joazz";
+                // usr = "YoussefBB";
+                // usr = "Joazz";
+                // usr = "OussamaB";
             }
 
             var myIDPerito = (from s in db.AGR_Periti_WEB
@@ -194,7 +195,9 @@ namespace WEB_Auto.Controllers
             var ElencoPorti = new SelectList(model.AGR_Porti.ToList(), "ID", "Descr");
 
             var PortiAdmin = from m in db.AGR_Porti
-                        where m.ID == "PMO" || m.ID == "TRI" || m.ID == "GOA" || m.ID == "CVV" || m.ID == "PMI" || m.ID == "IBZ" || m.ID == "MAH" || m.ID == "BCN" || m.ID == "VLC" || m.ID == "NAP"
+                        where m.ID == "PMO" || m.ID == "TRI" || m.ID == "GOA" || m.ID == "CVV" || m.ID == "PMI" || m.ID == "IBZ" 
+                                            || m.ID == "MAH" || m.ID == "BCN" || m.ID == "VLC" || m.ID == "NAP" || m.ID == "NAD"
+                                            || m.ID == "VLT" || m.ID == "TNG"
                              select m;
             model.AGR_Porti = PortiAdmin.ToList().OrderBy(s=>s.Descr);
             var ElencoPortiAdmin = new SelectList(model.AGR_Porti.ToList(), "ID", "Descr");

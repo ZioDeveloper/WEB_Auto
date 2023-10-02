@@ -395,7 +395,6 @@ namespace WEB_Auto.Controllers
                             " SET IDOperatore = @IDOperatore  " +
                             " WHERE ID = @ID ";
 
-
                 int Updated = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@IDOperatore", (int)Session["IDOperatore"]),
                                                                      new SqlParameter("@ID", IDPerizia));
             }

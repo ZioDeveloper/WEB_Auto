@@ -67,44 +67,44 @@ namespace WEB_Auto.Controllers
             {
                 if (Status == "TUTTE")
                 {
-                    var lista = (from m in db.WEB_AUTO_ListaSpedizioni_3_vw
+                    var lista = (from m in db.WEB_AUTO_ListaSpedizioni_4_vw
                                  where m.IDPerito == aPerito
                                  select m).ToList();
-                    model.WEB_AUTO_ListaSpedizioni_3_vw = lista;
+                    model.WEB_AUTO_ListaSpedizioni_4_vw = lista;
 
                 }
                 else if (Status == "APERTE")
                 {
-                    var lista = (from m in db.WEB_AUTO_ListaSpedizioni_3_vw
+                    var lista = (from m in db.WEB_AUTO_ListaSpedizioni_4_vw
                                  where m.IDPerito == aPerito
                                  where m.Aperte != 0
                                  where m.StandBy == 0
                                  select m).ToList();
-                    model.WEB_AUTO_ListaSpedizioni_3_vw = lista;
+                    model.WEB_AUTO_ListaSpedizioni_4_vw = lista;
 
                 }
                 else if (Status == "CHIUSE")
                 {
-                    var lista = (from m in db.WEB_AUTO_ListaSpedizioni_3_vw
+                    var lista = (from m in db.WEB_AUTO_ListaSpedizioni_4_vw
                                  where m.IDPerito == aPerito
                                  where m.Aperte == 0
                                  select m).ToList();
-                    model.WEB_AUTO_ListaSpedizioni_3_vw = lista;
+                    model.WEB_AUTO_ListaSpedizioni_4_vw = lista;
 
                 }
 
                 else if (Status == "STANDBY")
                 {
-                    var lista = (from m in db.WEB_AUTO_ListaSpedizioni_3_vw
+                    var lista = (from m in db.WEB_AUTO_ListaSpedizioni_4_vw
                                  where m.IDPerito == aPerito
                                  where m.Aperte != 0
                                  where m.StandBy != 0
                                  select m).ToList();
-                    model.WEB_AUTO_ListaSpedizioni_3_vw = lista;
+                    model.WEB_AUTO_ListaSpedizioni_4_vw = lista;
 
                 }
 
-                var stby = (from m in db.WEB_AUTO_ListaSpedizioni_3_vw
+                var stby = (from m in db.WEB_AUTO_ListaSpedizioni_4_vw
                             where m.IDPerito == aPerito
                             where m.StandBy > 0
                             select m).Count();
@@ -395,7 +395,7 @@ namespace WEB_Auto.Controllers
                             " SET IDOperatore = @IDOperatore  " +
                             " WHERE ID = @ID ";
 
-                int Updated = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@IDOperatore", (int)Session["IDOperatore"]),
+                  int Updated = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@IDOperatore", (int)Session["IDOperatore"]),
                                                                      new SqlParameter("@ID", IDPerizia));
             }
             // Dati per dropdown Meteo
@@ -406,7 +406,7 @@ namespace WEB_Auto.Controllers
             var ElencoMeteo = new SelectList(model.AGR_Meteo.ToList(), "ID", "DescrITA");
             ViewData["ElencoMeteo"] = ElencoMeteo;
 
-            var stby = (from m in db.WEB_AUTO_ListaSpedizioni_3_vw
+            var stby = (from m in db.WEB_AUTO_ListaSpedizioni_4_vw
                         where m.IDPerito == aPerito
                         where m.ID == IDSpedizione
                         where m.StandBy > 0

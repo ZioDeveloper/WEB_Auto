@@ -117,8 +117,8 @@ namespace WEB_Auto.Controllers
                              where m.DataInizioImbarco >= ini &&
                                    m.DataInizioImbarco <= end &&
                                    (m.IDPortoImbarco == myIDPorto || m.IDPortoSbarco == myIDPorto) &&
-                                   (m.IDCliente == "51" || m.IDCliente == "GN") &&
-                                   (o == null || o.IDPerito == aPerito)
+                                   (m.IDCliente == "51" || m.IDCliente == "GN")
+                                  // && (o == null || o.IDPerito == aPerito)
                              group o by new { m.IDOriginale1, m.DescrAlt, m.DataInizioImbarco } into g
                              orderby g.Key.DataInizioImbarco
                              select new
@@ -351,7 +351,7 @@ namespace WEB_Auto.Controllers
 
             if(myPerizia.DataPerizia.Value.Date > Convert.ToDateTime(dataInizioImbarco.DataInizioImbarco.Value.Date))
             {
-                cnt=1;
+                cnt = 1;
                 aMsg = "Data Errata : la data partenza non può essere inferiore alla data perizia!";
                 return false;
 

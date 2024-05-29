@@ -8,9 +8,9 @@
 
 
 <div style="text-align:left">
-    
+
     @*@using (Html.BeginForm("CercaTelaioSingolo", "Storico"))*@
-    @using (Html.BeginForm("CercaStoriaTelaio", "Storico"))
+    @using (Html.BeginForm("CercaStoriaTelaio", "Storico", FormMethod.Post))
     {
         <label>Filtro periodo ricerca viaggi</label><br />
         @*<label>15 gg: @Html.RadioButton("FiltroData", "15", false, new { onclick = "this.form.submit()" })</label>
@@ -37,6 +37,11 @@
         @*<label>&nbsp;&nbsp; &nbsp;&nbsp;Solo good:@Html.RadioButton("FiltroStato", "Good", false)</label>*@
         <label>&nbsp;&nbsp; &nbsp;&nbsp;Solo Damaged:@Html.RadioButton("FiltroStato", "DAMAGED", false)</label>
         <label>&nbsp;&nbsp; &nbsp;&nbsp;Solo Good:@Html.RadioButton("FiltroStato", "GOOD", false)</label>
+
+        @*<div>
+            <label for="FiltroIsActive">Cerca solo Semirimorchi</label>
+            @Html.CheckBox("ISSemirimorchio", true)
+        </div>*@
         <br /><br />
         <table>
             <tr>

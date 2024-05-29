@@ -70,6 +70,7 @@
         <EntityTypeShape EntityType="wisedbModel.AGR_PERIZIE_TEMP_MVC_LOG" Width="1.5" PointX="26.375" PointY="0.75" />
         <EntityTypeShape EntityType="wisedbModel.WEB_Auto_ListaPerizieXSpedizione_withInfo_vw" Width="1.5" PointX="26.375" PointY="4.75" />
         <EntityTypeShape EntityType="wisedbModel.WEB_AUTO_ListaSpedizioni_4_vw" Width="1.5" PointX="26.375" PointY="12.75" />
+        <EntityTypeShape EntityType="wisedbModel.WEB_ListaPerizieFlat_DEF_ALL_NO_AUTO_vw" Width="1.5" PointX="26.375" PointY="17.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

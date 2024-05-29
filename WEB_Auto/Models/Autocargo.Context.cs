@@ -86,5 +86,6 @@ namespace WEB_Auto.Models
         public virtual DbSet<AGR_PERIZIE_TEMP_MVC_LOG> AGR_PERIZIE_TEMP_MVC_LOG { get; set; }
         public virtual DbSet<WEB_Auto_ListaPerizieXSpedizione_withInfo_vw> WEB_Auto_ListaPerizieXSpedizione_withInfo_vw { get; set; }
         public virtual DbSet<WEB_AUTO_ListaSpedizioni_4_vw> WEB_AUTO_ListaSpedizioni_4_vw { get; set; }
+        public virtual DbSet<WEB_ListaPerizieFlat_DEF_ALL_NO_AUTO_vw> WEB_ListaPerizieFlat_DEF_ALL_NO_AUTO_vw { get; set; }
     }
 }

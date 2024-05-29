@@ -49,11 +49,103 @@ namespace WEB_Auto.Controllers
             return View(model);
         }
 
-        public ActionResult CercaStoriaTelaio(string aTelaio,  int FiltroData, string FiltroStato)
+        public ActionResult CercaStoriaTelaio(string aTelaio, int FiltroData, string FiltroStato, bool? ISSemirimorchio)
+        {
+            // Convertiamo il telaio in maiuscolo
+            string myTelaio = aTelaio.ToUpper();
+
+            // Impostiamo il timeout del comando del database
+            db.Database.CommandTimeout = 300;
+
+            // Creiamo il modello da passare alla vista
+            var model = new Models.HomeModel();
+
+            // Recuperiamo e ordiniamo i dati dalla vista WEB_ListaPerizieFlat_MVC_vw
+            var Chassis1 = db.WEB_ListaPerizieFlat_MVC_vw
+                .Where(m => m.Telaio == myTelaio && (m.IsClosed == false || m.IsClosed == null))
+                .OrderByDescending(m => m.DataPerizia)
+                .ToList();
+            model.WEB_ListaPerizieFlat_MVC_vw = Chassis1;
+
+            // Passiamo il telaio alla vista tramite ViewBag
+            ViewBag.Chassis1 = myTelaio;
+
+            // Recuperiamo e ordiniamo i dati dalla vista WEB_ListaPerizieFlat_TMP_vw
+            var Chassis2 = db.WEB_ListaPerizieFlat_TMP_vw
+                .Where(m => m.Telaio == myTelaio)
+                .OrderByDescending(m => m.DataPerizia)
+                .ToList();
+            model.WEB_ListaPerizieFlat_TMP_vw = Chassis2;
+
+            if (ISSemirimorchio == true)
+            {
+                // Recuperiamo i dati dalla vista WEB_ListaPerizieFlat_DEF_ALL_vw
+                var Chassis3 = db.WEB_ListaPerizieFlat_DEF_ALL_vw
+                    .Where(f => f.Telaio == myTelaio)
+                    .ToList();
+
+                // Applicare i filtri di stato
+                if (FiltroStato == "DAMAGED")
+                {
+                    Chassis3 = Chassis3.Where(f => f.STATUS.ToString() == "DMG").ToList();
+                }
+                else if (FiltroStato == "GOOD")
+                {
+                    Chassis3 = Chassis3.Where(f => f.STATUS.ToString() == "GOOD").ToList();
+                }
+
+                // Applicare il filtro di data
+                if (FiltroData != 90)
+                {
+                    var dataFiltro = DateTime.Now.AddDays(-FiltroData);
+                    Chassis3 = Chassis3.Where(f => f.DataPerizia >= dataFiltro).ToList();
+                }
+
+                // Ordiniamo i dati filtrati e li assegnamo al modello
+                model.WEB_ListaPerizieFlat_DEF_ALL_vw = Chassis3.OrderByDescending(f => f.DataPerizia).ToList();
+            }
+            else
+            {
+                // Recuperiamo i dati dalla vista WEB_ListaPerizieFlat_DEF_ALL_vw
+                var Chassis3 = db.WEB_ListaPerizieFlat_DEF_ALL_vw
+                    .Where(f => f.Telaio == myTelaio)
+                    .ToList();
+
+                // Applicare i filtri di stato
+                if (FiltroStato == "DAMAGED")
+                {
+                    Chassis3 = Chassis3.Where(f => f.STATUS.ToString() == "DMG").ToList();
+                }
+                else if (FiltroStato == "GOOD")
+                {
+                    Chassis3 = Chassis3.Where(f => f.STATUS.ToString() == "GOOD").ToList();
+                }
+
+                // Applicare il filtro di data
+                if (FiltroData != 90)
+                {
+                    var dataFiltro = DateTime.Now.AddDays(-FiltroData);
+                    Chassis3 = Chassis3.Where(f => f.DataPerizia >= dataFiltro).ToList();
+                }
+
+                // Ordiniamo i dati filtrati e li assegnamo al modello
+                model.WEB_ListaPerizieFlat_DEF_ALL_vw = Chassis3.OrderByDescending(f => f.DataPerizia).ToList();
+            }
+
+            // Passiamo i filtri alla vista tramite ViewBag
+            ViewBag.FiltroData = FiltroData;
+            ViewBag.FiltroStato = FiltroStato;
+
+            // Ritorniamo il risultato alla vista
+            return View(model);
+        }
+
+
+        public ActionResult CercaStoriaTelaioOLD(string aTelaio,  int FiltroData, string FiltroStato)
         {
             string myTelaio = aTelaio.ToUpper();
 
-            
+            db.Database.CommandTimeout = 300;
             var model = new Models.HomeModel();
 
             var Chassis1 = from m in db.WEB_ListaPerizieFlat_MVC_vw

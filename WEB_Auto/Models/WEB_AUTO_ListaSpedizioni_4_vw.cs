@@ -18,12 +18,12 @@ namespace WEB_Auto.Models
         public string ID { get; set; }
         public string IDOriginale1 { get; set; }
         public string IDTipoPerizia { get; set; }
-        public Nullable<int> NumPerizie { get; set; }
-        public Nullable<int> Aperte { get; set; }
-        public Nullable<int> Chiuse { get; set; }
-        public Nullable<int> StandBy { get; set; }
+        public int NumPerizie { get; set; }
+        public int Aperte { get; set; }
+        public int Chiuse { get; set; }
+        public int StandBy { get; set; }
         public Nullable<int> Good { get; set; }
-        public Nullable<int> Damaged { get; set; }
+        public int Damaged { get; set; }
         public string IDPerito { get; set; }
         public Nullable<System.DateTime> DataPartenzaImbarco { get; set; }
         public Nullable<System.DateTime> DataArrivoSbarco { get; set; }

@@ -1597,6 +1597,7 @@ namespace WEB_Auto.Controllers
                     var ElencoGravita = new SelectList(model.WEB_AGR_Gravita_vw.ToList().OrderBy(m => m.DescrITA), "ID", "DescrITA");
                     ViewData["ElencoGravita"] = ElencoGravita;
                     ISGravitaEnabled = false;
+                    ISGravitaEnabled = true;
                 }
                 else if (Session["Lang"].ToString() == "ESP")
                 {
@@ -1608,6 +1609,7 @@ namespace WEB_Auto.Controllers
                     var ElencoGravita = new SelectList(model.WEB_AGR_Gravita_vw.ToList().OrderBy(m => m.DescrESP), "ID", "DescrESP");
                     ViewData["ElencoGravita"] = ElencoGravita;
                     ISGravitaEnabled = false;
+                    ISGravitaEnabled = true;
                 }
                 else if (Session["Lang"].ToString() == "FRA")
                 {
@@ -1619,6 +1621,7 @@ namespace WEB_Auto.Controllers
                     var ElencoGravita = new SelectList(model.WEB_AGR_Gravita_vw.ToList().OrderBy(m => m.DescrFRA), "ID", "DescrFRA");
                     ViewData["ElencoGravita"] = ElencoGravita;
                     ISGravitaEnabled = false;
+                    ISGravitaEnabled = true;
                 }
                 else if (Session["Lang"].ToString() == "ENG")
                 {
@@ -1630,6 +1633,7 @@ namespace WEB_Auto.Controllers
                     var ElencoGravita = new SelectList(model.WEB_AGR_Gravita_vw.ToList().OrderBy(m => m.DescrENG), "ID", "DescrENG");
                     ViewData["ElencoGravita"] = ElencoGravita;
                     ISGravitaEnabled = false;
+                    ISGravitaEnabled = true;
                 }
             }
                 try
@@ -2651,6 +2655,7 @@ namespace WEB_Auto.Controllers
                 var ElencoGravita = new SelectList(model.WEB_AGR_Gravita_vw.ToList().OrderBy(m => m.DescrITA), "ID", "DescrITA");
                 ViewData["ElencoGravita"] = ElencoGravita;
                 ISGravitaEnabled = false;
+                ISGravitaEnabled = true;
 
             }
 

@@ -336,6 +336,9 @@
     <Compile Include="Models\WEB_AUTO_PDF.cs">
       <DependentUpon>Autocargo.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\WEB_ListaPerizieFlat_DEF_ALL_NO_AUTO_vw.cs">
+      <DependentUpon>Autocargo.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\WEB_ListaPerizieFlat_DEF_ALL_vw.cs">
       <DependentUpon>Autocargo.tt</DependentUpon>
     </Compile>

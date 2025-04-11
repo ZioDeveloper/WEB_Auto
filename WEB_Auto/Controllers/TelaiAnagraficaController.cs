@@ -1128,14 +1128,15 @@ namespace WEB_Auto.Controllers
                         if (hasdanni == 0)
                         {
 
-                            sqlcmd = " INSERT INTO AGR_PERIZIE_DETT_TEMP_MVC (IDPerizia,IDParte, IDDanno, QTA,Flags, Note)" +
-                                     " VALUES(@IDPerizia,@IDParte, @IDDanno, @QTA,@Flags, @Note)";
+                            sqlcmd = " INSERT INTO AGR_PERIZIE_DETT_TEMP_MVC (IDPerizia,IDParte, IDDanno,IDGravita, QTA,Flags, Note)" +
+                                     " VALUES(@IDPerizia,@IDParte, @IDDanno,@IDGravita, @QTA,@Flags, @Note)";
                             try
                             {
                                 Inserted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@IDPerizia", myIDPerizia),
                                                                              new SqlParameter("@IDParte", "045"),
                                                                              new SqlParameter("@IDDanno", "Y"),
                                                                              new SqlParameter("@QTA", 1),
+                                                                             new SqlParameter("@IDGravita", "*"),
                                                                               new SqlParameter("@Flags", "0"),
                                                                              new SqlParameter("@Note", "Danni da utilizzo")
                                                                              );
@@ -1268,14 +1269,15 @@ namespace WEB_Auto.Controllers
                         if (hasdanni == 0)
                         {
 
-                            sqlcmd = " INSERT INTO AGR_PERIZIE_DETT_TEMP_MVC (IDPerizia,IDParte, IDDanno, QTA,Flags, Note)" +
-                                     " VALUES(@IDPerizia,@IDParte, @IDDanno, @QTA,@Flags, @Note)";
+                            sqlcmd = " INSERT INTO AGR_PERIZIE_DETT_TEMP_MVC (IDPerizia,IDParte, IDDanno,IDGravita, QTA,Flags, Note)" +
+                                      " VALUES(@IDPerizia,@IDParte, @IDDanno,@IDGravita, @QTA,@Flags, @Note)";
                             try
                             {
                                 Inserted = db.Database.ExecuteSqlCommand(sqlcmd, new SqlParameter("@IDPerizia", myIDPerizia),
                                                                              new SqlParameter("@IDParte", "045"),
                                                                              new SqlParameter("@IDDanno", "Y"),
                                                                              new SqlParameter("@QTA", 1),
+                                                                             new SqlParameter("@IDGravita", "*"),
                                                                               new SqlParameter("@Flags", "0"),
                                                                              new SqlParameter("@Note", "Danni da utilizzo")
                                                                              );
@@ -1538,7 +1540,7 @@ namespace WEB_Auto.Controllers
 
             // Dati per dropdown AGR_Gravita
             // *******************************
-            if (ISGEFCO_GN_51)
+            if (ISGEFCO_GN_51 || 0==0)
             {
                 if (Session["Lang"].ToString() == "ITA")
                 {
@@ -1693,7 +1695,7 @@ namespace WEB_Auto.Controllers
         {
             
             string myMessDett = "";
-            bool isOK = CheckAllDetails(IDParte, IDDanno, Note, myIDPerizia, out myMessDett);
+            bool isOK = CheckAllDetails(IDParte, IDDanno, Note, myIDPerizia, IDGravita, out myMessDett);
             if (isOK)
             {
                 // Inserisco dettagli danno perizia
@@ -2498,6 +2500,12 @@ namespace WEB_Auto.Controllers
                 return false;
             }
 
+            else if (String.IsNullOrEmpty(IDDanno))
+            {
+                errMEss = "Inserire codice danno...";
+                return false;
+            }
+
             else if (IDParte.Left(1) != "2" && IDParte.Left(1) != "3")
             {
                 errMEss = "Codice parte danneggiata NON VALIDO";
@@ -2522,7 +2530,7 @@ namespace WEB_Auto.Controllers
             }
         }
 
-        public bool CheckAllDetails(string IDParte, string IDDanno, string Note, string myIDPerizia, out string errMEss)
+        public bool CheckAllDetails(string IDParte, string IDDanno, string Note, string myIDPerizia, string IDGravita, out string errMEss)
         {
             int contaitems = (from m in db.AGR_PERIZIE_DETT_TEMP_MVC
                               where m.IDPerizia == myIDPerizia
@@ -2544,6 +2552,11 @@ namespace WEB_Auto.Controllers
             else if (String.IsNullOrEmpty(IDDanno))
             {
                 errMEss = "Inserire codice danno...";
+                return false;
+            }
+            else if (String.IsNullOrEmpty(IDGravita))
+            {
+                errMEss = "Inserire codice gravità...";
                 return false;
             }
 

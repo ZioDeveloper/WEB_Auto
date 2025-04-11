@@ -251,14 +251,16 @@ namespace WEB_Auto.Controllers
                  myNewIDSped = (from m in db.AGR_Spedizioni
                                    where m.IDOriginale1 == newViaggio
                                    where m.IDCasa == myIDCasa
-                                   select m.ID).FirstOrDefault();
+                                   orderby m.DataPartenzaImbarco descending
+                                select m.ID).FirstOrDefault();
             }
             else
             {
                 myNewIDSped = (from m in db.AGR_Spedizioni
                                    where m.IDOriginale1 == newViaggio
                                    where m.IDCasa == "CAB" || m.IDCasa =="RTB"
-                                   select m.ID).FirstOrDefault();
+                                   orderby m.DataPartenzaImbarco descending
+                               select m.ID).FirstOrDefault();
             }
 
             if(String.IsNullOrEmpty(myNewIDSped))
@@ -277,9 +279,11 @@ namespace WEB_Auto.Controllers
             string oldTP = myPerizia.IDTipoPerizia;
             var newPOL = (from m in db.AGR_Spedizioni
                          where m.IDOriginale1 == newViaggio
-                         select m.IDPortoImbarco).FirstOrDefault();
+                          orderby m.DataPartenzaImbarco descending
+                          select m.IDPortoImbarco).FirstOrDefault();
             var newPOD = (from m in db.AGR_Spedizioni
                           where m.IDOriginale1 == newViaggio
+                          orderby m.DataPartenzaImbarco descending
                           select m.IDPortoSbarco).FirstOrDefault();
             if (oldTP == "C")
             {
@@ -475,6 +479,7 @@ namespace WEB_Auto.Controllers
 
             var DataxConfronto = (from m in db.AGR_Spedizioni
                                   where m.IDOriginale1 == Viaggio
+                                  orderby m.DataPartenzaImbarco descending
                                   select m.DataPartenzaImbarco).FirstOrDefault();
 
 

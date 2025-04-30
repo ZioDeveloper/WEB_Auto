@@ -15,7 +15,8 @@ namespace WEB_Auto.Controllers
     public class InvioFotoViaEmailController : Controller
     {
         private wisedbEntities db = new wisedbEntities();
-        // GET: InvioFotoViaEmail
+        // GET: InvioFotoViaEmail 
+
         public ActionResult AllegaFoto()
         {
             //string filename = "";
